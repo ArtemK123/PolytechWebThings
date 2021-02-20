@@ -1,0 +1,21 @@
+- Database:
+1. MS SQL Server
+2. Entity Framework Core
+
+- Backend:
+1. Clean architecture template
+2. MediatR and CQRS
+3. FluentValidation
+4. .NET 5 with nullability and records
+
+- Frontend:
+1. KnockoutJS
+2. Webpack
+3. TypeScript
+4. Stored under .sln and deployed in single process with backend
+
+- Unit/integration testing:
+1. NUnit
+2. Moq
+3. WebApplicationFactory for integration tests
+4. Respawn and integration tests with live database
