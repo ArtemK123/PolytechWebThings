@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>PolytechWebThings.Domain</RootNamespace>
-    <AssemblyName>PolytechWebThings.Domain</AssemblyName>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
 </Project>
