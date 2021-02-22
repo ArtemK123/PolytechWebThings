@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Domain.Enums;
+﻿using Domain.Enums;
 
-namespace Domain.Entities
+namespace Domain.Entities.User
 {
-    public record User
+    internal record User : IUser
     {
         public string Id { get; init; }
 
@@ -14,7 +13,5 @@ namespace Domain.Entities
         public string? SessionToken { get; init; }
 
         public UserRole Role { get; init; }
-
-        public IReadOnlyCollection<UserToWorkspaceConnection> WorkspaceCollections { get; init; } = new List<UserToWorkspaceConnection>();
     }
 }
