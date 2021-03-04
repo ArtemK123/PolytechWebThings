@@ -1,20 +1,22 @@
 ﻿using Application.Users;
+using Domain.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PolytechWebThings.Infrastructure.Database;
 using PolytechWebThings.Infrastructure.Database.Users;
+using PolytechWebThings.Infrastructure.Services;
 
 namespace PolytechWebThings.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+                options => options.UseSqlServer("name=Database:ConnectionString"));
 
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IGuidProvider, GuidProvider>();
 
             return services;
         }
