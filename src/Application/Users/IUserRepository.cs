@@ -1,11 +1,12 @@
-﻿using Domain.Entities.User;
+﻿using System.Threading.Tasks;
+using Domain.Entities.User;
 
 namespace Application.Users
 {
     public interface IUserRepository
     {
-        void Add(IUser user);
+        Task AddAsync(IUser user);
 
-        IUser? GetByEmail(string email);
+        Task<IUser?> GetByEmailAsync(string email);
     }
 }

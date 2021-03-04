@@ -18,17 +18,17 @@ namespace Application.Users.Commands.CreateUser
             this.newUserFactory = newUserFactory;
         }
 
-        public Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            IUser? optionalStoredUser = userRepository.GetByEmail(request.Email);
+            IUser? optionalStoredUser = await userRepository.GetByEmailAsync(request.Email);
             if (optionalStoredUser != null)
             {
                 throw new EmailTakenByOtherUserException(optionalStoredUser.Email, optionalStoredUser.Id);
             }
 
             IUser newUser = newUserFactory.Create(new NewUserCreationModel { Email = request.Email, Password = request.Password, Role = request.Role });
-            userRepository.Add(newUser);
-            return Task.FromResult(new Unit());
+            await userRepository.AddAsync(newUser);
+            return new Unit();
         }
     }
 }

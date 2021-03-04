@@ -33,7 +33,7 @@ namespace Application.UnitTest.Users.Commands.CreateUser
         [Test]
         public void EmailAlreadyTaken_ShouldThrowException()
         {
-            userRepositoryMock.Setup(repo => repo.GetByEmail(UserEmail)).Returns(CreateMockedUser());
+            userRepositoryMock.Setup(repo => repo.GetByEmailAsync(UserEmail)).Returns(Task.FromResult(CreateMockedUser()));
             EmailTakenByOtherUserException exception = Assert.ThrowsAsync<EmailTakenByOtherUserException>(() => createUserCommandHandler.Handle(CreateCommand(), CancellationToken.None));
             Assert.AreEqual($"Email {UserEmail} is already taken by user with id=${UserId}", exception?.Message);
         }
@@ -42,11 +42,11 @@ namespace Application.UnitTest.Users.Commands.CreateUser
         public async Task ValidUser_ShouldAddUser()
         {
             IUser createdUser = CreateMockedUser();
-            userRepositoryMock.Setup(repo => repo.GetByEmail(UserEmail)).Returns(default(IUser));
+            userRepositoryMock.Setup(repo => repo.GetByEmailAsync(UserEmail)).Returns(Task.FromResult(default(IUser)));
             newUserFactoryMock
                 .Setup(factory => factory.Create(It.Is<NewUserCreationModel>(model => model.Email == UserEmail && model.Password == Password && model.Role == Role)))
                 .Returns(createdUser);
-            userRepositoryMock.Setup(repo => repo.Add(createdUser));
+            userRepositoryMock.Setup(repo => repo.AddAsync(createdUser));
             await createUserCommandHandler.Handle(CreateCommand(), CancellationToken.None);
         }
 
