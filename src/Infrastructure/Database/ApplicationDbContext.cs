@@ -3,11 +3,12 @@ using PolytechWebThings.Infrastructure.Database.Users;
 
 namespace PolytechWebThings.Infrastructure.Database
 {
-    internal class ApplicationDbContext : DbContext
+    internal sealed class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<UserDatabaseModel> Users { get; set; } = null!;
