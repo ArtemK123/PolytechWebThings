@@ -20,7 +20,6 @@ namespace PolytechWebThings.Infrastructure
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IGuidProvider, GuidProvider>();
             services.AddSingleton<IStartupJob, EnsureDatabaseCreatedJob>();
-            services.AddSingleton<IStartupJob, RunMigrationsJob>();
 
             return services;
         }
