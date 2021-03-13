@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Application;
 using Domain;
 using Microsoft.AspNetCore.Builder;
@@ -32,7 +34,7 @@ namespace Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime hostApplicationLifetime)
         {
             if (env.IsDevelopment())
             {
@@ -55,15 +57,17 @@ namespace Web
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            // app.UseSpa(spa =>
-            // {
-            //     spa.Options.SourcePath = "ClientApp";
-            //
-            //     if (env.IsDevelopment())
-            //     {
-            //         spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-            //     }
-            // });
+            hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));
+        }
+
+        private static void ApplicationStartedCallback(IApplicationBuilder app)
+        {
+            IEnumerable<IStartupJob> startupJobs = app.ApplicationServices.GetServices<IStartupJob>();
+            IEnumerable<IStartupJob> orderedJobs = startupJobs.OrderBy(job => job.Priority);
+            foreach (IStartupJob job in orderedJobs)
+            {
+                job.Execute(app.ApplicationServices);
+            }
         }
     }
 }

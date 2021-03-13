@@ -8,7 +8,6 @@ namespace PolytechWebThings.Infrastructure.Database
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<UserDatabaseModel> Users { get; set; } = null!;
