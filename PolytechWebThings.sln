@@ -17,6 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTest", "tests\Application.UnitTest\Application.UnitTest.csproj", "{92A26BA8-134A-4043-960C-245B5D0BBF95}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build_configuration", "build_configuration", "{60B6C2AB-F97E-4EC1-A21D-C128AFE94F80}"
+ProjectSection(SolutionItems) = preProject
+	Custom.ruleset = Custom.ruleset
+	Directory.Build.props = Directory.Build.props
+	stylecop.json = stylecop.json
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
