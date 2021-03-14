@@ -32,6 +32,7 @@ namespace Application.UnitTest.Users.Commands.CreateUser
                 Assert.AreEqual(expectedValidationMessage, actualValidationResult.Errors.SingleOrDefault()?.ErrorMessage);
                 return;
             }
+
             Assert.IsTrue(actualValidationResult.IsValid);
         }
 
@@ -47,6 +48,7 @@ namespace Application.UnitTest.Users.Commands.CreateUser
                 Assert.AreEqual(expectedValidationMessage, actualValidationResult.Errors.SingleOrDefault()?.ErrorMessage);
                 return;
             }
+
             Assert.IsTrue(actualValidationResult.IsValid);
         }
     }

@@ -14,26 +14,22 @@ namespace Domain.Entities.User
 
         public IUser Create(NewUserCreationModel creationModel)
         {
-            return new User
-            {
-                Id = guidProvider.CreateGuid().ToString(),
-                Email = creationModel.Email,
-                Password = creationModel.Password,
-                SessionToken = null,
-                Role = creationModel.Role
-            };
+            return new User(
+                id: guidProvider.CreateGuid().ToString(),
+                email: creationModel.Email,
+                password: creationModel.Password,
+                sessionToken: null,
+                role: creationModel.Role);
         }
 
         public IUser Create(StoredUserCreationModel creationModel)
         {
-            return new User
-            {
-                Id = creationModel.Id,
-                Email = creationModel.Email,
-                Password = creationModel.Password,
-                SessionToken = creationModel.Id,
-                Role = creationModel.Role
-            };
+            return new User(
+                id: creationModel.Id,
+                email: creationModel.Email,
+                password: creationModel.Password,
+                sessionToken: creationModel.Id,
+                role: creationModel.Role);
         }
     }
 }

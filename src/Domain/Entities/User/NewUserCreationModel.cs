@@ -4,10 +4,17 @@ namespace Domain.Entities.User
 {
     public record NewUserCreationModel
     {
-        public string Email { get; init; } = "";
+        public NewUserCreationModel(string email, string password, UserRole role)
+        {
+            Email = email;
+            Password = password;
+            Role = role;
+        }
 
-        public string Password { get; init; } = "";
+        public string Email { get; }
 
-        public UserRole Role { get; init; } = UserRole.User;
+        public string Password { get; }
+
+        public UserRole Role { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Users;
 using Domain.Entities.Common;
@@ -36,15 +37,16 @@ namespace PolytechWebThings.Infrastructure.Database.Users
         {
             UserDatabaseModel? databaseModel = await dbContext.Users.Where(user => user.Email == email).FirstOrDefaultAsync();
             return databaseModel is not null
-                ? storedUserFactory.Create(new StoredUserCreationModel
-                {
-                    Id = databaseModel.Id,
-                    Email = databaseModel.Email,
-                    Password = databaseModel.Password,
-                    SessionToken = databaseModel.SessionToken,
-                    Role = databaseModel.Role
-                })
+                ? storedUserFactory.Create(Convert(databaseModel))
                 : null;
         }
+
+        private StoredUserCreationModel Convert(UserDatabaseModel databaseModel)
+            => new StoredUserCreationModel(
+                id: databaseModel.Id ?? throw new NullReferenceException(),
+                email: databaseModel.Email ?? throw new NullReferenceException(),
+                password: databaseModel.Password ?? throw new NullReferenceException(),
+                sessionToken: databaseModel.SessionToken,
+                role: databaseModel.Role ?? throw new NullReferenceException());
     }
 }

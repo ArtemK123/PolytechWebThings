@@ -26,9 +26,9 @@ namespace Application.Users.Commands.CreateUser
                 throw new EmailTakenByOtherUserException(optionalStoredUser.Email, optionalStoredUser.Id);
             }
 
-            IUser newUser = newUserFactory.Create(new NewUserCreationModel { Email = request.Email, Password = request.Password, Role = request.Role });
+            IUser newUser = newUserFactory.Create(new NewUserCreationModel(email: request.Email, password: request.Password, role: request.Role));
             await userRepository.AddAsync(newUser);
-            return new Unit();
+            return default;
         }
     }
 }

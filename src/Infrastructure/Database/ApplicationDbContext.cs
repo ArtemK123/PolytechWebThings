@@ -10,6 +10,6 @@ namespace PolytechWebThings.Infrastructure.Database
         {
         }
 
-        public DbSet<UserDatabaseModel> Users { get; set; } = null!;
+        public DbSet<UserDatabaseModel> Users { get; init; } = null!;
     }
 }
