@@ -62,9 +62,13 @@ namespace Web.IntegrationTest.Controllers
                 Content = JsonContent.Create(new CreateUserCommand { Email = string.Empty, Password = string.Empty })
             });
 
-            var responseMessage = await response.Content.ReadAsStringAsync();
+            string expectedResponseMessage = "Validation failed: " + Environment.NewLine +
+                                               " -- Email: Email is required." + Environment.NewLine +
+                                               " -- Password: Password is required.";
+
+            string actualResponseMessage = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.False(string.IsNullOrEmpty(responseMessage));
+            Assert.AreEqual(expectedResponseMessage, actualResponseMessage);
         }
     }
 }
