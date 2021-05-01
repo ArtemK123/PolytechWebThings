@@ -8,5 +8,7 @@ namespace Application.Users
         Task AddAsync(IUser user);
 
         Task<IUser?> GetByEmailAsync(string email);
+
+        Task UpdateAsync(IUser user);
     }
 }

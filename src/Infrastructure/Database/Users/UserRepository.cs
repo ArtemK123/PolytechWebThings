@@ -35,10 +35,26 @@ namespace PolytechWebThings.Infrastructure.Database.Users
 
         public async Task<IUser?> GetByEmailAsync(string email)
         {
-            UserDatabaseModel? databaseModel = await dbContext.Users.Where(user => user.Email == email).FirstOrDefaultAsync();
+            UserDatabaseModel? databaseModel = await dbContext.Users.Where(user => user.Email == email).SingleOrDefaultAsync();
             return databaseModel is not null
                 ? storedUserFactory.Create(Convert(databaseModel))
                 : null;
+        }
+
+        public async Task UpdateAsync(IUser user)
+        {
+            UserDatabaseModel? databaseModel = await dbContext.Users.Where(databaseUser => databaseUser.Id == user.Id).SingleOrDefaultAsync();
+            if (databaseModel is null)
+            {
+                throw new Exception("User to update is not found in the database");
+            }
+
+            databaseModel.Email = user.Email;
+            databaseModel.Password = user.Password;
+            databaseModel.Role = user.Role;
+            databaseModel.SessionToken = user.SessionToken;
+
+            await dbContext.SaveChangesAsync();
         }
 
         private StoredUserCreationModel Convert(UserDatabaseModel databaseModel)
