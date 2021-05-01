@@ -5,6 +5,7 @@ using Application.Users.Commands.LoginUser;
 using Application.Users.Queries.GetUserByEmail;
 using Domain.Entities.User;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -31,6 +32,13 @@ namespace Web.Controllers
             await mediator.Send(loginUserCommand);
             IUser user = await mediator.Send(new GetUserByEmailQuery { Email = loginUserCommand.Email });
             return user.SessionToken ?? throw new Exception("User token is null in the inappropriate context");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<string> GetEmail()
+        {
+            return "placeholder";
         }
     }
 }
