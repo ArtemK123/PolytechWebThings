@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Domain.Entities.Common;
 using Domain.Entities.User;
 using Domain.Exceptions;
 using Domain.Services;
@@ -12,13 +11,11 @@ namespace Application.Users.Commands.LoginUser
     {
         private readonly IGuidProvider guidProvider;
         private readonly IUserRepository userRepository;
-        private readonly IFactory<StoredUserCreationModel, IUser> userFactory;
 
-        public LoginUserHandler(IUserRepository userRepository, IGuidProvider guidProvider, IFactory<StoredUserCreationModel, IUser> userFactory)
+        public LoginUserHandler(IUserRepository userRepository, IGuidProvider guidProvider)
         {
             this.userRepository = userRepository;
             this.guidProvider = guidProvider;
-            this.userFactory = userFactory;
         }
 
         public async Task<Unit> Handle(LoginUserCommand request, CancellationToken cancellationToken)
@@ -35,8 +32,7 @@ namespace Application.Users.Commands.LoginUser
             }
 
             string userToken = GenerateToken();
-            StoredUserCreationModel storedUserCreationModel = new(user.Id, user.Email, user.Password, userToken, user.Role);
-            IUser updatedUser = userFactory.Create(storedUserCreationModel);
+            IUser updatedUser = user.MutateSessionToken(userToken);
             await userRepository.UpdateAsync(updatedUser);
             return Unit.Value;
         }

@@ -19,8 +19,13 @@ namespace Domain.Entities.User
 
         public string Password { get; }
 
-        public string? SessionToken { get; }
+        public string? SessionToken { get; private init; }
 
         public UserRole Role { get; }
+
+        public IUser MutateSessionToken(string? newToken)
+        {
+            return this with { SessionToken = newToken };
+        }
     }
 }

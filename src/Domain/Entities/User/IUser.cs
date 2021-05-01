@@ -13,5 +13,7 @@ namespace Domain.Entities.User
         public string? SessionToken { get; }
 
         public UserRole Role { get; }
+
+        public IUser MutateSessionToken(string? newToken);
     }
 }
