@@ -26,7 +26,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<string> Login(LoginUserCommand loginUserCommand)
+        public async Task<string> Login([FromBody]LoginUserCommand loginUserCommand)
         {
             await mediator.Send(loginUserCommand);
             IUser user = await mediator.Send(new GetUserByEmailQuery { Email = loginUserCommand.Email });
