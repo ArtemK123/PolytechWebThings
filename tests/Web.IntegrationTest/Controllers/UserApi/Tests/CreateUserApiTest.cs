@@ -6,13 +6,12 @@ using Application.Users;
 using Application.Users.Commands.CreateUser;
 using Domain.Entities.User;
 using Domain.Enums;
-using Domain.Exceptions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace Web.IntegrationTest.Controllers.UserApi
+namespace Web.IntegrationTest.Controllers.UserApi.Tests
 {
-    internal class UserApiControllerTest : WebApiIntegrationTestBase
+    internal class CreateUserTest : WebApiIntegrationTestBase
     {
         private UserApiProxy userApiProxy;
 
@@ -47,8 +46,8 @@ namespace Web.IntegrationTest.Controllers.UserApi
             HttpResponseMessage response = await userApiProxy.CreateAsync(new CreateUserCommand { Email = string.Empty, Password = string.Empty });
 
             string expectedResponseMessage = "Validation failed: " + Environment.NewLine +
-                                             " -- Email: Email is required." + Environment.NewLine +
-                                             " -- Password: Password is required.";
+                                             " -- Email: A valid email address is required." + Environment.NewLine +
+                                             " -- Password: 'Password' must not be empty.";
 
             string actualResponseMessage = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);

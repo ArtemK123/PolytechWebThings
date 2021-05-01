@@ -1,11 +1,11 @@
 ﻿using Application.Users.Validators;
 using FluentValidation;
 
-namespace Application.Users.Commands.CreateUser
+namespace Application.Users.Commands.LoginUser
 {
-    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
     {
-        public CreateUserCommandValidator()
+        public LoginUserCommandValidator()
         {
             RuleFor(model => model.Email).SetValidator(new EmailValidator()).NotNull();
             RuleFor(model => model.Password).NotEmpty();

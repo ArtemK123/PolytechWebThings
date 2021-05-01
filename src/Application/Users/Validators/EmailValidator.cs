@@ -7,7 +7,7 @@ namespace Application.Users.Validators
         public EmailValidator()
         {
             RuleFor(email => email)
-                .NotEmpty().WithMessage("Email is required")
+                .Cascade(CascadeMode.Stop)
                 .EmailAddress().WithMessage("A valid email address is required.");
         }
     }

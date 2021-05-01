@@ -19,6 +19,8 @@ namespace Web.Controllers
         {
             { typeof(ValidationException), exception => new BadRequestObjectResult(exception.Message) },
             { typeof(EmailTakenByOtherUserException), exception => new BadRequestObjectResult(exception.Message) },
+            { typeof(UserNotFoundByEmailException), exception => new BadRequestObjectResult(exception.Message) },
+            { typeof(WrongUserPasswordException), exception => new BadRequestObjectResult(exception.Message) },
         };
 
         public ExceptionHandlingController(ILoggerFactory loggerFactory)

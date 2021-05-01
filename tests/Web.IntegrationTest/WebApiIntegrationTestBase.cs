@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Web.IntegrationTest
 {
     [TestFixture]
-    internal abstract class WebApiIntegrationTestBase
+    public abstract class WebApiIntegrationTestBase
     {
         protected WebApplicationFactory<Startup> WebApplicationFactory { get; private set; }
 
