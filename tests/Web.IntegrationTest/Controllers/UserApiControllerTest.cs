@@ -8,32 +8,13 @@ using Application.Users.Commands.CreateUser;
 using Domain.Entities.User;
 using Domain.Enums;
 using Domain.Exceptions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Web.IntegrationTest.Controllers
 {
-    [TestFixture]
-    public class UserApiControllerTest
+    internal class UserApiControllerTest : WebApiIntegrationTestBase
     {
-        private WebApplicationFactory<Startup> webApplicationFactory;
-        private HttpClient httpClient;
-
-        [SetUp]
-        public void SetUp()
-        {
-            webApplicationFactory = new WebApplicationFactoryProvider().GetWebApplicationFactory();
-            httpClient = webApplicationFactory.CreateDefaultClient();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            webApplicationFactory.Dispose();
-            httpClient.Dispose();
-        }
-
         [Test]
         public async Task Create_ValidUser_ShouldCreateUser()
         {
@@ -41,11 +22,11 @@ namespace Web.IntegrationTest.Controllers
             const string password = "12345678";
             const UserRole role = UserRole.User;
 
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
             {
                 Content = JsonContent.Create(new CreateUserCommand { Email = email, Password = password, Role = role })
             });
-            IUserRepository userRepository = webApplicationFactory.Services.GetService<IUserRepository>() ?? throw new NullReferenceException();
+            IUserRepository userRepository = WebApplicationFactory.Services.GetService<IUserRepository>() ?? throw new NullReferenceException();
             IUser storedUser = await userRepository.GetByEmailAsync(email) ?? throw new NullReferenceException();
 
             Assert.True(response.IsSuccessStatusCode);
@@ -59,7 +40,7 @@ namespace Web.IntegrationTest.Controllers
         [Test]
         public async Task Create_InvalidRequest_ShouldReturnValidationMessages()
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
             {
                 Content = JsonContent.Create(new CreateUserCommand { Email = string.Empty, Password = string.Empty })
             });
@@ -80,12 +61,12 @@ namespace Web.IntegrationTest.Controllers
             const string password = "12345678";
             const UserRole role = UserRole.User;
 
-            await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
+            await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
             {
                 Content = JsonContent.Create(new CreateUserCommand { Email = email, Password = password, Role = role })
             });
 
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
             {
                 Content = JsonContent.Create(new CreateUserCommand { Email = email, Password = password, Role = role })
             });
