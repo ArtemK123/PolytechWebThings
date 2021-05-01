@@ -23,7 +23,7 @@ namespace Application.Users.Commands.CreateUser
             IUser? optionalStoredUser = await userRepository.GetByEmailAsync(request.Email);
             if (optionalStoredUser != null)
             {
-                throw new EmailTakenByOtherUserException(optionalStoredUser.Email, optionalStoredUser.Id);
+                throw new EmailTakenByOtherUserException(optionalStoredUser.Email);
             }
 
             IUser newUser = newUserFactory.Create(new NewUserCreationModel(email: request.Email, password: request.Password, role: request.Role));
