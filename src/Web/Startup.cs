@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Application;
 using Domain;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using PolytechWebThings.Infrastructure;
 
@@ -44,7 +46,10 @@ namespace Web
         {
             app.UseExceptionHandler("/internal/error");
 
-            app.UseStaticFiles();
+            app.UseDefaultFiles(new DefaultFilesOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "ClientApp/dist"))
+            });
             app.UseSpaStaticFiles();
 
             app.UseRouting();
@@ -64,8 +69,6 @@ namespace Web
                     name: "default",
                     pattern: "api/{controller}/{action=Index}/{id?}");
             });
-
-            app.UseSpa(_ => { });
 
             hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));
         }
