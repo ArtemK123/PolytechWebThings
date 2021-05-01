@@ -42,12 +42,11 @@ namespace Web.Controllers
 
             if (exceptionHandlersMapping.TryGetValue(exceptionType, out Func<Exception, IActionResult>? handler))
             {
-                logger.LogInformation($"{exceptionLogMessage} - Exception is handled by exception handler");
+                logger.LogInformation($"{exceptionLogMessage} - Exception is handled by an exception handler");
                 return handler(exception);
             }
 
-            logger.LogCritical($"{exceptionLogMessage} - Exception handler is not found");
-            logger.LogError(exception.StackTrace);
+            logger.LogError($"{exceptionLogMessage} - Exception handler is not found" + Environment.NewLine + exception.StackTrace);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
