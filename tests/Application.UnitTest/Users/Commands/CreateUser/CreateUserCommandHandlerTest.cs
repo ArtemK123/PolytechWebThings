@@ -13,7 +13,6 @@ namespace Application.UnitTest.Users.Commands.CreateUser
 {
     internal class CreateUserCommandHandlerTest
     {
-        private const string UserId = "guid";
         private const string UserEmail = "email@somewhere.com";
         private const string Password = "123123";
         private const UserRole Role = UserRole.User;
@@ -35,7 +34,7 @@ namespace Application.UnitTest.Users.Commands.CreateUser
         {
             userRepositoryMock.Setup(repo => repo.GetByEmailAsync(UserEmail)).Returns(Task.FromResult(CreateMockedUser()));
             EmailTakenByOtherUserException exception = Assert.ThrowsAsync<EmailTakenByOtherUserException>(() => createUserCommandHandler.Handle(CreateCommand(), CancellationToken.None));
-            Assert.AreEqual($"Email {UserEmail} is already taken by user with id=${UserId}", exception?.Message);
+            Assert.AreEqual($"Email {UserEmail} is already taken by other user", exception?.Message);
         }
 
         [Test]
@@ -46,7 +45,7 @@ namespace Application.UnitTest.Users.Commands.CreateUser
             newUserFactoryMock
                 .Setup(factory => factory.Create(It.Is<NewUserCreationModel>(model => model.Email == UserEmail && model.Password == Password && model.Role == Role)))
                 .Returns(createdUser);
-            userRepositoryMock.Setup(repo => repo.AddAsync(createdUser));
+            userRepositoryMock.Setup(repo => repo.AddAsync(createdUser)).Returns(Task.CompletedTask);
             await createUserCommandHandler.Handle(CreateCommand(), CancellationToken.None);
         }
 
@@ -56,7 +55,6 @@ namespace Application.UnitTest.Users.Commands.CreateUser
         {
             var mock = new Mock<IUser>(MockBehavior.Strict);
             mock.SetupGet(user => user.Email).Returns(UserEmail);
-            mock.SetupGet(user => user.Id).Returns(UserId);
             return mock.Object;
         }
     }

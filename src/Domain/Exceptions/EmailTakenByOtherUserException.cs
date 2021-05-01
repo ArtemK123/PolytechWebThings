@@ -5,7 +5,7 @@ namespace Domain.Exceptions
     public class EmailTakenByOtherUserException : Exception
     {
         public EmailTakenByOtherUserException(string userEmail)
-            : base($"Email {userEmail} is already taken by other user ")
+            : base($"Email {userEmail} is already taken by other user")
         {
         }
     }

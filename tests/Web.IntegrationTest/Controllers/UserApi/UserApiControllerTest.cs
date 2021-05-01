@@ -70,7 +70,7 @@ namespace Web.IntegrationTest.Controllers.UserApi
             string actualResponseMessage = await response.Content.ReadAsStringAsync();
 
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual(new EmailTakenByOtherUserException(email).Message, actualResponseMessage);
+            Assert.AreEqual($"Email {email} is already taken by other user", actualResponseMessage);
         }
     }
 }
