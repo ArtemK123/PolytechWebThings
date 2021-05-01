@@ -18,7 +18,7 @@ namespace Web.IntegrationTest.UseCases
         public void SetUp()
         {
             webApplicationFactory = new WebApplicationFactoryProvider().GetWebApplicationFactory();
-            httpClient = webApplicationFactory.CreateClient();
+            httpClient = webApplicationFactory.CreateDefaultClient();
         }
 
         [TearDown]
