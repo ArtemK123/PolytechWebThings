@@ -34,12 +34,13 @@ namespace Web
             services.AddApplication();
             services.AddInfrastructure();
 
-            services.AddControllers(config =>
+            services.AddControllers();
+
+            services.AddAuthorization(options =>
             {
-                var policy = new AuthorizationPolicyBuilder()
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
             });
 
             services

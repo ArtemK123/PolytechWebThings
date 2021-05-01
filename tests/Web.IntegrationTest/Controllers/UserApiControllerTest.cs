@@ -52,5 +52,18 @@ namespace Web.IntegrationTest.Controllers
             Assert.True(string.IsNullOrEmpty(storedUser.SessionToken));
             Assert.False(string.IsNullOrEmpty(storedUser.Id));
         }
+
+        [Test]
+        public async Task Create_InvalidRequest_ShouldReturnValidationMessages()
+        {
+            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
+            {
+                Content = JsonContent.Create(new CreateUserCommand { Email = string.Empty, Password = string.Empty })
+            });
+
+            var responseMessage = await response.Content.ReadAsStringAsync();
+
+            Assert.Fail();
+        }
     }
 }
