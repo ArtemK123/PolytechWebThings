@@ -28,7 +28,7 @@ namespace Domain.Entities.User
                 id: creationModel.Id,
                 email: creationModel.Email,
                 password: creationModel.Password,
-                sessionToken: creationModel.Id,
+                sessionToken: creationModel.SessionToken,
                 role: creationModel.Role);
         }
     }

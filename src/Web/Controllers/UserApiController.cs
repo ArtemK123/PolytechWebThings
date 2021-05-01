@@ -23,6 +23,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody]CreateUserCommand createUserCommand)
         {
             await mediator.Send(createUserCommand);
@@ -30,6 +31,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginUserCommand loginUserCommand)
         {
             await mediator.Send(loginUserCommand);
@@ -43,7 +45,6 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<string> GetEmail()
         {
             return HttpContext.User.FindFirstValue(ClaimTypes.Email);

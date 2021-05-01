@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Users.Validators;
+using FluentValidation;
 
 namespace Application.Users.Commands.CreateUser
 {
@@ -6,10 +7,7 @@ namespace Application.Users.Commands.CreateUser
     {
         public CreateUserCommandValidator()
         {
-            RuleFor(model => model.Email)
-                .Cascade(CascadeMode.Stop)
-                .NotEmpty().WithMessage(GetNotEmptyMessage("Email"))
-                .EmailAddress().WithMessage("A valid email address is required.");
+            RuleFor(model => model.Email).SetValidator(new EmailValidator());
             RuleFor(model => model.Password)
                 .NotEmpty().WithMessage(GetNotEmptyMessage("Password"));
         }
