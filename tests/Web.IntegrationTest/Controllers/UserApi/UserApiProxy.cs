@@ -31,5 +31,10 @@ namespace Web.IntegrationTest.Controllers.UserApi
                 Content = JsonContent.Create(loginUserCommand)
             });
         }
+
+        public async Task<HttpResponseMessage> LogoutAsync()
+        {
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Logout"));
+        }
     }
 }

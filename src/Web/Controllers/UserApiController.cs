@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Users.Commands.CreateUser;
 using Application.Users.Commands.LoginUser;
+using Application.Users.Commands.LogoutUser;
 using Application.Users.Queries.GetUserByEmail;
 using Domain.Entities.User;
 using MediatR;
@@ -42,11 +43,14 @@ namespace Web.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public async Task<string> GetEmail()
+        public async Task<IActionResult> Logout()
         {
-            return HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            string userEmail = HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            await mediator.Send(new LogoutUserCommand { Email = userEmail });
+            await HttpContext.SignOutAsync();
+            return Ok();
         }
 
         private ClaimsPrincipal CreateUserPrincipal(IUser user)

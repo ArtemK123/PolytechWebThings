@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Web.IntegrationTest.Controllers.UserApi.Tests
 {
-    internal class CreateUserTest : WebApiIntegrationTestBase
+    internal class CreateUserApiTest : WebApiIntegrationTestBase
     {
         private UserApiProxy userApiProxy;
 
