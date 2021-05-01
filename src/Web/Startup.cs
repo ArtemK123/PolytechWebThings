@@ -46,10 +46,14 @@ namespace Web
         {
             app.UseExceptionHandler("/internal/error");
 
-            app.UseDefaultFiles(new DefaultFilesOptions
+            if (Configuration.GetValue<bool>("UseDefaultFiles"))
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "ClientApp/dist"))
-            });
+                app.UseDefaultFiles(new DefaultFilesOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "ClientApp/dist"))
+                });
+            }
+
             app.UseSpaStaticFiles();
 
             app.UseRouting();

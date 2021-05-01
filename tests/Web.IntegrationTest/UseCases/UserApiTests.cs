@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Application.Users.Commands.CreateUser;
@@ -44,7 +45,18 @@ namespace Web.IntegrationTest.UseCases
             });
 
             Assert.True(loginResponse.IsSuccessStatusCode);
-            Assert.False(string.IsNullOrEmpty(await loginResponse.Content.ReadAsStringAsync()));
+
+            var cookieHeaderValue = loginResponse.Headers.GetValues("Set-Cookie").Single();
+            var cookieHeaderElements = cookieHeaderValue.Split(';').Select(element => element.Trim()).ToArray();
+            var token = cookieHeaderElements[0].Split('=')[1];
+            HttpResponseMessage getRestrictedResourceResponse = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "api/UserApi/GetEmail")
+            {
+                Headers =
+                {
+                    { "Cookie", $".AspNetCore.Cookies={token}" }
+                }
+            });
+            Assert.True(getRestrictedResourceResponse.IsSuccessStatusCode);
         }
     }
 }
