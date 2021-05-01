@@ -17,7 +17,7 @@ namespace Web.IntegrationTest.UseCases
         public void SetUp()
         {
             webApplicationFactory = new WebApplicationFactoryProvider().GetWebApplicationFactory();
-            httpClient = webApplicationFactory.CreateDefaultClient();
+            httpClient = webApplicationFactory.CreateClient();
         }
 
         [TearDown]
@@ -30,9 +30,9 @@ namespace Web.IntegrationTest.UseCases
         [Test]
         public async Task RegisterTest()
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "http://localhost:7406/api/UserApi/Create")
+            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/UserApi/Create")
             {
-                Content = JsonContent.Create(new CreateUserCommand { Email = "test321@gmail.com", Password = "12345678" })
+                Content = JsonContent.Create(new CreateUserCommand { Email = "test31232121@gmail.com", Password = "12345678" })
             });
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
