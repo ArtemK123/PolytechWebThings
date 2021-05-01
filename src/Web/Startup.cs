@@ -29,8 +29,8 @@ namespace Web
 
             services.AddControllers();
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            // In production, the Webpack files will be served from this directory
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +56,8 @@ namespace Web
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+
+            app.UseSpa(_ => { });
 
             hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));
         }

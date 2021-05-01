@@ -1,0 +1,27 @@
+{
+  "name": "webpack-knockout-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "cross-env NODE_ENV=development webpack --config ./webpack.config.js",
+    "build:prod": "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
+    "watch": "cross-env NODE_ENV=development webpack --config ./webpack.config.js --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "knockout": "^3.5.1"
+  },
+  "devDependencies": {
+    "@types/knockout": "^3.4.70",
+    "cross-env": "^7.0.3",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.1",
+    "ts-loader": "^9.1.1",
+    "typescript": "^4.2.4",
+    "webpack": "^5.35.1",
+    "webpack-cli": "^4.6.0"
+  }
+}
