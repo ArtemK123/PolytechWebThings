@@ -1,8 +1,8 @@
 <div>
     <h2>Create your new account</h2>
-    <form>
-        <span>Email</span><input /><br/>
-        <span>Password</span><input /><br/>
-        <button>Create account</button>
+    <form data-bind="submit: handleRegister">
+        <span>Email</span><input data-bind="value: email"/><br/>
+        <span>Password</span><input type="password" data-bind="value: password"/><br/>
+        <button type="submit">Create account</button>
     </form>
 </div>
