@@ -1,14 +1,11 @@
 import * as ko from 'knockout';
-
-import HelloWorldComponent from "./HelloWorldComponent/HelloWorldComponent";
-import InputComponent from "./InputComponent/InputComponent";
-import BackendConnectivityComponent from "./BackendConnectivityComponent/BackendConnectivityComponent";
+import AppComponent from "./components/appComponent/AppComponent";
+import BackendConnectionCheckComponent from './components/backendConnectionCheckComponent/BackendConnectionCheckComponent';
 
 class ComponentRegistration {
   registerBindings() {
-    ko.components.register('input-component', InputComponent);
-    ko.components.register('hello-world', HelloWorldComponent);
-    ko.components.register('backend-connectivity', BackendConnectivityComponent);
+    ko.components.register('app', AppComponent);
+    ko.components.register('backend-connection-check', BackendConnectionCheckComponent);
   }
 }
 

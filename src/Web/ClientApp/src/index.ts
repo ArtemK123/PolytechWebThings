@@ -1,12 +1,12 @@
 import * as ko from 'knockout';
 import ComponentRegistration from "./ComponentRegistration";
-import HelloWorldViewModel from './HelloWorldComponent/HelloWorldViewModel';
+import AppViewModel from "./components/appComponent/AppViewModel";
 
 function main() {
   new ComponentRegistration().registerBindings();
-  const rootComponent = document.createElement("hello-world");
+  const rootComponent = document.createElement("app");
   document.body.appendChild(rootComponent);
-  ko.applyBindings(new HelloWorldViewModel(), rootComponent);
+  ko.applyBindings(new AppViewModel(), rootComponent);
 }
 
 main();
