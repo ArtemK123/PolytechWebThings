@@ -27,6 +27,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Polytech WebThings',
+      favicon: './src/assets/favicon.ico'
     }),
   ],
   output: {
