@@ -1,4 +1,11 @@
 import template from "./Register.html";
-import { RegisterViewModel } from "./RegisterViewModel";
+import {RegisterViewModel} from "./RegisterViewModel";
+import {IComponent} from "../../componentsRegistration/IComponent";
+import {IComponentDescriptor} from "../../componentsRegistration/IComponentDescriptor";
 
-export default { viewModel: RegisterViewModel, template: template };
+export class RegisterComponent implements IComponent {
+    generateDescriptor(): IComponentDescriptor {
+        return { viewModel: RegisterViewModel, template: template };
+    }
+
+}

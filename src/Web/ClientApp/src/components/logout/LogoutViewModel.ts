@@ -1,6 +1,7 @@
 import {UserApiClient} from "../../services/UserApiClient";
+import {IViewModel} from "../../componentsRegistration/IViewModel";
 
-export class LogoutViewModel {
+export class LogoutViewModel implements IViewModel{
   private readonly userApiClient = new UserApiClient();
 
   public handleLogout() {

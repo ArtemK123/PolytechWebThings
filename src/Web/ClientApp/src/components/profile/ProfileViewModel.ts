@@ -1,6 +1,7 @@
 import * as ko from "knockout";
+import {IViewModel} from "../../componentsRegistration/IViewModel";
 
-export class ProfileViewModel {
+export class ProfileViewModel implements IViewModel {
   public authorized: ko.Computed<boolean>;
 
   constructor() {

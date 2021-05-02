@@ -1,4 +1,10 @@
 import template from "./Router.html";
-import { RouterViewModel } from "./RouterViewModel";
+import {RouterViewModel} from "./RouterViewModel";
+import {IComponent} from "../../componentsRegistration/IComponent";
+import {IComponentDescriptor} from "../../componentsRegistration/IComponentDescriptor";
 
-export default { viewModel: RouterViewModel, template: template };
+export class RouterComponent implements IComponent {
+    generateDescriptor(): IComponentDescriptor {
+        return { viewModel: RouterViewModel, template: template };
+    }
+}

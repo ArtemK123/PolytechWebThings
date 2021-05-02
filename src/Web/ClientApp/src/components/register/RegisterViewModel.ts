@@ -2,8 +2,9 @@ import * as ko from "knockout";
 import {ICreateUserCommand} from "../../models/ICreateUserCommand";
 import {UserRole} from "../../models/UserRole";
 import {UserApiClient} from "../../services/UserApiClient";
+import {IViewModel} from "../../componentsRegistration/IViewModel";
 
-export class RegisterViewModel {
+export class RegisterViewModel implements IViewModel {
   public readonly email: ko.Observable<string> = ko.observable("");
   public readonly password: ko.Observable<string> = ko.observable("");
 

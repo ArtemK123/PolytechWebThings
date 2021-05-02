@@ -1,4 +1,10 @@
 import template from "./BackendConnectionCheck.html";
-import { BackendConnectionCheckViewModel } from "./BackendConnectionCheckViewModel";
+import {BackendConnectionCheckViewModel} from "./BackendConnectionCheckViewModel";
+import {IComponentDescriptor} from "../../componentsRegistration/IComponentDescriptor";
+import {IComponent} from "../../componentsRegistration/IComponent";
 
-export default { viewModel: BackendConnectionCheckViewModel, template: template };
+export class BackendConnectionCheckComponent implements IComponent {
+    public generateDescriptor(): IComponentDescriptor {
+        return { viewModel: BackendConnectionCheckViewModel, template: template } as IComponentDescriptor;
+    }
+}

@@ -1,6 +1,7 @@
-import { IRouterParams } from "./IRouterParams";
+import {IRouterParams} from "./IRouterParams";
+import {IViewModel} from "../../componentsRegistration/IViewModel";
 
-export class RouterViewModel {
+export class RouterViewModel implements IViewModel {
   constructor(params: IRouterParams) {
     const currentPath: string = window.location.pathname;
     const componentTag: string | undefined = params.routes[currentPath] ?? params.routes["/"];

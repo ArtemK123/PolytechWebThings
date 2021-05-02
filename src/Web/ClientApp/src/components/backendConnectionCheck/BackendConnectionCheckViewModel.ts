@@ -1,6 +1,7 @@
 import { HealthCheckApiClient } from "../../services/HealthCheckApiClient";
+import {IViewModel} from "../../componentsRegistration/IViewModel";
 
-export class BackendConnectionCheckViewModel {
+export class BackendConnectionCheckViewModel implements IViewModel {
   private readonly apiClient = new HealthCheckApiClient();
 
   constructor() {
