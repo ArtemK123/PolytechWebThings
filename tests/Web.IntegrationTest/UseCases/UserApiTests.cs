@@ -11,6 +11,7 @@ namespace Web.IntegrationTest.UseCases
     internal class UserApiTests : WebApiIntegrationTestBase
     {
         [Test]
+        [Ignore("Will be refactored later")] // TODO: Refactor or delete
         public async Task RegisterAndLoginTest()
         {
             const string email = "test31232121@gmail.com";
