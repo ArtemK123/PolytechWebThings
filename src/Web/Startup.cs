@@ -76,7 +76,10 @@ namespace Web
                     pattern: "api/{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(_ => { });
+            app.MapWhen(httpContext => !httpContext.Request.Path.Value?.Contains("/api") ?? true, builder =>
+            {
+                builder.UseSpa(_ => { });
+            });
 
             hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));
         }
