@@ -5,6 +5,7 @@ export class LogoutViewModel {
     }).then(async response => {
       if (response.status === 200) {
         alert("Logout successfully");
+        window.location.replace("/");
         return;
       }
       const message = await response.text();

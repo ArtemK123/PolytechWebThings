@@ -21,6 +21,7 @@ export class LoginViewModel {
     ).then(async response => {
       if (response.status === 200) {
         alert("Login successfully");
+        window.location.replace("/");
         return;
       }
       const message = await response.text();
