@@ -1,8 +1,8 @@
 <div>
     <h2>Log into your account</h2>
-    <form>
-        <span>Email</span><input /><br/>
-        <span>Password</span><input /><br/>
-        <button>Login</button>
+    <form data-bind="submit: handleLogin">
+        <span>Email</span><input data-bind="value: email"/><br/>
+        <span>Password</span><input type="password" data-bind="value: password"/><br/>
+        <button type="submit">Login</button>
     </form>
 </div>

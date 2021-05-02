@@ -4,6 +4,7 @@ import BackendConnectionCheckComponent from './components/backendConnectionCheck
 import LoginComponent from "./components/login/LoginComponent";
 import ProfileComponent from "./components/profile/ProfileComponent";
 import RegisterComponent from "./components/register/RegisterComponent";
+import LogoutComponent from "./components/logout/LogoutComponent";
 
 class ComponentRegistration {
   registerBindings() {
@@ -12,6 +13,7 @@ class ComponentRegistration {
     ko.components.register('login', LoginComponent);
     ko.components.register('register', RegisterComponent);
     ko.components.register('profile', ProfileComponent);
+    ko.components.register('logout', LogoutComponent);
   }
 }
 

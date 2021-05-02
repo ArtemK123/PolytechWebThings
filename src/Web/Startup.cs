@@ -7,7 +7,6 @@ using Domain;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -38,6 +37,7 @@ namespace Web
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
+                    options.Cookie.HttpOnly = false;
                     options.Events.OnRedirectToLogin = context =>
                     {
                         context.Response.StatusCode = 401;
@@ -68,12 +68,6 @@ namespace Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseCookiePolicy(new CookiePolicyOptions
-            {
-                MinimumSameSitePolicy = SameSiteMode.Strict,
-                Secure = CookieSecurePolicy.SameAsRequest
-            });
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,19 +1,26 @@
 import * as ko from "knockout";
 
 export class ProfileViewModel {
-  public email: ko.Observable<string> = ko.observable<string>("");
   public authorized: ko.Computed<boolean>;
 
   constructor() {
-    this.initializeEmail();
-    this.authorized = ko.computed<boolean>(() => Boolean(this.email()));
+    this.authorized = ko.computed<boolean>(this.isAuthorized.bind(this));
   }
 
-  private initializeEmail() {
-    const storedEmail: string | undefined = localStorage.getItem("userEmail");
-    if (!storedEmail) {
-      this.email("");
-    }
-    this.email(storedEmail);
+  private isAuthorized(): boolean {
+    const cookies: { [_: string]: string } = this.getCookies();
+    const authCookie: string | undefined = cookies[".AspNetCore.Cookies"];
+    return authCookie !== undefined;
+  }
+
+  private getCookies(): { [_: string]: string } {
+    const allCookies: { [_: string]: string } = {};
+    const allCookiesArray: string[] = document.cookie.split('; ');
+
+    allCookiesArray.forEach(cookie => {
+      const keyValuePair: string[] = cookie.split("=");
+      allCookies[keyValuePair[0]] = keyValuePair[1];
+    });
+    return allCookies;
   }
 }
