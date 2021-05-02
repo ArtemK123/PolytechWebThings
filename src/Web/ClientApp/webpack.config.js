@@ -26,7 +26,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Asp.Net Core and Knockout',
+      title: 'Polytech WebThings',
     }),
   ],
   output: {
