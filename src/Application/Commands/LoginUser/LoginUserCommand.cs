@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Users.Commands.LoginUser
+namespace Application.Commands.LoginUser
 {
     public record LoginUserCommand : IRequest
     {

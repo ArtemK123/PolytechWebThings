@@ -1,7 +1,7 @@
 ﻿using Domain.Enums;
 using MediatR;
 
-namespace Application.Users.Commands.CreateUser
+namespace Application.Commands.CreateUser
 {
     public record CreateUserCommand : IRequest
     {

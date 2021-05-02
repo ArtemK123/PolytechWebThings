@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Application.Users.Commands.CreateUser;
-using Application.Users.Commands.LoginUser;
-using Application.Users.Commands.LogoutUser;
-using Application.Users.Queries.GetUserByEmail;
+using Application.Commands.CreateUser;
+using Application.Commands.LoginUser;
+using Application.Commands.LogoutUser;
+using Application.Queries.GetUserByEmail;
 using Domain.Entities.User;
 using Domain.Enums;
 using MediatR;

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Domain.Entities.User;
 
-namespace Application.Users
+namespace Application.Repositories
 {
     public interface IUserRepository
     {

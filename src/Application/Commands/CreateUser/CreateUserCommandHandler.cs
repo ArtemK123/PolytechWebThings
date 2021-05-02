@@ -1,11 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.Repositories;
 using Domain.Entities.Common;
 using Domain.Entities.User;
 using Domain.Exceptions;
 using MediatR;
 
-namespace Application.Users.Commands.CreateUser
+namespace Application.Commands.CreateUser
 {
     internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
     {

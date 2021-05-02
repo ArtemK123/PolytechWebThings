@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.User;
 using MediatR;
 
-namespace Application.Users.Queries.GetUserByEmail
+namespace Application.Queries.GetUserByEmail
 {
     public record GetUserByEmailQuery : IRequest<IUser>
     {

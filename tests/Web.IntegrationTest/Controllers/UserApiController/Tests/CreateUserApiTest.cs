@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Application.Users;
+using Application.Repositories;
 using Domain.Entities.User;
 using Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;

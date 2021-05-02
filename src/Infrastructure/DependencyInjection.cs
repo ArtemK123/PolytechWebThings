@@ -1,5 +1,5 @@
 ﻿using Application;
-using Application.Users;
+using Application.Repositories;
 using Domain.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,10 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Users.Queries.GetUserByEmail;
+using Application.Queries.GetUserByEmail;
+using Application.Repositories;
 using Domain.Entities.User;
 using MediatR;
 
-namespace Application.Users.Commands.LogoutUser
+namespace Application.Commands.LogoutUser
 {
     internal class LogoutUserHandler : IRequestHandler<LogoutUserCommand>
     {

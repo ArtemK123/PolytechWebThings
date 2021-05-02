@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Users;
-using Application.Users.Commands.CreateUser;
+using Application.Commands.CreateUser;
+using Application.Repositories;
 using Domain.Entities.Common;
 using Domain.Entities.User;
 using Domain.Enums;
@@ -9,7 +9,7 @@ using Domain.Exceptions;
 using Moq;
 using NUnit.Framework;
 
-namespace Application.UnitTest.Users.Commands.CreateUser
+namespace Application.UnitTest.Commands.CreateUser
 {
     internal class CreateUserCommandHandlerTest
     {

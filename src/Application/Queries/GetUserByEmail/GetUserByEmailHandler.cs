@@ -1,10 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.Repositories;
 using Domain.Entities.User;
 using Domain.Exceptions;
 using MediatR;
 
-namespace Application.Users.Queries.GetUserByEmail
+namespace Application.Queries.GetUserByEmail
 {
     public class GetUserByEmailHandler : IRequestHandler<GetUserByEmailQuery, IUser>
     {

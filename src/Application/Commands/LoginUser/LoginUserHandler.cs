@@ -1,11 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.Repositories;
 using Domain.Entities.User;
 using Domain.Exceptions;
 using Domain.Services;
 using MediatR;
 
-namespace Application.Users.Commands.LoginUser
+namespace Application.Commands.LoginUser
 {
     internal class LoginUserHandler : IRequestHandler<LoginUserCommand>
     {
