@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Application;
 using Domain;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using PolytechWebThings.Infrastructure;
+using Web.Attributes;
 
 namespace Web
 {
@@ -30,8 +34,11 @@ namespace Web
             services.AddDomain();
             services.AddApplication();
             services.AddInfrastructure();
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            services.AddControllers();
+            services
+                .AddControllers(options => options.Filters.Add(new ValidateModelFilter()))
+                .AddFluentValidation(options => options.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

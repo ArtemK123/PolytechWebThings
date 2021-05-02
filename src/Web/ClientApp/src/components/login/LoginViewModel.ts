@@ -1,7 +1,7 @@
 import * as ko from "knockout";
-import {ILoginUserCommand} from "../../models/ILoginUserCommand";
 import {UserApiClient} from "../../services/UserApiClient";
 import {IViewModel} from "../../componentsRegistration/IViewModel";
+import {ILoginUserRequest} from "../../models/request/ILoginUserRequest";
 
 export class LoginViewModel implements IViewModel{
   public readonly email: ko.Observable<string> = ko.observable("");
@@ -10,7 +10,7 @@ export class LoginViewModel implements IViewModel{
   private readonly userApiClient = new UserApiClient();
 
   public handleLogin() {
-    const requestModel: ILoginUserCommand = {
+    const requestModel: ILoginUserRequest = {
       email: this.email(),
       password: this.password(),
     };

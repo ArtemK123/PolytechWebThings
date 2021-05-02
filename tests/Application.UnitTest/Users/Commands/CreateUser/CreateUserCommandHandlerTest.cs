@@ -49,7 +49,7 @@ namespace Application.UnitTest.Users.Commands.CreateUser
             await createUserCommandHandler.Handle(CreateCommand(), CancellationToken.None);
         }
 
-        private CreateUserCommand CreateCommand() => new() { Email = UserEmail, Password = Password, Role = Role };
+        private CreateUserCommand CreateCommand() => new CreateUserCommand(email: UserEmail, password: Password, role: Role);
 
         private IUser CreateMockedUser()
         {

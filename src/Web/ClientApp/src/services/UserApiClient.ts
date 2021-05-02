@@ -1,8 +1,8 @@
-﻿import {ICreateUserCommand} from "../models/ICreateUserCommand";
-import {ILoginUserCommand} from "../models/ILoginUserCommand";
+﻿import {ICreateUserRequest} from "../models/request/ICreateUserRequest";
+import {ILoginUserRequest} from "../models/request/ILoginUserRequest";
 
 export class UserApiClient {
-    public create(requestModel: ICreateUserCommand): Promise<Response> {
+    public create(requestModel: ICreateUserRequest): Promise<Response> {
         return fetch("api/UserApi/Create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -10,7 +10,7 @@ export class UserApiClient {
         );
     }
 
-    public login(requestModel: ILoginUserCommand): Promise<Response> {
+    public login(requestModel: ILoginUserRequest): Promise<Response> {
         return fetch("api/UserApi/Login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

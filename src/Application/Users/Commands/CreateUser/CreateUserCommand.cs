@@ -5,10 +5,17 @@ namespace Application.Users.Commands.CreateUser
 {
     public record CreateUserCommand : IRequest
     {
-        public string Email { get; init; } = string.Empty;
+        public CreateUserCommand(string email, string password, UserRole role)
+        {
+            Email = email;
+            Password = password;
+            Role = role;
+        }
 
-        public string Password { get; init; } = string.Empty;
+        public string Email { get; }
 
-        public UserRole Role { get; init; }
+        public string Password { get; }
+
+        public UserRole Role { get; }
     }
 }

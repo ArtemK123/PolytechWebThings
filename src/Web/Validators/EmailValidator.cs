@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace Application.Users.Validators
+namespace Web.Validators
 {
-    public class EmailValidator : AbstractValidator<string>
+    public class EmailValidator : AbstractValidator<string?>
     {
         public EmailValidator()
         {

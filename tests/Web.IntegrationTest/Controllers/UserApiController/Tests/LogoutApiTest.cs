@@ -2,11 +2,10 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Application.Users.Commands.CreateUser;
-using Application.Users.Commands.LoginUser;
 using NUnit.Framework;
+using Web.Models.Request;
 
-namespace Web.IntegrationTest.Controllers.UserApi.Tests
+namespace Web.IntegrationTest.Controllers.UserApiController.Tests
 {
     internal class LogoutApiTest : WebApiIntegrationTestBase
     {
@@ -19,13 +18,13 @@ namespace Web.IntegrationTest.Controllers.UserApi.Tests
         public async Task SetUp()
         {
             userApiProxy = new UserApiProxy(HttpClient);
-            await userApiProxy.CreateAsync(new CreateUserCommand { Email = Email, Password = Password });
+            await userApiProxy.CreateAsync(new CreateUserRequest { Email = Email, Password = Password });
         }
 
         [Test]
         public async Task Logout_AuthenticatedUser_ShouldSignOutAuthenticatedUser_AndClearCookie()
         {
-            await userApiProxy.LoginAsync(new LoginUserCommand { Email = Email, Password = Password });
+            await userApiProxy.LoginAsync(new LoginUserRequest { Email = Email, Password = Password });
             HttpResponseMessage response = await userApiProxy.LogoutAsync();
 
             string cookieHeaderValue = response.Headers.GetValues("Set-Cookie").SingleOrDefault();

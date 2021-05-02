@@ -1,8 +1,7 @@
 import * as ko from "knockout";
-import {ICreateUserCommand} from "../../models/ICreateUserCommand";
-import {UserRole} from "../../models/UserRole";
 import {UserApiClient} from "../../services/UserApiClient";
 import {IViewModel} from "../../componentsRegistration/IViewModel";
+import {ICreateUserRequest} from "../../models/request/ICreateUserRequest";
 
 export class RegisterViewModel implements IViewModel {
   public readonly email: ko.Observable<string> = ko.observable("");
@@ -11,10 +10,9 @@ export class RegisterViewModel implements IViewModel {
   private readonly userApiClient = new UserApiClient();
 
   public handleRegister() {
-    const requestModel: ICreateUserCommand = {
+    const requestModel: ICreateUserRequest = {
       email: this.email(),
       password: this.password(),
-      role: UserRole.User
     };
 
     this.userApiClient.create(requestModel).then(async response => {

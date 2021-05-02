@@ -1,21 +1,22 @@
 ﻿using System.Linq;
-using Application.Users.Commands.CreateUser;
 using FluentValidation.Results;
 using NUnit.Framework;
+using Web.Models.Request;
+using Web.Validators;
 
-namespace Application.UnitTest.Users.Commands.CreateUser
+namespace Web.UnitTest.Validators
 {
-    internal class CreateUserCommandValidatorTest
+    internal class CreateUserRequestValidatorTest
     {
         private const string ValidEmail = "client@somewhere.com";
         private const string ValidPassword = "123123";
 
-        private CreateUserCommandValidator createUserCommandValidator;
+        private CreateUserRequestValidator createUserRequestValidator;
 
         [SetUp]
         public void SetUp()
         {
-            createUserCommandValidator = new CreateUserCommandValidator();
+            createUserRequestValidator = new CreateUserRequestValidator();
         }
 
         [TestCase(null, "'Email' must not be empty.", TestName = "Should fail validation when email is null")]
@@ -25,8 +26,8 @@ namespace Application.UnitTest.Users.Commands.CreateUser
         [TestCase(ValidEmail, null, TestName = "Should pass validation")]
         public void EmailTest(string input, string expectedValidationMessage)
         {
-            var command = new CreateUserCommand { Email = input, Password = ValidPassword };
-            ValidationResult actualValidationResult = createUserCommandValidator.Validate(command);
+            var command = new CreateUserRequest { Email = input, Password = ValidPassword };
+            ValidationResult actualValidationResult = createUserRequestValidator.Validate(command);
             if (expectedValidationMessage is not null)
             {
                 Assert.AreEqual(expectedValidationMessage, actualValidationResult.Errors.SingleOrDefault()?.ErrorMessage);
@@ -41,8 +42,8 @@ namespace Application.UnitTest.Users.Commands.CreateUser
         [TestCase(ValidPassword, null, TestName = "Should pass validation")]
         public void PasswordTest(string input, string expectedValidationMessage)
         {
-            var command = new CreateUserCommand { Email = ValidEmail, Password = input };
-            ValidationResult actualValidationResult = createUserCommandValidator.Validate(command);
+            var command = new CreateUserRequest { Email = ValidEmail, Password = input };
+            ValidationResult actualValidationResult = createUserRequestValidator.Validate(command);
             if (expectedValidationMessage is not null)
             {
                 Assert.AreEqual(expectedValidationMessage, actualValidationResult.Errors.SingleOrDefault()?.ErrorMessage);

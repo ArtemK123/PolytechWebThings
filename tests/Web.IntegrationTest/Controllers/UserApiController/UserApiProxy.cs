@@ -1,10 +1,9 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Application.Users.Commands.CreateUser;
-using Application.Users.Commands.LoginUser;
+using Web.Models.Request;
 
-namespace Web.IntegrationTest.Controllers.UserApi
+namespace Web.IntegrationTest.Controllers.UserApiController
 {
     internal class UserApiProxy
     {
@@ -16,19 +15,19 @@ namespace Web.IntegrationTest.Controllers.UserApi
             this.httpClient = httpClient;
         }
 
-        public async Task<HttpResponseMessage> CreateAsync(CreateUserCommand createUserCommand)
+        public async Task<HttpResponseMessage> CreateAsync(CreateUserRequest createUserRequest)
         {
             return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Create")
             {
-                Content = JsonContent.Create(createUserCommand)
+                Content = JsonContent.Create(createUserRequest)
             });
         }
 
-        public async Task<HttpResponseMessage> LoginAsync(LoginUserCommand loginUserCommand)
+        public async Task<HttpResponseMessage> LoginAsync(LoginUserRequest loginUserRequest)
         {
             return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Login")
             {
-                Content = JsonContent.Create(loginUserCommand)
+                Content = JsonContent.Create(loginUserRequest)
             });
         }
 

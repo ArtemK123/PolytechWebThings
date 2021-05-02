@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Users.Commands.CreateUser;
@@ -6,11 +7,13 @@ using Application.Users.Commands.LoginUser;
 using Application.Users.Commands.LogoutUser;
 using Application.Users.Queries.GetUserByEmail;
 using Domain.Entities.User;
+using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.Models.Request;
 
 namespace Web.Controllers
 {
@@ -24,17 +27,23 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateUserCommand createUserCommand)
+        public async Task<IActionResult> Create([FromBody]CreateUserRequest createUserRequest)
         {
-            await mediator.Send(createUserCommand);
+            await mediator.Send(request: new CreateUserCommand(
+                email: createUserRequest.Email ?? throw new NullReferenceException(),
+                password: createUserRequest.Password ?? throw new NullReferenceException(),
+                role: UserRole.User));
             return Ok();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody]LoginUserCommand loginUserCommand)
+        public async Task<IActionResult> Login([FromBody]LoginUserRequest loginUserRequest)
         {
-            await mediator.Send(loginUserCommand);
-            IUser user = await mediator.Send(new GetUserByEmailQuery { Email = loginUserCommand.Email });
+            await mediator.Send(new LoginUserCommand(
+                email: loginUserRequest.Email ?? throw new NullReferenceException(),
+                password: loginUserRequest.Password ?? throw new NullReferenceException()));
+
+            IUser user = await mediator.Send(new GetUserByEmailQuery(email: loginUserRequest.Email));
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 CreateUserPrincipal(user),
