@@ -1,7 +1,8 @@
 <div>
-    <backend-connection-check></backend-connection-check>
-    <register></register>
-    <login></login>
-    <profile></profile>
-    <logout></logout>
+    <router params='routes: {
+        "/": "<backend-connection-check></backend-connection-check><profile></profile><logout></logout>",
+        "/login": "<login></login>",
+        "/register": "<register></register>"
+    }'>
+    </router>
 </div>

@@ -76,6 +76,8 @@ namespace Web
                     pattern: "api/{controller}/{action=Index}/{id?}");
             });
 
+            app.UseSpa(_ => { });
+
             hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));
         }
 

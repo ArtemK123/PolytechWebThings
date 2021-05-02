@@ -5,6 +5,7 @@ import LoginComponent from "./components/login/LoginComponent";
 import ProfileComponent from "./components/profile/ProfileComponent";
 import RegisterComponent from "./components/register/RegisterComponent";
 import LogoutComponent from "./components/logout/LogoutComponent";
+import RouterComponent from "./components/router/RouterComponent";
 
 class ComponentRegistration {
   registerBindings() {
@@ -14,6 +15,7 @@ class ComponentRegistration {
     ko.components.register('register', RegisterComponent);
     ko.components.register('profile', ProfileComponent);
     ko.components.register('logout', LogoutComponent);
+    ko.components.register('router', RouterComponent);
   }
 }
 
