@@ -1,13 +1,13 @@
 import * as ko from "knockout";
 import {ICreateUserCommand} from "../../models/ICreateUserCommand";
 import {UserRole} from "../../models/UserRole";
+import {UserApiClient} from "../../services/UserApiClient";
 
 export class RegisterViewModel {
-  public email: ko.Observable<string> = ko.observable("");
-  public password: ko.Observable<string> = ko.observable("");
+  public readonly email: ko.Observable<string> = ko.observable("");
+  public readonly password: ko.Observable<string> = ko.observable("");
 
-  constructor() {
-  }
+  private readonly userApiClient = new UserApiClient();
 
   public handleRegister() {
     const requestModel: ICreateUserCommand = {
@@ -16,11 +16,7 @@ export class RegisterViewModel {
       role: UserRole.User
     };
 
-    fetch("api/UserApi/Create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestModel)}
-    ).then(async response => {
+    this.userApiClient.create(requestModel).then(async response => {
       if (response.status === 200) {
         alert("Registered successfully");
         return;

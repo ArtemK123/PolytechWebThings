@@ -1,8 +1,10 @@
+import {UserApiClient} from "../../services/UserApiClient";
+
 export class LogoutViewModel {
+  private readonly userApiClient = new UserApiClient();
+
   public handleLogout() {
-    fetch("api/UserApi/Logout", {
-      method: "POST"
-    }).then(async response => {
+    this.userApiClient.logout().then(async response => {
       if (response.status === 200) {
         alert("Logout successfully");
         window.location.replace("/");

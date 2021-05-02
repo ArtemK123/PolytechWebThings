@@ -1,7 +1,11 @@
+import { HealthCheckApiClient } from "../../services/HealthCheckApiClient";
+
 export class BackendConnectionCheckViewModel {
+  private readonly apiClient = new HealthCheckApiClient();
+
   constructor() {
-    fetch("api/HealthCheckApi/HealthCheck", { method: "GET"} )
-        .then(response => response.text())
-        .then(text =>  console.log(text));
+    this.apiClient.healthCheck()
+      .then(response => response.text())
+      .then(text =>  console.log(text));
   }
 }

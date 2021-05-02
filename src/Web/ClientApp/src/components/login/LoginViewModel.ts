@@ -1,12 +1,12 @@
 import * as ko from "knockout";
-import { ILoginUserCommand } from "../../models/ILoginUserCommand";
+import {ILoginUserCommand} from "../../models/ILoginUserCommand";
+import {UserApiClient} from "../../services/UserApiClient";
 
 export class LoginViewModel {
-  public email: ko.Observable<string> = ko.observable("");
-  public password: ko.Observable<string> = ko.observable("");
+  public readonly email: ko.Observable<string> = ko.observable("");
+  public readonly password: ko.Observable<string> = ko.observable("");
 
-  constructor() {
-  }
+  private readonly userApiClient = new UserApiClient();
 
   public handleLogin() {
     const requestModel: ILoginUserCommand = {
@@ -14,11 +14,7 @@ export class LoginViewModel {
       password: this.password(),
     };
 
-    fetch("api/UserApi/Login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestModel)}
-    ).then(async response => {
+    this.userApiClient.login(requestModel).then(async response => {
       if (response.status === 200) {
         alert("Login successfully");
         window.location.replace("/");
