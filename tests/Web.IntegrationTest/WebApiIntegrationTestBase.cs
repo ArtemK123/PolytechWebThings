@@ -25,6 +25,7 @@ namespace Web.IntegrationTest
         [TearDown]
         public void WebApiIntegrationTestBaseTearDown()
         {
+            ApplicationFactory.Services.GetService<ApplicationDbContext>()?.Database.EnsureDeleted();
             ApplicationFactory.Dispose();
             HttpClient.Dispose();
         }
