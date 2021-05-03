@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.Common;
-using Domain.Services;
+using Domain.Providers;
 
 namespace Domain.Entities.Workspace
 {

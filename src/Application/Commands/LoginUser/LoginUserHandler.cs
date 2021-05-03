@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Application.Repositories;
 using Domain.Entities.User;
 using Domain.Exceptions;
-using Domain.Services;
+using Domain.Providers;
 using MediatR;
 
 namespace Application.Commands.LoginUser

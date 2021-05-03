@@ -1,7 +1,7 @@
 ﻿using System;
-using Domain.Services;
+using Domain.Providers;
 
-namespace PolytechWebThings.Infrastructure.Services
+namespace PolytechWebThings.Infrastructure.Providers
 {
     internal class GuidProvider : IGuidProvider
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Services
+namespace Domain.Providers
 {
     public interface IGuidProvider
     {

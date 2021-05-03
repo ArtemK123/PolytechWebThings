@@ -1,12 +1,12 @@
 ﻿using Application;
 using Application.Repositories;
-using Domain.Services;
+using Domain.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PolytechWebThings.Infrastructure.Database;
 using PolytechWebThings.Infrastructure.Database.StartupJobs;
 using PolytechWebThings.Infrastructure.Database.Users;
-using PolytechWebThings.Infrastructure.Services;
+using PolytechWebThings.Infrastructure.Providers;
 
 namespace PolytechWebThings.Infrastructure
 {
