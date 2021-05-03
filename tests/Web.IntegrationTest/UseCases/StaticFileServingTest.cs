@@ -13,7 +13,7 @@ namespace Web.IntegrationTest.UseCases
         [TestCase("page/feature")]
         public async Task NonApiCall_ShouldReturnIndexHtml(string url)
         {
-            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "url"));
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, url));
             string responseText = await response.Content.ReadAsStringAsync();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
