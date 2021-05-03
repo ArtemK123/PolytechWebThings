@@ -56,7 +56,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            string userEmail = HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
             await mediator.Send(new LogoutUserCommand { Email = userEmail });
             await HttpContext.SignOutAsync();
             return Ok();
