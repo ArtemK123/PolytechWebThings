@@ -14,13 +14,15 @@ namespace Domain.Entities.Workspace
 
         public IWorkspace Create(NewWorkspaceCreationModel creationModel)
             => new Workspace(
-                id: guidProvider.CreateGuid().ToString(),
+                id: guidProvider.CreateGuid().GetHashCode(),
+                name: creationModel.Name,
                 gatewayUrl: creationModel.GatewayUrl,
                 userEmail: creationModel.UserEmail);
 
         public IWorkspace Create(StoredWorkspaceCreationModel creationModel)
             => new Workspace(
                 id: creationModel.Id,
+                name: creationModel.Name,
                 gatewayUrl: creationModel.GatewayUrl,
                 userEmail: creationModel.UserEmail);
     }

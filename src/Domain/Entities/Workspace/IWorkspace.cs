@@ -2,7 +2,9 @@
 {
     public interface IWorkspace
     {
-        string Id { get; }
+        int Id { get; }
+
+        string Name { get; }
 
         string GatewayUrl { get; }
 

@@ -2,14 +2,17 @@
 {
     public record StoredWorkspaceCreationModel
     {
-        public StoredWorkspaceCreationModel(string id, string gatewayUrl, string userEmail)
+        public StoredWorkspaceCreationModel(int id, string name, string gatewayUrl, string userEmail)
         {
             Id = id;
+            Name = name;
             GatewayUrl = gatewayUrl;
             UserEmail = userEmail;
         }
 
-        public string Id { get; }
+        public int Id { get; }
+
+        public string Name { get; }
 
         public string GatewayUrl { get; }
 
