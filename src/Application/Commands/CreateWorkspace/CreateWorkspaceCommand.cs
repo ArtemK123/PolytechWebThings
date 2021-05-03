@@ -8,6 +8,8 @@ namespace Application.Commands.CreateWorkspace
 
         public string GatewayUrl { get; }
 
+        public string AccessToken { get; }
+
         public string UserEmail { get; }
     }
 }

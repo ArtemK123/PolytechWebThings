@@ -17,6 +17,7 @@ namespace Domain.Entities.Workspace
                 id: guidProvider.CreateGuid().GetHashCode(),
                 name: creationModel.Name,
                 gatewayUrl: creationModel.GatewayUrl,
+                accessToken: creationModel.AccessToken,
                 userEmail: creationModel.UserEmail);
 
         public IWorkspace Create(StoredWorkspaceCreationModel creationModel)
@@ -24,6 +25,7 @@ namespace Domain.Entities.Workspace
                 id: creationModel.Id,
                 name: creationModel.Name,
                 gatewayUrl: creationModel.GatewayUrl,
+                accessToken: creationModel.AccessToken,
                 userEmail: creationModel.UserEmail);
     }
 }

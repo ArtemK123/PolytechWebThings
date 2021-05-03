@@ -8,6 +8,8 @@
 
         string GatewayUrl { get; }
 
+        string AccessToken { get; }
+
         string UserEmail { get; }
     }
 }

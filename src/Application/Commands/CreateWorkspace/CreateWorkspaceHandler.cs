@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Repositories;
 using Domain.Entities.Common;
@@ -27,9 +28,17 @@ namespace Application.Commands.CreateWorkspace
                 throw new GatewayAlreadyRegisteredException(request.GatewayUrl);
             }
 
-            IWorkspace newWorkspace = workspaceFactory.Create(new NewWorkspaceCreationModel(name: request.Name, gatewayUrl: request.GatewayUrl, userEmail: request.UserEmail));
+            CheckConnectionToGateway(gatewayUrl: request.GatewayUrl, accessToken: request.AccessToken);
+
+            IWorkspace newWorkspace = workspaceFactory.Create(
+                new NewWorkspaceCreationModel(name: request.Name, gatewayUrl: request.GatewayUrl, accessToken: request.AccessToken, userEmail: request.UserEmail));
             await workspaceRepository.AddAsync(newWorkspace);
             return Unit.Value;
+        }
+
+        private void CheckConnectionToGateway(string gatewayUrl, string accessToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
