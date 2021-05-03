@@ -1,28 +1,48 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using PolytechWebThings.Infrastructure.Database;
 
 namespace Web.IntegrationTest
 {
     [TestFixture]
-    public abstract class WebApiIntegrationTestBase
+    internal abstract class WebApiIntegrationTestBase
     {
-        protected WebApplicationFactory<Startup> WebApplicationFactory { get; private set; }
+        protected WebApplicationFactory<Startup> ApplicationFactory { get; private set; }
 
         protected HttpClient HttpClient { get; private set; }
 
         [SetUp]
         public void WebApiIntegrationTestBaseSetUp()
         {
-            WebApplicationFactory = new WebApplicationFactoryProvider().GetWebApplicationFactory();
-            HttpClient = WebApplicationFactory.CreateClient();
+            ApplicationFactory = new WebApplicationFactoryProvider().GetWebApplicationFactory(SetupMocks);
+            HttpClient = ApplicationFactory.CreateClient();
         }
 
         [TearDown]
         public void WebApiIntegrationTestBaseTearDown()
         {
-            WebApplicationFactory.Dispose();
+            ApplicationFactory.Dispose();
             HttpClient.Dispose();
+        }
+
+        protected virtual void SetupMocks(IServiceCollection services)
+        {
+            MockDatabase(services);
+        }
+
+        private static void MockDatabase(IServiceCollection services)
+        {
+            ServiceDescriptor dbContextOptionsDescriptor = services.SingleOrDefault(
+                descriptor => descriptor.ServiceType ==
+                              typeof(DbContextOptions<ApplicationDbContext>));
+
+            services.Remove(dbContextOptionsDescriptor);
+
+            services.AddDbContext<ApplicationDbContext>(options => { options.UseInMemoryDatabase("InMemoryDbForTesting"); });
         }
     }
 }

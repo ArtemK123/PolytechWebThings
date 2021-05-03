@@ -1,6 +1,6 @@
 ﻿namespace Web.Models.Request
 {
-    public class CreateUserRequest
+    public record CreateUserRequest
     {
         public string? Email { get; init; }
 

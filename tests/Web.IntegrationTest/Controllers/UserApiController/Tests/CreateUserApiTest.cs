@@ -28,7 +28,7 @@ namespace Web.IntegrationTest.Controllers.UserApiController.Tests
             const string password = "12345678";
 
             HttpResponseMessage response = await userApiProxy.CreateAsync(new CreateUserRequest { Email = email, Password = password });
-            IUserRepository userRepository = WebApplicationFactory.Services.GetService<IUserRepository>() ?? throw new NullReferenceException();
+            IUserRepository userRepository = ApplicationFactory.Services.GetService<IUserRepository>() ?? throw new NullReferenceException();
             IUser storedUser = await userRepository.GetByEmailAsync(email) ?? throw new NullReferenceException();
 
             Assert.True(response.IsSuccessStatusCode);

@@ -1,6 +1,6 @@
 ﻿namespace Web.Models.Request
 {
-    public class CreateWorkspaceRequest
+    public record CreateWorkspaceRequest
     {
         public string? Name { get; init; }
 
