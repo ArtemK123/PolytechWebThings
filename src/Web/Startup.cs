@@ -10,6 +10,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -85,7 +86,15 @@ namespace Web
 
             app.MapWhen(httpContext => !httpContext.Request.Path.Value?.Contains("/api") ?? true, builder =>
             {
-                builder.UseSpa(_ => { });
+                builder.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "ClientApp";
+
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseReactDevelopmentServer(npmScript: "watch");
+                    }
+                });
             });
 
             hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));
