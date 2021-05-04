@@ -43,10 +43,12 @@ namespace Web.IntegrationTest.Controllers
                 AccessToken = string.Empty
             });
 
-            string responseMessage = await response.Content.ReadAsStringAsync();
+            string expectedResponseMessage =
+                "{\"Name\":[\"'Name' must not be empty.\"],\"GatewayUrl\":[\"'Gateway Url' must not be empty.\"],\"AccessToken\":[\"'Access Token' must not be empty.\"]}";
+            string actualResponseMessage = await response.Content.ReadAsStringAsync();
 
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("text to replace with actual message", responseMessage);
+            Assert.AreEqual(expectedResponseMessage, actualResponseMessage);
         }
 
         [Test]
@@ -81,7 +83,7 @@ namespace Web.IntegrationTest.Controllers
 
             string responseMessage = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("text to replace with actual message", responseMessage);
+            Assert.AreEqual($"Gateway is already assigned to workspace. Gateway url is {GatewayUrl}", responseMessage);
         }
 
         [Test]
@@ -98,7 +100,7 @@ namespace Web.IntegrationTest.Controllers
             string responseMessage = await response.Content.ReadAsStringAsync();
 
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("text to replace with actual message", responseMessage);
+            Assert.AreEqual("Can not connect to gateway using the provided url and access token", responseMessage);
         }
 
         [Test]

@@ -21,6 +21,8 @@ namespace Web.Controllers
             { typeof(EmailTakenByOtherUserException), exception => new BadRequestObjectResult(exception.Message) },
             { typeof(UserNotFoundByEmailException), exception => new BadRequestObjectResult(exception.Message) },
             { typeof(WrongUserPasswordException), exception => new BadRequestObjectResult(exception.Message) },
+            { typeof(CanNotConnectToGatewayException), exception => new BadRequestObjectResult(exception.Message) },
+            { typeof(GatewayAlreadyRegisteredException), exception => new BadRequestObjectResult(exception.Message) },
         };
 
         public ExceptionHandlingController(ILoggerFactory loggerFactory)
