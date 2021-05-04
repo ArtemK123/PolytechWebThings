@@ -14,5 +14,16 @@ namespace PolytechWebThings.Infrastructure.Database
         public DbSet<UserDatabaseModel> Users { get; init; } = null!;
 
         public DbSet<WorkspaceDatabaseModel> Workspaces { get; init; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UserDatabaseModel>()
+                .HasIndex(user => user.Email)
+                .IsUnique();
+
+            builder.Entity<WorkspaceDatabaseModel>()
+                .HasIndex(workspace => workspace.GatewayUrl)
+                .IsUnique();
+        }
     }
 }

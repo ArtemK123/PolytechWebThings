@@ -59,10 +59,10 @@ namespace PolytechWebThings.Infrastructure.Database.Users
 
         private StoredUserCreationModel Convert(UserDatabaseModel databaseModel)
             => new StoredUserCreationModel(
-                id: databaseModel.Id ?? throw new NullReferenceException(),
-                email: databaseModel.Email ?? throw new NullReferenceException(),
-                password: databaseModel.Password ?? throw new NullReferenceException(),
+                id: databaseModel.Id,
+                email: databaseModel.Email,
+                password: databaseModel.Password,
                 sessionToken: databaseModel.SessionToken,
-                role: databaseModel.Role ?? throw new NullReferenceException());
+                role: databaseModel.Role);
     }
 }
