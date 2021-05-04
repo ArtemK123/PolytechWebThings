@@ -35,7 +35,7 @@ namespace PolytechWebThings.Infrastructure.Database.Workspaces
 
         public async Task AddAsync(IWorkspace workspace)
         {
-            var databaseModel = new WorkspaceDatabaseModel()
+            var databaseModel = new WorkspaceDatabaseModel
             {
                 Id = workspace.Id,
                 Name = workspace.Name,
