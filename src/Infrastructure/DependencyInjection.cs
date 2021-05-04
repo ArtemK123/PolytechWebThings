@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PolytechWebThings.Infrastructure.Connectors;
 using PolytechWebThings.Infrastructure.Database;
+using PolytechWebThings.Infrastructure.Database.Providers;
 using PolytechWebThings.Infrastructure.Database.StartupJobs;
 using PolytechWebThings.Infrastructure.Database.Users;
 using PolytechWebThings.Infrastructure.Database.Workspaces;
@@ -17,18 +18,22 @@ namespace PolytechWebThings.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer("name=Database:ConnectionString"));
-
+            services.AddDatabase();
             services.AddHttpClient();
-
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IWorkspaceRepository, WorkspaceRepository>();
             services.AddTransient<IGuidProvider, GuidProvider>();
-            services.AddSingleton<IStartupJob, EnsureDatabaseCreatedJob>();
             services.AddTransient<IGatewayConnector, GatewayConnector>();
 
             return services;
+        }
+
+        private static void AddDatabase(this IServiceCollection services)
+        {
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer("name=Database:ConnectionString"));
+            services.AddSingleton<IStartupJob, EnsureDatabaseCreatedJob>();
+            services.AddTransient<IDatabaseCreationTypeProvider, DatabaseCreationTypeProvider>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IWorkspaceRepository, WorkspaceRepository>();
         }
     }
 }
