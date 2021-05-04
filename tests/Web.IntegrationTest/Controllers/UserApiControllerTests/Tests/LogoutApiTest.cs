@@ -3,10 +3,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Web.Controllers;
 using Web.Models.Request;
 
-namespace Web.IntegrationTest.Controllers.UserApiController.Tests
+namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
 {
+    [TestFixture(TestOf = typeof(UserApiController))]
     internal class LogoutApiTest : WebApiIntegrationTestBase
     {
         private const string Email = "test@mail.com";

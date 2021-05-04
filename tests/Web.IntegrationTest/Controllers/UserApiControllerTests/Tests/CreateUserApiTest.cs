@@ -7,10 +7,12 @@ using Domain.Entities.User;
 using Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Web.Controllers;
 using Web.Models.Request;
 
-namespace Web.IntegrationTest.Controllers.UserApiController.Tests
+namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
 {
+    [TestFixture(TestOf = typeof(UserApiController))]
     internal class CreateUserApiTest : WebApiIntegrationTestBase
     {
         private UserApiProxy userApiProxy;

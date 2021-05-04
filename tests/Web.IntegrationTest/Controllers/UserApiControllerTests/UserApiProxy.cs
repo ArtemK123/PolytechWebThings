@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Web.Models.Request;
 
-namespace Web.IntegrationTest.Controllers.UserApiController
+namespace Web.IntegrationTest.Controllers.UserApiControllerTests
 {
     internal class UserApiProxy
     {

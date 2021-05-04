@@ -6,11 +6,13 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Web.Controllers;
 using Web.Models.Request;
 using Web.Models.Response;
 
-namespace Web.IntegrationTest.Controllers.WorkspaceApiController.Tests
+namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
 {
+    [TestFixture(TestOf = typeof(UserApiController))]
     internal class GetUserWorkspacesApiTest : WorkspaceApiControllerTestBase
     {
         [Test]

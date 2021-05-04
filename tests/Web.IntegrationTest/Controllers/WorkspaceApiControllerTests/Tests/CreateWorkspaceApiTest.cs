@@ -3,10 +3,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
+using Web.Controllers;
 using Web.Models.Request;
 
-namespace Web.IntegrationTest.Controllers.WorkspaceApiController.Tests
+namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
 {
+    [TestFixture(TestOf = typeof(UserApiController))]
     internal class CreateWorkspaceApiTest : WorkspaceApiControllerTestBase
     {
         [Test]

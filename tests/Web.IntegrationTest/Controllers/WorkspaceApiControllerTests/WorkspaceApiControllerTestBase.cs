@@ -5,10 +5,10 @@ using Application.Connectors;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
-using Web.IntegrationTest.Controllers.UserApiController;
+using Web.IntegrationTest.Controllers.UserApiControllerTests;
 using Web.Models.Request;
 
-namespace Web.IntegrationTest.Controllers.WorkspaceApiController
+namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     internal class WorkspaceApiControllerTestBase : WebApiIntegrationTestBase
     {

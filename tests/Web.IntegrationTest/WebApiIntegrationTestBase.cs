@@ -8,7 +8,6 @@ using PolytechWebThings.Infrastructure.Database;
 
 namespace Web.IntegrationTest
 {
-    [TestFixture]
     internal abstract class WebApiIntegrationTestBase
     {
         protected WebApplicationFactory<Startup> ApplicationFactory { get; private set; }
