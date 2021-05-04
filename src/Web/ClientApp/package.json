@@ -16,7 +16,12 @@
   },
   "devDependencies": {
     "@types/knockout": "^3.4.70",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
     "cross-env": "^7.0.3",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-webpack-plugin": "^2.5.4",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "ts-loader": "^9.1.1",
