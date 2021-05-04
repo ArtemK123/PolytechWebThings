@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PolytechWebThings.Infrastructure.Database.Users;
+using PolytechWebThings.Infrastructure.Database.Workspaces;
 
 namespace PolytechWebThings.Infrastructure.Database
 {
@@ -11,5 +12,7 @@ namespace PolytechWebThings.Infrastructure.Database
         }
 
         public DbSet<UserDatabaseModel> Users { get; init; } = null!;
+
+        public DbSet<WorkspaceDatabaseModel> Workspaces { get; init; } = null!;
     }
 }
