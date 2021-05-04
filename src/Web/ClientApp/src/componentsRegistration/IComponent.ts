@@ -1,4 +1,4 @@
-﻿import {IComponentDescriptor} from "./IComponentDescriptor";
+import { IComponentDescriptor } from "./IComponentDescriptor";
 
 export interface IComponent {
     generateDescriptor(): IComponentDescriptor;

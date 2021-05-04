@@ -1,1 +1,1 @@
-﻿export interface IViewModel {}
+export interface IViewModel {}

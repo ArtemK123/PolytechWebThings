@@ -1,3 +1,3 @@
-﻿export interface IRouterParams {
+export interface IRouterParams {
     routes: Record<string, string>
 }

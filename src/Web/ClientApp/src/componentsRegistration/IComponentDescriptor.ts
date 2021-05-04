@@ -1,4 +1,4 @@
-﻿import {IViewModel} from "./IViewModel";
+import { IViewModel } from "./IViewModel";
 
 export interface IComponentDescriptor {
     viewModel: IViewModel;
