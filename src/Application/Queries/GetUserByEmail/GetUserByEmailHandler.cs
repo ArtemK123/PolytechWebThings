@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Queries.GetUserByEmail
 {
-    public class GetUserByEmailHandler : IRequestHandler<GetUserByEmailQuery, IUser>
+    internal class GetUserByEmailHandler : IRequestHandler<GetUserByEmailQuery, IUser>
     {
         private readonly IUserRepository userRepository;
 

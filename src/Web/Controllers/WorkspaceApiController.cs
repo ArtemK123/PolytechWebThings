@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Commands.CreateWorkspace;
+using Application.Queries.GetUserWorkspaces;
+using Domain.Entities.Workspace;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +39,9 @@ namespace Web.Controllers
         public async Task<GetUserWorkspacesResponse> GetUserWorkspaces()
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
-            throw new NotImplementedException();
+            IReadOnlyCollection<IWorkspace> workspaces = await mediator.Send(new GetUserWorkspacesQuery(userEmail: userEmail));
+            IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(workspace => new WorkspaceApiModel(workspace.Name, workspace.GatewayUrl)).ToArray();
+            return new GetUserWorkspacesResponse(convertedWorkspaces);
         }
     }
 }

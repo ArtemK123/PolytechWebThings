@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Application.Repositories;
 using Domain.Entities.Common;
 using Domain.Entities.Workspace;
@@ -25,12 +27,14 @@ namespace PolytechWebThings.Infrastructure.Database.Workspaces
                 return null;
             }
 
-            return storedUserFactory.Create(new StoredWorkspaceCreationModel(
-                id: databaseModel.Id,
-                name: databaseModel.Name,
-                gatewayUrl: databaseModel.GatewayUrl,
-                accessToken: databaseModel.AccessToken,
-                userEmail: databaseModel.UserEmail));
+            return Convert(databaseModel);
+        }
+
+        public Task<IReadOnlyCollection<IWorkspace>> GetByUserEmail(string userEmail)
+        {
+            IEnumerable<WorkspaceDatabaseModel> databaseModels = dbContext.Workspaces.Where(workspaceDatabaseModel => workspaceDatabaseModel.UserEmail == userEmail).AsEnumerable();
+            IReadOnlyCollection<IWorkspace> workspaces = databaseModels.Select(Convert).ToList();
+            return Task.FromResult(workspaces);
         }
 
         public async Task AddAsync(IWorkspace workspace)
@@ -46,5 +50,13 @@ namespace PolytechWebThings.Infrastructure.Database.Workspaces
             await dbContext.Workspaces.AddAsync(databaseModel);
             await dbContext.SaveChangesAsync();
         }
+
+        private IWorkspace Convert(WorkspaceDatabaseModel databaseModel)
+            => storedUserFactory.Create(new StoredWorkspaceCreationModel(
+                id: databaseModel.Id,
+                name: databaseModel.Name,
+                gatewayUrl: databaseModel.GatewayUrl,
+                accessToken: databaseModel.AccessToken,
+                userEmail: databaseModel.UserEmail));
     }
 }
