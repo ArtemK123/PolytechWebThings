@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.Request;
+using Web.Models.Response;
 
 namespace Web.Controllers
 {
@@ -27,6 +28,14 @@ namespace Web.Controllers
                 gatewayUrl: request.GatewayUrl ?? throw new NullReferenceException(),
                 accessToken: request.AccessToken ?? throw new NullReferenceException(),
                 userEmail: User.FindFirstValue(ClaimTypes.Email)));
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<GetUserWorkspacesResponse> GetUserWorkspaces()
+        {
+            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            throw new NotImplementedException();
         }
     }
 }
