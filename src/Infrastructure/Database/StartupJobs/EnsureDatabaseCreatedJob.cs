@@ -13,7 +13,6 @@ namespace PolytechWebThings.Infrastructure.Database.StartupJobs
         {
             using var scope = serviceProvider.CreateScope();
             var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            applicationDbContext.Database.EnsureCreated();
             applicationDbContext.Database.Migrate();
         }
     }
