@@ -17,6 +17,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using PolytechWebThings.Infrastructure;
 using Web.Attributes;
+using Web.Middlewares;
 
 namespace Web
 {
@@ -84,17 +85,16 @@ namespace Web
                     pattern: "api/{controller}/{action=Index}/{id?}");
             });
 
-            app.MapWhen(httpContext => !httpContext.Request.Path.Value?.Contains("/api") ?? true, builder =>
-            {
-                builder.UseSpa(spa =>
-                {
-                    spa.Options.SourcePath = "ClientApp";
+            app.UseNotFoundForApiCall();
 
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseReactDevelopmentServer(npmScript: "watch");
-                    }
-                });
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                // if (env.IsDevelopment())
+                // {
+                //     spa.UseReactDevelopmentServer(npmScript: "watch");
+                // }
             });
 
             hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));
