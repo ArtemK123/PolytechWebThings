@@ -18,7 +18,8 @@
     "Web": {
       "commandName": "Project",
       "launchBrowser": false,
-      "applicationUrl": "http://localhost:7406",
+      "applicationUrl": "http://localhost:7400",
+      "launchUrl": "http://localhost:7406",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -89,12 +90,13 @@ namespace Web
 
             app.UseSpa(spa =>
             {
+                spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);
                 spa.Options.SourcePath = "ClientApp";
 
-                // if (env.IsDevelopment())
-                // {
-                //     spa.UseReactDevelopmentServer(npmScript: "watch");
-                // }
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "serve");
+                }
             });
 
             hostApplicationLifetime.ApplicationStarted.Register(() => ApplicationStartedCallback(app));

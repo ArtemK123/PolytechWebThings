@@ -9,7 +9,6 @@ console.log(`Using NODE_ENV = ${process.env.NODE_ENV}`);
 module.exports = {
     mode: isDevelopment ? "development" : "production",
     entry: "./src/index.ts",
-    devtool: "inline-source-map",
     module: {
         rules: [
             {
