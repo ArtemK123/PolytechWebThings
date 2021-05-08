@@ -1,7 +1,5 @@
 import * as ko from "knockout";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import "./Profile.scss";
 
 export class ProfileViewModel implements IViewModel {
     public authorized: ko.Computed<boolean>;
