@@ -15,8 +15,8 @@
         "@typescript-eslint/object-curly-spacing": ["warn"],
         "object-shorthand": ["warn"],
         "prefer-destructuring": ["warn", {"object": false, "array": false} ],
-        "unicode-bom": ["warn", "never"],
+        "unicode-bom": ["off"],
         "max-len": ["warn", { "code": 190 }],
-        "no-restricted-globals": ["off"]
+        "no-restricted-globals": ["off"],
     }
 };

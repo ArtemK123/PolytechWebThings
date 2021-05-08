@@ -2,6 +2,7 @@ import * as ko from "knockout";
 import { UserApiClient } from "../../services/UserApiClient";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
 import { ICreateUserRequest } from "../../models/request/ICreateUserRequest";
+import { RedirectHandler } from "../../services/RedirectHandler";
 
 export class RegisterViewModel implements IViewModel {
     public readonly email: ko.Observable<string> = ko.observable("");
@@ -20,11 +21,16 @@ export class RegisterViewModel implements IViewModel {
             if (response.status === 200) {
                 // eslint-disable-next-line no-alert
                 alert("Registered successfully");
+                RedirectHandler.redirect("/");
                 return;
             }
             const message = await response.text();
             // eslint-disable-next-line no-alert
             alert(`Error while registering: ${message}`);
         });
+    }
+
+    public handleRedirectToHomePage() {
+        RedirectHandler.redirect("/");
     }
 }
