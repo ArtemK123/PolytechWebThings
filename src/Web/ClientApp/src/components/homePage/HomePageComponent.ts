@@ -1,4 +1,4 @@
-import template from "./BackendConnectionCheck.html";
+import template from "./HomePage.html";
 import { HomePageViewModel } from "./HomePageViewModel";
 import { IComponentDescriptor } from "../../componentsRegistration/IComponentDescriptor";
 import { IComponent } from "../../componentsRegistration/IComponent";

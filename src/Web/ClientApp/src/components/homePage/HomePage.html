@@ -1,2 +1,6 @@
-<div style="visibility: hidden">
+<div data-bind="if: authorizedUser()">
+    <authorized-home-page></authorized-home-page>
+</div>
+<div data-bind="if: !authorizedUser()">
+    <unauthorized-home-page></unauthorized-home-page>
 </div>

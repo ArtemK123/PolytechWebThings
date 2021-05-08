@@ -1,13 +1,13 @@
-import { HealthCheckApiClient } from "../../services/HealthCheckApiClient";
+import * as ko from "knockout";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
 
 export class HomePageViewModel implements IViewModel {
-    private readonly apiClient = new HealthCheckApiClient();
+    public readonly authorizedUser: ko.Observable<boolean> = ko.observable(false);
 
     constructor() {
-        this.apiClient.healthCheck()
-            .then((response) => response.text())
-            // eslint-disable-next-line no-console
-            .then((text) => console.log(text));
+        const email: string | null | undefined = localStorage.getItem("email");
+        if (email) {
+            this.authorizedUser(true);
+        }
     }
 }
