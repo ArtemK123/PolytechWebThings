@@ -6,6 +6,7 @@ import { RegisterComponent } from "../components/register/RegisterComponent";
 import { ProfileComponent } from "../components/profile/ProfileComponent";
 import { LogoutComponent } from "../components/logout/LogoutComponent";
 import { RouterComponent } from "../components/router/RouterComponent";
+import { UnauthorizedHomePageComponent } from "../components/unauthorizedHomePage/UnauthorizedHomePageComponent";
 
 class ComponentRegistration {
     registerBindings() {
@@ -16,6 +17,7 @@ class ComponentRegistration {
         ko.components.register("profile", new ProfileComponent().generateDescriptor());
         ko.components.register("logout", new LogoutComponent().generateDescriptor());
         ko.components.register("router", new RouterComponent().generateDescriptor());
+        ko.components.register("unauthorized-home-page", new UnauthorizedHomePageComponent().generateDescriptor());
     }
 }
 

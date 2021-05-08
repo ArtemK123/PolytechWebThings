@@ -1,8 +1,9 @@
 <div>
     <router params='routes: {
-        "/": "<backend-connection-check></backend-connection-check><profile></profile><logout></logout>",
+        "/": "<unauthorized-home-page></unauthorized-home-page>",
         "/login": "<login></login>",
         "/register": "<register></register>"
     }'>
     </router>
+    <backend-connection-check></backend-connection-check>
 </div>
