@@ -41,7 +41,6 @@ namespace PolytechWebThings.Infrastructure.Database.Workspaces
         {
             var databaseModel = new WorkspaceDatabaseModel
             {
-                Id = workspace.Id,
                 Name = workspace.Name,
                 GatewayUrl = workspace.GatewayUrl,
                 AccessToken = workspace.AccessToken,
