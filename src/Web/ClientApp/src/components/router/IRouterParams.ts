@@ -1,3 +1,6 @@
+import { IRoute } from "./IRoute";
+
 export interface IRouterParams {
-    routes: Record<string, string>
+    routes: IRoute[];
+    routerElementId: string;
 }

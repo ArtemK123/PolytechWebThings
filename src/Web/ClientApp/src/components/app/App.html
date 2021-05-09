@@ -1,12 +1,5 @@
 <div>
     <header-component></header-component>
-    <router params='routes: {
-        "/": "<home-page></home-page>",
-        "/login": "<login></login>",
-        "/register": "<register></register>",
-        "/create-workspace": "<create-workspace-page></create-workspace-page>",
-        "/workspaces/1": "<workspace-page params=\"{ id: 1 }\"></workspace-page>"
-    }'>
-    </router>
+    <router params="{ routes: routerParams.routes, routerElementId: routerParams.routerElementId }"></router>
     <backend-connection-check></backend-connection-check>
 </div>

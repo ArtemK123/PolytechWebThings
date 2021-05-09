@@ -1,35 +1,39 @@
 import { IRouterParams } from "./IRouterParams";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
+import { IRoute } from "./IRoute";
 
 export class RouterViewModel implements IViewModel {
-    private readonly routes: Record<string, string>;
+    private readonly routes: IRoute[];
+    private readonly routerElementId: string;
 
     constructor(params: IRouterParams) {
         this.routes = params.routes;
+        this.routerElementId = params.routerElementId;
 
         this.updateRouterDiv();
-
-        window.addEventListener("popstate", () => {
-            this.updateRouterDiv();
-            history.go();
-        });
     }
 
     private updateRouterDiv(): void {
-        const routerDiv: HTMLElement = RouterViewModel.getRouterDiv();
-        routerDiv.innerHTML = this.getTag();
+        const routerDiv: HTMLElement = this.getRouterDiv();
+        routerDiv.innerHTML = this.generateRouteHtml();
     }
 
-    private static getRouterDiv(): HTMLElement {
-        return document.getElementById("router");
+    private getRouterDiv(): HTMLElement {
+        return document.getElementById(this.routerElementId);
     }
 
-    private getTag(): string {
+    private generateRouteHtml(): string {
         const currentPath: string = window.location.pathname;
-        const componentTag: string | undefined = this.routes[currentPath] ?? this.routes["/"];
-        if (componentTag === undefined) {
-            throw new Error("Component for given tag is not found");
+
+        const route: IRoute = this.getTargetRoute(currentPath);
+        return route.generateHtmlElement(currentPath);
+    }
+
+    private getTargetRoute(location: string): IRoute {
+        const targetRoute: IRoute | undefined = this.routes.find((route: IRoute) => route.pattern.test(location));
+        if (!targetRoute) {
+            throw new Error("Can not find route for given path");
         }
-        return componentTag;
+        return targetRoute;
     }
 }
