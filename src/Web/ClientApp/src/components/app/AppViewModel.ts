@@ -9,12 +9,17 @@ export default class AppViewModel implements IViewModel {
         this.routerParams = {
             routes: [
                 RouteGenerator.generate(/^\/$/, () => "<home-page></home-page>"),
-                RouteGenerator.generate(/\/login/, () => "<login></login>"),
-                RouteGenerator.generate(/\/register/, () => "<register></register>"),
-                RouteGenerator.generate(/\/create-workspace/, () => "<create-workspace-page></create-workspace-page>"),
-                RouteGenerator.generate(/\/workspaces\/1/, () => "<workspace-page params='{id: 1}'></workspace-page>"),
+                RouteGenerator.generate(/^\/login$/, () => "<login></login>"),
+                RouteGenerator.generate(/^\/register$/, () => "<register></register>"),
+                RouteGenerator.generate(/^\/create-workspace$/, () => "<create-workspace-page></create-workspace-page>"),
+                RouteGenerator.generate(/^\/workspaces\/[\d]+/, AppViewModel.generateWorkspacePage),
             ],
-            routerElementId: "router",
+            routerElementId: "root-router",
         };
+    }
+
+    private static generateWorkspacePage(path: string): string {
+        const id = path.replace(/^\/workspaces\//, "");
+        return `<workspace-page params='{id: ${id}}'></workspace-page>`;
     }
 }
