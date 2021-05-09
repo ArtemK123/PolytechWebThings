@@ -1,5 +1,5 @@
-import { UserApiClient } from "../../services/UserApiClient";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
+import { UserApiClient } from "../../backendApi/clients/UserApiClient";
 
 export class LogoutViewModel implements IViewModel {
     private readonly userApiClient = new UserApiClient();

@@ -18,5 +18,6 @@
         "unicode-bom": ["off"],
         "max-len": ["warn", { "code": 190 }],
         "no-restricted-globals": ["off"],
+        "@typescript-eslint/lines-between-class-members": ["off"]
     }
 };

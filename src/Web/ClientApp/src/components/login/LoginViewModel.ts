@@ -1,8 +1,8 @@
 import * as ko from "knockout";
-import { UserApiClient } from "../../services/UserApiClient";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
-import { ILoginUserRequest } from "../../models/request/ILoginUserRequest";
 import { RedirectHandler } from "../../services/RedirectHandler";
+import { ILoginUserRequest } from "../../backendApi/models/request/ILoginUserRequest";
+import { UserApiClient } from "../../backendApi/clients/UserApiClient";
 
 export class LoginViewModel implements IViewModel {
     public readonly email: ko.Observable<string> = ko.observable("");

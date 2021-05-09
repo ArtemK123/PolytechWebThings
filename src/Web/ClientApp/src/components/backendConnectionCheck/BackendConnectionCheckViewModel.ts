@@ -1,5 +1,5 @@
-import { HealthCheckApiClient } from "../../services/HealthCheckApiClient";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
+import { HealthCheckApiClient } from "../../backendApi/clients/HealthCheckApiClient";
 
 export class BackendConnectionCheckViewModel implements IViewModel {
     private readonly apiClient = new HealthCheckApiClient();

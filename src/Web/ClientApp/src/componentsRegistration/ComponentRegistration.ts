@@ -9,6 +9,7 @@ import { RouterComponent } from "../components/router/RouterComponent";
 import { UnauthorizedHomePageComponent } from "../components/unauthorizedHomePage/UnauthorizedHomePageComponent";
 import { AuthorizedHomePageComponent } from "../components/authorizedHomePage/AuthorizedHomePageComponent";
 import { HomePageComponent } from "../components/homePage/HomePageComponent";
+import { CreateWorkspacePageComponent } from "../components/createWorkspacePage/CreateWorkspacePageComponent";
 
 class ComponentRegistration {
     registerBindings() {
@@ -22,6 +23,7 @@ class ComponentRegistration {
         ko.components.register("home-page", new HomePageComponent().generateDescriptor());
         ko.components.register("unauthorized-home-page", new UnauthorizedHomePageComponent().generateDescriptor());
         ko.components.register("authorized-home-page", new AuthorizedHomePageComponent().generateDescriptor());
+        ko.components.register("create-workspace-page", new CreateWorkspacePageComponent().generateDescriptor());
     }
 }
 
