@@ -14,7 +14,11 @@ const devConfig = {
         proxy: {
             "/api": backendUrl,
         },
-        historyApiFallback: true,
+        historyApiFallback: {
+            historyApiFallback: {
+                index: "index.html",
+            },
+        },
     },
 };
 
