@@ -2,7 +2,7 @@
 import { ICreateWorkspaceRequest } from "../models/request/ICreateWorkspaceRequest";
 
 export class WorkspaceApiClient {
-    private static readonly apiUrl: string = "api/WorkspaceApi/";
+    private static readonly apiUrl: string = "/api/WorkspaceApi/";
 
     public async getUserWorkspaces(): Promise<IGetUserWorkspacesResponse> {
         const response: Response = await fetch(`${WorkspaceApiClient.apiUrl}GetUserWorkspaces`, { method: "GET" });

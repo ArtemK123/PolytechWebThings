@@ -3,7 +3,7 @@ import { ILoginUserRequest } from "../models/request/ILoginUserRequest";
 
 export class UserApiClient {
     public create(requestModel: ICreateUserRequest): Promise<Response> {
-        return fetch("api/UserApi/Create", {
+        return fetch("/api/UserApi/Create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestModel),
@@ -11,7 +11,7 @@ export class UserApiClient {
     }
 
     public login(requestModel: ILoginUserRequest): Promise<Response> {
-        return fetch("api/UserApi/Login", {
+        return fetch("/api/UserApi/Login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestModel),
@@ -19,7 +19,7 @@ export class UserApiClient {
     }
 
     public logout(): Promise<Response> {
-        return fetch("api/UserApi/Logout", {
+        return fetch("/api/UserApi/Logout", {
             method: "POST",
         });
     }
