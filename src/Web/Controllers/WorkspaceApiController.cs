@@ -40,7 +40,7 @@ namespace Web.Controllers
         {
             string userEmail = User.FindFirstValue(ClaimTypes.Email);
             IReadOnlyCollection<IWorkspace> workspaces = await mediator.Send(new GetUserWorkspacesQuery(userEmail: userEmail));
-            IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(workspace => new WorkspaceApiModel(workspace.Name, workspace.GatewayUrl)).ToArray();
+            IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(workspace => new WorkspaceApiModel(workspace.Id, workspace.Name, workspace.GatewayUrl)).ToArray();
             return new GetUserWorkspacesResponse(convertedWorkspaces);
         }
     }

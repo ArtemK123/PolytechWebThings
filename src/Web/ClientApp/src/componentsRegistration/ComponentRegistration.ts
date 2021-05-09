@@ -11,6 +11,7 @@ import { AuthorizedHomePageComponent } from "../components/authorizedHomePage/Au
 import { HomePageComponent } from "../components/homePage/HomePageComponent";
 import { CreateWorkspacePageComponent } from "../components/createWorkspacePage/CreateWorkspacePageComponent";
 import { HeaderComponent } from "../components/header/HeaderComponent";
+import { WorkspaceCardComponent } from "../components/workspaceCard/WorkspaceCardComponent";
 
 class ComponentRegistration {
     registerBindings() {
@@ -26,6 +27,7 @@ class ComponentRegistration {
         ko.components.register("authorized-home-page", new AuthorizedHomePageComponent().generateDescriptor());
         ko.components.register("create-workspace-page", new CreateWorkspacePageComponent().generateDescriptor());
         ko.components.register("header-component", new HeaderComponent().generateDescriptor());
+        ko.components.register("workspace-card", new WorkspaceCardComponent().generateDescriptor());
     }
 }
 

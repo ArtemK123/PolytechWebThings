@@ -65,6 +65,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
                     .Workspaces.All(responseModel =>
                         createWorkspaceRequests.Any(
                             requestModel => AreSame(requestModel, responseModel))));
+            Assert.True(responseData.Workspaces.All(workspace => workspace.Id != default));
         }
 
         private async Task<HttpResponseMessage> SendGetUserWorkspacesRequest()
