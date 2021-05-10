@@ -4,7 +4,7 @@ import { IWorkspaceCardParams } from "./IWorkspaceCardParams";
 import { IWorkspaceApiModel } from "../../backendApi/models/response/IWorkspaceApiModel";
 import { RedirectHandler } from "../../services/RedirectHandler";
 import { WorkspaceApiClient } from "../../backendApi/clients/WorkspaceApiClient";
-import { IDeleteWorkspaceRequest } from "../../backendApi/models/request/IDeleteWorkspaceRequest";
+import { IDeleteWorkspaceRequest } from "../../backendApi/models/request/workspace/IDeleteWorkspaceRequest";
 
 export class WorkspaceCardViewModel implements IViewModel {
     public readonly workspaceLink: ko.Observable<string> = ko.observable("test");

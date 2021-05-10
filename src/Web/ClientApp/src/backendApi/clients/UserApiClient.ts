@@ -1,5 +1,5 @@
-import { ICreateUserRequest } from "../models/request/ICreateUserRequest";
-import { ILoginUserRequest } from "../models/request/ILoginUserRequest";
+import { ICreateUserRequest } from "../models/request/user/ICreateUserRequest";
+import { ILoginUserRequest } from "../models/request/user/ILoginUserRequest";
 
 export class UserApiClient {
     public create(requestModel: ICreateUserRequest): Promise<Response> {

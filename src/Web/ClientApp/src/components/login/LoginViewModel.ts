@@ -1,7 +1,7 @@
 import * as ko from "knockout";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
 import { RedirectHandler } from "../../services/RedirectHandler";
-import { ILoginUserRequest } from "../../backendApi/models/request/ILoginUserRequest";
+import { ILoginUserRequest } from "../../backendApi/models/request/user/ILoginUserRequest";
 import { UserApiClient } from "../../backendApi/clients/UserApiClient";
 
 export class LoginViewModel implements IViewModel {

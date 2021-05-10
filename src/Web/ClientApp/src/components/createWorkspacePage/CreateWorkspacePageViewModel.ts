@@ -1,6 +1,6 @@
 ﻿import * as ko from "knockout";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
-import { ICreateWorkspaceRequest } from "../../backendApi/models/request/ICreateWorkspaceRequest";
+import { ICreateWorkspaceRequest } from "../../backendApi/models/request/workspace/ICreateWorkspaceRequest";
 import { WorkspaceApiClient } from "../../backendApi/clients/WorkspaceApiClient";
 import { RedirectHandler } from "../../services/RedirectHandler";
 
