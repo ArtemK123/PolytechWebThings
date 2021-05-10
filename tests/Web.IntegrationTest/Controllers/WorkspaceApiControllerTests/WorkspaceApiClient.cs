@@ -10,6 +10,8 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     internal class WorkspaceApiClient
     {
+        private const string ApiUrlBase = "api/WorkspaceApi/";
+
         private readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -24,7 +26,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         public async Task<HttpResponseMessage> GetUserWorkspacesHttpResponseAsync()
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "api/WorkspaceApi/GetUserWorkspaces"));
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, $"{ApiUrlBase}GetUserWorkspaces"));
         }
 
         public async Task<GetUserWorkspacesResponse> GetUserWorkspacesParsedResponseAsync()
@@ -37,7 +39,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         public async Task<HttpResponseMessage> GetByIdHttpResponseAsync(GetWorkspaceByIdRequest requestModel)
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, $"api/WorkspaceApi/GetById/{requestModel.WorkspaceId}"));
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}GetById")
+            {
+                Content = JsonContent.Create(requestModel)
+            });
         }
 
         public async Task<WorkspaceApiModel> GetByIdParsedResponseAsync(GetWorkspaceByIdRequest requestModel)
@@ -50,7 +55,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         public async Task<HttpResponseMessage> CreateAsync(CreateWorkspaceRequest requestModel)
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/WorkspaceApi/Create")
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}Create")
             {
                 Content = JsonContent.Create(requestModel)
             });
@@ -58,7 +63,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         public async Task<HttpResponseMessage> UpdateAsync(UpdateWorkspaceRequest requestModel)
         {
-            return await httpClient.SendAsync(request: new HttpRequestMessage(HttpMethod.Post, $"api/WorkspaceApi/Update")
+            return await httpClient.SendAsync(request: new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}Update")
             {
                 Content = JsonContent.Create(requestModel)
             });
@@ -66,7 +71,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         public async Task<HttpResponseMessage> DeleteAsync(DeleteWorkspaceRequest requestModel)
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, $"api/WorkspaceApi/Delete/{requestModel.WorkspaceId}"));
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}Delete")
+            {
+                Content = JsonContent.Create(requestModel)
+            });
         }
     }
 }

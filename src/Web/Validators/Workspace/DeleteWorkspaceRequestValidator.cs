@@ -7,7 +7,7 @@ namespace Web.Validators.Workspace
     {
         public DeleteWorkspaceRequestValidator()
         {
-            RuleFor(request => request.WorkspaceId).NotNull().SetValidator(new IdValidator());
+            RuleFor(request => request.Id).NotNull().SetValidator(new IdValidator());
         }
     }
 }

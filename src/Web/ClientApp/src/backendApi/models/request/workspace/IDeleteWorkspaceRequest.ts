@@ -1,3 +1,3 @@
 ﻿export interface IDeleteWorkspaceRequest {
-    workspaceId: number;
+    id: number;
 }

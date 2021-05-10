@@ -49,12 +49,12 @@ namespace Web.Controllers
             return new GetUserWorkspacesResponse(convertedWorkspaces);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public async Task<WorkspaceApiModel> GetById(GetWorkspaceByIdRequest request)
+        public async Task<WorkspaceApiModel> GetById([FromBody]GetWorkspaceByIdRequest request)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.WorkspaceId!.Value, userEmail));
+            IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.Id!.Value, userEmail));
             return Convert(workspace);
         }
 
@@ -72,12 +72,12 @@ namespace Web.Controllers
                     userEmail));
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize]
-        public async Task Delete(DeleteWorkspaceRequest request)
+        public async Task Delete([FromBody]DeleteWorkspaceRequest request)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.WorkspaceId.GetValueOrDefault(), userEmail: userEmail));
+            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.Id.GetValueOrDefault(), userEmail: userEmail));
         }
 
         private static WorkspaceApiModel Convert(IWorkspace workspace)

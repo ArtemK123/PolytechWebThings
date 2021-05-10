@@ -1,3 +1,3 @@
 ﻿export interface IGetWorkspaceByIdRequest {
-    workspaceId: number;
+    id: number;
 }

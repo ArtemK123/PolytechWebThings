@@ -19,7 +19,7 @@ export class UpdateWorkspacePageViewModel implements IViewModel {
     constructor(params: IUpdateWorkspacePageParams) {
         this.workspaceId = params.id;
         this.apiClient
-            .getWorkspaceById({ workspaceId: params.id } as IGetWorkspaceByIdRequest)
+            .getWorkspaceById({ id: params.id } as IGetWorkspaceByIdRequest)
             .then((response) => response.json())
             .then((workspaceApiModel: IWorkspaceApiModel) => {
                 this.name(workspaceApiModel.name);

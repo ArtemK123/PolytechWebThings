@@ -21,11 +21,19 @@ export class WorkspaceApiClient {
     }
 
     public deleteWorkspace(requestModel: IDeleteWorkspaceRequest): Promise<Response> {
-        return fetch(`${WorkspaceApiClient.apiUrl}Delete/${requestModel.workspaceId}`, { method: "DELETE" });
+        return fetch(`${WorkspaceApiClient.apiUrl}Delete`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestModel),
+        });
     }
 
     public getWorkspaceById(requestModel: IGetWorkspaceByIdRequest): Promise<Response> {
-        return fetch(`${WorkspaceApiClient.apiUrl}GetById/${requestModel.workspaceId}`, { method: "GET" });
+        return fetch(`${WorkspaceApiClient.apiUrl}GetById`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestModel),
+        });
     }
 
     public updateWorkspace(requestModel: IUpdateWorkspaceRequest): Promise<Response> {

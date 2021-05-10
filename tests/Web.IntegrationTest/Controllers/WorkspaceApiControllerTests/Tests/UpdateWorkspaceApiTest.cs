@@ -94,7 +94,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
 
             GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(updateWorkspaceRequest.GatewayUrl, updateWorkspaceRequest.AccessToken)).ReturnsAsync(true);
             HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(updateWorkspaceRequest);
-            WorkspaceApiModel updatedWorkspace = await WorkspaceApiClient.GetByIdParsedResponseAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
+            WorkspaceApiModel updatedWorkspace = await WorkspaceApiClient.GetByIdParsedResponseAsync(new GetWorkspaceByIdRequest { Id = WorkspaceId });
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.IsTrue(AreEqual(updateWorkspaceRequest, updatedWorkspace));
         }

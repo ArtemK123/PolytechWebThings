@@ -28,7 +28,7 @@ export class WorkspaceCardViewModel implements IViewModel {
         const confirmDelete: boolean = confirm(`Are you sure to delete this workspace - ${this.workspaceDescriptor()}`);
         if (confirmDelete) {
             this.workspaceApiClient
-                .deleteWorkspace({ workspaceId: this.workspaceId } as IDeleteWorkspaceRequest)
+                .deleteWorkspace({ id: this.workspaceId } as IDeleteWorkspaceRequest)
                 .then(() => RedirectHandler.reloadCurrentPage());
         }
     }
