@@ -2,6 +2,7 @@
 import { ICreateWorkspaceRequest } from "../models/request/workspace/ICreateWorkspaceRequest";
 import { IDeleteWorkspaceRequest } from "../models/request/workspace/IDeleteWorkspaceRequest";
 import { IGetWorkspaceByIdRequest } from "../models/request/workspace/IGetWorkspaceByIdRequest";
+import { IUpdateWorkspaceRequest } from "../models/request/workspace/IUpdateWorkspaceRequest";
 
 export class WorkspaceApiClient {
     private static readonly apiUrl: string = "/api/WorkspaceApi/";
@@ -25,5 +26,13 @@ export class WorkspaceApiClient {
 
     public getWorkspaceById(requestModel: IGetWorkspaceByIdRequest): Promise<Response> {
         return fetch(`${WorkspaceApiClient.apiUrl}GetById/${requestModel.workspaceId}`, { method: "GET" });
+    }
+
+    public updateWorkspace(requestModel: IUpdateWorkspaceRequest): Promise<Response> {
+        return fetch(`${WorkspaceApiClient.apiUrl}Update`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestModel),
+        });
     }
 }

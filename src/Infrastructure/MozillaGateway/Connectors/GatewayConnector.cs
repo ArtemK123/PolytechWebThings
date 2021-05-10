@@ -16,16 +16,23 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Connectors
 
         public async Task<bool> CanConnectToGatewayAsync(string gatewayUrl, string accessToken)
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, gatewayUrl)
+            try
             {
-                Headers =
+                HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, gatewayUrl)
                 {
-                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
-                    Authorization = new AuthenticationHeaderValue("Bearer", accessToken)
-                }
-            });
+                    Headers =
+                    {
+                        Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
+                        Authorization = new AuthenticationHeaderValue("Bearer", accessToken)
+                    }
+                });
 
-            return response.IsSuccessStatusCode;
+                return response.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException)
+            {
+                return false;
+            }
         }
     }
 }
