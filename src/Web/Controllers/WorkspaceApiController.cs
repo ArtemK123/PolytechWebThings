@@ -52,7 +52,7 @@ namespace Web.Controllers
         public async Task Delete([FromBody] DeleteWorkspaceRequest request)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.WorkspaceId, userEmail: userEmail));
+            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.WorkspaceId.GetValueOrDefault(), userEmail: userEmail));
         }
     }
 }

@@ -25,14 +25,14 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task GetUserWorkspaces_Unauthorized_ShouldReturnUnauthorizedResponse()
         {
             await UserApiProxy.LogoutAsync();
-            HttpResponseMessage response = await SendGetUserWorkspacesRequest();
+            HttpResponseMessage response = await WorkspaceApiClient.GetUserWorkspacesHttpResponseAsync();
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
         [Test]
         public async Task GetUserWorkspaces_NoWorkspaces_ShouldReturnEmptyCollection()
         {
-            HttpResponseMessage response = await SendGetUserWorkspacesRequest();
+            HttpResponseMessage response = await WorkspaceApiClient.GetUserWorkspacesHttpResponseAsync();
             string responseText = await response.Content.ReadAsStringAsync();
             GetUserWorkspacesResponse responseData = JsonSerializer.Deserialize<GetUserWorkspacesResponse>(responseText, jsonSerializerOptions) ?? throw new NullReferenceException();
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -52,10 +52,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             foreach (CreateWorkspaceRequest createWorkspaceRequest in createWorkspaceRequests)
             {
                 GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(createWorkspaceRequest.GatewayUrl, createWorkspaceRequest.AccessToken)).ReturnsAsync(true);
-                await SendCreateWorkspaceRequest(createWorkspaceRequest);
+                await WorkspaceApiClient.CreateWorkspaceAsync(createWorkspaceRequest);
             }
 
-            HttpResponseMessage response = await SendGetUserWorkspacesRequest();
+            HttpResponseMessage response = await WorkspaceApiClient.GetUserWorkspacesHttpResponseAsync();
             string responseText = await response.Content.ReadAsStringAsync();
             GetUserWorkspacesResponse responseData = JsonSerializer.Deserialize<GetUserWorkspacesResponse>(responseText, jsonSerializerOptions) ?? throw new NullReferenceException();
 
@@ -66,11 +66,6 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
                         createWorkspaceRequests.Any(
                             requestModel => AreSame(requestModel, responseModel))));
             Assert.True(responseData.Workspaces.All(workspace => workspace.Id != default));
-        }
-
-        private async Task<HttpResponseMessage> SendGetUserWorkspacesRequest()
-        {
-            return await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, "api/WorkspaceApi/GetUserWorkspaces"));
         }
 
         private bool AreSame(CreateWorkspaceRequest requestModel, WorkspaceApiModel responseModel)

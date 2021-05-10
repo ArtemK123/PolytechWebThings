@@ -2,6 +2,6 @@
 {
     public class DeleteWorkspaceRequest
     {
-        public int WorkspaceId { get; init; }
+        public int? WorkspaceId { get; init; }
     }
 }
