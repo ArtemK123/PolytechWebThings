@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Web.Validators
+namespace Web.Validators.User
 {
     public class EmailValidator : AbstractValidator<string?>
     {

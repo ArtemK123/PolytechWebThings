@@ -35,14 +35,15 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-        [TestCase(null, TestName = "Should return bad request when workspaceId is missing")]
-        [TestCase(-1, TestName = "Should return bad request when workspaceId is invalid")]
-        public async Task Delete_InvalidRequestModel_ShouldReturnBadRequest(int? invalidWorkspaceId)
+        [TestCase(null, "{\"WorkspaceId\":[\"'Workspace Id' must not be empty.\"]}", TestName = "Should return bad request when workspaceId is missing")]
+        [TestCase(0, "{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", TestName = "Should return bad request when workspaceId is 0")]
+        [TestCase(-1, "{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", TestName = "Should return bad request when workspaceId is negative number")]
+        public async Task Delete_InvalidRequestModel_ShouldReturnBadRequest(int? invalidWorkspaceId, string expectedValidationMessage)
         {
             HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = invalidWorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("Request model is invalid", responseText);
+            Assert.AreEqual(expectedValidationMessage, responseText);
         }
 
         [Test]
@@ -53,8 +54,8 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             await UserApiProxy.LoginAsync(new LoginUserRequest { Email = AnotherUserEmail, Password = UserPassword });
             HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("User has not enough rights to delete this workspace", responseText);
+            Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
+            Assert.AreEqual($"User does not have rights to perform this action - Delete workspace with id={workspaceId}", responseText);
         }
 
         [Test]
@@ -64,7 +65,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = nonExistingWorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("Workspace is not found", responseText);
+            Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", responseText);
         }
 
         [Test]

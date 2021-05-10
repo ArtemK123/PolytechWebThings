@@ -22,12 +22,13 @@ namespace PolytechWebThings.Infrastructure.Database.Workspaces
         public async Task<IWorkspace?> GetByGatewayUrlAsync(string url)
         {
             WorkspaceDatabaseModel? databaseModel = await dbContext.Workspaces.SingleOrDefaultAsync(model => model.GatewayUrl == url);
-            if (databaseModel is null)
-            {
-                return null;
-            }
+            return ConvertNullable(databaseModel);
+        }
 
-            return Convert(databaseModel);
+        public async Task<IWorkspace?> GetByIdAsync(int id)
+        {
+            WorkspaceDatabaseModel? databaseModel = await GetWorkspaceDatabaseModelByIdAsync(id: id);
+            return ConvertNullable(databaseModel);
         }
 
         public Task<IReadOnlyCollection<IWorkspace>> GetByUserEmail(string userEmail)
@@ -49,6 +50,24 @@ namespace PolytechWebThings.Infrastructure.Database.Workspaces
             await dbContext.Workspaces.AddAsync(databaseModel);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(IWorkspace workspace)
+        {
+            WorkspaceDatabaseModel? workspaceDatabaseModel = await GetWorkspaceDatabaseModelByIdAsync(workspace.Id);
+            if (workspaceDatabaseModel is null)
+            {
+                return;
+            }
+
+            dbContext.Remove(workspaceDatabaseModel);
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async Task<WorkspaceDatabaseModel?> GetWorkspaceDatabaseModelByIdAsync(int id)
+            => await dbContext.Workspaces.SingleOrDefaultAsync(model => model.Id == id);
+
+        private IWorkspace? ConvertNullable(WorkspaceDatabaseModel? databaseModel)
+            => databaseModel is null ? null : Convert(databaseModel);
 
         private IWorkspace Convert(WorkspaceDatabaseModel databaseModel)
             => storedUserFactory.Create(new StoredWorkspaceCreationModel(

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Web.Models.Workspace.Request;
 
-namespace Web.Validators
+namespace Web.Validators.Workspace
 {
     public class CreateWorkspaceRequestValidator : AbstractValidator<CreateWorkspaceRequest>
     {

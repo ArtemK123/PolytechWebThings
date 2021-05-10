@@ -8,8 +8,12 @@ namespace Application.Repositories
     {
         Task<IWorkspace?> GetByGatewayUrlAsync(string url);
 
+        Task<IWorkspace?> GetByIdAsync(int id);
+
         Task<IReadOnlyCollection<IWorkspace>> GetByUserEmail(string userEmail);
 
         Task AddAsync(IWorkspace workspace);
+
+        Task DeleteAsync(IWorkspace workspace);
     }
 }

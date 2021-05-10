@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Web.Models.User.Request;
 
-namespace Web.Validators
+namespace Web.Validators.User
 {
     public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
     {

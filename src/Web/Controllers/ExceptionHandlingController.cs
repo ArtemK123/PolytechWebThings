@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using Domain.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
@@ -23,6 +24,8 @@ namespace Web.Controllers
             { typeof(WrongUserPasswordException), exception => new BadRequestObjectResult(exception.Message) },
             { typeof(CanNotConnectToGatewayException), exception => new BadRequestObjectResult(exception.Message) },
             { typeof(GatewayAlreadyRegisteredException), exception => new BadRequestObjectResult(exception.Message) },
+            { typeof(UserDoesNotHaveRequiredRightsException), exception => new ObjectResult(exception.Message) { StatusCode = (int)HttpStatusCode.Forbidden } },
+            { typeof(WorkspaceNotFoundByIdException), exception => new BadRequestObjectResult(exception.Message) },
         };
 
         public ExceptionHandlingController(ILoggerFactory loggerFactory)

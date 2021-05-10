@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using NUnit.Framework;
 using Web.Models.User.Request;
 using Web.Validators;
+using Web.Validators.User;
 
 namespace Web.UnitTest.Validators
 {
