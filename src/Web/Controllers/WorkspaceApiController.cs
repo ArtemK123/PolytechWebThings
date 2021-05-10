@@ -47,6 +47,13 @@ namespace Web.Controllers
             return new GetUserWorkspacesResponse(convertedWorkspaces);
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<GetUserWorkspacesResponse> GetById(GetWorkspaceByIdRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpDelete]
         [Authorize]
         public async Task Delete(DeleteWorkspaceRequest request)

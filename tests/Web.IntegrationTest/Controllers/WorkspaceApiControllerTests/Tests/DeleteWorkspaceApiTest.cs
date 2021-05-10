@@ -22,7 +22,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task SetUp()
         {
             GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(true);
-            await WorkspaceApiClient.CreateWorkspaceAsync(new CreateWorkspaceRequest { Name = WorkspaceName, AccessToken = AccessToken, GatewayUrl = GatewayUrl });
+            await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest { Name = WorkspaceName, AccessToken = AccessToken, GatewayUrl = GatewayUrl });
             GetUserWorkspacesResponse getUserWorkspacesResponse = await WorkspaceApiClient.GetUserWorkspacesParsedResponseAsync();
             workspaceId = getUserWorkspacesResponse.Workspaces.First().Id;
         }
@@ -31,7 +31,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task Delete_UnauthorizedUser_ShouldReturnUnauthorizedResponse()
         {
             await UserApiProxy.LogoutAsync();
-            HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.DeleteAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
@@ -40,7 +40,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         [TestCase(-1, "{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", TestName = "Should return bad request when workspaceId is negative number")]
         public async Task Delete_InvalidRequestModel_ShouldReturnBadRequest(int? invalidWorkspaceId, string expectedValidationMessage)
         {
-            HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = invalidWorkspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.DeleteAsync(new DeleteWorkspaceRequest { WorkspaceId = invalidWorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.AreEqual(expectedValidationMessage, responseText);
@@ -52,7 +52,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             await UserApiProxy.LogoutAsync();
             await UserApiProxy.CreateAsync(new CreateUserRequest { Email = AnotherUserEmail, Password = UserPassword });
             await UserApiProxy.LoginAsync(new LoginUserRequest { Email = AnotherUserEmail, Password = UserPassword });
-            HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.DeleteAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
             Assert.AreEqual($"User does not have rights to perform this action - Delete workspace with id={workspaceId}", responseText);
@@ -62,7 +62,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task Delete_WorkspaceIsNotFound_ShouldReturnErrorMessage()
         {
             int nonExistingWorkspaceId = workspaceId + 1;
-            HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = nonExistingWorkspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.DeleteAsync(new DeleteWorkspaceRequest { WorkspaceId = nonExistingWorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", responseText);
@@ -71,7 +71,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         [Test]
         public async Task Delete_Success_ShouldReturnOkResponse()
         {
-            HttpResponseMessage deleteWorkspaceResponse = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
+            HttpResponseMessage deleteWorkspaceResponse = await WorkspaceApiClient.DeleteAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
             GetUserWorkspacesResponse getUserWorkspacesResponse = await WorkspaceApiClient.GetUserWorkspacesParsedResponseAsync();
 
             Assert.AreEqual(HttpStatusCode.OK, deleteWorkspaceResponse.StatusCode);

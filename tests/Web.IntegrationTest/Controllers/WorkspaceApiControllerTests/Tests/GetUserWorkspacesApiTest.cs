@@ -52,7 +52,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             foreach (CreateWorkspaceRequest createWorkspaceRequest in createWorkspaceRequests)
             {
                 GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(createWorkspaceRequest.GatewayUrl, createWorkspaceRequest.AccessToken)).ReturnsAsync(true);
-                await WorkspaceApiClient.CreateWorkspaceAsync(createWorkspaceRequest);
+                await WorkspaceApiClient.CreateAsync(createWorkspaceRequest);
             }
 
             HttpResponseMessage response = await WorkspaceApiClient.GetUserWorkspacesHttpResponseAsync();
