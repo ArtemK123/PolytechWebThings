@@ -6,7 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using Web.IntegrationTest.Controllers.UserApiControllerTests;
-using Web.Models.Request;
+using Web.Models.User.Request;
+using Web.Models.Workspace.Request;
 
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {

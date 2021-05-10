@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Web.Models.Response
+namespace Web.Models.Workspace.Response
 {
     public record GetUserWorkspacesResponse
     {

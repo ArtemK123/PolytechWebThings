@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Application;
 using Domain;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +35,7 @@ namespace Web
             services.AddDomain();
             services.AddApplication();
             services.AddInfrastructure();
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddWeb();
 
             services
                 .AddControllers(options => options.Filters.Add(new ValidateModelFilter()))

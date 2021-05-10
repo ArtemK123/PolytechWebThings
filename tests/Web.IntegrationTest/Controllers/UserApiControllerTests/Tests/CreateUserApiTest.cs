@@ -8,7 +8,7 @@ using Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.Models.Request;
+using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
 {

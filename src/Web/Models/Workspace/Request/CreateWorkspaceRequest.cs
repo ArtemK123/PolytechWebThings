@@ -1,4 +1,4 @@
-﻿namespace Web.Models.Request
+﻿namespace Web.Models.Workspace.Request
 {
     public record CreateWorkspaceRequest
     {

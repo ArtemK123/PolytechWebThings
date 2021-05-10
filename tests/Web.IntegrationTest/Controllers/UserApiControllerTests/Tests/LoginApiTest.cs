@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.Models.Request;
+using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
 {

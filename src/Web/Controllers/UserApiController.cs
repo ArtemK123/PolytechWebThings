@@ -13,17 +13,20 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Web.Models.Request;
+using Web.Models.User.Request;
+using Web.Providers;
 
 namespace Web.Controllers
 {
     public class UserApiController : ControllerBase
     {
         private readonly ISender mediator;
+        private readonly IUserEmailProvider userEmailProvider;
 
-        public UserApiController(ISender mediator)
+        public UserApiController(ISender mediator, IUserEmailProvider userEmailProvider)
         {
             this.mediator = mediator;
+            this.userEmailProvider = userEmailProvider;
         }
 
         [HttpPost]
@@ -59,7 +62,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            string userEmail = User.FindFirstValue(ClaimTypes.Email);
+            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(new LogoutUserCommand { Email = userEmail });
             await HttpContext.SignOutAsync();
             return Ok();

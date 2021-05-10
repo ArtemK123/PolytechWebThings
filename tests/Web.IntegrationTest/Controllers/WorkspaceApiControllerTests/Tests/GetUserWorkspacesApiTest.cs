@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.Models.Request;
-using Web.Models.Response;
+using Web.Models.Workspace.Request;
+using Web.Models.Workspace.Response;
 
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
 {
-    [TestFixture(TestOf = typeof(UserApiController))]
+    [TestFixture(TestOf = typeof(WorkspaceApiController))]
     internal class GetUserWorkspacesApiTest : WorkspaceApiControllerTestBase
     {
         private readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions

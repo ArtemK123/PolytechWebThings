@@ -1,4 +1,4 @@
-﻿namespace Web.Models.Response
+﻿namespace Web.Models.Workspace.Response
 {
     public class WorkspaceApiModel
     {

@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Web.Models.Request;
+using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Controllers.UserApiControllerTests
 {

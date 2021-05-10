@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FluentValidation.Results;
 using NUnit.Framework;
-using Web.Models.Request;
+using Web.Models.User.Request;
 using Web.Validators;
 
 namespace Web.UnitTest.Validators

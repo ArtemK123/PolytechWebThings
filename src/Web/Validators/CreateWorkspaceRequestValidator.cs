@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Web.Models.Request;
+using Web.Models.Workspace.Request;
 
 namespace Web.Validators
 {
