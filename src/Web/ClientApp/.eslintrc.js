@@ -19,6 +19,8 @@
         "max-len": ["warn", { "code": 190 }],
         "no-restricted-globals": ["off"],
         "@typescript-eslint/lines-between-class-members": ["off"],
-        "no-alert": ["off"]
+        "no-alert": ["off"],
+        "no-console": ["off"],
+        "@typescript-eslint/no-unused-vars": ["warn"],
     }
 };
