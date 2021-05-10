@@ -8,13 +8,14 @@ using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
-    internal class WorkspaceApiControllerTestBase : WebApiIntegrationTestBase
+    internal abstract class WorkspaceApiControllerTestBase : WebApiIntegrationTestBase
     {
         protected const string WorkspaceName = "TestName";
         protected const string GatewayUrl = "http://localhost:8080";
         protected const string AccessToken = "j.w.t";
-        protected const string UserPassword = "123123";
+        private const string UserPassword = "123123";
         private const string UserEmail = "test@gmail.com";
+        private const string AnotherUserEmail = "another@test.com";
 
         protected UserApiProxy UserApiProxy { get; private set; }
 
@@ -36,6 +37,13 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         {
             base.SetupMocks(services);
             services.AddTransient(_ => GatewayConnectorMock.Object);
+        }
+
+        protected async Task ChangeUserAsync()
+        {
+            await UserApiProxy.LogoutAsync();
+            await UserApiProxy.CreateAsync(new CreateUserRequest { Email = AnotherUserEmail, Password = UserPassword });
+            await UserApiProxy.LoginAsync(new LoginUserRequest { Email = AnotherUserEmail, Password = UserPassword });
         }
     }
 }

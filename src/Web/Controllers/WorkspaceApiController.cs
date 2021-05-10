@@ -43,7 +43,7 @@ namespace Web.Controllers
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             IReadOnlyCollection<IWorkspace> workspaces = await mediator.Send(new GetUserWorkspacesQuery(userEmail: userEmail));
-            IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(workspace => new WorkspaceApiModel(workspace.Id, workspace.Name, workspace.GatewayUrl)).ToArray();
+            IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(Convert).ToArray();
             return new GetUserWorkspacesResponse(convertedWorkspaces);
         }
 
@@ -61,5 +61,8 @@ namespace Web.Controllers
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.WorkspaceId.GetValueOrDefault(), userEmail: userEmail));
         }
+
+        private static WorkspaceApiModel Convert(IWorkspace workspace)
+            => new WorkspaceApiModel(id: workspace.Id, name: workspace.Name, accessToken: workspace.AccessToken, gatewayUrl: workspace.GatewayUrl);
     }
 }
