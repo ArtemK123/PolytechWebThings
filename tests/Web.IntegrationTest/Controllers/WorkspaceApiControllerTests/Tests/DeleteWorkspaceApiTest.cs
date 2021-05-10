@@ -31,8 +31,18 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task Delete_UnauthorizedUser_ShouldReturnUnauthorizedResponse()
         {
             await UserApiProxy.LogoutAsync();
-            HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest());
+            HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = workspaceId });
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [TestCase(null, TestName = "Should return bad request when workspaceId is missing")]
+        [TestCase(-1, TestName = "Should return bad request when workspaceId is invalid")]
+        public async Task Delete_InvalidRequestModel_ShouldReturnBadRequest(int? invalidWorkspaceId)
+        {
+            HttpResponseMessage response = await WorkspaceApiClient.DeleteWorkspaceAsync(new DeleteWorkspaceRequest { WorkspaceId = invalidWorkspaceId });
+            string responseText = await response.Content.ReadAsStringAsync();
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual("Request model is invalid", responseText);
         }
 
         [Test]
