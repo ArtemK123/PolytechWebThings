@@ -47,7 +47,10 @@ namespace Web.Controllers
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 CreateUserPrincipal(user),
-                new AuthenticationProperties());
+                new AuthenticationProperties
+                {
+                    IsPersistent = true
+                });
 
             return Ok();
         }

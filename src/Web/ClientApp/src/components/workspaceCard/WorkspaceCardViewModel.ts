@@ -2,14 +2,28 @@ import * as ko from "knockout";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
 import { IWorkspaceCardParams } from "./IWorkspaceCardParams";
 import { IWorkspaceApiModel } from "../../backendApi/models/response/IWorkspaceApiModel";
+import { RedirectHandler } from "../../services/RedirectHandler";
 
 export class WorkspaceCardViewModel implements IViewModel {
-    public readonly href: ko.Observable<string> = ko.observable("test");
-    public readonly text: ko.Observable<string> = ko.observable("test");
+    public readonly workspaceLink: ko.Observable<string> = ko.observable("test");
+    public readonly workspaceDescriptor: ko.Observable<string> = ko.observable("test");
 
     constructor(params: IWorkspaceCardParams) {
-        this.href(`workspaces/${params.workspaceApiModel.id.toString()}`);
-        this.text(WorkspaceCardViewModel.generateLinkText(params.workspaceApiModel));
+        this.workspaceLink(`workspaces/${params.workspaceApiModel.id.toString()}`);
+        this.workspaceDescriptor(WorkspaceCardViewModel.generateLinkText(params.workspaceApiModel));
+    }
+
+    public handleEdit(): void {
+        const editLink: string = `${this.workspaceLink()}/edit`;
+        RedirectHandler.redirect(editLink);
+    }
+
+    public handleDelete(): void {
+        // eslint-disable-next-line no-alert
+        const confirmDelete: boolean = confirm(`Are you sure to delete this workspace - ${this.workspaceDescriptor()}`);
+        if (confirmDelete) {
+            throw new Error("Not implemented");
+        }
     }
 
     private static generateLinkText(workspaceApiModel: IWorkspaceApiModel): string {
