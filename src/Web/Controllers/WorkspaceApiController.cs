@@ -47,9 +47,9 @@ namespace Web.Controllers
             return new GetUserWorkspacesResponse(convertedWorkspaces);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Authorize]
-        public async Task Delete([FromBody] DeleteWorkspaceRequest request)
+        public async Task Delete(DeleteWorkspaceRequest request)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.WorkspaceId.GetValueOrDefault(), userEmail: userEmail));

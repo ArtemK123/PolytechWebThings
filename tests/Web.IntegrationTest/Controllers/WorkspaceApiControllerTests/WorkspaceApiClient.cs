@@ -45,10 +45,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         public async Task<HttpResponseMessage> DeleteWorkspaceAsync(DeleteWorkspaceRequest requestModel)
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "api/WorkspaceApi/Delete")
-            {
-                Content = JsonContent.Create(requestModel)
-            });
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, $"api/WorkspaceApi/Delete/{requestModel.WorkspaceId}"));
         }
     }
 }
