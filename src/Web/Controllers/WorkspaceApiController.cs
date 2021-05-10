@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Commands.CreateWorkspace;
 using Application.Commands.DeleteWorkspace;
 using Application.Queries.GetUserWorkspaces;
+using Application.Queries.GetWorkspaceById;
 using Domain.Entities.Workspace;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -49,9 +50,11 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<GetUserWorkspacesResponse> GetById(GetWorkspaceByIdRequest request)
+        public async Task<WorkspaceApiModel> GetById(GetWorkspaceByIdRequest request)
         {
-            throw new NotImplementedException();
+            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
+            IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.WorkspaceId!.Value, userEmail));
+            return Convert(workspace);
         }
 
         [HttpDelete]

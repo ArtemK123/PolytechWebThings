@@ -20,8 +20,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         }
 
         [TestCase(null, "{\"WorkspaceId\":[\"'Workspace Id' must not be empty.\"]}", TestName = "Should return bad request when workspaceId is missing")]
-        [TestCase(0, "{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", TestName = "Should return bad request when workspaceId is 0")]
-        [TestCase(-1, "{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", TestName = "Should return bad request when workspaceId is negative number")]
+        [TestCase(0, "{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", TestName = "Should return bad request when workspaceId is invalid")]
         public async Task Delete_InvalidRequestModel_ShouldReturnBadRequest(int? invalidWorkspaceId, string expectedValidationMessage)
         {
             HttpResponseMessage response = await WorkspaceApiClient.DeleteAsync(new DeleteWorkspaceRequest { WorkspaceId = invalidWorkspaceId });
@@ -37,7 +36,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             HttpResponseMessage response = await WorkspaceApiClient.DeleteAsync(new DeleteWorkspaceRequest { WorkspaceId = WorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
-            Assert.AreEqual($"User does not have rights to perform this action - Delete workspace with id={WorkspaceId}", responseText);
+            Assert.AreEqual($"User does not have rights to perform this action - Get workspace with id={WorkspaceId}", responseText);
         }
 
         [Test]

@@ -20,10 +20,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-        [Test]
-        public async Task GetById_InvalidModel_ShouldReturnErrorMessage()
+        [TestCase(null, TestName = "Should return bad request when workspaceId is missing")]
+        [TestCase(-1, TestName = "Should return bad request when workspaceId is invalid")]
+        public async Task GetById_InvalidModel_ShouldReturnErrorMessage(int? invalidId)
         {
-            int invalidId = -1;
             HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = invalidId });
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -50,7 +50,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             WorkspaceApiModel workspaceApiModel = JsonSerializer.Deserialize<WorkspaceApiModel>(responseText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.IsTrue(AreSame(StoredWorkspace, WorkspaceId, workspaceApiModel));
         }
 
