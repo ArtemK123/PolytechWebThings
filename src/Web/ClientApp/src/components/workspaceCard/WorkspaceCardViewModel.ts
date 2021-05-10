@@ -19,7 +19,6 @@ export class WorkspaceCardViewModel implements IViewModel {
     }
 
     public handleDelete(): void {
-        // eslint-disable-next-line no-alert
         const confirmDelete: boolean = confirm(`Are you sure to delete this workspace - ${this.workspaceDescriptor()}`);
         if (confirmDelete) {
             throw new Error("Not implemented");

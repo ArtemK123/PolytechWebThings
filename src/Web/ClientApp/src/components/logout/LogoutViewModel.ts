@@ -7,13 +7,11 @@ export class LogoutViewModel implements IViewModel {
     public handleLogout() {
         this.userApiClient.logout().then(async (response) => {
             if (response.status === 200) {
-                // eslint-disable-next-line no-alert
                 alert("Logout successfully");
                 window.location.replace("/");
                 return;
             }
             const message = await response.text();
-            // eslint-disable-next-line no-alert
             alert(`Error while logging out: ${message}`);
         });
     }

@@ -22,12 +22,10 @@ export class CreateWorkspacePageViewModel implements IViewModel {
             .createWorkspace(requestModel)
             .then(async (response) => {
                 if (response.status === 200) {
-                    // eslint-disable-next-line no-alert
                     alert("Created successfully");
                     RedirectHandler.redirect("/");
                 } else {
                     const responseMessage: string = await response.text();
-                    // eslint-disable-next-line no-alert
                     alert(`Error while creating workspace: ${responseMessage}`);
                 }
             });

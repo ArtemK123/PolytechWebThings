@@ -19,14 +19,12 @@ export class LoginViewModel implements IViewModel {
 
         this.userApiClient.login(requestModel).then(async (response) => {
             if (response.status === 200) {
-                // eslint-disable-next-line no-alert
                 alert("Login successfully");
                 localStorage.setItem("email", requestModel.email);
                 LoginViewModel.redirectToHomePage();
                 return;
             }
             const message = await response.text();
-            // eslint-disable-next-line no-alert
             alert(`Error while logging in: ${message}`);
         });
     }

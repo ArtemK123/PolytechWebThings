@@ -19,13 +19,11 @@ export class RegisterViewModel implements IViewModel {
 
         this.userApiClient.create(requestModel).then(async (response) => {
             if (response.status === 200) {
-                // eslint-disable-next-line no-alert
                 alert("Registered successfully");
                 RedirectHandler.redirect("/");
                 return;
             }
             const message = await response.text();
-            // eslint-disable-next-line no-alert
             alert(`Error while registering: ${message}`);
         });
     }
