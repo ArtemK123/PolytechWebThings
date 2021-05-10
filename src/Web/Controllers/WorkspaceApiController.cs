@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Commands.CreateWorkspace;
 using Application.Commands.DeleteWorkspace;
+using Application.Commands.UpdateWorkspace;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
 using Domain.Entities.Workspace;
@@ -57,11 +58,18 @@ namespace Web.Controllers
             return Convert(workspace);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize]
-        public async Task Update(UpdateWorkspaceRequest request)
+        public async Task Update([FromBody]UpdateWorkspaceRequest request)
         {
-            throw new NotImplementedException();
+            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
+            await mediator.Send(
+                new UpdateWorkspaceCommand(
+                    workspaceId: request.Id ?? throw new NullReferenceException(),
+                    name: request.Name ?? throw new NullReferenceException(),
+                    gatewayUrl: request.GatewayUrl ?? throw new NullReferenceException(),
+                    request.AccessToken ?? throw new NullReferenceException(),
+                    userEmail));
         }
 
         [HttpDelete]

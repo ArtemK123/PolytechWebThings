@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.Models.Workspace.Request;
+using Web.Models.Workspace.Response;
 
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
 {
@@ -14,7 +15,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         private UpdateWorkspaceRequest DefaultRequest
             => new UpdateWorkspaceRequest
             {
-                WorkspaceId = WorkspaceId,
+                Id = WorkspaceId,
                 Name = WorkspaceName,
                 AccessToken = AccessToken,
                 GatewayUrl = GatewayUrl
@@ -35,14 +36,13 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(requestWithoutMandatoryParams);
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("", responseText); // TODO: replace with actual validation message
         }
 
         [Test]
         public async Task Update_WorkspaceIsNotFound_ShouldReturnErrorMessage()
         {
             int nonExistingWorkspaceId = WorkspaceId + 1;
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { WorkspaceId = nonExistingWorkspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { Id = nonExistingWorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", responseText);
@@ -63,11 +63,12 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         {
             string otherGatewayUrl = "http://other.website.com";
             CreateWorkspaceRequest createOtherWorkspaceRequest = StoredWorkspace with { GatewayUrl = otherGatewayUrl };
+            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(otherGatewayUrl, AccessToken)).ReturnsAsync(true);
             await WorkspaceApiClient.CreateAsync(createOtherWorkspaceRequest);
             HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { GatewayUrl = otherGatewayUrl });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual($"Gateway is already assigned to workspace. Gateway url is {GatewayUrl}", responseText);
+            Assert.AreEqual($"Gateway is already assigned to workspace. Gateway url is {otherGatewayUrl}", responseText);
         }
 
         [Test]
@@ -81,10 +82,27 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         }
 
         [Test]
-        public async Task Update_Success_ShouldReturnOkResult()
+        public async Task Update_Success_ShouldUpdateWorkspace()
         {
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
+            UpdateWorkspaceRequest updateWorkspaceRequest = new UpdateWorkspaceRequest
+            {
+                Id = WorkspaceId,
+                Name = "Updated Name",
+                GatewayUrl = "http://updated.url.com",
+                AccessToken = "updated.jwt.token"
+            };
+
+            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(updateWorkspaceRequest.GatewayUrl, updateWorkspaceRequest.AccessToken)).ReturnsAsync(true);
+            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(updateWorkspaceRequest);
+            WorkspaceApiModel updatedWorkspace = await WorkspaceApiClient.GetByIdParsedResponseAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.IsTrue(AreEqual(updateWorkspaceRequest, updatedWorkspace));
         }
+
+        private bool AreEqual(UpdateWorkspaceRequest updateWorkspaceRequest, WorkspaceApiModel workspaceApiModel)
+            => updateWorkspaceRequest.Id == workspaceApiModel.Id
+               && updateWorkspaceRequest.Name == workspaceApiModel.Name
+               && updateWorkspaceRequest.GatewayUrl == workspaceApiModel.GatewayUrl
+               && updateWorkspaceRequest.AccessToken == workspaceApiModel.AccessToken;
     }
 }

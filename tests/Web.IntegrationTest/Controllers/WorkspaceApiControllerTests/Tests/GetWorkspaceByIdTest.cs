@@ -16,7 +16,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task GetById_UnauthorizedUser_ShouldReturnUnauthorizedResponse()
         {
             await UserApiProxy.LogoutAsync();
-            HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.GetByIdHttpResponseAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
@@ -24,7 +24,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         [TestCase(-1, TestName = "Should return bad request when workspaceId is invalid")]
         public async Task GetById_InvalidModel_ShouldReturnErrorMessage(int? invalidId)
         {
-            HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = invalidId });
+            HttpResponseMessage response = await WorkspaceApiClient.GetByIdHttpResponseAsync(new GetWorkspaceByIdRequest { WorkspaceId = invalidId });
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
@@ -32,7 +32,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task GetById_WorkspaceIsNotFound_ShouldReturnErrorMessage()
         {
             int nonExistingWorkspaceId = WorkspaceId + 1;
-            HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = nonExistingWorkspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.GetByIdHttpResponseAsync(new GetWorkspaceByIdRequest { WorkspaceId = nonExistingWorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", responseText);
@@ -42,7 +42,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         public async Task GetById_UserHasNotEnoughRights_ShouldReturnErrorMessage()
         {
             await ChangeUserAsync();
-            HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.GetByIdHttpResponseAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
             Assert.AreEqual($"User does not have rights to perform this action - Get workspace with id={WorkspaceId}", responseText);
@@ -51,7 +51,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         [Test]
         public async Task GetById_Success_ShouldReturnErrorMessage()
         {
-            HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
+            HttpResponseMessage response = await WorkspaceApiClient.GetByIdHttpResponseAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
             string responseText = await response.Content.ReadAsStringAsync();
             WorkspaceApiModel workspaceApiModel = JsonSerializer.Deserialize<WorkspaceApiModel>(responseText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);

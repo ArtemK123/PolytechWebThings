@@ -11,5 +11,9 @@
         string AccessToken { get; }
 
         string UserEmail { get; }
+
+        MutableWorkspace ToMutable();
+
+        IWorkspace Mutate(MutableWorkspace mutableWorkspace);
     }
 }

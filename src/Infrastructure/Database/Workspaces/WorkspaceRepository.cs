@@ -51,6 +51,18 @@ namespace PolytechWebThings.Infrastructure.Database.Workspaces
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task UpdateAsync(IWorkspace workspace)
+        {
+            WorkspaceDatabaseModel databaseModel = await dbContext.Workspaces.Where(databaseWorkspace => databaseWorkspace.Id == workspace.Id).SingleAsync();
+
+            databaseModel.Name = workspace.Name;
+            databaseModel.GatewayUrl = workspace.GatewayUrl;
+            databaseModel.AccessToken = workspace.AccessToken;
+            databaseModel.UserEmail = workspace.UserEmail;
+
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(IWorkspace workspace)
         {
             WorkspaceDatabaseModel? workspaceDatabaseModel = await GetWorkspaceDatabaseModelByIdAsync(workspace.Id);

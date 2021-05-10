@@ -14,6 +14,8 @@ namespace Application.Repositories
 
         Task AddAsync(IWorkspace workspace);
 
+        Task UpdateAsync(IWorkspace workspace);
+
         Task DeleteAsync(IWorkspace workspace);
     }
 }

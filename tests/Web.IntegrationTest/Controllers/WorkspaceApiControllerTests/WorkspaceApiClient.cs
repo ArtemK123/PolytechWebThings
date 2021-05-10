@@ -35,9 +35,17 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
             return responseData;
         }
 
-        public async Task<HttpResponseMessage> GetByIdAsync(GetWorkspaceByIdRequest requestModel)
+        public async Task<HttpResponseMessage> GetByIdHttpResponseAsync(GetWorkspaceByIdRequest requestModel)
         {
             return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, $"api/WorkspaceApi/GetById/{requestModel.WorkspaceId}"));
+        }
+
+        public async Task<WorkspaceApiModel> GetByIdParsedResponseAsync(GetWorkspaceByIdRequest requestModel)
+        {
+            HttpResponseMessage response = await GetByIdHttpResponseAsync(requestModel);
+            string responseText = await response.Content.ReadAsStringAsync();
+            WorkspaceApiModel responseData = JsonSerializer.Deserialize<WorkspaceApiModel>(responseText, jsonSerializerOptions) ?? throw new NullReferenceException();
+            return responseData;
         }
 
         public async Task<HttpResponseMessage> CreateAsync(CreateWorkspaceRequest requestModel)
@@ -50,14 +58,9 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         public async Task<HttpResponseMessage> UpdateAsync(UpdateWorkspaceRequest requestModel)
         {
-            return await httpClient.SendAsync(request: new HttpRequestMessage(HttpMethod.Put, $"api/WorkspaceApi/Update/{requestModel.WorkspaceId}")
+            return await httpClient.SendAsync(request: new HttpRequestMessage(HttpMethod.Post, $"api/WorkspaceApi/Update")
             {
-                Content = JsonContent.Create(new
-                {
-                    requestModel.Name,
-                    requestModel.GatewayUrl,
-                    requestModel.AccessToken
-                })
+                Content = JsonContent.Create(requestModel)
             });
         }
 
