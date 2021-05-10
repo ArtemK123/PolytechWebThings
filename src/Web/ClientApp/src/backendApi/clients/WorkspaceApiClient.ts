@@ -20,11 +20,7 @@ export class WorkspaceApiClient {
     }
 
     public deleteWorkspace(requestModel: IDeleteWorkspaceRequest): Promise<Response> {
-        return fetch(`${WorkspaceApiClient.apiUrl}Delete`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestModel),
-        });
+        return fetch(`${WorkspaceApiClient.apiUrl}Delete/${requestModel.workspaceId}`, { method: "DELETE" });
     }
 
     public getWorkspaceById(requestModel: IGetWorkspaceByIdRequest): Promise<Response> {
