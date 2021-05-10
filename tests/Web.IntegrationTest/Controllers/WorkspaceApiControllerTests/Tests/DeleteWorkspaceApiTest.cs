@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.Models.User.Request;
@@ -20,6 +21,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         [SetUp]
         public async Task SetUp()
         {
+            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(true);
             await WorkspaceApiClient.CreateWorkspaceAsync(new CreateWorkspaceRequest { Name = WorkspaceName, AccessToken = AccessToken, GatewayUrl = GatewayUrl });
             GetUserWorkspacesResponse getUserWorkspacesResponse = await WorkspaceApiClient.GetUserWorkspacesParsedResponseAsync();
             workspaceId = getUserWorkspacesResponse.Workspaces.First().Id;
