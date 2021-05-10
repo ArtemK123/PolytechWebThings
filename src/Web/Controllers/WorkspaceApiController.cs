@@ -57,6 +57,13 @@ namespace Web.Controllers
             return Convert(workspace);
         }
 
+        [HttpPut]
+        [Authorize]
+        public async Task Update(UpdateWorkspaceRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpDelete]
         [Authorize]
         public async Task Delete(DeleteWorkspaceRequest request)

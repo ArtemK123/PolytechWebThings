@@ -48,6 +48,19 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
             });
         }
 
+        public async Task<HttpResponseMessage> UpdateAsync(UpdateWorkspaceRequest requestModel)
+        {
+            return await httpClient.SendAsync(request: new HttpRequestMessage(HttpMethod.Put, $"api/WorkspaceApi/Update/{requestModel.WorkspaceId}")
+            {
+                Content = JsonContent.Create(new
+                {
+                    requestModel.Name,
+                    requestModel.GatewayUrl,
+                    requestModel.AccessToken
+                })
+            });
+        }
+
         public async Task<HttpResponseMessage> DeleteAsync(DeleteWorkspaceRequest requestModel)
         {
             return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, $"api/WorkspaceApi/Delete/{requestModel.WorkspaceId}"));

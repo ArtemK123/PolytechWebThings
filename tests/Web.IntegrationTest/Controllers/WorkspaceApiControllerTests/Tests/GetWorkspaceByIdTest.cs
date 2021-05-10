@@ -33,7 +33,9 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         {
             int nonExistingWorkspaceId = WorkspaceId + 1;
             HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = nonExistingWorkspaceId });
+            string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", responseText);
         }
 
         [Test]
@@ -41,7 +43,9 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         {
             await ChangeUserAsync();
             HttpResponseMessage response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { WorkspaceId = WorkspaceId });
+            string responseText = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
+            Assert.AreEqual($"User does not have rights to perform this action - Get workspace with id={WorkspaceId}", responseText);
         }
 
         [Test]
