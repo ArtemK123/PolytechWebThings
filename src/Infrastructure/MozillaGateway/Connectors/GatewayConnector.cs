@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Application.Connectors;
 
-namespace PolytechWebThings.Infrastructure.Connectors
+namespace PolytechWebThings.Infrastructure.MozillaGateway.Connectors
 {
     internal class GatewayConnector : IGatewayConnector
     {

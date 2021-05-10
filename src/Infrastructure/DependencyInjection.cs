@@ -4,12 +4,12 @@ using Application.Repositories;
 using Domain.Providers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PolytechWebThings.Infrastructure.Connectors;
 using PolytechWebThings.Infrastructure.Database;
 using PolytechWebThings.Infrastructure.Database.Providers;
 using PolytechWebThings.Infrastructure.Database.StartupJobs;
 using PolytechWebThings.Infrastructure.Database.Users;
 using PolytechWebThings.Infrastructure.Database.Workspaces;
+using PolytechWebThings.Infrastructure.MozillaGateway.Connectors;
 using PolytechWebThings.Infrastructure.Providers;
 
 namespace PolytechWebThings.Infrastructure

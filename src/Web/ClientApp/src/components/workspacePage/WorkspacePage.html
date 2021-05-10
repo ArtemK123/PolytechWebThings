@@ -1,4 +1,7 @@
 <div>
-    <span>Test id is</span>
-    <span data-bind="text: id"></span>
+    <h3 data-bind="text: workspaceName"></h3>
+    <h4>Things in the workspace:</h4>
+    <div data-bind="foreach: things">
+        <div>Thing</div>
+    </div>
 </div>
