@@ -88,6 +88,13 @@ namespace Web.Controllers
             return new OperationResult(OperationStatus.Success);
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<OperationResult<GetWorkspaceWithThingsResponse>> GetWorkspaceWithThings([FromBody] GetWorkspaceWithThingsRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         private static OperationResult<WorkspaceApiModel> ConvertToOperationResult(IWorkspace workspace)
             => new OperationResult<WorkspaceApiModel>(
                 OperationStatus.Success,

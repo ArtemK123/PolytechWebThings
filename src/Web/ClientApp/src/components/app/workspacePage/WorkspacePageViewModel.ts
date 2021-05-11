@@ -3,9 +3,9 @@ import { IThingApiModel } from "../../../backendApi/models/response/things/IThin
 import { IWorkspacePageParams } from "./IWorkspacePageParams";
 import { IViewModel } from "../../../componentsRegistration/IViewModel";
 import { IOperationResult } from "../../../backendApi/models/response/OperationResult/IOperationResult";
-import { IGetWorkspaceWithThingsResponse } from "../../../backendApi/models/response/things/IGetWorkspaceWithThingsResponse";
-import { IGetWorkspaceWithThingsRequest } from "../../../backendApi/models/request/things/IGetWorkspaceWithThingsRequest";
 import { OperationStatus } from "../../../backendApi/models/response/OperationResult/OperationStatus";
+import { IGetWorkspaceWithThingsRequest } from "../../../backendApi/models/request/workspace/IGetWorkspaceWithThingsRequest";
+import { IGetWorkspaceWithThingsResponse } from "../../../backendApi/models/response/IGetWorkspaceWithThingsResponse";
 
 export class WorkspacePageViewModel implements IViewModel {
     public readonly id: ko.Observable<number> = ko.observable(-1);

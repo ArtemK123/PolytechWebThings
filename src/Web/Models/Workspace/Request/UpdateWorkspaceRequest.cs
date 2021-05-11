@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Web.Models.Workspace.Request
+﻿namespace Web.Models.Workspace.Request
 {
     public record UpdateWorkspaceRequest
     {

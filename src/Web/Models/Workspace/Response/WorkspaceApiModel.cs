@@ -1,6 +1,6 @@
 ﻿namespace Web.Models.Workspace.Response
 {
-    public class WorkspaceApiModel
+    public record WorkspaceApiModel
     {
         public WorkspaceApiModel(int id, string name, string accessToken, string gatewayUrl)
         {

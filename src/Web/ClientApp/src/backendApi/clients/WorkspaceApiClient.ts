@@ -6,6 +6,8 @@ import { IUpdateWorkspaceRequest } from "../models/request/workspace/IUpdateWork
 import { IOperationResult } from "../models/response/OperationResult/IOperationResult";
 import { IWorkspaceApiModel } from "../models/response/IWorkspaceApiModel";
 import { BackendRequestSender } from "../senders/BackendRequestSender";
+import { IGetWorkspaceWithThingsRequest } from "../models/request/workspace/IGetWorkspaceWithThingsRequest";
+import { IGetWorkspaceWithThingsResponse } from "../models/response/IGetWorkspaceWithThingsResponse";
 
 export class WorkspaceApiClient {
     private static readonly apiUrl: string = "/api/WorkspaceApi/";
@@ -29,5 +31,9 @@ export class WorkspaceApiClient {
 
     public updateWorkspace(requestModel: IUpdateWorkspaceRequest): Promise<IOperationResult<void>> {
         return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}Update`, requestModel);
+    }
+
+    public getWorkspaceWithThingsRequest(requestModel: IGetWorkspaceWithThingsRequest): Promise<IOperationResult<IGetWorkspaceWithThingsResponse>> {
+        return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}GetWorkspaceWithThings`, requestModel);
     }
 }
