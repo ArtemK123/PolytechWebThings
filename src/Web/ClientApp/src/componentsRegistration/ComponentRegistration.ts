@@ -11,7 +11,7 @@ import { AuthorizedHomePageComponent } from "../components/authorizedHomePage/Au
 import { HomePageComponent } from "../components/homePage/HomePageComponent";
 import { CreateWorkspacePageComponent } from "../components/createWorkspacePage/CreateWorkspacePageComponent";
 import { HeaderComponent } from "../components/header/HeaderComponent";
-import { WorkspaceCardComponent } from "../components/workspaceCard/WorkspaceCardComponent";
+import { WorkspaceCardComponent } from "../components/authorizedHomePage/workspaceCard/WorkspaceCardComponent";
 import { WorkspacePageComponent } from "../components/workspacePage/WorkspacePageComponent";
 import { UpdateWorkspacePageComponent } from "../components/updateWorkspacePage/UpdateWorkspacePageComponent";
 
