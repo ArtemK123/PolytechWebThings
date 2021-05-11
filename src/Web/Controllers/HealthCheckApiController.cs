@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web.Models.OperationResults;
 
 namespace Web.Controllers
 {
     public class HealthCheckApiController : ControllerBase
     {
         [HttpGet]
-        public string HealthCheck()
+        public OperationResult<string> HealthCheck()
         {
-            return "Hello from backend!";
+            return new OperationResult<string>(OperationStatus.Success, "Hello from backend!");
         }
     }
 }

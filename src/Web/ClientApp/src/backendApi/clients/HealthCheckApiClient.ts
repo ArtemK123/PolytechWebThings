@@ -1,5 +1,8 @@
+import { IOperationResult } from "../models/response/OperationResult/IOperationResult";
+
 export class HealthCheckApiClient {
-    public healthCheck(): Promise<Response> {
-        return fetch("/api/HealthCheckApi/HealthCheck", { method: "GET" });
+    public async healthCheck(): Promise<IOperationResult<string>> {
+        const response = await fetch("/api/HealthCheckApi/HealthCheck", { method: "GET" });
+        return response.json();
     }
 }
