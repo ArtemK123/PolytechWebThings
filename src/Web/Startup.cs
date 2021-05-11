@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Application;
 using Domain;
 using FluentValidation.AspNetCore;
@@ -48,12 +47,12 @@ namespace Web
                 .AddCookie(options =>
                 {
                     options.Cookie.HttpOnly = false;
-                    options.Events.OnRedirectToLogin = context =>
+                    options.Events.OnRedirectToLogin = async context =>
                     {
                         context.Response.StatusCode = 200;
                         OperationResult operationResult = new OperationResult(OperationStatus.Unauthorized);
-                        context.Response.Body = new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(operationResult));
-                        return Task.CompletedTask;
+                        byte[] serialized = JsonSerializer.SerializeToUtf8Bytes(operationResult);
+                        await context.Response.Body.WriteAsync(serialized, 0, serialized.Length);
                     };
                 });
 
