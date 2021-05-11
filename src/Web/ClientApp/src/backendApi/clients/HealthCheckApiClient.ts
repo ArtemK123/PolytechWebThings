@@ -2,7 +2,9 @@ import { IOperationResult } from "../models/response/OperationResult/IOperationR
 import { BackendRequestSender } from "../senders/BackendRequestSender";
 
 export class HealthCheckApiClient {
+    private readonly backendRequestSender: BackendRequestSender = new BackendRequestSender();
+
     public async healthCheck(): Promise<IOperationResult<string>> {
-        return BackendRequestSender.send<string>("/api/HealthCheckApi/HealthCheck", { method: "GET" });
+        return this.backendRequestSender.send<string>("/api/HealthCheckApi/HealthCheck", { method: "GET" });
     }
 }

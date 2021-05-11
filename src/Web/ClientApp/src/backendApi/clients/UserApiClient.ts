@@ -1,26 +1,21 @@
 import { ICreateUserRequest } from "../models/request/user/ICreateUserRequest";
 import { ILoginUserRequest } from "../models/request/user/ILoginUserRequest";
+import { IOperationResult } from "../models/response/OperationResult/IOperationResult";
+import { BackendRequestSender } from "../senders/BackendRequestSender";
 
 export class UserApiClient {
-    public create(requestModel: ICreateUserRequest): Promise<Response> {
-        return fetch("/api/UserApi/Create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestModel),
-        });
+    private static readonly apiUrlBase: string = "/api/UserApi/";
+    private readonly backendRequestSender: BackendRequestSender = new BackendRequestSender();
+
+    public create(requestModel: ICreateUserRequest): Promise<IOperationResult<void>> {
+        return this.backendRequestSender.sendPostRequest(`${UserApiClient.apiUrlBase}Create`, requestModel);
     }
 
-    public login(requestModel: ILoginUserRequest): Promise<Response> {
-        return fetch("/api/UserApi/Login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestModel),
-        });
+    public login(requestModel: ILoginUserRequest): Promise<IOperationResult<void>> {
+        return this.backendRequestSender.sendPostRequest(`${UserApiClient.apiUrlBase}Login`, requestModel);
     }
 
-    public logout(): Promise<Response> {
-        return fetch("/api/UserApi/Logout", {
-            method: "POST",
-        });
+    public logout(): Promise<IOperationResult<void>> {
+        return this.backendRequestSender.sendPostRequestWithoutBody(`${UserApiClient.apiUrlBase}Logout`);
     }
 }

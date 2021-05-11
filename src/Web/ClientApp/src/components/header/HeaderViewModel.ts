@@ -2,11 +2,13 @@ import * as ko from "knockout";
 import { IViewModel } from "../../componentsRegistration/IViewModel";
 import { UserApiClient } from "../../backendApi/clients/UserApiClient";
 import { RedirectHandler } from "../../services/RedirectHandler";
+import { LogoutUseCase } from "../../useCases/LogoutUseCase";
 
 export class HeaderViewModel implements IViewModel {
     public readonly userAccount: ko.Observable<string> = ko.observable("Unauthorized");
 
     private readonly userApiClient: UserApiClient = new UserApiClient();
+    private readonly logoutUseCase: LogoutUseCase = new LogoutUseCase();
 
     constructor() {
         this.updateUserAccount();
@@ -17,12 +19,7 @@ export class HeaderViewModel implements IViewModel {
     }
 
     public handleLogout(): void {
-        this.userApiClient
-            .logout()
-            .then(() => {
-                localStorage.removeItem("email");
-                RedirectHandler.redirect("/");
-            });
+        this.logoutUseCase.execute();
     }
 
     private updateUserAccount() {

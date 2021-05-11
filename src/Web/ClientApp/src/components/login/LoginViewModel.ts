@@ -3,6 +3,8 @@ import { IViewModel } from "../../componentsRegistration/IViewModel";
 import { RedirectHandler } from "../../services/RedirectHandler";
 import { ILoginUserRequest } from "../../backendApi/models/request/user/ILoginUserRequest";
 import { UserApiClient } from "../../backendApi/clients/UserApiClient";
+import { OperationStatus } from "../../backendApi/models/response/OperationResult/OperationStatus";
+import { IOperationResult } from "../../backendApi/models/response/OperationResult/IOperationResult";
 
 export class LoginViewModel implements IViewModel {
     public readonly email: ko.Observable<string> = ko.observable("");
@@ -17,15 +19,12 @@ export class LoginViewModel implements IViewModel {
             password: this.password(),
         };
 
-        this.userApiClient.login(requestModel).then(async (response) => {
-            if (response.status === 200) {
+        this.userApiClient.login(requestModel).then((result: IOperationResult<void>) => {
+            if (result.status === OperationStatus.Success) {
                 alert("Login successfully");
                 localStorage.setItem("email", requestModel.email);
                 LoginViewModel.redirectToHomePage();
-                return;
             }
-            const message = await response.text();
-            alert(`Error while logging in: ${message}`);
         });
     }
 

@@ -3,6 +3,7 @@ import { IViewModel } from "../../componentsRegistration/IViewModel";
 import { IGetUserWorkspacesResponse } from "../../backendApi/models/response/IGetUserWorkspacesResponse";
 import { WorkspaceApiClient } from "../../backendApi/clients/WorkspaceApiClient";
 import { IWorkspaceApiModel } from "../../backendApi/models/response/IWorkspaceApiModel";
+import { IOperationResult } from "../../backendApi/models/response/OperationResult/IOperationResult";
 
 export class AuthorizedHomePageViewModel implements IViewModel {
     public readonly email: ko.Observable<string> = ko.observable<string>("");
@@ -21,8 +22,8 @@ export class AuthorizedHomePageViewModel implements IViewModel {
     }
 
     private fetchWorkspaces(): void {
-        this.workspaceApiClient.getUserWorkspaces().then((response: IGetUserWorkspacesResponse) => {
-            this.workspaces(response.workspaces);
+        this.workspaceApiClient.getUserWorkspaces().then((response: IOperationResult<IGetUserWorkspacesResponse>) => {
+            this.workspaces(response.data.workspaces);
         });
     }
 }

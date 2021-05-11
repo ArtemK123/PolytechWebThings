@@ -6,6 +6,8 @@ import { IGetWorkspaceByIdRequest } from "../../backendApi/models/request/worksp
 import { IWorkspaceApiModel } from "../../backendApi/models/response/IWorkspaceApiModel";
 import { RedirectHandler } from "../../services/RedirectHandler";
 import { IUpdateWorkspaceRequest } from "../../backendApi/models/request/workspace/IUpdateWorkspaceRequest";
+import { IOperationResult } from "../../backendApi/models/response/OperationResult/IOperationResult";
+import { OperationStatus } from "../../backendApi/models/response/OperationResult/OperationStatus";
 
 export class UpdateWorkspacePageViewModel implements IViewModel {
     public readonly name: ko.Observable<string> = ko.observable("");
@@ -20,11 +22,10 @@ export class UpdateWorkspacePageViewModel implements IViewModel {
         this.workspaceId = params.id;
         this.apiClient
             .getWorkspaceById({ id: params.id } as IGetWorkspaceByIdRequest)
-            .then((response) => response.json())
-            .then((workspaceApiModel: IWorkspaceApiModel) => {
-                this.name(workspaceApiModel.name);
-                this.url(workspaceApiModel.gatewayUrl);
-                this.token(workspaceApiModel.accessToken);
+            .then((operationResult: IOperationResult<IWorkspaceApiModel>) => {
+                this.name(operationResult.data.name);
+                this.url(operationResult.data.gatewayUrl);
+                this.token(operationResult.data.accessToken);
             })
             .catch((error) => {
                 console.error(error);
@@ -43,15 +44,10 @@ export class UpdateWorkspacePageViewModel implements IViewModel {
 
         this.apiClient
             .updateWorkspace(requestModel)
-            .then(async (response) => {
-                if (response.status === 200) {
+            .then((result) => {
+                if (result.status === OperationStatus.Success) {
                     alert("Updated successfully");
                     RedirectHandler.redirect("/");
-                } else if (response.status !== 500) {
-                    const responseText: string = await response.text();
-                    alert(responseText);
-                } else {
-                    alert("Error while updating");
                 }
             });
     }

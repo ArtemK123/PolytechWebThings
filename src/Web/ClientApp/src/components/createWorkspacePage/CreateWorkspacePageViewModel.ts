@@ -3,6 +3,8 @@ import { IViewModel } from "../../componentsRegistration/IViewModel";
 import { ICreateWorkspaceRequest } from "../../backendApi/models/request/workspace/ICreateWorkspaceRequest";
 import { WorkspaceApiClient } from "../../backendApi/clients/WorkspaceApiClient";
 import { RedirectHandler } from "../../services/RedirectHandler";
+import { OperationStatus } from "../../backendApi/models/response/OperationResult/OperationStatus";
+import { IOperationResult } from "../../backendApi/models/response/OperationResult/IOperationResult";
 
 export class CreateWorkspacePageViewModel implements IViewModel {
     public readonly name: ko.Observable<string> = ko.observable("");
@@ -20,13 +22,9 @@ export class CreateWorkspacePageViewModel implements IViewModel {
 
         this.apiClient
             .createWorkspace(requestModel)
-            .then(async (response) => {
-                if (response.status === 200) {
-                    alert("Created successfully");
+            .then((result: IOperationResult<void>) => {
+                if (result.status === OperationStatus.Success) {
                     RedirectHandler.redirect("/");
-                } else {
-                    const responseMessage: string = await response.text();
-                    alert(`Error while creating workspace: ${responseMessage}`);
                 }
             });
     }

@@ -3,10 +3,10 @@ import { RedirectHandler } from "../../services/RedirectHandler";
 
 export class UnauthorizedHomePageViewModel implements IViewModel {
     public handleSignIn(): void {
-        RedirectHandler.redirect("login");
+        RedirectHandler.redirect("/login");
     }
 
     public handleSignUp(): void {
-        RedirectHandler.redirect("register");
+        RedirectHandler.redirect("/register");
     }
 }

@@ -3,44 +3,31 @@ import { ICreateWorkspaceRequest } from "../models/request/workspace/ICreateWork
 import { IDeleteWorkspaceRequest } from "../models/request/workspace/IDeleteWorkspaceRequest";
 import { IGetWorkspaceByIdRequest } from "../models/request/workspace/IGetWorkspaceByIdRequest";
 import { IUpdateWorkspaceRequest } from "../models/request/workspace/IUpdateWorkspaceRequest";
+import { IOperationResult } from "../models/response/OperationResult/IOperationResult";
+import { IWorkspaceApiModel } from "../models/response/IWorkspaceApiModel";
+import { BackendRequestSender } from "../senders/BackendRequestSender";
 
 export class WorkspaceApiClient {
     private static readonly apiUrl: string = "/api/WorkspaceApi/";
+    private readonly backendRequestSender: BackendRequestSender = new BackendRequestSender();
 
-    public async getUserWorkspaces(): Promise<IGetUserWorkspacesResponse> {
-        const response: Response = await fetch(`${WorkspaceApiClient.apiUrl}GetUserWorkspaces`, { method: "GET" });
-        return response.json();
+    public async getUserWorkspaces(): Promise<IOperationResult<IGetUserWorkspacesResponse>> {
+        return this.backendRequestSender.sendGetRequest(`${WorkspaceApiClient.apiUrl}GetUserWorkspaces`);
     }
 
-    public createWorkspace(requestModel: ICreateWorkspaceRequest): Promise<Response> {
-        return fetch(`${WorkspaceApiClient.apiUrl}Create`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestModel),
-        });
+    public createWorkspace(requestModel: ICreateWorkspaceRequest): Promise<IOperationResult<void>> {
+        return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}Create`, requestModel);
     }
 
-    public deleteWorkspace(requestModel: IDeleteWorkspaceRequest): Promise<Response> {
-        return fetch(`${WorkspaceApiClient.apiUrl}Delete`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestModel),
-        });
+    public deleteWorkspace(requestModel: IDeleteWorkspaceRequest): Promise<IOperationResult<void>> {
+        return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}Delete`, requestModel);
     }
 
-    public getWorkspaceById(requestModel: IGetWorkspaceByIdRequest): Promise<Response> {
-        return fetch(`${WorkspaceApiClient.apiUrl}GetById`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestModel),
-        });
+    public getWorkspaceById(requestModel: IGetWorkspaceByIdRequest): Promise<IOperationResult<IWorkspaceApiModel>> {
+        return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}GetById`, requestModel);
     }
 
-    public updateWorkspace(requestModel: IUpdateWorkspaceRequest): Promise<Response> {
-        return fetch(`${WorkspaceApiClient.apiUrl}Update`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestModel),
-        });
+    public updateWorkspace(requestModel: IUpdateWorkspaceRequest): Promise<IOperationResult<void>> {
+        return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}Update`, requestModel);
     }
 }
