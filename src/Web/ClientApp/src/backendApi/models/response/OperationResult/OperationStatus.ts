@@ -1,5 +1,5 @@
 ﻿export enum OperationStatus {
     Success,
-    ClientError,
-    InternalError,
+    Forbidden,
+    Error,
 }

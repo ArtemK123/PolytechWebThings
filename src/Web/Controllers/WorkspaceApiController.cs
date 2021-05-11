@@ -12,6 +12,7 @@ using Domain.Entities.Workspace;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 using Web.Providers;
@@ -31,7 +32,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task Create([FromBody] CreateWorkspaceRequest request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Create([FromBody] CreateWorkspaceRequest request, CancellationToken cancellationToken)
         {
             await mediator.Send(
                 new CreateWorkspaceCommand(
@@ -40,30 +41,31 @@ namespace Web.Controllers
                     accessToken: request.AccessToken ?? throw new NullReferenceException(),
                     userEmail: userEmailProvider.GetUserEmail(HttpContext)),
                 cancellationToken);
+            return new OperationResult(OperationStatus.Success);
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<GetUserWorkspacesResponse> GetUserWorkspaces(CancellationToken cancellationToken)
+        public async Task<OperationResult<GetUserWorkspacesResponse>> GetUserWorkspaces(CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             IReadOnlyCollection<IWorkspace> workspaces = await mediator.Send(new GetUserWorkspacesQuery(userEmail: userEmail), cancellationToken);
-            IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(Convert).ToArray();
-            return new GetUserWorkspacesResponse(convertedWorkspaces);
+            IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(ConvertApiModel).ToArray();
+            return new OperationResult<GetUserWorkspacesResponse>(OperationStatus.Success, new GetUserWorkspacesResponse(convertedWorkspaces));
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<WorkspaceApiModel> GetById([FromBody]GetWorkspaceByIdRequest request, CancellationToken cancellationToken)
+        public async Task<OperationResult<WorkspaceApiModel>> GetById([FromBody]GetWorkspaceByIdRequest request, CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.Id!.Value, userEmail), cancellationToken);
-            return Convert(workspace);
+            return ConvertToOperationResult(workspace);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task Update([FromBody]UpdateWorkspaceRequest request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Update([FromBody]UpdateWorkspaceRequest request, CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(
@@ -74,17 +76,24 @@ namespace Web.Controllers
                     request.AccessToken ?? throw new NullReferenceException(),
                     userEmail),
                 cancellationToken);
+            return new OperationResult(OperationStatus.Success);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task Delete([FromBody]DeleteWorkspaceRequest request, CancellationToken cancellationToken)
+        public async Task<OperationResult> Delete([FromBody]DeleteWorkspaceRequest request, CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.Id.GetValueOrDefault(), userEmail: userEmail), cancellationToken);
+            return new OperationResult(OperationStatus.Success);
         }
 
-        private static WorkspaceApiModel Convert(IWorkspace workspace)
+        private static OperationResult<WorkspaceApiModel> ConvertToOperationResult(IWorkspace workspace)
+            => new OperationResult<WorkspaceApiModel>(
+                OperationStatus.Success,
+                ConvertApiModel(workspace));
+
+        private static WorkspaceApiModel ConvertApiModel(IWorkspace workspace)
             => new WorkspaceApiModel(id: workspace.Id, name: workspace.Name, accessToken: workspace.AccessToken, gatewayUrl: workspace.GatewayUrl);
     }
 }

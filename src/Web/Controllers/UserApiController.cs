@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.Models.OperationResults;
 using Web.Models.User.Request;
 using Web.Providers;
 
@@ -31,7 +32,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateUserRequest createUserRequest, CancellationToken cancellationToken)
+        public async Task<OperationResult> Create([FromBody]CreateUserRequest createUserRequest, CancellationToken cancellationToken)
         {
             await mediator.Send(
                 new CreateUserCommand(
@@ -39,11 +40,11 @@ namespace Web.Controllers
                     password: createUserRequest.Password ?? throw new NullReferenceException(),
                     role: UserRole.User),
                 cancellationToken);
-            return Ok();
+            return new OperationResult(OperationStatus.Success);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody]LoginUserRequest loginUserRequest, CancellationToken cancellationToken)
+        public async Task<OperationResult> Login([FromBody]LoginUserRequest loginUserRequest, CancellationToken cancellationToken)
         {
             await mediator.Send(
                 new LoginUserCommand(
@@ -60,17 +61,17 @@ namespace Web.Controllers
                     IsPersistent = true
                 });
 
-            return Ok();
+            return new OperationResult(OperationStatus.Success);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Logout(CancellationToken cancellationToken)
+        public async Task<OperationResult> Logout(CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(new LogoutUserCommand { Email = userEmail }, cancellationToken);
             await HttpContext.SignOutAsync();
-            return Ok();
+            return new OperationResult(OperationStatus.Success);
         }
 
         private ClaimsPrincipal CreateUserPrincipal(IUser user)

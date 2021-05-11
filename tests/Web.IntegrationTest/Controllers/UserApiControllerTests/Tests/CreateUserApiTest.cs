@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Application.Repositories;
 using Domain.Entities.User;
@@ -8,6 +6,7 @@ using Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.Models.OperationResults;
 using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
@@ -29,11 +28,11 @@ namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
             const string email = "test3213@gmail.com";
             const string password = "12345678";
 
-            HttpResponseMessage response = await userApiProxy.CreateAsync(new CreateUserRequest { Email = email, Password = password });
+            OperationResult response = await userApiProxy.CreateAsync(new CreateUserRequest { Email = email, Password = password });
             IUserRepository userRepository = ApplicationFactory.Services.GetService<IUserRepository>() ?? throw new NullReferenceException();
             IUser storedUser = await userRepository.GetByEmailAsync(email) ?? throw new NullReferenceException();
 
-            Assert.True(response.IsSuccessStatusCode);
+            Assert.AreEqual(OperationStatus.Success, response.Status);
             Assert.AreEqual(email, storedUser.Email);
             Assert.AreEqual(password, storedUser.Password);
             Assert.AreEqual(UserRole.User, storedUser.Role);
@@ -44,13 +43,12 @@ namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
         [Test]
         public async Task Create_InvalidRequest_ShouldReturnValidationMessages()
         {
-            HttpResponseMessage response = await userApiProxy.CreateAsync(new CreateUserRequest { Email = string.Empty, Password = string.Empty });
+            OperationResult response = await userApiProxy.CreateAsync(new CreateUserRequest { Email = string.Empty, Password = string.Empty });
 
             string expectedResponseMessage = "{\"Email\":[\"A valid email address is required.\"],\"Password\":[\"'Password' must not be empty.\"]}";
 
-            string actualResponseMessage = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual(expectedResponseMessage, actualResponseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual(expectedResponseMessage, response.Message);
         }
 
         [Test]
@@ -62,12 +60,10 @@ namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
 
             await userApiProxy.CreateAsync(createUserRequest);
 
-            HttpResponseMessage response = await userApiProxy.CreateAsync(createUserRequest);
+            OperationResult response = await userApiProxy.CreateAsync(createUserRequest);
 
-            string actualResponseMessage = await response.Content.ReadAsStringAsync();
-
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual($"Email {email} is already taken by other user", actualResponseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual($"Email {email} is already taken by other user", response.Message);
         }
     }
 }

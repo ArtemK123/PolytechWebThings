@@ -1,6 +1,9 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Web.Models.OperationResults;
 using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Controllers.UserApiControllerTests
@@ -15,12 +18,13 @@ namespace Web.IntegrationTest.Controllers.UserApiControllerTests
             this.httpClient = httpClient;
         }
 
-        public async Task<HttpResponseMessage> CreateAsync(CreateUserRequest createUserRequest)
+        public async Task<OperationResult> CreateAsync(CreateUserRequest createUserRequest)
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Create")
+            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Create")
             {
                 Content = JsonContent.Create(createUserRequest)
             });
+            return await ParseResponseAsync<OperationResult>(response);
         }
 
         public async Task<HttpResponseMessage> LoginAsync(LoginUserRequest loginUserRequest)
@@ -34,6 +38,13 @@ namespace Web.IntegrationTest.Controllers.UserApiControllerTests
         public async Task<HttpResponseMessage> LogoutAsync()
         {
             return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Logout"));
+        }
+
+        private async Task<TOperationResult> ParseResponseAsync<TOperationResult>(HttpResponseMessage response)
+            where TOperationResult : OperationResult
+        {
+            await using Stream responseStream = await response.Content.ReadAsStreamAsync();
+            return await JsonSerializer.DeserializeAsync<TOperationResult>(responseStream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
     }
 }

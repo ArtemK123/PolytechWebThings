@@ -3,7 +3,7 @@
     public enum OperationStatus
     {
         Success,
-        ClientError,
-        InternalError
+        Forbidden,
+        Error
     }
 }
