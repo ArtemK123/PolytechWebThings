@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Commands.CreateUser;
 using Application.Commands.LoginUser;
@@ -30,21 +31,25 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateUserRequest createUserRequest)
+        public async Task<IActionResult> Create([FromBody]CreateUserRequest createUserRequest, CancellationToken cancellationToken)
         {
-            await mediator.Send(request: new CreateUserCommand(
-                email: createUserRequest.Email ?? throw new NullReferenceException(),
-                password: createUserRequest.Password ?? throw new NullReferenceException(),
-                role: UserRole.User));
+            await mediator.Send(
+                new CreateUserCommand(
+                    email: createUserRequest.Email ?? throw new NullReferenceException(),
+                    password: createUserRequest.Password ?? throw new NullReferenceException(),
+                    role: UserRole.User),
+                cancellationToken);
             return Ok();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody]LoginUserRequest loginUserRequest)
+        public async Task<IActionResult> Login([FromBody]LoginUserRequest loginUserRequest, CancellationToken cancellationToken)
         {
-            await mediator.Send(new LoginUserCommand(
-                email: loginUserRequest.Email ?? throw new NullReferenceException(),
-                password: loginUserRequest.Password ?? throw new NullReferenceException()));
+            await mediator.Send(
+                new LoginUserCommand(
+                    email: loginUserRequest.Email ?? throw new NullReferenceException(),
+                    password: loginUserRequest.Password ?? throw new NullReferenceException()),
+                cancellationToken);
 
             IUser user = await mediator.Send(new GetUserByEmailQuery(email: loginUserRequest.Email));
             await HttpContext.SignInAsync(
@@ -60,10 +65,10 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(new LogoutUserCommand { Email = userEmail });
+            await mediator.Send(new LogoutUserCommand { Email = userEmail }, cancellationToken);
             await HttpContext.SignOutAsync();
             return Ok();
         }
