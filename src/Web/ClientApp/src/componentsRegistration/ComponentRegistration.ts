@@ -12,6 +12,7 @@ import { RegisterComponent } from "../components/app/register/RegisterComponent"
 import { HomePageComponent } from "../components/app/homePage/HomePageComponent";
 import { WorkspacePageComponent } from "../components/app/workspacePage/WorkspacePageComponent";
 import { UpdateWorkspacePageComponent } from "../components/app/updateWorkspacePage/UpdateWorkspacePageComponent";
+import { ThingCardComponent } from "../components/app/workspacePage/thingCard/ThingCardComponent";
 
 class ComponentRegistration {
     registerBindings() {
@@ -28,6 +29,7 @@ class ComponentRegistration {
         ko.components.register("workspace-card", new WorkspaceCardComponent().generateDescriptor());
         ko.components.register("workspace-page", new WorkspacePageComponent().generateDescriptor());
         ko.components.register("update-workspace-page", new UpdateWorkspacePageComponent().generateDescriptor());
+        ko.components.register("thing-card", new ThingCardComponent().generateDescriptor());
     }
 }
 

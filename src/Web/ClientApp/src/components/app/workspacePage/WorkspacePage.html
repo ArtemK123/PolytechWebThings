@@ -1,7 +1,7 @@
 <div>
-    <h3 data-bind="text: workspaceName"></h3>
+    <h3>Workspace name is <span data-bind="text: workspaceName"></span></h3>
     <h4>Things in the workspace:</h4>
     <div data-bind="foreach: things">
-        <div>Thing</div>
+        <thing-card params="{ model: $data }"></thing-card>
     </div>
 </div>
