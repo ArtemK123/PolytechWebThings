@@ -4,9 +4,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.IntegrationTest.Utils.ApiClients;
+using Web.IntegrationTest.Utils.Parsers;
+using Web.Models.OperationResults;
 using Web.Models.User.Request;
 
-namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
+namespace Web.IntegrationTest.Controllers.UserApiControllerTests
 {
     [TestFixture(TestOf = typeof(UserApiController))]
     internal class LoginApiTest : WebApiIntegrationTestBase
@@ -14,19 +17,19 @@ namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
         private const string Email = "test@mail.com";
         private const string Password = "123213123";
 
-        private UserApiProxy userApiProxy;
+        private UserApiClient userApiClient;
 
         [SetUp]
         public async Task SetUp()
         {
-            userApiProxy = new UserApiProxy(HttpClient);
-            await userApiProxy.CreateAsync(new CreateUserRequest { Email = Email, Password = Password });
+            userApiClient = new UserApiClient(HttpClient, new HttpResponseMessageParser());
+            await userApiClient.CreateAsync(new CreateUserRequest { Email = Email, Password = Password });
         }
 
         [Test]
         public async Task Login_ValidCredentials_ShouldReturnCookieWithToken()
         {
-            HttpResponseMessage response = await userApiProxy.LoginAsync(new LoginUserRequest { Email = Email, Password = Password });
+            HttpResponseMessage response = await userApiClient.LoginRawResponseAsync(new LoginUserRequest { Email = Email, Password = Password });
 
             string cookieHeaderValue = response.Headers.GetValues("Set-Cookie").SingleOrDefault();
             string[] cookieHeaderElements = cookieHeaderValue?.Split(';').Select(element => element.Trim()).ToArray();
@@ -39,37 +42,32 @@ namespace Web.IntegrationTest.Controllers.UserApiControllerTests.Tests
         [Test]
         public async Task Login_InvalidModel_ShouldReturnBadRequestResponse_AndValidationMessage()
         {
-            HttpResponseMessage response = await userApiProxy.LoginAsync(new LoginUserRequest { Email = string.Empty, Password = string.Empty });
+            OperationResult response = await userApiClient.LoginAsync(new LoginUserRequest { Email = string.Empty, Password = string.Empty });
 
             string expectedResponseMessage = "{\"Email\":[\"A valid email address is required.\"],\"Password\":[\"'Password' must not be empty.\"]}";
-            string actualResponseMessage = await response.Content.ReadAsStringAsync();
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual(expectedResponseMessage, actualResponseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual(expectedResponseMessage, response.Message);
         }
 
         [Test]
         public async Task Login_UserIsNotFound_ShouldReturnBadRequest()
         {
             const string wrongUserEmail = "another@test.com";
-            HttpResponseMessage response = await userApiProxy.LoginAsync(new LoginUserRequest { Email = wrongUserEmail, Password = Password });
+            OperationResult response = await userApiClient.LoginAsync(new LoginUserRequest { Email = wrongUserEmail, Password = Password });
 
-            string responseMessage = await response.Content.ReadAsStringAsync();
-
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual($"User with email={wrongUserEmail} is not found", responseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual($"User with email={wrongUserEmail} is not found", response.Message);
         }
 
         [Test]
         public async Task Login_WrongPassword_ShouldReturnBadRequest()
         {
             const string wrongPassword = "wrongPassword";
-            HttpResponseMessage response = await userApiProxy.LoginAsync(new LoginUserRequest { Email = Email, Password = wrongPassword });
+            OperationResult response = await userApiClient.LoginAsync(new LoginUserRequest { Email = Email, Password = wrongPassword });
 
-            string responseMessage = await response.Content.ReadAsStringAsync();
-
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual($"Wrong password for user with email={Email}", responseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual($"Wrong password for user with email={Email}", response.Message);
         }
     }
 }

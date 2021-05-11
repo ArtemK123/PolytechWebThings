@@ -1,5 +1,6 @@
 ﻿export enum OperationStatus {
     Success,
-    Forbidden,
     Error,
+    Unauthorized,
+    Forbidden,
 }

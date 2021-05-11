@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Application;
 using Domain;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using PolytechWebThings.Infrastructure;
 using Web.Attributes;
 using Web.Middlewares;
+using Web.Models.OperationResults;
 
 namespace Web
 {
@@ -48,7 +50,9 @@ namespace Web
                     options.Cookie.HttpOnly = false;
                     options.Events.OnRedirectToLogin = context =>
                     {
-                        context.Response.StatusCode = 401;
+                        context.Response.StatusCode = 200;
+                        OperationResult operationResult = new OperationResult(OperationStatus.Unauthorized);
+                        context.Response.Body = new MemoryStream(JsonSerializer.SerializeToUtf8Bytes(operationResult));
                         return Task.CompletedTask;
                     };
                 });

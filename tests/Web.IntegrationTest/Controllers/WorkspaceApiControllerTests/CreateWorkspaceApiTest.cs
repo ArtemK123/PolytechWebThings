@@ -1,12 +1,11 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 
-namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
+namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
     internal class CreateWorkspaceApiTest : WorkspaceApiControllerTestBase
@@ -14,7 +13,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         [Test]
         public async Task Create_InvalidModel_ShouldReturnBadRequestResponse()
         {
-            HttpResponseMessage response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
+            OperationResult response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
             {
                 Name = string.Empty,
                 GatewayUrl = string.Empty,
@@ -23,25 +22,24 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
 
             string expectedResponseMessage =
                 "{\"Name\":[\"'Name' must not be empty.\"],\"GatewayUrl\":[\"'Gateway Url' must not be empty.\"],\"AccessToken\":[\"'Access Token' must not be empty.\"]}";
-            string actualResponseMessage = await response.Content.ReadAsStringAsync();
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual(expectedResponseMessage, actualResponseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual(expectedResponseMessage, response.Message);
         }
 
         [Test]
         public async Task Create_UnauthorizedUser_ShouldReturnUnauthorizedResponse()
         {
-            await UserApiProxy.LogoutAsync();
+            await UserApiClient.LogoutAsync();
 
-            HttpResponseMessage response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
+            OperationResult response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
             {
                 Name = string.Empty,
                 GatewayUrl = string.Empty,
                 AccessToken = string.Empty
             });
 
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.AreEqual(OperationStatus.Unauthorized, response.Status);
         }
 
         [Test]
@@ -57,42 +55,39 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             var secondRequest = firstRequest with { Name = "other name", AccessToken = "otherj.w.t" };
 
             await WorkspaceApiClient.CreateAsync(firstRequest);
-            HttpResponseMessage response = await WorkspaceApiClient.CreateAsync(secondRequest);
+            OperationResult response = await WorkspaceApiClient.CreateAsync(secondRequest);
 
-            string responseMessage = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual($"Gateway is already assigned to workspace. Gateway url is {GatewayUrl}", responseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual($"Gateway is already assigned to workspace. Gateway url is {GatewayUrl}", response.Message);
         }
 
         [Test]
         public async Task Create_CannotConnectToGateway_ShouldReturnBadRequestResponse()
         {
             GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(false);
-            HttpResponseMessage response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
+            OperationResult response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
             {
                 Name = WorkspaceName,
                 GatewayUrl = GatewayUrl,
                 AccessToken = AccessToken
             });
 
-            string responseMessage = await response.Content.ReadAsStringAsync();
-
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("Can not connect to gateway using the provided url and access token", responseMessage);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual("Can not connect to gateway using the provided url and access token", response.Message);
         }
 
         [Test]
         public async Task Create_Success_ShouldReturnOkResponse()
         {
             GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(true);
-            HttpResponseMessage response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
+            OperationResult response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
             {
                 Name = WorkspaceName,
                 GatewayUrl = GatewayUrl,
                 AccessToken = AccessToken
             });
 
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OperationStatus.Success, response.Status);
         }
     }
 }

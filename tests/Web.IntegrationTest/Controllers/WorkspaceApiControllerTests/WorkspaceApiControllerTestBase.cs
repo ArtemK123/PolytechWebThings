@@ -3,7 +3,8 @@ using Application.Connectors;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
-using Web.IntegrationTest.Controllers.UserApiControllerTests;
+using Web.IntegrationTest.Utils.ApiClients;
+using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
@@ -17,7 +18,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         private const string UserEmail = "test@gmail.com";
         private const string AnotherUserEmail = "another@test.com";
 
-        protected UserApiProxy UserApiProxy { get; private set; }
+        protected UserApiClient UserApiClient { get; private set; }
 
         protected WorkspaceApiClient WorkspaceApiClient { get; private set; }
 
@@ -27,10 +28,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         public async Task WorkspaceApiControllerTestBaseSetUp()
         {
             GatewayConnectorMock = new Mock<IGatewayConnector>(MockBehavior.Strict);
-            UserApiProxy = new UserApiProxy(HttpClient);
-            WorkspaceApiClient = new WorkspaceApiClient(HttpClient);
-            await UserApiProxy.CreateAsync(new CreateUserRequest { Email = UserEmail, Password = UserPassword });
-            await UserApiProxy.LoginAsync(new LoginUserRequest { Email = UserEmail, Password = UserPassword });
+            UserApiClient = new UserApiClient(HttpClient, new HttpResponseMessageParser());
+            WorkspaceApiClient = new WorkspaceApiClient(HttpClient, new HttpResponseMessageParser());
+            await UserApiClient.CreateAsync(new CreateUserRequest { Email = UserEmail, Password = UserPassword });
+            await UserApiClient.LoginAsync(new LoginUserRequest { Email = UserEmail, Password = UserPassword });
         }
 
         protected override void SetupMocks(IServiceCollection services)
@@ -41,9 +42,9 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         protected async Task ChangeUserAsync()
         {
-            await UserApiProxy.LogoutAsync();
-            await UserApiProxy.CreateAsync(new CreateUserRequest { Email = AnotherUserEmail, Password = UserPassword });
-            await UserApiProxy.LoginAsync(new LoginUserRequest { Email = AnotherUserEmail, Password = UserPassword });
+            await UserApiClient.LogoutAsync();
+            await UserApiClient.CreateAsync(new CreateUserRequest { Email = AnotherUserEmail, Password = UserPassword });
+            await UserApiClient.LoginAsync(new LoginUserRequest { Email = AnotherUserEmail, Password = UserPassword });
         }
     }
 }

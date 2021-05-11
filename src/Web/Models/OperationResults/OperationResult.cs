@@ -26,13 +26,13 @@
 
     public record OperationResult<TData> : OperationResult
     {
-        public OperationResult(OperationStatus status, string message, TData? data)
+        public OperationResult(OperationStatus status, string message, TData data)
             : base(status, message)
         {
             Data = data;
         }
 
-        public OperationResult(OperationStatus status, TData? data)
+        public OperationResult(OperationStatus status, TData data)
             : base(status)
         {
             Data = data;
@@ -41,8 +41,9 @@
         // for json serializer
         public OperationResult()
         {
+            Data = default!;
         }
 
-        public TData? Data { get; set; }
+        public TData Data { get; set; }
     }
 }

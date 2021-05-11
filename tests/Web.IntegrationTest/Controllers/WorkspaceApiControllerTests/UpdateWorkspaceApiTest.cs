@@ -1,13 +1,12 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 
-namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
+namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
     internal class UpdateWorkspaceApiTest : WorkspaceApiControllerWithStoredWorkspaceTestBase
@@ -24,38 +23,35 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
         [Test]
         public async Task Update_UnauthorizedUser_ShouldReturnUnauthorizedResult()
         {
-            await UserApiProxy.LogoutAsync();
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            await UserApiClient.LogoutAsync();
+            OperationResult response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
+            Assert.AreEqual(OperationStatus.Unauthorized, response.Status);
         }
 
         [Test]
         public async Task Update_InvalidModel_ShouldReturnErrorMessage()
         {
             UpdateWorkspaceRequest requestWithoutMandatoryParams = new UpdateWorkspaceRequest();
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(requestWithoutMandatoryParams);
-            string responseText = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            OperationResult response = await WorkspaceApiClient.UpdateAsync(requestWithoutMandatoryParams);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
         }
 
         [Test]
         public async Task Update_WorkspaceIsNotFound_ShouldReturnErrorMessage()
         {
             int nonExistingWorkspaceId = WorkspaceId + 1;
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { Id = nonExistingWorkspaceId });
-            string responseText = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", responseText);
+            OperationResult response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { Id = nonExistingWorkspaceId });
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", response.Message);
         }
 
         [Test]
         public async Task Update_UserHasNotEnoughRights_ShouldReturnErrorMessage()
         {
             await ChangeUserAsync();
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
-            string responseText = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
-            Assert.AreEqual($"User does not have rights to perform this action - Get workspace with id={WorkspaceId}", responseText);
+            OperationResult response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
+            Assert.AreEqual(OperationStatus.Forbidden, response.Status);
+            Assert.AreEqual($"User does not have rights to perform this action - Get workspace with id={WorkspaceId}", response.Message);
         }
 
         [Test]
@@ -65,20 +61,18 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             CreateWorkspaceRequest createOtherWorkspaceRequest = StoredWorkspace with { GatewayUrl = otherGatewayUrl };
             GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(otherGatewayUrl, AccessToken)).ReturnsAsync(true);
             await WorkspaceApiClient.CreateAsync(createOtherWorkspaceRequest);
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { GatewayUrl = otherGatewayUrl });
-            string responseText = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual($"Gateway is already assigned to workspace. Gateway url is {otherGatewayUrl}", responseText);
+            OperationResult response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { GatewayUrl = otherGatewayUrl });
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual($"Gateway is already assigned to workspace. Gateway url is {otherGatewayUrl}", response.Message);
         }
 
         [Test]
         public async Task Update_CanNotConnectToNewGateway_ShouldReturnErrorMessage()
         {
             GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(false);
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
-            string responseText = await response.Content.ReadAsStringAsync();
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual("Can not connect to gateway using the provided url and access token", responseText);
+            OperationResult response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
+            Assert.AreEqual(OperationStatus.Error, response.Status);
+            Assert.AreEqual("Can not connect to gateway using the provided url and access token", response.Message);
         }
 
         [Test]
@@ -93,10 +87,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
             };
 
             GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(updateWorkspaceRequest.GatewayUrl, updateWorkspaceRequest.AccessToken)).ReturnsAsync(true);
-            HttpResponseMessage response = await WorkspaceApiClient.UpdateAsync(updateWorkspaceRequest);
-            WorkspaceApiModel updatedWorkspace = await WorkspaceApiClient.GetByIdParsedResponseAsync(new GetWorkspaceByIdRequest { Id = WorkspaceId });
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(AreEqual(updateWorkspaceRequest, updatedWorkspace));
+            OperationResult response = await WorkspaceApiClient.UpdateAsync(updateWorkspaceRequest);
+            OperationResult<WorkspaceApiModel> updatedWorkspaceResponse = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { Id = WorkspaceId });
+            Assert.AreEqual(OperationStatus.Success, response.Status);
+            Assert.IsTrue(AreEqual(updateWorkspaceRequest, updatedWorkspaceResponse.Data));
         }
 
         private bool AreEqual(UpdateWorkspaceRequest updateWorkspaceRequest, WorkspaceApiModel workspaceApiModel)

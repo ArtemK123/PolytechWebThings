@@ -1,42 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 
-namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
+namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
     internal class GetUserWorkspacesApiTest : WorkspaceApiControllerTestBase
     {
-        private readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-
         [Test]
         public async Task GetUserWorkspaces_Unauthorized_ShouldReturnUnauthorizedResponse()
         {
-            await UserApiProxy.LogoutAsync();
-            HttpResponseMessage response = await WorkspaceApiClient.GetUserWorkspacesHttpResponseAsync();
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            await UserApiClient.LogoutAsync();
+            OperationResult<GetUserWorkspacesResponse> response = await WorkspaceApiClient.GetUserWorkspacesAsync();
+            Assert.AreEqual(OperationStatus.Unauthorized, response.Status);
         }
 
         [Test]
         public async Task GetUserWorkspaces_NoWorkspaces_ShouldReturnEmptyCollection()
         {
-            HttpResponseMessage response = await WorkspaceApiClient.GetUserWorkspacesHttpResponseAsync();
-            string responseText = await response.Content.ReadAsStringAsync();
-            GetUserWorkspacesResponse responseData = JsonSerializer.Deserialize<GetUserWorkspacesResponse>(responseText, jsonSerializerOptions) ?? throw new NullReferenceException();
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsEmpty(responseData.Workspaces);
+            OperationResult<GetUserWorkspacesResponse> response = await WorkspaceApiClient.GetUserWorkspacesAsync();
+            Assert.AreEqual(OperationStatus.Success, response.Status);
+            Assert.IsEmpty(response.Data.Workspaces);
         }
 
         [Test]
@@ -55,17 +45,15 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.Tests
                 await WorkspaceApiClient.CreateAsync(createWorkspaceRequest);
             }
 
-            HttpResponseMessage response = await WorkspaceApiClient.GetUserWorkspacesHttpResponseAsync();
-            string responseText = await response.Content.ReadAsStringAsync();
-            GetUserWorkspacesResponse responseData = JsonSerializer.Deserialize<GetUserWorkspacesResponse>(responseText, jsonSerializerOptions) ?? throw new NullReferenceException();
+            OperationResult<GetUserWorkspacesResponse> response = await WorkspaceApiClient.GetUserWorkspacesAsync();
 
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(OperationStatus.Success, response.Status);
             Assert.True(
-                responseData
+                response.Data
                     .Workspaces.All(responseModel =>
                         createWorkspaceRequests.Any(
                             requestModel => AreSame(requestModel, responseModel))));
-            Assert.True(responseData.Workspaces.All(workspace => workspace.Id != default));
+            Assert.True(response.Data.Workspaces.All(workspace => workspace.Id != default));
         }
 
         private bool AreSame(CreateWorkspaceRequest requestModel, WorkspaceApiModel responseModel)
