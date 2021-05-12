@@ -1,5 +1,6 @@
 ﻿using Application;
-using Application.Connectors;
+using Application.MozillaGateway.Connectors;
+using Application.MozillaGateway.Providers;
 using Application.Repositories;
 using Domain.Providers;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using PolytechWebThings.Infrastructure.Database.StartupJobs;
 using PolytechWebThings.Infrastructure.Database.Users;
 using PolytechWebThings.Infrastructure.Database.Workspaces;
 using PolytechWebThings.Infrastructure.MozillaGateway.Connectors;
+using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
 using PolytechWebThings.Infrastructure.Providers;
 
 namespace PolytechWebThings.Infrastructure
@@ -20,10 +22,16 @@ namespace PolytechWebThings.Infrastructure
         {
             services.AddDatabase();
             services.AddHttpClient();
+            services.AddMozillaGateway();
             services.AddTransient<IGuidProvider, GuidProvider>();
-            services.AddTransient<IGatewayConnector, GatewayConnector>();
 
             return services;
+        }
+
+        private static void AddMozillaGateway(this IServiceCollection services)
+        {
+            services.AddTransient<IGatewayConnector, GatewayConnector>();
+            services.AddTransient<IThingsProvider, ThingsProvider>();
         }
 
         private static void AddDatabase(this IServiceCollection services)

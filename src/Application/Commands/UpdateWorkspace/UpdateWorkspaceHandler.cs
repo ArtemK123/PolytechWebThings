@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Connectors;
+using Application.MozillaGateway.Connectors;
 using Application.Queries.GetWorkspaceById;
 using Application.Repositories;
 using Domain.Entities.Workspace;

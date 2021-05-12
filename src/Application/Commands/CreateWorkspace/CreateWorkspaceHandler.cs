@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Connectors;
+using Application.MozillaGateway.Connectors;
 using Application.Repositories;
 using Domain.Entities.Common;
 using Domain.Entities.Workspace;

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Application.Connectors;
+using Application.MozillaGateway.Connectors;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;

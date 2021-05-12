@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Application.Connectors
+namespace Application.MozillaGateway.Connectors
 {
     public interface IGatewayConnector
     {
