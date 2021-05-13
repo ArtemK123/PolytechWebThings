@@ -27,7 +27,6 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         [SetUp]
         public async Task WorkspaceApiControllerTestBaseSetUp()
         {
-            GatewayConnectorMock = new Mock<IGatewayConnector>(MockBehavior.Strict);
             UserApiClient = new UserApiClient(HttpClient, new HttpResponseMessageParser());
             WorkspaceApiClient = new WorkspaceApiClient(HttpClient, new HttpResponseMessageParser());
             await UserApiClient.CreateAsync(new CreateUserRequest { Email = UserEmail, Password = UserPassword });
@@ -37,6 +36,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         protected override void SetupMocks(IServiceCollection services)
         {
             base.SetupMocks(services);
+            GatewayConnectorMock = new Mock<IGatewayConnector>(MockBehavior.Strict);
             services.AddTransient(_ => GatewayConnectorMock.Object);
         }
 

@@ -24,8 +24,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
         private readonly IHttpClientFactory httpClientFactory;
 
-        public ThingsProvider(
-            IHttpClientFactory httpClientFactory)
+        public ThingsProvider(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
         }
@@ -104,7 +103,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         private async Task<HttpResponseMessage> SendRequestToGatewayAsync(IWorkspace workspace)
         {
             string thingsUrl = workspace.GatewayUrl + "/things";
-            return await httpClientFactory.CreateClient().SendAsync(new HttpRequestMessage(HttpMethod.Get, thingsUrl)
+            return await httpClientFactory.CreateClient(nameof(ThingsProvider)).SendAsync(new HttpRequestMessage(HttpMethod.Get, thingsUrl)
             {
                 Headers =
                 {
