@@ -27,35 +27,4 @@ export class WorkspacePageViewModel implements IViewModel {
                 this.things(response.data.things);
             });
     }
-
-    // private getHardcodedResponse(request: IGetWorkspaceWithThingsRequest): Promise<IOperationResult<IGetWorkspaceWithThingsResponse>> {
-    //     return new Promise((resolve) => {
-    //         resolve({
-    //             status: OperationStatus.Success,
-    //             message: "Success",
-    //             data: {
-    //                 workspace: {
-    //                     id: this.id(),
-    //                     name: "Hardcoded",
-    //                 },
-    //                 things: [
-    //                     {
-    //                         title: "thing1",
-    //                         properties: [
-    //                             { name: "Power", value: "off" },
-    //                             { name: "Temperature", value: "90" },
-    //                         ],
-    //                     },
-    //                     {
-    //                         title: "thing2",
-    //                         properties: [
-    //                             { name: "Color", value: "black" },
-    //                             { name: "Brightness", value: "70" },
-    //                         ],
-    //                     },
-    //                 ],
-    //             } as IGetWorkspaceWithThingsResponse,
-    //         } as IOperationResult<IGetWorkspaceWithThingsResponse>);
-    //     });
-    // }
 }
