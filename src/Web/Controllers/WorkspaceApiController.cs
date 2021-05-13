@@ -8,11 +8,15 @@ using Application.Commands.DeleteWorkspace;
 using Application.Commands.UpdateWorkspace;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
+using Application.Queries.GetWorkspaceWithThings;
+using Domain.Entities.WebThingsGateway.Property;
+using Domain.Entities.WebThingsGateway.Thing;
 using Domain.Entities.Workspace;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.OperationResults;
+using Web.Models.Things;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 using Web.Providers;
@@ -36,9 +40,9 @@ namespace Web.Controllers
         {
             await mediator.Send(
                 new CreateWorkspaceCommand(
-                    name: request.Name ?? throw new NullReferenceException(),
-                    gatewayUrl: request.GatewayUrl ?? throw new NullReferenceException(),
-                    accessToken: request.AccessToken ?? throw new NullReferenceException(),
+                    name: ConvertToNonNullable(request.Name),
+                    gatewayUrl: ConvertToNonNullable(request.GatewayUrl),
+                    accessToken: ConvertToNonNullable(request.AccessToken),
                     userEmail: userEmailProvider.GetUserEmail(HttpContext)),
                 cancellationToken);
             return new OperationResult(OperationStatus.Success);
@@ -70,10 +74,10 @@ namespace Web.Controllers
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(
                 new UpdateWorkspaceCommand(
-                    workspaceId: request.Id ?? throw new NullReferenceException(),
-                    name: request.Name ?? throw new NullReferenceException(),
-                    gatewayUrl: request.GatewayUrl ?? throw new NullReferenceException(),
-                    request.AccessToken ?? throw new NullReferenceException(),
+                    workspaceId: ConvertToNonNullableValueType(request.Id),
+                    name: ConvertToNonNullable(request.Name),
+                    gatewayUrl: ConvertToNonNullable(request.GatewayUrl),
+                    accessToken: ConvertToNonNullable(request.AccessToken),
                     userEmail),
                 cancellationToken);
             return new OperationResult(OperationStatus.Success);
@@ -84,7 +88,7 @@ namespace Web.Controllers
         public async Task<OperationResult> Delete([FromBody]DeleteWorkspaceRequest request, CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: request.Id.GetValueOrDefault(), userEmail: userEmail), cancellationToken);
+            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: ConvertToNonNullableValueType(request.Id), userEmail: userEmail), cancellationToken);
             return new OperationResult(OperationStatus.Success);
         }
 
@@ -92,7 +96,12 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult<GetWorkspaceWithThingsResponse>> GetWorkspaceWithThings([FromBody] GetWorkspaceWithThingsRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
+            WorkspaceWithThingsModel result
+                = await mediator.Send(new GetWorkspaceWithThingsQuery(workspaceId: ConvertToNonNullableValueType(request.WorkspaceId), userEmail), cancellationToken);
+            WorkspaceApiModel convertedWorkspaceModel = ConvertApiModel(result.Workspace);
+            IReadOnlyCollection<ThingApiModel> convertedThingModels = result.Things.Select(Convert).ToArray();
+            return new OperationResult<GetWorkspaceWithThingsResponse>(OperationStatus.Success, new GetWorkspaceWithThingsResponse(convertedWorkspaceModel, convertedThingModels));
         }
 
         private static OperationResult<WorkspaceApiModel> ConvertToOperationResult(IWorkspace workspace)
@@ -102,5 +111,21 @@ namespace Web.Controllers
 
         private static WorkspaceApiModel ConvertApiModel(IWorkspace workspace)
             => new WorkspaceApiModel(id: workspace.Id, name: workspace.Name, accessToken: workspace.AccessToken, gatewayUrl: workspace.GatewayUrl);
+
+        private TModel ConvertToNonNullable<TModel>(TModel? nullableModel)
+            where TModel : class
+        {
+            return nullableModel ?? throw new NullReferenceException();
+        }
+
+        private TValueType ConvertToNonNullableValueType<TValueType>(TValueType? nullableValueType)
+            where TValueType : struct
+        {
+            return nullableValueType ?? throw new NullReferenceException();
+        }
+
+        private ThingApiModel Convert(IThing thing) => new ThingApiModel(title: thing.Title, properties: thing.Properties.Select(Convert).ToArray());
+
+        private PropertyApiModel Convert(IProperty property) => new PropertyApiModel(name: property.Name, value: property.Value);
     }
 }
