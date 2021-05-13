@@ -57,7 +57,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
         private IThing Convert(ThingParsingModel thingParsingModel)
         {
-            IReadOnlyCollection<IProperty> properties = thingParsingModel.Properties.Select(keyValuePair => Convert(keyValuePair.Value)).ToList();
+            // IReadOnlyCollection<IProperty> properties = thingParsingModel.Properties.Select(keyValuePair => Convert(keyValuePair.Value)).ToList();
+            IReadOnlyCollection<IProperty> properties = Array.Empty<IProperty>();
             IReadOnlyCollection<IAction> actions = Array.Empty<IAction>(); // TODO: Find a way to parse actions as well
 
             return thingFactory.Create(new ParsedThingCreationModel(title: thingParsingModel.Title, href: thingParsingModel.Href, properties, actions));
