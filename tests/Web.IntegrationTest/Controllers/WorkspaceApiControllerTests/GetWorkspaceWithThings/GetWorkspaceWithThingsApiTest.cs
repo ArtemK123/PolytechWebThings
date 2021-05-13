@@ -3,13 +3,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using Moq.Protected;
 using NUnit.Framework;
-using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
 using Web.Controllers;
 using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
@@ -20,8 +15,6 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
     internal class GetWorkspaceWithThingsApiTest : WorkspaceApiControllerWithStoredWorkspaceTestBase
     {
-        private Mock<HttpMessageHandler> httpMessageHandlerMock;
-
         [Test]
         public async Task GetWorkspaceWithThings_PrimitivePropertyValues_ShouldDeserializeAndReturnThings()
         {
@@ -36,29 +29,13 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
             Assert.AreEqual(serializedExpected, serializedActual);
         }
 
-        protected override void SetupMocks(IServiceCollection services)
-        {
-            base.SetupMocks(services);
-
-            httpMessageHandlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
-
-            Mock<IHttpClientFactory> httpClientFactoryMock = new Mock<IHttpClientFactory>(MockBehavior.Strict);
-            HttpClient httpClient = new HttpClient(httpMessageHandlerMock.Object);
-            httpClientFactoryMock.Setup(factory => factory.CreateClient(nameof(GatewayMessageSender))).Returns(httpClient);
-            services.AddTransient(_ => httpClientFactoryMock.Object);
-        }
-
         private async Task SetupHttpMessageHandlerMock(string resourcesFolder)
         {
             string inputPath = Path.Combine(resourcesFolder, "Input.json");
             string jsonFileContent = await File.ReadAllTextAsync(inputPath);
-            httpMessageHandlerMock.Protected()
-                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(message => IsHttpRequestMessageValid(message)), ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(jsonFileContent),
-                });
+            SetupHttpMessageHandlerMock(
+                IsHttpRequestMessageValid,
+                new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(jsonFileContent) });
         }
 
         private bool IsHttpRequestMessageValid(HttpRequestMessage httpRequestMessage)

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Moq;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.Models.OperationResults;
@@ -41,7 +40,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
             foreach (CreateWorkspaceRequest createWorkspaceRequest in createWorkspaceRequests)
             {
-                GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(createWorkspaceRequest.GatewayUrl, createWorkspaceRequest.AccessToken)).ReturnsAsync(true);
+                MockGatewayConnectionCheck(validConnection: true, gatewayUrl: createWorkspaceRequest.GatewayUrl, accessToken: createWorkspaceRequest.AccessToken);
                 await WorkspaceApiClient.CreateAsync(createWorkspaceRequest);
             }
 

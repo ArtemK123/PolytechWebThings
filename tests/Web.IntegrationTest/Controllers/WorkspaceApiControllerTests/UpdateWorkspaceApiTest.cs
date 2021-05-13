@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Moq;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.Models.OperationResults;
@@ -59,7 +58,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         {
             string otherGatewayUrl = "http://other.website.com";
             CreateWorkspaceRequest createOtherWorkspaceRequest = StoredWorkspace with { GatewayUrl = otherGatewayUrl };
-            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(otherGatewayUrl, AccessToken)).ReturnsAsync(true);
+            MockGatewayConnectionCheck(validConnection: true, gatewayUrl: otherGatewayUrl);
             await WorkspaceApiClient.CreateAsync(createOtherWorkspaceRequest);
             OperationResult response = await WorkspaceApiClient.UpdateAsync(DefaultRequest with { GatewayUrl = otherGatewayUrl });
             Assert.AreEqual(OperationStatus.Error, response.Status);
@@ -69,7 +68,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         [Test]
         public async Task Update_CanNotConnectToNewGateway_ShouldReturnErrorMessage()
         {
-            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(false);
+            MockGatewayConnectionCheck(validConnection: false);
             OperationResult response = await WorkspaceApiClient.UpdateAsync(DefaultRequest);
             Assert.AreEqual(OperationStatus.Error, response.Status);
             Assert.AreEqual("Can not connect to gateway using the provided url and access token", response.Message);
@@ -86,7 +85,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
                 AccessToken = "updated.jwt.token"
             };
 
-            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(updateWorkspaceRequest.GatewayUrl, updateWorkspaceRequest.AccessToken)).ReturnsAsync(true);
+            MockGatewayConnectionCheck(validConnection: true, gatewayUrl: updateWorkspaceRequest.GatewayUrl, accessToken: updateWorkspaceRequest.AccessToken);
             OperationResult response = await WorkspaceApiClient.UpdateAsync(updateWorkspaceRequest);
             OperationResult<WorkspaceApiModel> updatedWorkspaceResponse = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { Id = WorkspaceId });
             Assert.AreEqual(OperationStatus.Success, response.Status);

@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Moq;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.Models.OperationResults;
@@ -45,7 +44,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         [Test]
         public async Task Create_GatewayUrlIsAlreadyUsed_ShouldReturnBadRequestResponse()
         {
-            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(true);
+            MockGatewayConnectionCheck(validConnection: true);
             var firstRequest = new CreateWorkspaceRequest
             {
                 Name = WorkspaceName,
@@ -64,7 +63,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         [Test]
         public async Task Create_CannotConnectToGateway_ShouldReturnBadRequestResponse()
         {
-            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(false);
+            MockGatewayConnectionCheck(validConnection: false);
             OperationResult response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
             {
                 Name = WorkspaceName,
@@ -79,7 +78,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         [Test]
         public async Task Create_Success_ShouldReturnOkResponse()
         {
-            GatewayConnectorMock.Setup(connector => connector.CanConnectToGatewayAsync(GatewayUrl, AccessToken)).ReturnsAsync(true);
+            MockGatewayConnectionCheck(validConnection: true);
             OperationResult response = await WorkspaceApiClient.CreateAsync(new CreateWorkspaceRequest
             {
                 Name = WorkspaceName,
