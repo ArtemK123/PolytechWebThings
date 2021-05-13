@@ -16,4 +16,10 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Web\Web.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Controllers/WorkspaceApiControllerTests/GetWorkspaceWithThings/PrimitivePropertyValues.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>

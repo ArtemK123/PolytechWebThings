@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,16 +25,18 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
         [Test]
         public async Task GetWorkspaceWithThings_PrimitivePropertyValues()
         {
+            string path = Path.GetFullPath("Controllers/WorkspaceApiControllerTests/GetWorkspaceWithThings/PrimitivePropertyValues.json");
+            string jsonFileContent = await File.ReadAllTextAsync(path);
             httpMessageHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(message => IsHttpRequestMessageValid(message)), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent("{'name':thecodebuzz,'city':'USA'}"),
+                    Content = new StringContent(jsonFileContent),
                 });
 
             OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
-            Assert.AreEqual(OperationStatus.Success, result.Message);
+            Assert.AreEqual(OperationStatus.Success, result.Status);
         }
 
         private bool IsHttpRequestMessageValid(HttpRequestMessage httpRequestMessage)
