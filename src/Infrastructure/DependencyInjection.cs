@@ -12,6 +12,7 @@ using PolytechWebThings.Infrastructure.Database.Users;
 using PolytechWebThings.Infrastructure.Database.Workspaces;
 using PolytechWebThings.Infrastructure.MozillaGateway.Connectors;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
 using PolytechWebThings.Infrastructure.Providers;
@@ -40,6 +41,7 @@ namespace PolytechWebThings.Infrastructure
 
         private static void AddParsers(this IServiceCollection services)
         {
+            services.AddTransient<IGetThingsResponseParser, GetThingsResponseParser>();
             services.AddTransient<IPropertyParser, BooleanPropertyParser>();
             services.AddTransient<IPropertyParser, StringPropertyParser>();
             services.AddTransient<IPropertyParser, NumberPropertyParser>();

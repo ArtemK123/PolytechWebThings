@@ -2,15 +2,15 @@
 using Domain.Entities.WebThingsGateway.Properties;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
-namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
+namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
 {
-    internal class IntegerPropertyParser : PropertyParserBase
+    internal class NumberPropertyParser : PropertyParserBase
     {
-        public override string PropertyValueType => "integer";
+        public override string PropertyValueType => "number";
 
         public override Property Parse(JsonElement propertyJson)
         {
-            IntegerPropertyParsingModel parsedModel = Deserialize<IntegerPropertyParsingModel>(propertyJson);
+            NumberPropertyParsingModel parsedModel = Deserialize<NumberPropertyParsingModel>(propertyJson);
             return new NumberProperty
             {
                 Name = parsedModel.Name,
@@ -21,8 +21,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
                 ReadOnly = parsedModel.ReadOnly,
                 Value = parsedModel.Value,
                 Unit = parsedModel.Unit,
-                Minimum = int.MinValue,
-                Maximum = int.MaxValue
+                Minimum = parsedModel.Minimum,
+                Maximum = parsedModel.Maximum
             };
         }
     }

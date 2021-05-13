@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
 
-namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
+namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
 {
     internal interface IPropertyParser
     {
