@@ -11,6 +11,7 @@ using PolytechWebThings.Infrastructure.Database.StartupJobs;
 using PolytechWebThings.Infrastructure.Database.Users;
 using PolytechWebThings.Infrastructure.Database.Workspaces;
 using PolytechWebThings.Infrastructure.MozillaGateway.Connectors;
+using PolytechWebThings.Infrastructure.MozillaGateway.Parsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
 using PolytechWebThings.Infrastructure.Providers;
 
@@ -32,6 +33,15 @@ namespace PolytechWebThings.Infrastructure
         {
             services.AddTransient<IGatewayConnector, GatewayConnector>();
             services.AddTransient<IThingsProvider, ThingsProvider>();
+            services.AddParsers();
+        }
+
+        private static void AddParsers(this IServiceCollection services)
+        {
+            services.AddTransient<IPropertyParser, BooleanPropertyParser>();
+            services.AddTransient<IPropertyParser, StringPropertyParser>();
+            services.AddTransient<IPropertyParser, NumberPropertyParser>();
+            services.AddTransient<IPropertyParser, IntegerPropertyParser>();
         }
 
         private static void AddDatabase(this IServiceCollection services)

@@ -3,6 +3,5 @@
     internal record BooleanPropertyParsingModel : PropertyParsingModelBase
     {
         public bool Value { get; init; }
-
     }
 }

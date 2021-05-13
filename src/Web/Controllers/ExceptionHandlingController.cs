@@ -16,7 +16,12 @@ namespace Web.Controllers
     {
         private readonly ILogger logger;
 
-        private readonly IReadOnlyDictionary<Type, Func<Exception, OperationResult>> exceptionHandlersMapping = new Dictionary<Type, Func<Exception, OperationResult>>
+        public ExceptionHandlingController(ILoggerFactory loggerFactory)
+        {
+            logger = loggerFactory.CreateLogger(nameof(ExceptionHandlingController));
+        }
+
+        private IReadOnlyDictionary<Type, Func<Exception, OperationResult>> ExceptionHandlersMapping => new Dictionary<Type, Func<Exception, OperationResult>>
         {
             { typeof(ValidationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(EmailTakenByOtherUserException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
@@ -26,13 +31,14 @@ namespace Web.Controllers
             { typeof(GatewayAlreadyRegisteredException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(WorkspaceNotFoundByIdException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(UserDoesNotHaveRequiredRightsException), exception => new OperationResult(OperationStatus.Forbidden, exception.Message) },
-            { typeof(BrokenGatewayCommunicationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            {
+                typeof(BrokenGatewayCommunicationException), exception =>
+                {
+                    logger.LogInformation($"Inner exception in gateway communication {exception.InnerException?.Message}");
+                    return new OperationResult(OperationStatus.Error, exception.Message);
+                }
+            },
         };
-
-        public ExceptionHandlingController(ILoggerFactory loggerFactory)
-        {
-            logger = loggerFactory.CreateLogger(nameof(ExceptionHandlingController));
-        }
 
         public IActionResult Error()
         {
@@ -48,7 +54,7 @@ namespace Web.Controllers
             Type exceptionType = exception.GetType();
             string exceptionLogMessage = $"{exceptionType.Name}: {exception.Message}";
 
-            if (exceptionHandlersMapping.TryGetValue(exceptionType, out Func<Exception, OperationResult>? handler))
+            if (ExceptionHandlersMapping.TryGetValue(exceptionType, out Func<Exception, OperationResult>? handler))
             {
                 logger.LogInformation($"{exceptionLogMessage} - Exception is handled by an exception handler");
                 return new OkObjectResult(handler(exception));

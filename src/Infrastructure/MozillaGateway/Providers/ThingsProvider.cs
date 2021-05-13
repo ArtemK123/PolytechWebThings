@@ -12,6 +12,7 @@ using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using Domain.Exceptions;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
+using PolytechWebThings.Infrastructure.MozillaGateway.Parsers;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 {
@@ -23,10 +24,12 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         };
 
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly IReadOnlyCollection<IPropertyParser> propertyParsers;
 
-        public ThingsProvider(IHttpClientFactory httpClientFactory)
+        public ThingsProvider(IHttpClientFactory httpClientFactory, IEnumerable<IPropertyParser> propertyParsers)
         {
             this.httpClientFactory = httpClientFactory;
+            this.propertyParsers = propertyParsers.ToArray();
         }
 
         public async Task<IReadOnlyCollection<Thing>> GetAsync(IWorkspace workspace)
@@ -93,92 +96,14 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
             string? propertyValueType = typeElement.GetString();
 
-            if (propertyValueType == "boolean")
+            IPropertyParser? parser = propertyParsers.SingleOrDefault(currentParser => currentParser.PropertyValueType == propertyValueType);
+
+            if (parser is null)
             {
-                BooleanPropertyParsingModel parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<BooleanPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
-                return new BooleanProperty
-                {
-                    Name = parsedModel.Name,
-                    Visible = parsedModel.Visible,
-                    Title = parsedModel.Title,
-                    PropertyType = parsedModel.PropertyType,
-                    Links = parsedModel.Links,
-                    ReadOnly = parsedModel.ReadOnly,
-                    Value = parsedModel.Value
-                };
+                throw new NotSupportedException($"Unsupported property value`s type {propertyValueType}");
             }
 
-            if (propertyValueType == "string")
-            {
-                bool isEnum = propertyJson.TryGetProperty("enum", out _);
-                if (isEnum)
-                {
-                    var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
-                    return new EnumProperty
-                    {
-                        Name = parsedModel.Name,
-                        Visible = parsedModel.Visible,
-                        Title = parsedModel.Title,
-                        PropertyType = parsedModel.PropertyType,
-                        Links = parsedModel.Links,
-                        ReadOnly = parsedModel.ReadOnly,
-                        Value = parsedModel.Value
-                    };
-                }
-                else
-                {
-                    var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
-                    return new EnumProperty
-                    {
-                        Name = parsedModel.Name,
-                        Visible = parsedModel.Visible,
-                        Title = parsedModel.Title,
-                        PropertyType = parsedModel.PropertyType,
-                        Links = parsedModel.Links,
-                        ReadOnly = parsedModel.ReadOnly,
-                        Value = parsedModel.Value,
-                        AllowedValues = parsedModel.Enum
-                    };
-                }
-            }
-
-            if (propertyValueType == "number")
-            {
-                var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<NumberPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
-                return new NumberProperty
-                {
-                    Name = parsedModel.Name,
-                    Visible = parsedModel.Visible,
-                    Title = parsedModel.Title,
-                    PropertyType = parsedModel.PropertyType,
-                    Links = parsedModel.Links,
-                    ReadOnly = parsedModel.ReadOnly,
-                    Value = parsedModel.Value,
-                    Unit = parsedModel.Unit,
-                    Minimum = parsedModel.Minimum,
-                    Maximum = parsedModel.Maximum
-                };
-            }
-
-            if (propertyValueType == "integer")
-            {
-                var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<IntegerPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
-                return new NumberProperty
-                {
-                    Name = parsedModel.Name,
-                    Visible = parsedModel.Visible,
-                    Title = parsedModel.Title,
-                    PropertyType = parsedModel.PropertyType,
-                    Links = parsedModel.Links,
-                    ReadOnly = parsedModel.ReadOnly,
-                    Value = parsedModel.Value,
-                    Unit = parsedModel.Unit,
-                    Minimum = int.MinValue,
-                    Maximum = int.MaxValue
-                };
-            }
-
-            throw new NotSupportedException($"Unsupported property value`s type {propertyValueType}");
+            return parser.Parse(propertyJson);
         }
     }
 }
