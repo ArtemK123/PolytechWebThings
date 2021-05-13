@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Application.Converters;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
 using Application.Queries.GetWorkspaceWithThings;
+using Domain.Entities.WebThingsGateway;
 using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
@@ -101,7 +103,9 @@ namespace Web.Controllers
                 = await mediator.Send(new GetWorkspaceWithThingsQuery(workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId), userEmail), cancellationToken);
             WorkspaceApiModel convertedWorkspaceModel = ConvertApiModel(result.Workspace);
             IReadOnlyCollection<ThingApiModel> convertedThingModels = result.Things.Select(Convert).ToArray();
-            return new OperationResult<GetWorkspaceWithThingsResponse>(OperationStatus.Success, new GetWorkspaceWithThingsResponse(convertedWorkspaceModel, convertedThingModels));
+            return new OperationResult<GetWorkspaceWithThingsResponse>(
+                OperationStatus.Success,
+                new GetWorkspaceWithThingsResponse { Workspace = convertedWorkspaceModel, Things = convertedThingModels });
         }
 
         private static OperationResult<WorkspaceApiModel> ConvertToOperationResult(IWorkspace workspace)
@@ -114,6 +118,33 @@ namespace Web.Controllers
 
         private ThingApiModel Convert(Thing thing) => new ThingApiModel { Title = thing.Title, Properties = thing.Properties.Select(Convert).ToArray() };
 
-        private PropertyApiModel Convert(Property property) => new PropertyApiModel { Name = property.Name, Value = null };
+        private PropertyApiModel Convert(Property property)
+        {
+            if (property.ValueType == GatewayValueType.Boolean)
+            {
+                BooleanProperty convertedProperty = (BooleanProperty)property;
+                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value.ToString(), ValueType = convertedProperty.ValueType.ToString() };
+            }
+
+            if (property.ValueType == GatewayValueType.Number)
+            {
+                NumberProperty convertedProperty = (NumberProperty)property;
+                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value.ToString(), ValueType = convertedProperty.ValueType.ToString() };
+            }
+
+            if (property.ValueType == GatewayValueType.String)
+            {
+                StringProperty convertedProperty = (StringProperty)property;
+                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value, ValueType = convertedProperty.ValueType.ToString() };
+            }
+
+            if (property.ValueType == GatewayValueType.Enum)
+            {
+                EnumProperty convertedProperty = (EnumProperty)property;
+                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value, ValueType = convertedProperty.ValueType.ToString() };
+            }
+
+            throw new NotSupportedException("Unsupported property type");
+        }
     }
 }

@@ -5,14 +5,8 @@ namespace Web.Models.Workspace.Response
 {
     public record GetWorkspaceWithThingsResponse
     {
-        public GetWorkspaceWithThingsResponse(WorkspaceApiModel workspace, IReadOnlyCollection<ThingApiModel> things)
-        {
-            Workspace = workspace;
-            Things = things;
-        }
+        public WorkspaceApiModel? Workspace { get; init; }
 
-        public WorkspaceApiModel Workspace { get; init; }
-
-        public IReadOnlyCollection<ThingApiModel> Things { get; init; }
+        public IReadOnlyCollection<ThingApiModel>? Things { get; init; }
     }
 }

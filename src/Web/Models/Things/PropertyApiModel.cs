@@ -5,5 +5,7 @@
         public string? Name { get; init; }
 
         public string? Value { get; init; }
+
+        public string? ValueType { get; init; }
     }
 }
