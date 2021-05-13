@@ -11,6 +11,7 @@ using Domain.Entities.WebThingsGateway.Action;
 using Domain.Entities.WebThingsGateway.Property;
 using Domain.Entities.WebThingsGateway.Thing;
 using Domain.Entities.Workspace;
+using Domain.Exceptions;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
@@ -33,9 +34,16 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
         public async Task<IReadOnlyCollection<IThing>> GetAsync(IWorkspace workspace)
         {
-            IReadOnlyCollection<ThingParsingModel> parsedThings = await GetParsedThingModelsAsync(workspace);
-            IReadOnlyCollection<IThing> convertedThings = Convert(parsedThings);
-            return convertedThings;
+            try
+            {
+                IReadOnlyCollection<ThingParsingModel> parsedThings = await GetParsedThingModelsAsync(workspace);
+                IReadOnlyCollection<IThing> convertedThings = Convert(parsedThings);
+                return convertedThings;
+            }
+            catch (Exception exception)
+            {
+                throw new BrokenGatewayCommunicationException(exception);
+            }
         }
 
         private async Task<IReadOnlyCollection<ThingParsingModel>> GetParsedThingModelsAsync(IWorkspace workspace)
@@ -62,7 +70,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
         private async Task<HttpResponseMessage> SendRequestToGatewayAsync(IWorkspace workspace)
         {
-            return await httpClientFactory.CreateClient().SendAsync(new HttpRequestMessage(HttpMethod.Get, workspace.GatewayUrl)
+            string thingsUrl = workspace.GatewayUrl + "/things";
+            return await httpClientFactory.CreateClient().SendAsync(new HttpRequestMessage(HttpMethod.Get, thingsUrl)
             {
                 Headers =
                 {

@@ -26,6 +26,7 @@ namespace Web.Controllers
             { typeof(GatewayAlreadyRegisteredException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(WorkspaceNotFoundByIdException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(UserDoesNotHaveRequiredRightsException), exception => new OperationResult(OperationStatus.Forbidden, exception.Message) },
+            { typeof(BrokenGatewayCommunicationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
         };
 
         public ExceptionHandlingController(ILoggerFactory loggerFactory)
