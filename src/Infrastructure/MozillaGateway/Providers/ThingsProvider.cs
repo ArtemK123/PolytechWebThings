@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Application.Converters;
 using Application.MozillaGateway.Providers;
 using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
@@ -59,7 +60,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         private IReadOnlyCollection<Thing> Deserialize(string serializedText)
         {
             IReadOnlyCollection<ThingFlatParsingModel> flatThingModels
-                = GetValueOrThrow(JsonSerializer.Deserialize<IReadOnlyCollection<ThingFlatParsingModel>>(serializedText, jsonSerializerOptions));
+                = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<IReadOnlyCollection<ThingFlatParsingModel>>(serializedText, jsonSerializerOptions));
 
             IReadOnlyCollection<Thing> parsedThings = flatThingModels.Select(ParseThing).ToList();
 
@@ -94,7 +95,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
             if (propertyValueType == "boolean")
             {
-                BooleanPropertyParsingModel parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<BooleanPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                BooleanPropertyParsingModel parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<BooleanPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
                 return new BooleanProperty
                 {
                     Name = parsedModel.Name,
@@ -112,7 +113,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
                 bool isEnum = propertyJson.TryGetProperty("enum", out _);
                 if (isEnum)
                 {
-                    var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                    var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
                     return new EnumProperty
                     {
                         Name = parsedModel.Name,
@@ -126,7 +127,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
                 }
                 else
                 {
-                    var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                    var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
                     return new EnumProperty
                     {
                         Name = parsedModel.Name,
@@ -143,7 +144,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
             if (propertyValueType == "number")
             {
-                var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<NumberPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<NumberPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
                 return new NumberProperty
                 {
                     Name = parsedModel.Name,
@@ -161,7 +162,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
             if (propertyValueType == "integer")
             {
-                var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<IntegerPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                var parsedModel = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<IntegerPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
                 return new NumberProperty
                 {
                     Name = parsedModel.Name,
@@ -179,9 +180,5 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
             throw new NotSupportedException($"Unsupported property value`s type {propertyValueType}");
         }
-
-        private TValue GetValueOrThrow<TValue>(TValue? nullableValue)
-            where TValue : class
-            => nullableValue ?? throw new NullReferenceException();
     }
 }

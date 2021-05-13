@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Commands.CreateWorkspace;
 using Application.Commands.DeleteWorkspace;
 using Application.Commands.UpdateWorkspace;
+using Application.Converters;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
 using Application.Queries.GetWorkspaceWithThings;
@@ -39,9 +39,9 @@ namespace Web.Controllers
         {
             await mediator.Send(
                 new CreateWorkspaceCommand(
-                    name: ConvertToNonNullable(request.Name),
-                    gatewayUrl: ConvertToNonNullable(request.GatewayUrl),
-                    accessToken: ConvertToNonNullable(request.AccessToken),
+                    name: NullableConverter.GetOrThrow(request.Name),
+                    gatewayUrl: NullableConverter.GetOrThrow(request.GatewayUrl),
+                    accessToken: NullableConverter.GetOrThrow(request.AccessToken),
                     userEmail: userEmailProvider.GetUserEmail(HttpContext)),
                 cancellationToken);
             return new OperationResult(OperationStatus.Success);
@@ -73,10 +73,10 @@ namespace Web.Controllers
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             await mediator.Send(
                 new UpdateWorkspaceCommand(
-                    workspaceId: ConvertToNonNullableValueType(request.Id),
-                    name: ConvertToNonNullable(request.Name),
-                    gatewayUrl: ConvertToNonNullable(request.GatewayUrl),
-                    accessToken: ConvertToNonNullable(request.AccessToken),
+                    workspaceId: NullableConverter.GetOrThrow(request.Id),
+                    name: NullableConverter.GetOrThrow(request.Name),
+                    gatewayUrl: NullableConverter.GetOrThrow(request.GatewayUrl),
+                    accessToken: NullableConverter.GetOrThrow(request.AccessToken),
                     userEmail),
                 cancellationToken);
             return new OperationResult(OperationStatus.Success);
@@ -87,7 +87,7 @@ namespace Web.Controllers
         public async Task<OperationResult> Delete([FromBody]DeleteWorkspaceRequest request, CancellationToken cancellationToken)
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: ConvertToNonNullableValueType(request.Id), userEmail: userEmail), cancellationToken);
+            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: NullableConverter.GetOrThrow(request.Id), userEmail: userEmail), cancellationToken);
             return new OperationResult(OperationStatus.Success);
         }
 
@@ -97,7 +97,7 @@ namespace Web.Controllers
         {
             string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             WorkspaceWithThingsModel result
-                = await mediator.Send(new GetWorkspaceWithThingsQuery(workspaceId: ConvertToNonNullableValueType(request.WorkspaceId), userEmail), cancellationToken);
+                = await mediator.Send(new GetWorkspaceWithThingsQuery(workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId), userEmail), cancellationToken);
             WorkspaceApiModel convertedWorkspaceModel = ConvertApiModel(result.Workspace);
             IReadOnlyCollection<ThingApiModel> convertedThingModels = result.Things.Select(Convert).ToArray();
             return new OperationResult<GetWorkspaceWithThingsResponse>(OperationStatus.Success, new GetWorkspaceWithThingsResponse(convertedWorkspaceModel, convertedThingModels));
@@ -110,18 +110,6 @@ namespace Web.Controllers
 
         private static WorkspaceApiModel ConvertApiModel(IWorkspace workspace)
             => new WorkspaceApiModel(id: workspace.Id, name: workspace.Name, accessToken: workspace.AccessToken, gatewayUrl: workspace.GatewayUrl);
-
-        private TModel ConvertToNonNullable<TModel>(TModel? nullableModel)
-            where TModel : class
-        {
-            return nullableModel ?? throw new NullReferenceException();
-        }
-
-        private TValueType ConvertToNonNullableValueType<TValueType>(TValueType? nullableValueType)
-            where TValueType : struct
-        {
-            return nullableValueType ?? throw new NullReferenceException();
-        }
 
         private ThingApiModel Convert(Thing thing) => new ThingApiModel();
     }
