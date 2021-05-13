@@ -12,7 +12,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
     internal abstract class WorkspaceApiControllerTestBase : WebApiIntegrationTestBase
     {
         protected const string WorkspaceName = "TestName";
-        protected const string GatewayUrl = "http://localhost:8080";
+        protected const string GatewayUrl = "http://localhost:12344";
         protected const string AccessToken = "j.w.t";
         private const string UserPassword = "123123";
         private const string UserEmail = "test@gmail.com";

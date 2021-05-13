@@ -11,8 +11,8 @@ namespace Web.Models.Workspace.Response
             Things = things;
         }
 
-        public WorkspaceApiModel Workspace { get; }
+        public WorkspaceApiModel Workspace { get; init; }
 
-        public IReadOnlyCollection<ThingApiModel> Things { get; }
+        public IReadOnlyCollection<ThingApiModel> Things { get; init; }
     }
 }

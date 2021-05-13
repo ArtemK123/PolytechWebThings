@@ -1,0 +1,2575 @@
+﻿[
+  {
+    "title": "Virtual Actions & Events Thing",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [],
+    "description": "",
+    "href": "/things/virtual-things-10",
+    "properties": {},
+    "actions": {
+      "basic": {
+        "title": "No Input",
+        "description": "An action with no inputs, fires an event",
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-10/actions/basic"
+          }
+        ]
+      },
+      "single": {
+        "title": "Single Input",
+        "description": "An action with a single, non-object input",
+        "input": {
+          "type": "number"
+        },
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-10/actions/single"
+          }
+        ]
+      },
+      "multiple": {
+        "title": "Multiple Inputs",
+        "description": "An action with mutiple, optional inputs",
+        "input": {
+          "type": "object",
+          "properties": {
+            "stringInput": {
+              "type": "string"
+            },
+            "booleanInput": {
+              "type": "boolean"
+            }
+          }
+        },
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-10/actions/multiple"
+          }
+        ]
+      },
+      "advanced": {
+        "title": "Advanced Inputs",
+        "description": "An action with many inputs, some required",
+        "input": {
+          "type": "object",
+          "required": [
+            "numberInput"
+          ],
+          "properties": {
+            "numberInput": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "unit": "percent"
+            },
+            "integerInput": {
+              "type": "integer",
+              "unit": "metre"
+            },
+            "stringInput": {
+              "type": "string"
+            },
+            "booleanInput": {
+              "type": "boolean"
+            },
+            "enumInput": {
+              "type": "string",
+              "enum": [
+                "enum string1",
+                "enum string2",
+                "enum string3"
+              ]
+            }
+          }
+        },
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-10/actions/advanced"
+          }
+        ]
+      }
+    },
+    "events": {
+      "virtualEvent": {
+        "description": "An event from a virtual thing",
+        "type": "number",
+        "links": [
+          {
+            "rel": "event",
+            "href": "/things/virtual-things-10/events/virtualEvent"
+          }
+        ]
+      }
+    },
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-10/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-10/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-10/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-10"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-10"
+      }
+    ],
+    "layoutIndex": 0,
+    "selectedCapability": "Custom",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-10",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-10:readwrite",
+          "/things/virtual-things-10",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual On/Off Color Light",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch",
+      "Light",
+      "ColorControl"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-0",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-0/properties/on"
+          }
+        ]
+      },
+      "color": {
+        "name": "color",
+        "value": "#ffffff",
+        "visible": true,
+        "title": "Color",
+        "type": "string",
+        "@type": "ColorProperty",
+        "readOnly": false,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-0/properties/color"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-0/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-0/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-0/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-0"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-0"
+      }
+    ],
+    "layoutIndex": 1,
+    "selectedCapability": "Light",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-0",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-0:readwrite",
+          "/things/virtual-things-0",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Multi-level Switch",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch",
+      "MultiLevelSwitch"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-1",
+    "properties": {
+      "level": {
+        "name": "level",
+        "value": 0,
+        "visible": true,
+        "title": "Level",
+        "type": "number",
+        "@type": "LevelProperty",
+        "unit": "percent",
+        "minimum": 0,
+        "maximum": 100,
+        "readOnly": false,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-1/properties/level"
+          }
+        ]
+      },
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-1/properties/on"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-1/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-1/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-1/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-1"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-1"
+      }
+    ],
+    "layoutIndex": 2,
+    "selectedCapability": "MultiLevelSwitch",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-1",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-1:readwrite",
+          "/things/virtual-things-1",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Dimmable Color Light",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch",
+      "Light",
+      "ColorControl"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-2",
+    "properties": {
+      "color": {
+        "name": "color",
+        "value": "#ffffff",
+        "visible": true,
+        "title": "Color",
+        "type": "string",
+        "@type": "ColorProperty",
+        "readOnly": false,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-2/properties/color"
+          }
+        ]
+      },
+      "colorTemperature": {
+        "name": "colorTemperature",
+        "value": 2500,
+        "visible": true,
+        "title": "Color Temperature",
+        "type": "number",
+        "@type": "ColorTemperatureProperty",
+        "unit": "kelvin",
+        "minimum": 2500,
+        "maximum": 9000,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-2/properties/colorTemperature"
+          }
+        ]
+      },
+      "colorMode": {
+        "name": "colorMode",
+        "value": "color",
+        "visible": true,
+        "title": "Color Mode",
+        "type": "string",
+        "@type": "ColorModeProperty",
+        "enum": [
+          "color",
+          "temperature"
+        ],
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-2/properties/colorMode"
+          }
+        ]
+      },
+      "level": {
+        "name": "level",
+        "value": 0,
+        "visible": true,
+        "title": "Brightness",
+        "type": "number",
+        "@type": "BrightnessProperty",
+        "unit": "percent",
+        "minimum": 0,
+        "maximum": 100,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-2/properties/level"
+          }
+        ]
+      },
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-2/properties/on"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-2/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-2/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-2/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-2"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-2"
+      }
+    ],
+    "layoutIndex": 3,
+    "selectedCapability": "Light",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-2",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-2:readwrite",
+          "/things/virtual-things-2",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual On/Off Switch",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-3",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-3/properties/on"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-3/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-3/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-3/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-3"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-3"
+      }
+    ],
+    "layoutIndex": 4,
+    "selectedCapability": "OnOffSwitch",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-3",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-3:readwrite",
+          "/things/virtual-things-3",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Binary Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "BinarySensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-4",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "BooleanProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-4/properties/on"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-4/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-4/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-4/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-4"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-4"
+      }
+    ],
+    "layoutIndex": 5,
+    "selectedCapability": "BinarySensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-4",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-4:readwrite",
+          "/things/virtual-things-4",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Multi-level Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "MultiLevelSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-5",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "BooleanProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-5/properties/on"
+          }
+        ]
+      },
+      "level": {
+        "name": "level",
+        "value": 0,
+        "visible": true,
+        "title": "Level",
+        "type": "number",
+        "@type": "LevelProperty",
+        "unit": "percent",
+        "minimum": 0,
+        "maximum": 100,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-5/properties/level"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-5/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-5/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-5/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-5"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-5"
+      }
+    ],
+    "layoutIndex": 6,
+    "selectedCapability": "MultiLevelSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-5",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-5:readwrite",
+          "/things/virtual-things-5",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Smart Plug",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch",
+      "EnergyMonitor",
+      "SmartPlug",
+      "MultiLevelSwitch"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-6",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-6/properties/on"
+          }
+        ]
+      },
+      "level": {
+        "name": "level",
+        "value": 0,
+        "visible": true,
+        "title": "Level",
+        "type": "number",
+        "@type": "LevelProperty",
+        "unit": "percent",
+        "minimum": 0,
+        "maximum": 100,
+        "readOnly": false,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-6/properties/level"
+          }
+        ]
+      },
+      "instantaneousPower": {
+        "name": "instantaneousPower",
+        "value": 0,
+        "visible": true,
+        "title": "Power",
+        "type": "number",
+        "@type": "InstantaneousPowerProperty",
+        "unit": "watt",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-6/properties/instantaneousPower"
+          }
+        ]
+      },
+      "instantaneousPowerFactor": {
+        "name": "instantaneousPowerFactor",
+        "value": 0,
+        "visible": true,
+        "title": "Power Factor",
+        "type": "number",
+        "@type": "InstantaneousPowerFactorProperty",
+        "minimum": -1,
+        "maximum": 1,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-6/properties/instantaneousPowerFactor"
+          }
+        ]
+      },
+      "voltage": {
+        "name": "voltage",
+        "value": 0,
+        "visible": true,
+        "title": "Voltage",
+        "type": "number",
+        "@type": "VoltageProperty",
+        "unit": "volt",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-6/properties/voltage"
+          }
+        ]
+      },
+      "current": {
+        "name": "current",
+        "value": 0,
+        "visible": true,
+        "title": "Current",
+        "type": "number",
+        "@type": "CurrentProperty",
+        "unit": "ampere",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-6/properties/current"
+          }
+        ]
+      },
+      "frequency": {
+        "name": "frequency",
+        "value": 0,
+        "visible": true,
+        "title": "Frequency",
+        "type": "number",
+        "@type": "FrequencyProperty",
+        "unit": "hertz",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-6/properties/frequency"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-6/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-6/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-6/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-6"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-6"
+      }
+    ],
+    "layoutIndex": 7,
+    "selectedCapability": "SmartPlug",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-6",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-6:readwrite",
+          "/things/virtual-things-6",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual On/Off Light",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch",
+      "Light"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-7",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-7/properties/on"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-7/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-7/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-7/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-7"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-7"
+      }
+    ],
+    "layoutIndex": 8,
+    "selectedCapability": "Light",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-7",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-7:readwrite",
+          "/things/virtual-things-7",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Dimmable Light",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch",
+      "Light"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-8",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-8/properties/on"
+          }
+        ]
+      },
+      "level": {
+        "name": "level",
+        "value": 0,
+        "visible": true,
+        "title": "Brightness",
+        "type": "number",
+        "@type": "BrightnessProperty",
+        "unit": "percent",
+        "minimum": 0,
+        "maximum": 100,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-8/properties/level"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-8/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-8/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-8/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-8"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-8"
+      }
+    ],
+    "layoutIndex": 9,
+    "selectedCapability": "Light",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-8",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-8:readwrite",
+          "/things/virtual-things-8",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Thing",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [],
+    "description": "",
+    "href": "/things/virtual-things-9",
+    "properties": {
+      "boolProperty": {
+        "name": "boolProperty",
+        "value": true,
+        "visible": true,
+        "type": "boolean",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-9/properties/boolProperty"
+          }
+        ]
+      },
+      "stringProperty": {
+        "name": "stringProperty",
+        "value": "blah",
+        "visible": true,
+        "type": "string",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-9/properties/stringProperty"
+          }
+        ]
+      },
+      "numberProperty": {
+        "name": "numberProperty",
+        "value": 12,
+        "visible": true,
+        "type": "number",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-9/properties/numberProperty"
+          }
+        ]
+      },
+      "numberUnitProperty": {
+        "name": "numberUnitProperty",
+        "value": 34,
+        "visible": true,
+        "type": "number",
+        "unit": "metres",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-9/properties/numberUnitProperty"
+          }
+        ]
+      },
+      "numberUnitMinMaxProperty": {
+        "name": "numberUnitMinMaxProperty",
+        "value": 56,
+        "visible": true,
+        "type": "number",
+        "unit": "degrees",
+        "minimum": 0,
+        "maximum": 100,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-9/properties/numberUnitMinMaxProperty"
+          }
+        ]
+      },
+      "numberEnumProperty": {
+        "name": "numberEnumProperty",
+        "value": 0,
+        "visible": true,
+        "type": "number",
+        "unit": "something",
+        "enum": [
+          0,
+          10,
+          20,
+          30
+        ],
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-9/properties/numberEnumProperty"
+          }
+        ]
+      },
+      "stringEnumProperty": {
+        "name": "stringEnumProperty",
+        "value": "string1",
+        "visible": true,
+        "type": "string",
+        "enum": [
+          "string1",
+          "string2",
+          "string3",
+          "string4"
+        ],
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-9/properties/stringEnumProperty"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-9/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-9/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-9/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-9"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-9"
+      }
+    ],
+    "layoutIndex": 10,
+    "selectedCapability": "Custom",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-9",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-9:readwrite",
+          "/things/virtual-things-9",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual On/Off Color Temperature Light",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "OnOffSwitch",
+      "Light",
+      "ColorControl"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-12",
+    "properties": {
+      "on": {
+        "name": "on",
+        "value": false,
+        "visible": true,
+        "title": "On/Off",
+        "type": "boolean",
+        "@type": "OnOffProperty",
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-12/properties/on"
+          }
+        ]
+      },
+      "colorTemperature": {
+        "name": "colorTemperature",
+        "value": 2500,
+        "visible": true,
+        "title": "Color Temperature",
+        "type": "number",
+        "@type": "ColorTemperatureProperty",
+        "unit": "kelvin",
+        "minimum": 2500,
+        "maximum": 9000,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-12/properties/colorTemperature"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-12/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-12/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-12/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-12"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-12"
+      }
+    ],
+    "layoutIndex": 11,
+    "selectedCapability": "Light",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-12",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-12:readwrite",
+          "/things/virtual-things-12",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Door Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "DoorSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-13",
+    "properties": {
+      "open": {
+        "name": "open",
+        "value": false,
+        "visible": true,
+        "title": "Open",
+        "type": "boolean",
+        "@type": "OpenProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-13/properties/open"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-13/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-13/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-13/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-13"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-13"
+      }
+    ],
+    "layoutIndex": 12,
+    "selectedCapability": "DoorSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-13",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-13:readwrite",
+          "/things/virtual-things-13",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Motion Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "MotionSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-14",
+    "properties": {
+      "motion": {
+        "name": "motion",
+        "value": false,
+        "visible": true,
+        "title": "Motion",
+        "type": "boolean",
+        "@type": "MotionProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-14/properties/motion"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-14/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-14/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-14/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-14"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-14"
+      }
+    ],
+    "layoutIndex": 13,
+    "selectedCapability": "MotionSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-14",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-14:readwrite",
+          "/things/virtual-things-14",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Push Button",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "PushButton"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-15",
+    "properties": {
+      "pushed": {
+        "name": "pushed",
+        "value": false,
+        "visible": true,
+        "title": "Pushed",
+        "type": "boolean",
+        "@type": "PushedProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-15/properties/pushed"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-15/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-15/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-15/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-15"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-15"
+      }
+    ],
+    "layoutIndex": 14,
+    "selectedCapability": "PushButton",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-15",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-15:readwrite",
+          "/things/virtual-things-15",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Leak Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "LeakSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-16",
+    "properties": {
+      "leak": {
+        "name": "leak",
+        "value": false,
+        "visible": true,
+        "title": "Leak",
+        "type": "boolean",
+        "@type": "LeakProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-16/properties/leak"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-16/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-16/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-16/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-16"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-16"
+      }
+    ],
+    "layoutIndex": 15,
+    "selectedCapability": "LeakSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-16",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-16:readwrite",
+          "/things/virtual-things-16",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Temperature Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "TemperatureSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-17",
+    "properties": {
+      "temperature": {
+        "name": "temperature",
+        "value": 20,
+        "visible": true,
+        "title": "Temperature",
+        "type": "number",
+        "@type": "TemperatureProperty",
+        "unit": "degree celsius",
+        "minimum": -20,
+        "maximum": 50,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-17/properties/temperature"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-17/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-17/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-17/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-17"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-17"
+      }
+    ],
+    "layoutIndex": 16,
+    "selectedCapability": "TemperatureSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-17",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-17:readwrite",
+          "/things/virtual-things-17",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Alarm",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "Alarm"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-21",
+    "properties": {
+      "alarm": {
+        "name": "alarm",
+        "value": false,
+        "visible": true,
+        "title": "Alarm",
+        "type": "boolean",
+        "@type": "AlarmProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-21/properties/alarm"
+          }
+        ]
+      }
+    },
+    "actions": {
+      "trigger": {
+        "title": "Trigger",
+        "description": "Trigger alarm",
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-21/actions/trigger"
+          }
+        ]
+      },
+      "silence": {
+        "title": "Silence",
+        "description": "Silence alarm",
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-21/actions/silence"
+          }
+        ]
+      }
+    },
+    "events": {
+      "alarmEvent": {
+        "description": "An alarm event from a virtual thing",
+        "type": "string",
+        "@type": "AlarmEvent",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "event",
+            "href": "/things/virtual-things-21/events/alarmEvent"
+          }
+        ]
+      }
+    },
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-21/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-21/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-21/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-21"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-21"
+      }
+    ],
+    "layoutIndex": 17,
+    "selectedCapability": "Alarm",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-21",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-21:readwrite",
+          "/things/virtual-things-21",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Energy Monitor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "EnergyMonitor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-22",
+    "properties": {
+      "instantaneousPower": {
+        "name": "instantaneousPower",
+        "value": 0,
+        "visible": true,
+        "title": "Power",
+        "type": "number",
+        "@type": "InstantaneousPowerProperty",
+        "unit": "watt",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-22/properties/instantaneousPower"
+          }
+        ]
+      },
+      "instantaneousPowerFactor": {
+        "name": "instantaneousPowerFactor",
+        "value": 0,
+        "visible": true,
+        "title": "Power Factor",
+        "type": "number",
+        "@type": "InstantaneousPowerFactorProperty",
+        "minimum": -1,
+        "maximum": 1,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-22/properties/instantaneousPowerFactor"
+          }
+        ]
+      },
+      "voltage": {
+        "name": "voltage",
+        "value": 0,
+        "visible": true,
+        "title": "Voltage",
+        "type": "number",
+        "@type": "VoltageProperty",
+        "unit": "volt",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-22/properties/voltage"
+          }
+        ]
+      },
+      "current": {
+        "name": "current",
+        "value": 0,
+        "visible": true,
+        "title": "Current",
+        "type": "number",
+        "@type": "CurrentProperty",
+        "unit": "ampere",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-22/properties/current"
+          }
+        ]
+      },
+      "frequency": {
+        "name": "frequency",
+        "value": 0,
+        "visible": true,
+        "title": "Frequency",
+        "type": "number",
+        "@type": "FrequencyProperty",
+        "unit": "hertz",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-22/properties/frequency"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-22/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-22/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-22/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-22"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-22"
+      }
+    ],
+    "layoutIndex": 18,
+    "selectedCapability": "EnergyMonitor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-22",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-22:readwrite",
+          "/things/virtual-things-22",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Color Control",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "ColorControl"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-23",
+    "properties": {
+      "color": {
+        "name": "color",
+        "value": "#ffffff",
+        "visible": true,
+        "title": "Color",
+        "type": "string",
+        "@type": "ColorProperty",
+        "readOnly": false,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-23/properties/color"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-23/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-23/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-23/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-23"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-23"
+      }
+    ],
+    "layoutIndex": 19,
+    "selectedCapability": "ColorControl",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-23",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-23:readwrite",
+          "/things/virtual-things-23",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Thermostat",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "Thermostat",
+      "TemperatureSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-24",
+    "properties": {
+      "temperature": {
+        "name": "temperature",
+        "value": 20,
+        "visible": true,
+        "title": "Temperature",
+        "type": "number",
+        "@type": "TemperatureProperty",
+        "unit": "degree celsius",
+        "minimum": 0,
+        "maximum": 100,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-24/properties/temperature"
+          }
+        ]
+      },
+      "heatingTargetTemperature": {
+        "name": "heatingTargetTemperature",
+        "value": 19,
+        "visible": true,
+        "title": "Heating Target",
+        "type": "number",
+        "@type": "TargetTemperatureProperty",
+        "unit": "degree celsius",
+        "minimum": 10,
+        "maximum": 38,
+        "multipleOf": 0.1,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-24/properties/heatingTargetTemperature"
+          }
+        ]
+      },
+      "coolingTargetTemperature": {
+        "name": "coolingTargetTemperature",
+        "value": 25,
+        "visible": true,
+        "title": "Cooling Target",
+        "type": "number",
+        "@type": "TargetTemperatureProperty",
+        "unit": "degree celsius",
+        "minimum": 10,
+        "maximum": 38,
+        "multipleOf": 0.1,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-24/properties/coolingTargetTemperature"
+          }
+        ]
+      },
+      "heatingCooling": {
+        "name": "heatingCooling",
+        "value": "heating",
+        "visible": true,
+        "title": "Heating/Cooling",
+        "type": "string",
+        "@type": "HeatingCoolingProperty",
+        "enum": [
+          "off",
+          "heating",
+          "cooling"
+        ],
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-24/properties/heatingCooling"
+          }
+        ]
+      },
+      "thermostatMode": {
+        "name": "thermostatMode",
+        "value": "heat",
+        "visible": true,
+        "title": "Mode",
+        "type": "string",
+        "@type": "ThermostatModeProperty",
+        "enum": [
+          "off",
+          "heat",
+          "cool",
+          "auto"
+        ],
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-24/properties/thermostatMode"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-24/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-24/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-24/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-24"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-24"
+      }
+    ],
+    "layoutIndex": 20,
+    "selectedCapability": "Thermostat",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-24",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-24:readwrite",
+          "/things/virtual-things-24",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Lock",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "Lock"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-25",
+    "properties": {
+      "locked": {
+        "name": "locked",
+        "value": "unlocked",
+        "visible": true,
+        "title": "Current State",
+        "type": "string",
+        "@type": "LockedProperty",
+        "enum": [
+          "locked",
+          "unlocked",
+          "jammed",
+          "unknown"
+        ],
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-25/properties/locked"
+          }
+        ]
+      }
+    },
+    "actions": {
+      "lock": {
+        "@type": "LockAction",
+        "title": "Lock",
+        "description": "Lock the locking mechanism",
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-25/actions/lock"
+          }
+        ]
+      },
+      "unlock": {
+        "@type": "UnlockAction",
+        "title": "Unlock",
+        "description": "Unlock the locking mechanism",
+        "links": [
+          {
+            "rel": "action",
+            "href": "/things/virtual-things-25/actions/unlock"
+          }
+        ]
+      }
+    },
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-25/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-25/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-25/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-25"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-25"
+      }
+    ],
+    "layoutIndex": 21,
+    "selectedCapability": "Lock",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-25",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-25:readwrite",
+          "/things/virtual-things-25",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Color Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "ColorSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-26",
+    "properties": {
+      "color": {
+        "name": "color",
+        "value": "#ffffff",
+        "visible": true,
+        "title": "Color",
+        "type": "string",
+        "@type": "ColorProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-26/properties/color"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-26/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-26/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-26/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-26"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-26"
+      }
+    ],
+    "layoutIndex": 22,
+    "selectedCapability": "ColorSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-26",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-26:readwrite",
+          "/things/virtual-things-26",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Humidity Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "HumiditySensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-27",
+    "properties": {
+      "humidity": {
+        "name": "humidity",
+        "value": 20,
+        "visible": true,
+        "title": "Humidity",
+        "type": "number",
+        "@type": "HumidityProperty",
+        "unit": "percent",
+        "minimum": 0,
+        "maximum": 100,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-27/properties/humidity"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-27/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-27/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-27/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-27"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-27"
+      }
+    ],
+    "layoutIndex": 23,
+    "selectedCapability": "HumiditySensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-27",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-27:readwrite",
+          "/things/virtual-things-27",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Air Quality Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "AirQualitySensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-28",
+    "properties": {
+      "concentration": {
+        "name": "concentration",
+        "value": 20,
+        "visible": true,
+        "title": "Gas Concentration",
+        "type": "number",
+        "@type": "ConcentrationProperty",
+        "unit": "ppm",
+        "minimum": 0,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-28/properties/concentration"
+          }
+        ]
+      },
+      "density": {
+        "name": "density",
+        "value": 20,
+        "visible": true,
+        "title": "Particulate Density",
+        "type": "number",
+        "@type": "DensityProperty",
+        "unit": "micrograms per cubic metre",
+        "minimum": 0,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-28/properties/density"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-28/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-28/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-28/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-28"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-28"
+      }
+    ],
+    "layoutIndex": 24,
+    "selectedCapability": "AirQualitySensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-28",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-28:readwrite",
+          "/things/virtual-things-28",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Barometric Pressure Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "BarometricPressureSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-29",
+    "properties": {
+      "pressure": {
+        "name": "pressure",
+        "value": 20,
+        "visible": true,
+        "title": "Pressure",
+        "type": "number",
+        "@type": "BarometricPressureProperty",
+        "unit": "hectopascal",
+        "minimum": 0,
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-29/properties/pressure"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-29/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-29/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-29/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-29"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-29"
+      }
+    ],
+    "layoutIndex": 25,
+    "selectedCapability": "BarometricPressureSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-29",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-29:readwrite",
+          "/things/virtual-things-29",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  },
+  {
+    "title": "Virtual Smoke Sensor",
+    "@context": "https://iot.mozilla.org/schemas",
+    "@type": [
+      "SmokeSensor"
+    ],
+    "description": "",
+    "href": "/things/virtual-things-30",
+    "properties": {
+      "smoke": {
+        "name": "smoke",
+        "value": false,
+        "visible": true,
+        "title": "Smoke",
+        "type": "boolean",
+        "@type": "SmokeProperty",
+        "readOnly": true,
+        "links": [
+          {
+            "rel": "property",
+            "href": "/things/virtual-things-30/properties/smoke"
+          }
+        ]
+      }
+    },
+    "actions": {},
+    "events": {},
+    "links": [
+      {
+        "rel": "properties",
+        "href": "/things/virtual-things-30/properties"
+      },
+      {
+        "rel": "actions",
+        "href": "/things/virtual-things-30/actions"
+      },
+      {
+        "rel": "events",
+        "href": "/things/virtual-things-30/events"
+      },
+      {
+        "rel": "alternate",
+        "mediaType": "text/html",
+        "href": "/things/virtual-things-30"
+      },
+      {
+        "rel": "alternate",
+        "href": "ws://localhost:8080/things/virtual-things-30"
+      }
+    ],
+    "layoutIndex": 26,
+    "selectedCapability": "SmokeSensor",
+    "iconHref": null,
+    "id": "http://localhost:8080/things/virtual-things-30",
+    "base": "http://localhost:8080/",
+    "securityDefinitions": {
+      "oauth2_sc": {
+        "scheme": "oauth2",
+        "flow": "code",
+        "authorization": "http://localhost:8080/oauth/authorize",
+        "token": "http://localhost:8080/oauth/token",
+        "scopes": [
+          "/things/virtual-things-30:readwrite",
+          "/things/virtual-things-30",
+          "/things:readwrite",
+          "/things"
+        ]
+      }
+    },
+    "security": "oauth2_sc"
+  }
+]
