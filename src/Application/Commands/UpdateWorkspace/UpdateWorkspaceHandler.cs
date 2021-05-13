@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.MozillaGateway.Connectors;
+using Application.MozillaGateway.Checkers;
 using Application.Queries.GetWorkspaceById;
 using Application.Repositories;
 using Domain.Entities.Workspace;
@@ -12,13 +12,13 @@ namespace Application.Commands.UpdateWorkspace
     internal class UpdateWorkspaceHandler : IRequestHandler<UpdateWorkspaceCommand>
     {
         private readonly ISender mediator;
-        private readonly IGatewayConnector gatewayConnector;
+        private readonly IGatewayConnectionChecker gatewayConnectionChecker;
         private readonly IWorkspaceRepository workspaceRepository;
 
-        public UpdateWorkspaceHandler(ISender mediator, IGatewayConnector gatewayConnector, IWorkspaceRepository workspaceRepository)
+        public UpdateWorkspaceHandler(ISender mediator, IGatewayConnectionChecker gatewayConnectionChecker, IWorkspaceRepository workspaceRepository)
         {
             this.mediator = mediator;
-            this.gatewayConnector = gatewayConnector;
+            this.gatewayConnectionChecker = gatewayConnectionChecker;
             this.workspaceRepository = workspaceRepository;
         }
 
@@ -31,7 +31,7 @@ namespace Application.Commands.UpdateWorkspace
                 await CheckGatewayUrlUsage(request);
             }
 
-            bool validConnectionToGateway = await gatewayConnector.CanConnectToGatewayAsync(gatewayUrl: request.GatewayUrl, accessToken: request.AccessToken);
+            bool validConnectionToGateway = await gatewayConnectionChecker.CanConnectToGatewayAsync(gatewayUrl: request.GatewayUrl, accessToken: request.AccessToken);
             if (!validConnectionToGateway)
             {
                 throw new CanNotConnectToGatewayException();

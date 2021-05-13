@@ -1,5 +1,5 @@
 ﻿using Application;
-using Application.MozillaGateway.Connectors;
+using Application.MozillaGateway.Checkers;
 using Application.MozillaGateway.Providers;
 using Application.Repositories;
 using Domain.Providers;
@@ -10,7 +10,7 @@ using PolytechWebThings.Infrastructure.Database.Providers;
 using PolytechWebThings.Infrastructure.Database.StartupJobs;
 using PolytechWebThings.Infrastructure.Database.Users;
 using PolytechWebThings.Infrastructure.Database.Workspaces;
-using PolytechWebThings.Infrastructure.MozillaGateway.Connectors;
+using PolytechWebThings.Infrastructure.MozillaGateway.Checkers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
@@ -34,7 +34,7 @@ namespace PolytechWebThings.Infrastructure
 
         private static void AddMozillaGateway(this IServiceCollection services)
         {
-            services.AddTransient<IGatewayConnector, GatewayConnector>();
+            services.AddTransient<IGatewayConnectionChecker, GatewayConnectionChecker>();
             services.AddTransient<IThingsProvider, ThingsProvider>();
             services.AddTransient<IGatewayMessageSender, GatewayMessageSender>();
             services.AddTransient<IPropertyParserResolver, PropertyParserResolver>();

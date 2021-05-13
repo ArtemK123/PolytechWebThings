@@ -1,30 +1,40 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Domain.Entities.Workspace;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Senders
 {
     internal class GatewayMessageSender : IGatewayMessageSender
     {
-        private const string ThingsApiAddress = "/things";
-
-        private readonly IHttpClientFactory httpClientFactory;
+        private readonly HttpClient httpClient;
 
         public GatewayMessageSender(IHttpClientFactory httpClientFactory)
         {
-            this.httpClientFactory = httpClientFactory;
+            httpClient = httpClientFactory.CreateClient(nameof(GatewayMessageSender));
         }
 
-        public async Task<HttpResponseMessage> SendGetThingsRequest(IWorkspace workspace)
+        public async Task<HttpResponseMessage> SendGetThingsRequestAsync(string gatewayBaseUrl, string accessToken)
         {
-            string thingsUrl = workspace.GatewayUrl + ThingsApiAddress;
-            return await httpClientFactory.CreateClient(nameof(GatewayMessageSender)).SendAsync(new HttpRequestMessage(HttpMethod.Get, thingsUrl)
+            string thingsUrl = gatewayBaseUrl + "/things";
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, thingsUrl)
             {
                 Headers =
                 {
                     Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
-                    Authorization = new AuthenticationHeaderValue("Bearer", workspace.AccessToken)
+                    Authorization = new AuthenticationHeaderValue("Bearer", accessToken)
+                }
+            });
+        }
+
+        public async Task<HttpResponseMessage> SendPingRequestAsync(string gatewayBaseUrl, string accessToken)
+        {
+            string url = gatewayBaseUrl + "/ping";
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Headers =
+                {
+                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
+                    Authorization = new AuthenticationHeaderValue("Bearer", accessToken)
                 }
             });
         }

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.MozillaGateway.Connectors;
+using Application.MozillaGateway.Checkers;
 using Application.Repositories;
 using Domain.Entities.Common;
 using Domain.Entities.Workspace;
@@ -13,13 +13,13 @@ namespace Application.Commands.CreateWorkspace
     {
         private readonly IWorkspaceRepository workspaceRepository;
         private readonly IFactory<NewWorkspaceCreationModel, IWorkspace> workspaceFactory;
-        private readonly IGatewayConnector gatewayConnector;
+        private readonly IGatewayConnectionChecker gatewayConnectionChecker;
 
-        public CreateWorkspaceHandler(IWorkspaceRepository workspaceRepository, IFactory<NewWorkspaceCreationModel, IWorkspace> workspaceFactory, IGatewayConnector gatewayConnector)
+        public CreateWorkspaceHandler(IWorkspaceRepository workspaceRepository, IFactory<NewWorkspaceCreationModel, IWorkspace> workspaceFactory, IGatewayConnectionChecker gatewayConnectionChecker)
         {
             this.workspaceRepository = workspaceRepository;
             this.workspaceFactory = workspaceFactory;
-            this.gatewayConnector = gatewayConnector;
+            this.gatewayConnectionChecker = gatewayConnectionChecker;
         }
 
         public async Task<Unit> Handle(CreateWorkspaceCommand request, CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ namespace Application.Commands.CreateWorkspace
                 throw new GatewayAlreadyRegisteredException(request.GatewayUrl);
             }
 
-            bool validConnectionToGateway = await gatewayConnector.CanConnectToGatewayAsync(gatewayUrl: request.GatewayUrl, accessToken: request.AccessToken);
+            bool validConnectionToGateway = await gatewayConnectionChecker.CanConnectToGatewayAsync(gatewayUrl: request.GatewayUrl, accessToken: request.AccessToken);
             if (!validConnectionToGateway)
             {
                 throw new CanNotConnectToGatewayException();

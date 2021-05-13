@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Application.MozillaGateway.Connectors
+namespace Application.MozillaGateway.Checkers
 {
-    public interface IGatewayConnector
+    public interface IGatewayConnectionChecker
     {
         public Task<bool> CanConnectToGatewayAsync(string gatewayUrl, string accessToken);
     }

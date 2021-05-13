@@ -26,7 +26,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         {
             try
             {
-                HttpResponseMessage response = await gatewayMessageSender.SendGetThingsRequest(workspace);
+                HttpResponseMessage response = await gatewayMessageSender.SendGetThingsRequestAsync(workspace.GatewayUrl, workspace.AccessToken);
                 return await getThingsResponseParser.Parse(response);
             }
             catch (Exception exception)

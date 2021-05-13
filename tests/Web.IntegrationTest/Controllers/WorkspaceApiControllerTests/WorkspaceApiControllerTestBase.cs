@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Application.MozillaGateway.Connectors;
+using Application.MozillaGateway.Checkers;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
@@ -22,7 +22,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 
         protected WorkspaceApiClient WorkspaceApiClient { get; private set; }
 
-        protected Mock<IGatewayConnector> GatewayConnectorMock { get; private set; }
+        protected Mock<IGatewayConnectionChecker> GatewayConnectorMock { get; private set; }
 
         [SetUp]
         public async Task WorkspaceApiControllerTestBaseSetUp()
@@ -36,7 +36,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         protected override void SetupMocks(IServiceCollection services)
         {
             base.SetupMocks(services);
-            GatewayConnectorMock = new Mock<IGatewayConnector>(MockBehavior.Strict);
+            GatewayConnectorMock = new Mock<IGatewayConnectionChecker>(MockBehavior.Strict);
             services.AddTransient(_ => GatewayConnectorMock.Object);
         }
 
