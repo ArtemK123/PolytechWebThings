@@ -13,9 +13,6 @@ namespace Domain
             services.AddTransient<IFactory<StoredUserCreationModel, IUser>, UserFactory>();
             services.AddTransient<IFactory<NewWorkspaceCreationModel, IWorkspace>, WorkspaceFactory>();
             services.AddTransient<IFactory<StoredWorkspaceCreationModel, IWorkspace>, WorkspaceFactory>();
-            // services.AddTransient<IFactory<ParsedThingCreationModel, IThing>, ThingFactory>();
-            // services.AddTransient<IFactory<ParsedPropertyCreationModel, IProperty>, PropertyFactory>();
-            // services.AddTransient<IFactory<ParsedActionCreationModel, IAction>, ActionFactory>();
             return services;
         }
     }

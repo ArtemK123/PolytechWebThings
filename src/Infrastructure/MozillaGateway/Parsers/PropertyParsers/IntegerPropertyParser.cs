@@ -11,19 +11,17 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
         public override Property Parse(JsonElement propertyJson)
         {
             IntegerPropertyParsingModel parsedModel = Deserialize<IntegerPropertyParsingModel>(propertyJson);
-            return new NumberProperty
-            {
-                Name = parsedModel.Name,
-                Visible = parsedModel.Visible,
-                Title = parsedModel.Title,
-                PropertyType = parsedModel.PropertyType,
-                Links = parsedModel.Links,
-                ReadOnly = parsedModel.ReadOnly,
-                Value = parsedModel.Value,
-                Unit = parsedModel.Unit,
-                Minimum = int.MinValue,
-                Maximum = int.MaxValue
-            };
+            return new NumberProperty(
+                name: parsedModel.Name,
+                visible: parsedModel.Visible,
+                title: parsedModel.Title,
+                propertyType: parsedModel.PropertyType,
+                links: parsedModel.Links,
+                readOnly: parsedModel.ReadOnly,
+                value: parsedModel.Value,
+                unit: parsedModel.Unit,
+                minimum: int.MinValue,
+                maximum: int.MaxValue);
         }
     }
 }

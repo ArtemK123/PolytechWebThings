@@ -2,8 +2,14 @@
 {
     public record Link
     {
-        public string Rel { get; init; }
+        public Link(string rel, string href)
+        {
+            Rel = rel;
+            Href = href;
+        }
 
-        public string Href { get; init; }
+        public string Rel { get; }
+
+        public string Href { get; }
     }
 }

@@ -11,16 +11,14 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
         public override Property Parse(JsonElement propertyJson)
         {
             BooleanPropertyParsingModel parsedModel = Deserialize<BooleanPropertyParsingModel>(propertyJson);
-            return new BooleanProperty
-            {
-                Name = parsedModel.Name,
-                Visible = parsedModel.Visible,
-                Title = parsedModel.Title,
-                PropertyType = parsedModel.PropertyType,
-                Links = parsedModel.Links,
-                ReadOnly = parsedModel.ReadOnly,
-                Value = parsedModel.Value
-            };
+            return new BooleanProperty(
+                name: parsedModel.Name,
+                visible: parsedModel.Visible,
+                title: parsedModel.Title,
+                propertyType: parsedModel.PropertyType,
+                links: parsedModel.Links,
+                readOnly: parsedModel.ReadOnly,
+                value: parsedModel.Value);
         }
     }
 }

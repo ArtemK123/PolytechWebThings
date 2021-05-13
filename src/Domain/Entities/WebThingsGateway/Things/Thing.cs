@@ -5,20 +5,40 @@ namespace Domain.Entities.WebThingsGateway.Things
 {
     public record Thing
     {
-        public string Title { get; init; }
+        public Thing(
+            string title,
+            IReadOnlyCollection<string> types,
+            string description,
+            string href,
+            string selectedCapability,
+            string id,
+            IReadOnlyCollection<Link> links,
+            IReadOnlyCollection<Property> properties)
+        {
+            Title = title;
+            Types = types;
+            Description = description;
+            Href = href;
+            SelectedCapability = selectedCapability;
+            Id = id;
+            Links = links;
+            Properties = properties;
+        }
 
-        public IReadOnlyCollection<string> Types { get; init; }
+        public string Title { get; }
 
-        public string Description { get; init; }
+        public IReadOnlyCollection<string> Types { get; }
 
-        public string Href { get; init; }
+        public string Description { get; }
 
-        public string SelectedCapability { get; init; }
+        public string Href { get; }
 
-        public string Id { get; init; }
+        public string SelectedCapability { get; }
 
-        public IReadOnlyCollection<Link> Links { get; init; }
+        public string Id { get; }
 
-        public IReadOnlyCollection<Property> Properties { get; init; }
+        public IReadOnlyCollection<Link> Links { get; }
+
+        public IReadOnlyCollection<Property> Properties { get; }
     }
 }

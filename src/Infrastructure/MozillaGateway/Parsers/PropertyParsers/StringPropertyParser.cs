@@ -17,32 +17,28 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
         private Property ParseString(JsonElement propertyJson)
         {
             StringPropertyParsingModel parsedModel = Deserialize<StringPropertyParsingModel>(propertyJson);
-            return new EnumProperty
-            {
-                Name = parsedModel.Name,
-                Visible = parsedModel.Visible,
-                Title = parsedModel.Title,
-                PropertyType = parsedModel.PropertyType,
-                Links = parsedModel.Links,
-                ReadOnly = parsedModel.ReadOnly,
-                Value = parsedModel.Value,
-            };
+            return new StringProperty(
+                name: parsedModel.Name,
+                visible: parsedModel.Visible,
+                title: parsedModel.Title,
+                propertyType: parsedModel.PropertyType,
+                links: parsedModel.Links,
+                readOnly: parsedModel.ReadOnly,
+                value: parsedModel.Value);
         }
 
         private Property ParseEnum(JsonElement propertyJson)
         {
             EnumPropertyParsingModel parsedModel = Deserialize<EnumPropertyParsingModel>(propertyJson);
-            return new EnumProperty
-            {
-                Name = parsedModel.Name,
-                Visible = parsedModel.Visible,
-                Title = parsedModel.Title,
-                PropertyType = parsedModel.PropertyType,
-                Links = parsedModel.Links,
-                ReadOnly = parsedModel.ReadOnly,
-                Value = parsedModel.Value,
-                AllowedValues = parsedModel.Enum
-            };
+            return new EnumProperty(
+                name: parsedModel.Name,
+                visible: parsedModel.Visible,
+                title: parsedModel.Title,
+                propertyType: parsedModel.PropertyType,
+                links: parsedModel.Links,
+                readOnly: parsedModel.ReadOnly,
+                value: parsedModel.Value,
+                allowedValues: parsedModel.Enum);
         }
     }
 }

@@ -22,17 +22,15 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
         {
             IReadOnlyCollection<Property> parsedProperties = flatThingModel.Properties.Select(keyValuePair => ParseProperty(keyValuePair.Value)).ToArray();
 
-            return new Thing
-            {
-                Title = flatThingModel.Title,
-                Types = flatThingModel.Types,
-                Description = flatThingModel.Description,
-                Href = flatThingModel.Href,
-                SelectedCapability = flatThingModel.SelectedCapability,
-                Id = flatThingModel.Id,
-                Links = flatThingModel.Links,
-                Properties = parsedProperties
-            };
+            return new Thing(
+                title: flatThingModel.Title,
+                types: flatThingModel.Types,
+                description: flatThingModel.Description,
+                href: flatThingModel.Href,
+                selectedCapability: flatThingModel.SelectedCapability,
+                id: flatThingModel.Id,
+                links: flatThingModel.Links,
+                properties: parsedProperties);
         }
 
         private Property ParseProperty(JsonElement propertyJson)

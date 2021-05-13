@@ -4,18 +4,28 @@ namespace Domain.Entities.WebThingsGateway.Properties
 {
     public abstract record Property
     {
-        public string Name { get; init; }
+        protected Property(string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly)
+        {
+            Name = name;
+            Visible = visible;
+            Title = title;
+            PropertyType = propertyType;
+            Links = links;
+            ReadOnly = readOnly;
+        }
 
-        public bool Visible { get; init; }
+        public string Name { get; }
 
-        public string Title { get; init; }
+        public bool Visible { get; }
+
+        public string Title { get; }
 
         public abstract GatewayValueType ValueType { get; }
 
-        public string PropertyType { get; init; }
+        public string PropertyType { get; }
 
-        public IReadOnlyCollection<Link> Links { get; init; }
+        public IReadOnlyCollection<Link> Links { get; }
 
-        public bool ReadOnly { get; init; }
+        public bool ReadOnly { get; }
     }
 }
