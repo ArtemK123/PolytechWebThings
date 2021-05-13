@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.MozillaGateway.Providers;
 using Application.Queries.GetWorkspaceById;
-using Domain.Entities.WebThingsGateway.Thing;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using MediatR;
 

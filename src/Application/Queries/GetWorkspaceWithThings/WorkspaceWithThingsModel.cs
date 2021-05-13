@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Domain.Entities.WebThingsGateway.Thing;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 
 namespace Application.Queries.GetWorkspaceWithThings

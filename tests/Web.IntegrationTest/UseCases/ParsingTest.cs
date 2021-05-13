@@ -7,7 +7,6 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Domain.Entities.WebThingsGateway.Thing;
 using Domain.Entities.Workspace;
 using Domain.Exceptions;
 using NUnit.Framework;

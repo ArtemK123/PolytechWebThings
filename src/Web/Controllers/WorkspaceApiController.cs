@@ -9,7 +9,7 @@ using Application.Commands.UpdateWorkspace;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
 using Application.Queries.GetWorkspaceWithThings;
-using Domain.Entities.WebThingsGateway.Thing;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

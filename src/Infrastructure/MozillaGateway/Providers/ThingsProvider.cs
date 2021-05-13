@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using Application.MozillaGateway.Providers;
 using Domain.Entities.Common;
 using Domain.Entities.WebThingsGateway.Action;
-using Domain.Entities.WebThingsGateway.Property;
-using Domain.Entities.WebThingsGateway.Thing;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using Domain.Exceptions;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
@@ -18,20 +17,19 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 {
     internal class ThingsProvider : IThingsProvider
     {
-        // private readonly IHttpClientFactory httpClientFactory;
-        // private readonly IFactory<ParsedThingCreationModel, IThing> thingFactory;
-        // private readonly IFactory<ParsedPropertyCreationModel, IProperty> propertyFactory;
-        //
-        // public ThingsProvider(
-        //     IHttpClientFactory httpClientFactory,
-        //     IFactory<ParsedThingCreationModel, IThing> thingFactory,
-        //     IFactory<ParsedPropertyCreationModel, IProperty> propertyFactory)
-        // {
-        //     this.httpClientFactory = httpClientFactory;
-        //     this.thingFactory = thingFactory;
-        //     this.propertyFactory = propertyFactory;
-        // }
-        //
+        private readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+        };
+
+        private readonly IHttpClientFactory httpClientFactory;
+
+        public ThingsProvider(
+            IHttpClientFactory httpClientFactory)
+        {
+            this.httpClientFactory = httpClientFactory;
+        }
+
         // public async Task<IReadOnlyCollection<IThing>> GetAsync(IWorkspace workspace)
         // {
         //     try
@@ -88,9 +86,78 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         //         = JsonSerializer.Deserialize<IReadOnlyCollection<ThingParsingModel>>(serializedText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         //     return deserialized ?? throw new NullReferenceException();
         // }
-        public Task<IReadOnlyCollection<Thing>> GetAsync(IWorkspace workspace)
+        public async Task<IReadOnlyCollection<Thing>> GetAsync(IWorkspace workspace)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage response = await SendRequestToGatewayAsync(workspace);
+                string responseText = await response.Content.ReadAsStringAsync();
+                var result = Deserialize(responseText);
+                return Array.Empty<Thing>();
+            }
+            catch (Exception exception)
+            {
+                throw new BrokenGatewayCommunicationException(exception);
+            }
+        }
+
+        private async Task<HttpResponseMessage> SendRequestToGatewayAsync(IWorkspace workspace)
+        {
+            string thingsUrl = workspace.GatewayUrl + "/things";
+            return await httpClientFactory.CreateClient().SendAsync(new HttpRequestMessage(HttpMethod.Get, thingsUrl)
+            {
+                Headers =
+                {
+                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
+                    Authorization = new AuthenticationHeaderValue("Bearer", workspace.AccessToken)
+                }
+            });
+        }
+
+        private IReadOnlyCollection<ThingParsingModel> Deserialize(string serializedText)
+        {
+            IReadOnlyCollection<ThingFlatModel>? deserialized
+                = JsonSerializer.Deserialize<IReadOnlyCollection<ThingFlatModel>>(serializedText, jsonSerializerOptions);
+
+            IReadOnlyCollection<PropertyModelBase> parsedProperties =
+                deserialized.SelectMany(thing => thing.Properties.Select(keyValuePair => DeserializeProperty(keyValuePair.Value))).ToArray();
+            return Array.Empty<ThingParsingModel>();
+        }
+
+        private PropertyModelBase DeserializeProperty(JsonElement propertyJson)
+        {
+            string propertyValueType = propertyJson.GetProperty("type").GetString();
+            PropertyModelBase parsedModel = default;
+            if (propertyValueType == "boolean")
+            {
+                parsedModel = JsonSerializer.Deserialize<BooleanProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+            }
+            else if (propertyValueType == "string")
+            {
+                bool isEnum = propertyJson.TryGetProperty("enum", out var _);
+                if (isEnum)
+                {
+                    parsedModel = JsonSerializer.Deserialize<EnumProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+                }
+                else
+                {
+                    parsedModel = JsonSerializer.Deserialize<StringProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+                }
+            }
+            else if (propertyValueType == "number")
+            {
+                parsedModel = JsonSerializer.Deserialize<NumberProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+            }
+            else if (propertyValueType == "integer")
+            {
+                parsedModel = JsonSerializer.Deserialize<IntegerProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+            }
+            else
+            {
+                Console.WriteLine($"Unsupported property value`s type {propertyValueType}");
+            }
+
+            return parsedModel;
         }
     }
 }
