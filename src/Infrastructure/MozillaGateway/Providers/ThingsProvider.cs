@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Application.Converters;
@@ -13,6 +12,7 @@ using Domain.Entities.Workspace;
 using Domain.Exceptions;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 {
@@ -23,12 +23,12 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
             PropertyNameCaseInsensitive = true,
         };
 
-        private readonly IHttpClientFactory httpClientFactory;
         private readonly IReadOnlyCollection<IPropertyParser> propertyParsers;
+        private readonly IGatewayMessageSender gatewayMessageSender;
 
-        public ThingsProvider(IHttpClientFactory httpClientFactory, IEnumerable<IPropertyParser> propertyParsers)
+        public ThingsProvider(IEnumerable<IPropertyParser> propertyParsers, IGatewayMessageSender gatewayMessageSender)
         {
-            this.httpClientFactory = httpClientFactory;
+            this.gatewayMessageSender = gatewayMessageSender;
             this.propertyParsers = propertyParsers.ToArray();
         }
 
@@ -36,7 +36,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         {
             try
             {
-                HttpResponseMessage response = await SendRequestToGatewayAsync(workspace);
+                HttpResponseMessage response = await gatewayMessageSender.SendGetThingsRequest(workspace);
                 string responseText = await response.Content.ReadAsStringAsync();
                 IReadOnlyCollection<Thing> parsedThings = Deserialize(responseText);
                 return parsedThings;
@@ -45,19 +45,6 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
             {
                 throw new BrokenGatewayCommunicationException(exception);
             }
-        }
-
-        private async Task<HttpResponseMessage> SendRequestToGatewayAsync(IWorkspace workspace)
-        {
-            string thingsUrl = workspace.GatewayUrl + "/things";
-            return await httpClientFactory.CreateClient(nameof(ThingsProvider)).SendAsync(new HttpRequestMessage(HttpMethod.Get, thingsUrl)
-            {
-                Headers =
-                {
-                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
-                    Authorization = new AuthenticationHeaderValue("Bearer", workspace.AccessToken)
-                }
-            });
         }
 
         private IReadOnlyCollection<Thing> Deserialize(string serializedText)

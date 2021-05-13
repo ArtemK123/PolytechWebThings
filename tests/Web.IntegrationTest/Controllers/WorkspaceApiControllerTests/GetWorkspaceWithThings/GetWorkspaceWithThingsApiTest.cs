@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
 using Web.Controllers;
 using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
@@ -44,7 +44,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
 
             Mock<IHttpClientFactory> httpClientFactoryMock = new Mock<IHttpClientFactory>(MockBehavior.Strict);
             HttpClient httpClient = new HttpClient(httpMessageHandlerMock.Object);
-            httpClientFactoryMock.Setup(factory => factory.CreateClient(nameof(ThingsProvider))).Returns(httpClient);
+            httpClientFactoryMock.Setup(factory => factory.CreateClient(nameof(GatewayMessageSender))).Returns(httpClient);
             services.AddTransient(_ => httpClientFactoryMock.Object);
         }
 
