@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Domain.Entities.WebThingsGateway;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Models
 {
-    internal record PropertyParsingModel
+    internal abstract record PropertyParsingModelBase
     {
         public string Name { get; init; }
-
-        public string Value { get; init; }
 
         public bool Visible { get; init; }
 
@@ -19,14 +18,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Models
         [JsonPropertyName("@type")]
         public string PropertyType { get; init; }
 
-        public string Unit { get; init; }
-
-        public int Minimum { get; init; }
-
-        public int Maximum { get; init; }
+        public IReadOnlyCollection<Link> Links { get; init; }
 
         public bool ReadOnly { get; init; }
-
-        public IReadOnlyCollection<LinkParsingModel> Links { get; init; }
     }
 }

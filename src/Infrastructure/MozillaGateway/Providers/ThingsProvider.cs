@@ -59,13 +59,10 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         private IReadOnlyCollection<Thing> Deserialize(string serializedText)
         {
             IReadOnlyCollection<ThingFlatParsingModel> flatThingModels
-                = JsonSerializer.Deserialize<IReadOnlyCollection<ThingFlatParsingModel>>(serializedText, jsonSerializerOptions)
-                  ?? throw new NullReferenceException();
+                = GetValueOrThrow(JsonSerializer.Deserialize<IReadOnlyCollection<ThingFlatParsingModel>>(serializedText, jsonSerializerOptions));
 
             IReadOnlyCollection<Thing> parsedThings = flatThingModels.Select(ParseThing).ToList();
 
-            // IReadOnlyCollection<PropertyModelBase> parsedProperties =
-            //     flatThingModels.SelectMany(thing => thing.Properties.Select(keyValuePair => DeserializeProperty(keyValuePair.Value))).ToArray();
             return parsedThings;
         }
 
@@ -88,38 +85,103 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
 
         private Property ParseProperty(JsonElement propertyJson)
         {
-            string propertyValueType = propertyJson.GetProperty("type").GetString();
-            Property parsedModel = default;
+            if (!propertyJson.TryGetProperty("type", out JsonElement typeElement))
+            {
+                throw new NotSupportedException("Cannot find type field for property");
+            }
+
+            string? propertyValueType = typeElement.GetString();
+
             if (propertyValueType == "boolean")
             {
-                parsedModel = JsonSerializer.Deserialize<BooleanProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+                BooleanPropertyParsingModel parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<BooleanPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                return new BooleanProperty
+                {
+                    Name = parsedModel.Name,
+                    Visible = parsedModel.Visible,
+                    Title = parsedModel.Title,
+                    PropertyType = parsedModel.PropertyType,
+                    Links = parsedModel.Links,
+                    ReadOnly = parsedModel.ReadOnly,
+                    Value = parsedModel.Value
+                };
             }
-            else if (propertyValueType == "string")
+
+            if (propertyValueType == "string")
             {
-                bool isEnum = propertyJson.TryGetProperty("enum", out var _);
+                bool isEnum = propertyJson.TryGetProperty("enum", out _);
                 if (isEnum)
                 {
-                    parsedModel = JsonSerializer.Deserialize<EnumProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+                    var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                    return new EnumProperty
+                    {
+                        Name = parsedModel.Name,
+                        Visible = parsedModel.Visible,
+                        Title = parsedModel.Title,
+                        PropertyType = parsedModel.PropertyType,
+                        Links = parsedModel.Links,
+                        ReadOnly = parsedModel.ReadOnly,
+                        Value = parsedModel.Value
+                    };
                 }
                 else
                 {
-                    parsedModel = JsonSerializer.Deserialize<StringProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
+                    var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<EnumPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                    return new EnumProperty
+                    {
+                        Name = parsedModel.Name,
+                        Visible = parsedModel.Visible,
+                        Title = parsedModel.Title,
+                        PropertyType = parsedModel.PropertyType,
+                        Links = parsedModel.Links,
+                        ReadOnly = parsedModel.ReadOnly,
+                        Value = parsedModel.Value,
+                        AllowedValues = parsedModel.Enum
+                    };
                 }
             }
-            else if (propertyValueType == "number")
+
+            if (propertyValueType == "number")
             {
-                parsedModel = JsonSerializer.Deserialize<NumberProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
-            }
-            else if (propertyValueType == "integer")
-            {
-                parsedModel = JsonSerializer.Deserialize<NumberProperty>(propertyJson.GetRawText(), jsonSerializerOptions);
-            }
-            else
-            {
-                Console.WriteLine($"Unsupported property value`s type {propertyValueType}");
+                var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<NumberPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                return new NumberProperty
+                {
+                    Name = parsedModel.Name,
+                    Visible = parsedModel.Visible,
+                    Title = parsedModel.Title,
+                    PropertyType = parsedModel.PropertyType,
+                    Links = parsedModel.Links,
+                    ReadOnly = parsedModel.ReadOnly,
+                    Value = parsedModel.Value,
+                    Unit = parsedModel.Unit,
+                    Minimum = parsedModel.Minimum,
+                    Maximum = parsedModel.Maximum
+                };
             }
 
-            return parsedModel;
+            if (propertyValueType == "integer")
+            {
+                var parsedModel = GetValueOrThrow(JsonSerializer.Deserialize<IntegerPropertyParsingModel>(propertyJson.GetRawText(), jsonSerializerOptions));
+                return new NumberProperty
+                {
+                    Name = parsedModel.Name,
+                    Visible = parsedModel.Visible,
+                    Title = parsedModel.Title,
+                    PropertyType = parsedModel.PropertyType,
+                    Links = parsedModel.Links,
+                    ReadOnly = parsedModel.ReadOnly,
+                    Value = parsedModel.Value,
+                    Unit = parsedModel.Unit,
+                    Minimum = int.MinValue,
+                    Maximum = int.MaxValue
+                };
+            }
+
+            throw new NotSupportedException($"Unsupported property value`s type {propertyValueType}");
         }
+
+        private TValue GetValueOrThrow<TValue>(TValue? nullableValue)
+            where TValue : class
+            => nullableValue ?? throw new NullReferenceException();
     }
 }
