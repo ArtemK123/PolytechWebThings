@@ -9,7 +9,6 @@ using Application.Commands.UpdateWorkspace;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
 using Application.Queries.GetWorkspaceWithThings;
-using Domain.Entities.WebThingsGateway.Property;
 using Domain.Entities.WebThingsGateway.Thing;
 using Domain.Entities.Workspace;
 using MediatR;
@@ -124,8 +123,6 @@ namespace Web.Controllers
             return nullableValueType ?? throw new NullReferenceException();
         }
 
-        private ThingApiModel Convert(IThing thing) => new ThingApiModel(title: thing.Title, properties: thing.Properties.Select(Convert).ToArray());
-
-        private PropertyApiModel Convert(IProperty property) => new PropertyApiModel(name: property.Name, value: property.Value);
+        private ThingApiModel Convert(Thing thing) => new ThingApiModel();
     }
 }

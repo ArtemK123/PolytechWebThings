@@ -6,7 +6,7 @@ namespace Application.Queries.GetWorkspaceWithThings
 {
     public record WorkspaceWithThingsModel
     {
-        public WorkspaceWithThingsModel(IWorkspace workspace, IReadOnlyCollection<IThing> things)
+        public WorkspaceWithThingsModel(IWorkspace workspace, IReadOnlyCollection<Thing> things)
         {
             Workspace = workspace;
             Things = things;
@@ -14,6 +14,6 @@ namespace Application.Queries.GetWorkspaceWithThings
 
         public IWorkspace Workspace { get; }
 
-        public IReadOnlyCollection<IThing> Things { get; }
+        public IReadOnlyCollection<Thing> Things { get; }
     }
 }

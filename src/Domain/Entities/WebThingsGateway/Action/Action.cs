@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.WebThingsGateway.Action
 {
-    internal record Action : IAction
+    internal record Action
     {
         public Action(string name, string href)
         {

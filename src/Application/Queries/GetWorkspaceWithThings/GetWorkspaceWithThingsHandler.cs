@@ -23,7 +23,7 @@ namespace Application.Queries.GetWorkspaceWithThings
         public async Task<WorkspaceWithThingsModel> Handle(GetWorkspaceWithThingsQuery request, CancellationToken cancellationToken)
         {
             IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.WorkspaceId, request.UserEmail), cancellationToken);
-            IReadOnlyCollection<IThing> things = await thingsProvider.GetAsync(workspace);
+            IReadOnlyCollection<Thing> things = await thingsProvider.GetAsync(workspace);
             return new WorkspaceWithThingsModel(workspace, things);
         }
     }

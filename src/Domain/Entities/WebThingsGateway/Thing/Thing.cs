@@ -1,25 +1,15 @@
-﻿using System.Collections.Generic;
-using Domain.Entities.WebThingsGateway.Action;
-using Domain.Entities.WebThingsGateway.Property;
-
-namespace Domain.Entities.WebThingsGateway.Thing
+﻿namespace Domain.Entities.WebThingsGateway.Thing
 {
-    internal record Thing : IThing
+    public record Thing
     {
-        public Thing(string title, string href, IReadOnlyCollection<IProperty> properties, IReadOnlyCollection<IAction> actions)
+        public Thing(string title, string href)
         {
             Title = title;
             Href = href;
-            Properties = properties;
-            Actions = actions;
         }
 
-        public string Title { get; }
+        public string Title { get; init; }
 
-        public string Href { get; }
-
-        public IReadOnlyCollection<IProperty> Properties { get; }
-
-        public IReadOnlyCollection<IAction> Actions { get; }
+        public string Href { get; init; }
     }
 }

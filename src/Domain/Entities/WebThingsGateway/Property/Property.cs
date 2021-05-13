@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.WebThingsGateway.Property
 {
-    internal record Property : IProperty
+    internal record Property
     {
         public Property(string name, string value, string href)
         {

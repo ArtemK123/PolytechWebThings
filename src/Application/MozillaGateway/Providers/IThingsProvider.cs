@@ -7,6 +7,6 @@ namespace Application.MozillaGateway.Providers
 {
     public interface IThingsProvider
     {
-        Task<IReadOnlyCollection<IThing>> GetAsync(IWorkspace workspace);
+        Task<IReadOnlyCollection<Thing>> GetAsync(IWorkspace workspace);
     }
 }
