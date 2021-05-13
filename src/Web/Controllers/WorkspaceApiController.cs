@@ -9,6 +9,7 @@ using Application.Converters;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
 using Application.Queries.GetWorkspaceWithThings;
+using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using MediatR;
@@ -111,6 +112,8 @@ namespace Web.Controllers
         private static WorkspaceApiModel ConvertApiModel(IWorkspace workspace)
             => new WorkspaceApiModel(id: workspace.Id, name: workspace.Name, accessToken: workspace.AccessToken, gatewayUrl: workspace.GatewayUrl);
 
-        private ThingApiModel Convert(Thing thing) => new ThingApiModel();
+        private ThingApiModel Convert(Thing thing) => new ThingApiModel { Title = thing.Title, Properties = thing.Properties.Select(Convert).ToArray() };
+
+        private PropertyApiModel Convert(Property property) => new PropertyApiModel { Name = property.Name, Value = null };
     }
 }

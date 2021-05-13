@@ -4,8 +4,8 @@ namespace Web.Models.Things
 {
     public record ThingApiModel
     {
-        public string Title { get; set; }
+        public string? Title { get; init;  }
 
-        public IReadOnlyCollection<PropertyApiModel> Properties { get; set; }
+        public IReadOnlyCollection<PropertyApiModel>? Properties { get; init; }
     }
 }
