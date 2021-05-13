@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Resolvers;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
 {
     internal class ThingParser : IThingParser
     {
-        private readonly IEnumerable<IPropertyParser> propertyParsers;
+        private readonly IPropertyParserResolver propertyParserResolver;
 
-        public ThingParser(IEnumerable<IPropertyParser> propertyParsers)
+        public ThingParser(IPropertyParserResolver propertyParserResolver)
         {
-            this.propertyParsers = propertyParsers;
+            this.propertyParserResolver = propertyParserResolver;
         }
 
         public Thing Parse(ThingFlatParsingModel flatThingModel)
@@ -37,20 +37,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
 
         private Property ParseProperty(JsonElement propertyJson)
         {
-            if (!propertyJson.TryGetProperty("type", out JsonElement typeElement))
-            {
-                throw new NotSupportedException("Cannot find type field for property");
-            }
-
-            string? propertyValueType = typeElement.GetString();
-
-            IPropertyParser? parser = propertyParsers.SingleOrDefault(currentParser => currentParser.PropertyValueType == propertyValueType);
-
-            if (parser is null)
-            {
-                throw new NotSupportedException($"Unsupported property value`s type {propertyValueType}");
-            }
-
+            IPropertyParser parser = propertyParserResolver.Resolve(propertyJson);
             return parser.Parse(propertyJson);
         }
     }

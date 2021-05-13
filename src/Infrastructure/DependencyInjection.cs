@@ -14,6 +14,7 @@ using PolytechWebThings.Infrastructure.MozillaGateway.Connectors;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Resolvers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
 using PolytechWebThings.Infrastructure.Providers;
 
@@ -36,6 +37,7 @@ namespace PolytechWebThings.Infrastructure
             services.AddTransient<IGatewayConnector, GatewayConnector>();
             services.AddTransient<IThingsProvider, ThingsProvider>();
             services.AddTransient<IGatewayMessageSender, GatewayMessageSender>();
+            services.AddTransient<IPropertyParserResolver, PropertyParserResolver>();
             services.AddParsers();
         }
 
