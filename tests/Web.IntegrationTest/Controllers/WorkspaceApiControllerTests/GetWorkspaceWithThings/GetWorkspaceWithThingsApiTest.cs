@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
         public async Task GetWorkspaceWithThings_PrimitivePropertyValues()
         {
             httpMessageHandlerMock.Protected()
-                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(message => IsHttpRequestMessageValid(message)), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
@@ -33,6 +34,13 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
             OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
             Assert.AreEqual(OperationStatus.Success, result.Message);
         }
+
+        private bool IsHttpRequestMessageValid(HttpRequestMessage httpRequestMessage)
+            => httpRequestMessage.RequestUri?.AbsoluteUri == GatewayUrl + "/things"
+                && httpRequestMessage.Method == HttpMethod.Get
+                && httpRequestMessage.Headers.Authorization?.Scheme == "Bearer"
+                && httpRequestMessage.Headers.Authorization?.Parameter == AccessToken
+                && httpRequestMessage.Headers.Accept.Single().MediaType == "application/json";
 
         protected override void SetupMocks(IServiceCollection services)
         {
