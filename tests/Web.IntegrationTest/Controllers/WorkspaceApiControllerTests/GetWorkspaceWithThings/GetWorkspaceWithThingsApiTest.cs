@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,12 +23,17 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
         private Mock<HttpMessageHandler> httpMessageHandlerMock;
 
         [Test]
-        public async Task GetWorkspaceWithThings_PrimitivePropertyValues()
+        public async Task GetWorkspaceWithThings_PrimitivePropertyValues_ShouldDeserializeAndReturnThings()
         {
-            await SetupHttpMessageHandlerMock();
+            string resourcesFolder = Path.GetFullPath("Controllers/WorkspaceApiControllerTests/GetWorkspaceWithThings/PrimitivePropertyValues");
+            await SetupHttpMessageHandlerMock(resourcesFolder);
+            string serializedExpected = await File.ReadAllTextAsync(Path.Combine(resourcesFolder, "Expected.json"));
+
             OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+            string serializedActual = JsonSerializer.Serialize(result.Data);
+
             Assert.AreEqual(OperationStatus.Success, result.Status);
-            Assert.IsNotEmpty(result.Data.Things);
+            Assert.AreEqual(serializedExpected, serializedActual);
         }
 
         protected override void SetupMocks(IServiceCollection services)
@@ -42,10 +48,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
             services.AddTransient(_ => httpClientFactoryMock.Object);
         }
 
-        private async Task SetupHttpMessageHandlerMock()
+        private async Task SetupHttpMessageHandlerMock(string resourcesFolder)
         {
-            string path = Path.GetFullPath("Controllers/WorkspaceApiControllerTests/GetWorkspaceWithThings/PrimitivePropertyValues.json");
-            string jsonFileContent = await File.ReadAllTextAsync(path);
+            string inputPath = Path.Combine(resourcesFolder, "Input.json");
+            string jsonFileContent = await File.ReadAllTextAsync(inputPath);
             httpMessageHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(message => IsHttpRequestMessageValid(message)), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
