@@ -42,6 +42,7 @@ namespace PolytechWebThings.Infrastructure
         private static void AddParsers(this IServiceCollection services)
         {
             services.AddTransient<IGetThingsResponseParser, GetThingsResponseParser>();
+            services.AddTransient<IThingParser, ThingParser>();
             services.AddTransient<IPropertyParser, BooleanPropertyParser>();
             services.AddTransient<IPropertyParser, StringPropertyParser>();
             services.AddTransient<IPropertyParser, NumberPropertyParser>();
