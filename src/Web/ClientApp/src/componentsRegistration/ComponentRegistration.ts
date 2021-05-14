@@ -14,6 +14,7 @@ import { UpdateWorkspacePageComponent } from "../components/app/updateWorkspaceP
 import { ThingCardComponent } from "../components/app/workspacePage/thingCard/ThingCardComponent";
 import { RouterComponent } from "../components/common/router/RouterComponent";
 import { LoaderComponent } from "../components/common/loader/LoaderComponent";
+import { CreateRuleModalComponent } from "../components/app/workspacePage/createRuleModal/CreateRuleComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -35,6 +36,7 @@ export class ComponentRegistration {
         ko.components.register("workspace-page", new WorkspacePageComponent().generateDescriptor());
         ko.components.register("update-workspace-page", new UpdateWorkspacePageComponent().generateDescriptor());
         ko.components.register("thing-card", new ThingCardComponent().generateDescriptor());
+        ko.components.register("create-rule-modal", new CreateRuleModalComponent().generateDescriptor());
     }
 
     private static registerCommonComponents() {

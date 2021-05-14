@@ -14,6 +14,7 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly workspaceName: ko.Observable<string> = ko.observable("");
     public readonly things: ko.ObservableArray<IThingApiModel> = ko.observableArray([]);
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
+    public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
 
     private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
@@ -28,5 +29,9 @@ export class WorkspacePageViewModel implements IViewModel {
                 this.workspaceName(response.data.workspace.name);
                 this.things(response.data.things);
             });
+    }
+
+    public createRule(): void {
+        this.isCreateRuleFormOpened(true);
     }
 }
