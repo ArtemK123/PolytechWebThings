@@ -34,7 +34,11 @@ namespace Web.Controllers
             {
                 typeof(BrokenGatewayCommunicationException), exception =>
                 {
-                    logger.LogInformation($"Inner exception in gateway communication {exception.InnerException?.Message}");
+                    if (exception.InnerException is not null)
+                    {
+                        logger.LogInformation($"Inner exception in gateway communication {exception.InnerException?.Message}");
+                    }
+
                     return new OperationResult(OperationStatus.Error, exception.Message);
                 }
             },

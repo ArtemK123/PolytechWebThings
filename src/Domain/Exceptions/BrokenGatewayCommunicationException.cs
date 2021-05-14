@@ -4,8 +4,13 @@ namespace Domain.Exceptions
 {
     public class BrokenGatewayCommunicationException : Exception
     {
-        public BrokenGatewayCommunicationException(Exception innerException)
-            : base("Error in communication with gateway. Contact the administrator", innerException)
+        public BrokenGatewayCommunicationException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
+        public BrokenGatewayCommunicationException(string message)
+            : base(message)
         {
         }
     }

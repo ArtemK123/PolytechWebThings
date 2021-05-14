@@ -3,7 +3,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.Models.OperationResults;
@@ -19,7 +22,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
         public async Task GetWorkspaceWithThings_PrimitivePropertyValues_ShouldDeserializeAndReturnThings()
         {
             string resourcesFolder = Path.GetFullPath("Controllers/WorkspaceApiControllerTests/GetWorkspaceWithThings/PrimitivePropertyValues");
-            await SetupHttpMessageHandlerMock(resourcesFolder);
+            await SetupHttpMessageHandlerMockWithValidResponse(resourcesFolder);
             string serializedExpected = await File.ReadAllTextAsync(Path.Combine(resourcesFolder, "Expected.json"));
 
             OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
@@ -29,16 +32,52 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspa
             Assert.AreEqual(serializedExpected, serializedActual);
         }
 
-        private async Task SetupHttpMessageHandlerMock(string resourcesFolder)
+        [Test]
+        public async Task GetWorkspaceWithThings_NoResponseFromGateway_ShouldInformUserAboutProblem()
+        {
+            HttpRequestException thrownException = new HttpRequestException("Some problem with http connection");
+
+            HttpMessageHandlerMock.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(message => IsExpectedHttpResponseMessage(message)), ItExpr.IsAny<CancellationToken>())
+                .ThrowsAsync(thrownException);
+
+            OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+
+            Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual($"Can not connect to {WorkspaceName} gateway at {GatewayUrl}", result.Message);
+        }
+
+        [Test]
+        public async Task GetWorkspaceWithThings_UnauthorizedResponseFromGateway_ShouldInformUserAboutProblem()
+        {
+            SetupHttpMessageHandlerMock(IsExpectedHttpResponseMessage, new HttpResponseMessage(HttpStatusCode.Unauthorized));
+
+            OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+            Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual($"Invalid access token for {WorkspaceName} gateway at {GatewayUrl}. Please, update access token and try again", result.Message);
+        }
+
+        [Test]
+        public async Task GetWorkspaceWithThings_InvalidPayloadFromGateway_ShouldInformUserAboutProblem()
+        {
+            string returnedPayload = "<doctype html><html><head></head><body></body></html>";
+            SetupHttpMessageHandlerMock(IsExpectedHttpResponseMessage, new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(returnedPayload) });
+
+            OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+            Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual($"{WorkspaceName} gateway returned invalid data, which can not be parsed. If this error remains, please contact the support", result.Message);
+        }
+
+        private async Task SetupHttpMessageHandlerMockWithValidResponse(string resourcesFolder)
         {
             string inputPath = Path.Combine(resourcesFolder, "Input.json");
             string jsonFileContent = await File.ReadAllTextAsync(inputPath);
             SetupHttpMessageHandlerMock(
-                IsHttpRequestMessageValid,
+                IsExpectedHttpResponseMessage,
                 new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(jsonFileContent) });
         }
 
-        private bool IsHttpRequestMessageValid(HttpRequestMessage httpRequestMessage)
+        private bool IsExpectedHttpResponseMessage(HttpRequestMessage httpRequestMessage)
             => httpRequestMessage.RequestUri?.AbsoluteUri == GatewayUrl + "/things"
                && httpRequestMessage.Method == HttpMethod.Get
                && httpRequestMessage.Headers.Authorization?.Scheme == "Bearer"
