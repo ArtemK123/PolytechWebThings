@@ -120,31 +120,54 @@ namespace Web.Controllers
 
         private PropertyApiModel Convert(Property property)
         {
+            var propertyApiModel = new PropertyApiModel
+            {
+                Name = property.Name,
+                Visible = property.Visible,
+                Title = property.Title,
+                ValueType = property.ValueType,
+                PropertyType = property.PropertyType,
+                Links = property.Links.Select(Convert).ToArray(),
+                ReadOnly = property.ReadOnly
+            };
+
             if (property.ValueType == GatewayValueType.Boolean)
             {
                 BooleanProperty convertedProperty = (BooleanProperty)property;
-                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value.ToString(), ValueType = convertedProperty.ValueType.ToString() };
+                return propertyApiModel with { Value = convertedProperty.Value.ToString() };
             }
 
             if (property.ValueType == GatewayValueType.Number)
             {
                 NumberProperty convertedProperty = (NumberProperty)property;
-                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value.ToString(), ValueType = convertedProperty.ValueType.ToString() };
+                return propertyApiModel with
+                {
+                    Value = convertedProperty.Value.ToString(),
+                    Unit = convertedProperty.Unit,
+                    Minimum = convertedProperty.Minimum,
+                    Maximum = convertedProperty.Maximum
+                };
             }
 
             if (property.ValueType == GatewayValueType.String)
             {
                 StringProperty convertedProperty = (StringProperty)property;
-                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value, ValueType = convertedProperty.ValueType.ToString() };
+                return propertyApiModel with { Value = convertedProperty.Value };
             }
 
             if (property.ValueType == GatewayValueType.Enum)
             {
                 EnumProperty convertedProperty = (EnumProperty)property;
-                return new PropertyApiModel { Name = property.Name, Value = convertedProperty.Value, ValueType = convertedProperty.ValueType.ToString() };
+                return propertyApiModel with { Value = convertedProperty.Value, AllowedValues = convertedProperty.AllowedValues };
             }
 
             throw new NotSupportedException("Unsupported property type");
         }
+
+        private LinkApiModel Convert(Link link) => new LinkApiModel
+        {
+            Rel = link.Rel,
+            Href = link.Href
+        };
     }
 }
