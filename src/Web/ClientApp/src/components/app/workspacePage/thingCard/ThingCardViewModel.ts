@@ -11,4 +11,12 @@ export class ThingCardViewModel implements IViewModel {
         this.title(params.model.title);
         this.properties(params.model.properties);
     }
+
+    public generatePropertyText(property: IPropertyApiModel) {
+        const propertyText: string = `${property.name}: ${property.value}`;
+        if (property.unit) {
+            return `${propertyText} ${property.unit}`;
+        }
+        return propertyText;
+    }
 }
