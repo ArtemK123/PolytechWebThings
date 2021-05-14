@@ -1,6 +1,6 @@
 import * as ko from "knockout";
-import AppViewModel from "./components/app/AppViewModel";
-import ComponentRegistration from "./componentsRegistration/ComponentRegistration";
+import { ComponentRegistration } from "./componentsRegistration/ComponentRegistration";
+import { AppViewModel } from "./components/app/AppViewModel";
 
 function main() {
     new ComponentRegistration().registerBindings();

@@ -11,8 +11,9 @@ import { RedirectHandler } from "../../../services/RedirectHandler";
 
 export class WorkspacePageViewModel implements IViewModel {
     public readonly id: ko.Observable<number> = ko.observable(-1);
-    public readonly workspaceName: ko.Observable<string> = ko.observable("Test");
+    public readonly workspaceName: ko.Observable<string> = ko.observable("");
     public readonly things: ko.ObservableArray<IThingApiModel> = ko.observableArray([]);
+    public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
 
     private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
@@ -23,6 +24,7 @@ export class WorkspacePageViewModel implements IViewModel {
                 if (response.status !== OperationStatus.Success) {
                     RedirectHandler.redirect("/");
                 }
+                this.isLoading(false);
                 this.workspaceName(response.data.workspace.name);
                 this.things(response.data.things);
             });

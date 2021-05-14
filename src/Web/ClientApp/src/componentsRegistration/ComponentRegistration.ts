@@ -7,20 +7,25 @@ import { WorkspaceCardComponent } from "../components/app/homePage/authorizedHom
 import { BackendConnectionCheckComponent } from "../components/app/backendConnectionCheck/BackendConnectionCheckComponent";
 import { CreateWorkspacePageComponent } from "../components/app/createWorkspacePage/CreateWorkspacePageComponent";
 import { AuthorizedHomePageComponent } from "../components/app/homePage/authorizedHomePage/AuthorizedHomePageComponent";
-import { RouterComponent } from "../components/app/router/RouterComponent";
 import { RegisterComponent } from "../components/app/register/RegisterComponent";
 import { HomePageComponent } from "../components/app/homePage/HomePageComponent";
 import { WorkspacePageComponent } from "../components/app/workspacePage/WorkspacePageComponent";
 import { UpdateWorkspacePageComponent } from "../components/app/updateWorkspacePage/UpdateWorkspacePageComponent";
 import { ThingCardComponent } from "../components/app/workspacePage/thingCard/ThingCardComponent";
+import { RouterComponent } from "../components/common/router/RouterComponent";
+import { LoaderComponent } from "../components/common/loader/LoaderComponent";
 
-class ComponentRegistration {
-    registerBindings() {
+export class ComponentRegistration {
+    public registerBindings() {
+        ComponentRegistration.registerAppComponents();
+        ComponentRegistration.registerCommonComponents();
+    }
+
+    private static registerAppComponents() {
         ko.components.register("app", new AppComponent().generateDescriptor());
         ko.components.register("backend-connection-check", new BackendConnectionCheckComponent().generateDescriptor());
         ko.components.register("login", new LoginComponent().generateDescriptor());
         ko.components.register("register", new RegisterComponent().generateDescriptor());
-        ko.components.register("router", new RouterComponent().generateDescriptor());
         ko.components.register("home-page", new HomePageComponent().generateDescriptor());
         ko.components.register("unauthorized-home-page", new UnauthorizedHomePageComponent().generateDescriptor());
         ko.components.register("authorized-home-page", new AuthorizedHomePageComponent().generateDescriptor());
@@ -31,6 +36,9 @@ class ComponentRegistration {
         ko.components.register("update-workspace-page", new UpdateWorkspacePageComponent().generateDescriptor());
         ko.components.register("thing-card", new ThingCardComponent().generateDescriptor());
     }
-}
 
-export default ComponentRegistration;
+    private static registerCommonComponents() {
+        ko.components.register("router", new RouterComponent().generateDescriptor());
+        ko.components.register("loader", new LoaderComponent().generateDescriptor());
+    }
+}

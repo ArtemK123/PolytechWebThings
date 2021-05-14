@@ -1,8 +1,8 @@
 import { IViewModel } from "../../componentsRegistration/IViewModel";
-import { IRouterParams } from "./router/IRouterParams";
-import { RouteGenerator } from "./router/RouteGenerator";
+import { RouteGenerator } from "../common/router/RouteGenerator";
+import { IRouterParams } from "../common/router/IRouterParams";
 
-export default class AppViewModel implements IViewModel {
+export class AppViewModel implements IViewModel {
     public readonly routerParams: IRouterParams;
 
     constructor() {

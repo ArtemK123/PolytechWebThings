@@ -1,7 +1,12 @@
 <div>
+    <!-- ko if: isLoading -->
+    <loader></loader>
+    <!-- /ko -->
+    <!-- ko ifnot: isLoading -->
     <h2>Workspace name is <span data-bind="text: workspaceName"></span></h2>
     <h3>Things in the workspace:</h3>
     <div data-bind="foreach: things">
         <thing-card params="{ model: $data }"></thing-card>
     </div>
+    <!-- /ko -->
 </div>
