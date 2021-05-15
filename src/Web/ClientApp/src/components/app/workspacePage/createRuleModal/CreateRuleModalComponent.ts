@@ -2,7 +2,7 @@ import template from "./CreateRuleModal.html";
 import "./CreateRuleModal.scss";
 import { IComponentDescriptor } from "../../../../componentsRegistration/IComponentDescriptor";
 import { IComponent } from "../../../../componentsRegistration/IComponent";
-import { CreateRuleModalViewModel } from "./CreateRuleViewModel";
+import { CreateRuleModalViewModel } from "./CreateRuleModalViewModel";
 
 export class CreateRuleModalComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

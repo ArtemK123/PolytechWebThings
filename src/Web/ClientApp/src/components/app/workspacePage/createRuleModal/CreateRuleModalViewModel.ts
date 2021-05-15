@@ -7,6 +7,7 @@ export class CreateRuleModalViewModel implements IViewModel {
     public readonly isVisible: ko.Observable<boolean>;
     public readonly ruleName: ko.Observable<string> = ko.observable("");
     public readonly steps: ko.ObservableArray<string> = ko.observableArray([]);
+    public readonly isCreateStepModalVisible: ko.Observable<boolean> = ko.observable(false);
 
     private readonly rules: ko.ObservableArray<IRuleModel>;
 
@@ -30,7 +31,7 @@ export class CreateRuleModalViewModel implements IViewModel {
     }
 
     public addStep(): void {
-        this.steps.push(`Step ${this.steps().length + 1}`);
+        this.isCreateStepModalVisible(true);
     }
 
     public removeStep(step: string): void {

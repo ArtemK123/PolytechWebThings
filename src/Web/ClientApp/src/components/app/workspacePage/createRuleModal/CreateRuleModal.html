@@ -11,6 +11,7 @@
                 <button data-bind="click: $parent.removeStep.bind($parent)">Remove step</button>
             </div>
         </div>
+        <create-step-modal params="{ isVisible: isCreateStepModalVisible, steps: steps }"></create-step-modal>
         <button data-bind="click: addStep">Add step</button>
     </div>
 </div>

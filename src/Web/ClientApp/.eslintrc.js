@@ -22,5 +22,7 @@
         "no-alert": ["off"],
         "no-console": ["off"],
         "@typescript-eslint/no-unused-vars": ["warn"],
+        "@typescript-eslint/no-useless-constructor": ["warn"],
+        "@typescript-eslint/no-empty-function": ["warn"],
     }
 };
