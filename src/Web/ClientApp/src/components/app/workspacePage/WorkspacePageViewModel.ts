@@ -8,6 +8,7 @@ import { IGetWorkspaceWithThingsResponse } from "../../../backendApi/models/resp
 import { WorkspaceApiClient } from "../../../backendApi/clients/WorkspaceApiClient";
 import { OperationStatus } from "../../../backendApi/models/response/OperationResult/OperationStatus";
 import { RedirectHandler } from "../../../services/RedirectHandler";
+import { IRuleModel } from "./models/IRuleModel";
 
 export class WorkspacePageViewModel implements IViewModel {
     public readonly id: ko.Observable<number> = ko.observable(-1);
@@ -15,6 +16,7 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly things: ko.ObservableArray<IThingApiModel> = ko.observableArray([]);
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
     public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
+    public readonly rules: ko.ObservableArray<IRuleModel> = ko.observableArray([]);
 
     private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
@@ -29,6 +31,10 @@ export class WorkspacePageViewModel implements IViewModel {
                 this.workspaceName(response.data.workspace.name);
                 this.things(response.data.things);
             });
+    }
+
+    public generateRuleElement(rule: IRuleModel) {
+        return rule.steps.reduce((prev, current, index) => `${prev}<br/><span>${index + 1}. ${current}</span>`, `<span>${rule.name}:</span>`);
     }
 
     public createRule(): void {

@@ -9,9 +9,12 @@
             <thing-card params="{ model: $data }"></thing-card>
         </div>
         <h3>Rules in the workspace</h3>
-        <div data-bind="ifnot: isCreateRuleFormOpened">
-            <button data-bind="click: createRule">Create new rule</button>
+        <div data-bind="foreach: rules">
+            <div data-bind="html: $parent.generateRuleElement($data)"></div>
         </div>
-        <create-rule-modal params="{ isVisible: isCreateRuleFormOpened }"></create-rule-modal>
+        <div data-bind="ifnot: isCreateRuleFormOpened">
+            <button data-bind="click: createRule.bind($data)">Create new rule</button>
+        </div>
+        <create-rule-modal params="{ isVisible: isCreateRuleFormOpened, rules: rules }"></create-rule-modal>
     </div>
 </div>
