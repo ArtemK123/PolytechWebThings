@@ -34,7 +34,8 @@ export class WorkspacePageViewModel implements IViewModel {
     }
 
     public generateRuleElement(rule: IRuleModel) {
-        return rule.steps.reduce((prev, current, index) => `${prev}<br/><span>${index + 1}. ${current}</span>`, `<span>${rule.name}:</span>`);
+        const ruleElement = rule.steps.reduce((prev, current, index) => `${prev}<br/><span>${index + 1}. ${current}</span>`, `<span>${rule.name}:</span>`);
+        return `${ruleElement}<hr/>`;
     }
 
     public createRule(): void {
