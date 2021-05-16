@@ -1,7 +1,16 @@
 <div class="thing-card">
-    <i class="fas fa-camera"></i>
-    <span class="thing-card__title" data-bind="text: title, click: handleCardClick"></span>
-    <ul class="thing-card__properties thing-card__properties--hidden" data-bind="foreach: properties">
+    <div class="thing-card__title-with-icon-container" data-bind="click: changeCollapseState">
+        <div data-bind="if: isCollapsed" class="thing-card__icon-container">
+            <i class="fas fa-angle-right"></i>
+        </div>
+        <div data-bind="ifnot: isCollapsed" class="thing-card__icon-container">
+            <i class="fas fa-angle-down"></i>
+        </div>
+        <span data-bind="text: title"></span>
+    </div>
+    <!-- ko ifnot: isCollapsed -->
+    <ul data-bind="foreach: properties">
         <li data-bind="text: $data.name"></li>
     </ul>
+    <!-- /ko -->
 </div>

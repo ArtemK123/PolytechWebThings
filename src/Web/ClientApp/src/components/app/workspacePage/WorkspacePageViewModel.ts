@@ -23,7 +23,7 @@ export class WorkspacePageViewModel implements IViewModel {
     private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
     public readonly routes: IRoute[] = [
-        RouteGenerator.generate(/\/things/, () => `<workspace-things-component params="{ things: $parent.things }"></workspace-things-component>`),
+        RouteGenerator.generate(/\/things/, () => "<workspace-things-component params=\"{ things: $parent.things }\"></workspace-things-component>"),
         RouteGenerator.generate(/\/rules/, () => "<workspace-rules-component></workspace-rules-component>"),
         RouteGenerator.generate(/\//, () => ""),
     ];

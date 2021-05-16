@@ -6,13 +6,14 @@ import { IPropertyApiModel } from "../../../../../backendApi/models/response/thi
 export class ThingCardViewModel implements IViewModel {
     public readonly title: ko.Observable<string> = ko.observable("");
     public readonly properties: ko.ObservableArray<IPropertyApiModel> = ko.observableArray([]);
+    public readonly isCollapsed: ko.Observable<boolean> = ko.observable(true);
 
     constructor(params: IThingCardParams) {
         this.title(params.model.title);
         this.properties(params.model.properties);
     }
 
-    public handleCardClick(): void {
-        console.log("Clicked");
+    public changeCollapseState(): void {
+        this.isCollapsed(!this.isCollapsed());
     }
 }
