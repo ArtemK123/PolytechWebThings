@@ -16,6 +16,8 @@ import { RouterComponent } from "../components/common/router/RouterComponent";
 import { LoaderComponent } from "../components/common/loader/LoaderComponent";
 import { CreateRuleModalComponent } from "../components/app/workspacePage/createRuleModal/CreateRuleModalComponent";
 import { CreateStepModalComponent } from "../components/app/workspacePage/createRuleModal/CreateStepModal/CreateStepModalComponent";
+import { WorkspaceThingsComponent } from "../components/app/workspacePage/workspaceThingsComponent/WorkspaceThingsComponent";
+import { WorkspaceRulesComponent } from "../components/app/workspacePage/workspaceRulesComponent/WorkspaceRulesComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -39,6 +41,8 @@ export class ComponentRegistration {
         ko.components.register("thing-card", new ThingCardComponent().generateDescriptor());
         ko.components.register("create-rule-modal", new CreateRuleModalComponent().generateDescriptor());
         ko.components.register("create-step-modal", new CreateStepModalComponent().generateDescriptor());
+        ko.components.register("workspace-things-component", new WorkspaceThingsComponent().generateDescriptor());
+        ko.components.register("workspace-rules-component", new WorkspaceRulesComponent().generateDescriptor());
     }
 
     private static registerCommonComponents() {
