@@ -12,7 +12,7 @@ export class AppViewModel implements IViewModel {
                 RouteGenerator.generate(/^\/login$/, () => "<login></login>"),
                 RouteGenerator.generate(/^\/register$/, () => "<register></register>"),
                 RouteGenerator.generate(/^\/create-workspace$/, () => "<create-workspace-page></create-workspace-page>"),
-                RouteGenerator.generate(/^\/workspaces\/(\d+)$/, AppViewModel.generateWorkspacePage),
+                RouteGenerator.generate(/^\/workspaces\/(\d+)/, AppViewModel.generateWorkspacePage),
                 RouteGenerator.generate(/^\/workspaces\/(\d+)\/edit$/, AppViewModel.generateEditWorkspacePage),
             ],
             routerElementId: "root-router",

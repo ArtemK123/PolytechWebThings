@@ -9,6 +9,8 @@ import { WorkspaceApiClient } from "../../../backendApi/clients/WorkspaceApiClie
 import { OperationStatus } from "../../../backendApi/models/response/OperationResult/OperationStatus";
 import { RedirectHandler } from "../../../services/RedirectHandler";
 import { IRuleModel } from "./models/IRuleModel";
+import { RouteGenerator } from "../../common/router/RouteGenerator";
+import { IRoute } from "../../common/router/IRoute";
 
 export class WorkspacePageViewModel implements IViewModel {
     public readonly id: ko.Observable<number> = ko.observable(-1);
@@ -17,20 +19,26 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
     public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
     public readonly rules: ko.ObservableArray<IRuleModel> = ko.observableArray([]);
+    public readonly currentUrl: ko.Computed = ko.computed(() => window.location.pathname);
+
+    public readonly routes: IRoute[] = [
+        RouteGenerator.generate(/\/things/, () => "<workspace-things-component></workspace-things-component>"),
+        RouteGenerator.generate(/\/rules/, () => "<workspace-rules-component></workspace-rules-component>"),
+    ];
 
     private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
     constructor(params: IWorkspacePageParams) {
         this.id(params.id);
-        this.workspaceApiClient.getWorkspaceWithThingsRequest({ workspaceId: this.id() } as IGetWorkspaceWithThingsRequest)
-            .then((response: IOperationResult<IGetWorkspaceWithThingsResponse>) => {
-                if (response.status !== OperationStatus.Success) {
-                    RedirectHandler.redirect("/");
-                }
-                this.isLoading(false);
-                this.workspaceName(response.data.workspace.name);
-                this.things(response.data.things);
-            });
+        // this.workspaceApiClient.getWorkspaceWithThingsRequest({ workspaceId: this.id() } as IGetWorkspaceWithThingsRequest)
+        //     .then((response: IOperationResult<IGetWorkspaceWithThingsResponse>) => {
+        //         if (response.status !== OperationStatus.Success) {
+        //             RedirectHandler.redirect("/");
+        //         }
+        //         this.isLoading(false);
+        //         this.workspaceName(response.data.workspace.name);
+        //         this.things(response.data.things);
+        //     });
     }
 
     public generateRuleElement(rule: IRuleModel) {
