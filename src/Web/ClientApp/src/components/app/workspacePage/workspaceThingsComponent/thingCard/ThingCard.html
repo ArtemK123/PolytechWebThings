@@ -9,8 +9,8 @@
         <span data-bind="text: title"></span>
     </div>
     <!-- ko ifnot: isCollapsed -->
-    <ul data-bind="foreach: properties">
-        <li data-bind="text: $data.name"></li>
-    </ul>
+    <div data-bind="foreach: properties">
+        <thing-property-card params="{ model: $data }"></thing-property-card>
+    </div>
     <!-- /ko -->
 </div>

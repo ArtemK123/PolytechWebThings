@@ -18,6 +18,7 @@ import { HomePageComponent } from "src/components/app/homePage/HomePageComponent
 import { WorkspacePageComponent } from "src/components/app/workspacePage/WorkspacePageComponent";
 import { UpdateWorkspacePageComponent } from "src/components/app/updateWorkspacePage/UpdateWorkspacePageComponent";
 import { WorkspaceRulesComponent } from "src/components/app/workspacePage/workspaceRulesComponent/WorkspaceRulesComponent";
+import { ThingPropertyCardComponent } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/ThingPropertyCardComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -43,6 +44,7 @@ export class ComponentRegistration {
         ko.components.register("create-step-modal", new CreateStepModalComponent().generateDescriptor());
         ko.components.register("workspace-things-component", new WorkspaceThingsComponent().generateDescriptor());
         ko.components.register("workspace-rules-component", new WorkspaceRulesComponent().generateDescriptor());
+        ko.components.register("thing-property-card", new ThingPropertyCardComponent().generateDescriptor());
     }
 
     private static registerCommonComponents() {
