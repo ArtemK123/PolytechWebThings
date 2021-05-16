@@ -1,8 +1,8 @@
 import * as ko from "knockout";
-import { IThingApiModel } from "../../../backendApi/models/response/things/IThingApiModel";
+import {IThingApiModel} from "src/backendApi/models/response/things/IThingApiModel";
+import {IViewModel} from "src/componentsRegistration/IViewModel";
+import {IOperationResult} from "src/backendApi/models/response/OperationResult/IOperationResult";
 import { IWorkspacePageParams } from "./IWorkspacePageParams";
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
-import { IOperationResult } from "../../../backendApi/models/response/OperationResult/IOperationResult";
 import { IGetWorkspaceWithThingsRequest } from "../../../backendApi/models/request/workspace/IGetWorkspaceWithThingsRequest";
 import { IGetWorkspaceWithThingsResponse } from "../../../backendApi/models/response/IGetWorkspaceWithThingsResponse";
 import { WorkspaceApiClient } from "../../../backendApi/clients/WorkspaceApiClient";

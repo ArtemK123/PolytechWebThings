@@ -7,5 +7,9 @@
     "target": "es5",
     "allowJs": false,
     "moduleResolution": "node",
+    "baseUrl": "",
+    "paths" : {
+      "src/*": ["./src/*"]
+    }
   }
 }
