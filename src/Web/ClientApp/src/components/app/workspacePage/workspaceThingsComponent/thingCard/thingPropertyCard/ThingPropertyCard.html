@@ -1,3 +1,11 @@
 <div class="thing-property-card">
-    <span data-bind="text: model.name"></span> <span data-bind="text: model.value"></span>
+    <div data-bind="text: model.title"></div>
+    <div>
+        <!-- ko if: model.readOnly -->
+            <input data-bind='value: inputValue' readonly>
+        <!-- /ko -->
+        <!-- ko ifnot: model.readOnly -->
+            <input data-bind='textInput: inputValue'>
+        <!-- /ko -->
+    </div>
 </div>
