@@ -20,6 +20,8 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
     public readonly rules: ko.ObservableArray<IRuleModel> = ko.observableArray([]);
 
+    private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
+
     public readonly routes: IRoute[] = [
         RouteGenerator.generate(/\/things/, () => `<workspace-things-component params="{ things: $parent.things }"></workspace-things-component>`),
         RouteGenerator.generate(/\/rules/, () => "<workspace-rules-component></workspace-rules-component>"),
@@ -42,8 +44,6 @@ export class WorkspacePageViewModel implements IViewModel {
     public generateMenuHref(menuItem: string) {
         return `/workspaces/${this.id()}/${menuItem}`;
     }
-
-    private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
     public generateRuleElement(rule: IRuleModel) {
         const ruleElement = rule.steps.reduce((prev, current, index) => `${prev}<br/><span>${index + 1}. ${current}</span>`, `<span>${rule.name}:</span>`);

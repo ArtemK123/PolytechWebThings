@@ -11,13 +11,13 @@ import { RegisterComponent } from "../components/app/register/RegisterComponent"
 import { HomePageComponent } from "../components/app/homePage/HomePageComponent";
 import { WorkspacePageComponent } from "../components/app/workspacePage/WorkspacePageComponent";
 import { UpdateWorkspacePageComponent } from "../components/app/updateWorkspacePage/UpdateWorkspacePageComponent";
-import { ThingCardComponent } from "../components/app/workspacePage/thingCard/ThingCardComponent";
 import { RouterComponent } from "../components/common/router/RouterComponent";
 import { LoaderComponent } from "../components/common/loader/LoaderComponent";
 import { CreateRuleModalComponent } from "../components/app/workspacePage/createRuleModal/CreateRuleModalComponent";
 import { CreateStepModalComponent } from "../components/app/workspacePage/createRuleModal/CreateStepModal/CreateStepModalComponent";
 import { WorkspaceThingsComponent } from "../components/app/workspacePage/workspaceThingsComponent/WorkspaceThingsComponent";
 import { WorkspaceRulesComponent } from "../components/app/workspacePage/workspaceRulesComponent/WorkspaceRulesComponent";
+import { ThingCardComponent } from "../components/app/workspacePage/workspaceThingsComponent/thingCard/ThingCardComponent";
 
 export class ComponentRegistration {
     public registerBindings() {

@@ -1,0 +1,6 @@
+<div class="thing-card">
+    <span class="thing-card__title" data-bind="text: title, click: handleCardClick"></span>
+    <ul class="thing-card__properties thing-card__properties--hidden" data-bind="foreach: properties">
+        <li data-bind="text: $data.name"></li>
+    </ul>
+</div>

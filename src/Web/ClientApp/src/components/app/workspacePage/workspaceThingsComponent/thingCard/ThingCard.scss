@@ -1,0 +1,11 @@
+﻿.thing-card {
+  padding: 10px;
+}
+
+.thing-card:hover {
+  background-color: lightgray;
+}
+
+.thing-card__properties--hidden {
+  display: none;
+}
