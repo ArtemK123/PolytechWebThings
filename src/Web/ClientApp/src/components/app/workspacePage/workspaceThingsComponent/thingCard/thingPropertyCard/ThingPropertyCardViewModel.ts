@@ -11,4 +11,15 @@ export class ThingPropertyCardViewModel implements IViewModel {
         this.model = params.model;
         this.inputValue(this.model.value);
     }
+
+    public handleKeyUp(data: ThingPropertyCardViewModel, event: KeyboardEvent): void {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            this.handleValueUpdate();
+        }
+    }
+
+    private handleValueUpdate(): void {
+        console.log(`New value ${this.inputValue()} was sent to backend`);
+    }
 }

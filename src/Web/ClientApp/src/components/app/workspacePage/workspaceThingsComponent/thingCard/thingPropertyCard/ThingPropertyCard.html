@@ -5,7 +5,7 @@
             <input data-bind='value: inputValue' readonly>
         <!-- /ko -->
         <!-- ko ifnot: model.readOnly -->
-            <input data-bind='textInput: inputValue'>
+            <input title="Press enter if you want to save modified value" data-bind='textInput: inputValue, event: { keyup: handleKeyUp }'>
         <!-- /ko -->
     </div>
 </div>
