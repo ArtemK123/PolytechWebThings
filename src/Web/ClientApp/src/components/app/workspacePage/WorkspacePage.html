@@ -5,8 +5,8 @@
     <div data-bind="ifnot: isLoading">
         <h2>Workspace name is <span data-bind="text: workspaceName"></span></h2>
         <ul>
-            <li><a data-bind="attr: { href: currentUrl() + '/things' }">Things</a></li>
-            <li><a data-bind="attr: { href: currentUrl() + '/rules' }">Rules</a></li>
+            <li><a data-bind="attr: { href: generateMenuHref('things') }">Things</a></li>
+            <li><a data-bind="attr: { href: generateMenuHref('rules') }">Rules</a></li>
         </ul>
         <router id="workspace-router"  params="{ routes: routes, routerElementId: 'workspace-router' }"></router>
     </div>

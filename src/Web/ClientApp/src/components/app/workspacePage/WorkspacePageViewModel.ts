@@ -18,7 +18,6 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly things: ko.ObservableArray<IThingApiModel> = ko.observableArray([]);
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
     public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
-    public readonly currentUrl: ko.Computed = ko.computed(() => window.location.pathname);
 
     public readonly routes: IRoute[] = [
         RouteGenerator.generate(/\/things/, () => "<workspace-things-component></workspace-things-component>"),
@@ -29,5 +28,9 @@ export class WorkspacePageViewModel implements IViewModel {
     constructor(params: IWorkspacePageParams) {
         this.id(params.id);
         this.isLoading(false);
+    }
+
+    public generateMenuHref(menuItem: string) {
+        return `/workspaces/${this.id()}/${menuItem}`;
     }
 }
