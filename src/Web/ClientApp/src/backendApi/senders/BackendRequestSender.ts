@@ -1,7 +1,7 @@
-﻿import { IOperationResult } from "../models/response/OperationResult/IOperationResult";
-import { OperationStatus } from "../models/response/OperationResult/OperationStatus";
-import { BackendRequestDirectSender } from "./BackendRequestDirectSender";
-import { UnsuccessfulOperationHandler } from "../handler/UnsuccessfulOperationHandler";
+﻿import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { BackendRequestDirectSender } from "src/backendApi/senders/BackendRequestDirectSender";
+import { UnsuccessfulOperationHandler } from "src/backendApi/handler/UnsuccessfulOperationHandler";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
 
 export class BackendRequestSender extends BackendRequestDirectSender {
     private readonly unsuccessfulOperationHandler: UnsuccessfulOperationHandler = new UnsuccessfulOperationHandler();

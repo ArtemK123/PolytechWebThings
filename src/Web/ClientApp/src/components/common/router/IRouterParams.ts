@@ -1,4 +1,4 @@
-import { IRoute } from "./IRoute";
+import { IRoute } from "src/components/common/router/IRoute";
 
 export interface IRouterParams {
     routes: IRoute[];

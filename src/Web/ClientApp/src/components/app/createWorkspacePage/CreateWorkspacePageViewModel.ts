@@ -1,10 +1,10 @@
 ﻿import * as ko from "knockout";
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
-import { ICreateWorkspaceRequest } from "../../../backendApi/models/request/workspace/ICreateWorkspaceRequest";
-import { RedirectHandler } from "../../../services/RedirectHandler";
-import { OperationStatus } from "../../../backendApi/models/response/OperationResult/OperationStatus";
-import { IOperationResult } from "../../../backendApi/models/response/OperationResult/IOperationResult";
-import { WorkspaceApiClient } from "../../../backendApi/clients/WorkspaceApiClient";
+import { ICreateWorkspaceRequest } from "src/backendApi/models/request/workspace/ICreateWorkspaceRequest";
+import { RedirectHandler } from "src/services/RedirectHandler";
+import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class CreateWorkspacePageViewModel implements IViewModel {
     public readonly name: ko.Observable<string> = ko.observable("");

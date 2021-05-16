@@ -1,8 +1,8 @@
 import * as ko from "knockout";
-import { RedirectHandler } from "../../../services/RedirectHandler";
-import { LogoutUseCase } from "../../../useCases/LogoutUseCase";
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
-import { UserApiClient } from "../../../backendApi/clients/UserApiClient";
+import { RedirectHandler } from "src/services/RedirectHandler";
+import { LogoutUseCase } from "src/useCases/LogoutUseCase";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { UserApiClient } from "src/backendApi/clients/UserApiClient";
 
 export class HeaderViewModel implements IViewModel {
     public readonly userAccount: ko.Observable<string> = ko.observable("Unauthorized");

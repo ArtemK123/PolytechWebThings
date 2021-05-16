@@ -1,6 +1,6 @@
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
-import { HealthCheckApiClient } from "../../../backendApi/clients/HealthCheckApiClient";
-import { IOperationResult } from "../../../backendApi/models/response/OperationResult/IOperationResult";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { HealthCheckApiClient } from "src/backendApi/clients/HealthCheckApiClient";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
 
 export class BackendConnectionCheckViewModel implements IViewModel {
     private readonly apiClient = new HealthCheckApiClient();

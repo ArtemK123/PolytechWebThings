@@ -1,6 +1,6 @@
 ﻿import * as ko from "knockout";
-import { IRuleModel } from "../models/IRuleModel";
-import { IThingApiModel } from "../../../../backendApi/models/response/things/IThingApiModel";
+import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
 
 export interface ICreateRuleModalParams {
     isVisible: ko.Observable<boolean>;

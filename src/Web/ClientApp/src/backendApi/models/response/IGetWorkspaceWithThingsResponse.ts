@@ -1,5 +1,5 @@
-﻿import { IThingApiModel } from "./things/IThingApiModel";
-import { IWorkspaceApiModel } from "./IWorkspaceApiModel";
+﻿import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
 
 export interface IGetWorkspaceWithThingsResponse {
     workspace: IWorkspaceApiModel;

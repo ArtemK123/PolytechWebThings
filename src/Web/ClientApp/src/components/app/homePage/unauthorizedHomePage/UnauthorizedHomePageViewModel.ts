@@ -1,5 +1,5 @@
-import { RedirectHandler } from "../../../../services/RedirectHandler";
-import { IViewModel } from "../../../../componentsRegistration/IViewModel";
+import { RedirectHandler } from "src/services/RedirectHandler";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
 
 export class UnauthorizedHomePageViewModel implements IViewModel {
     public handleSignIn(): void {

@@ -1,8 +1,8 @@
-﻿import template from "./UpdateWorkspacePage.html";
-import { UpdateWorkspacePageViewModel } from "./UpdateWorkspacePageViewModel";
+﻿import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { UpdateWorkspacePageViewModel } from "src/components/app/updateWorkspacePage/UpdateWorkspacePageViewModel";
+import { IComponent } from "src/componentsRegistration/IComponent";
+import template from "./UpdateWorkspacePage.html";
 import "./UpdateWorkspacePage.scss";
-import { IComponentDescriptor } from "../../../componentsRegistration/IComponentDescriptor";
-import { IComponent } from "../../../componentsRegistration/IComponent";
 
 export class UpdateWorkspacePageComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

@@ -1,4 +1,4 @@
-﻿import { UserApiClient } from "../backendApi/clients/UserApiClient";
+﻿import { UserApiClient } from "src/backendApi/clients/UserApiClient";
 
 export class LogoutUseCase {
     private readonly userApiClient = new UserApiClient();

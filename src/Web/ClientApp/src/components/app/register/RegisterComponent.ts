@@ -1,7 +1,7 @@
+import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { IComponent } from "src/componentsRegistration/IComponent";
+import { RegisterViewModel } from "src/components/app/register/RegisterViewModel";
 import template from "./Register.html";
-import { RegisterViewModel } from "./RegisterViewModel";
-import { IComponentDescriptor } from "../../../componentsRegistration/IComponentDescriptor";
-import { IComponent } from "../../../componentsRegistration/IComponent";
 
 export class RegisterComponent implements IComponent {
     generateDescriptor(): IComponentDescriptor {

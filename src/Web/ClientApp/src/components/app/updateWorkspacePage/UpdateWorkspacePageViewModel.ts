@@ -1,13 +1,13 @@
 ﻿import * as ko from "knockout";
-import { IUpdateWorkspaceRequest } from "../../../backendApi/models/request/workspace/IUpdateWorkspaceRequest";
-import { RedirectHandler } from "../../../services/RedirectHandler";
-import { OperationStatus } from "../../../backendApi/models/response/OperationResult/OperationStatus";
-import { IWorkspaceApiModel } from "../../../backendApi/models/response/IWorkspaceApiModel";
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
-import { IGetWorkspaceByIdRequest } from "../../../backendApi/models/request/workspace/IGetWorkspaceByIdRequest";
-import { IUpdateWorkspacePageParams } from "./IUpdateWorkspacePageParams";
-import { IOperationResult } from "../../../backendApi/models/response/OperationResult/IOperationResult";
-import { WorkspaceApiClient } from "../../../backendApi/clients/WorkspaceApiClient";
+import { IUpdateWorkspaceRequest } from "src/backendApi/models/request/workspace/IUpdateWorkspaceRequest";
+import { RedirectHandler } from "src/services/RedirectHandler";
+import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { IGetWorkspaceByIdRequest } from "src/backendApi/models/request/workspace/IGetWorkspaceByIdRequest";
+import { IUpdateWorkspacePageParams } from "src/components/app/updateWorkspacePage/IUpdateWorkspacePageParams";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class UpdateWorkspacePageViewModel implements IViewModel {
     public readonly name: ko.Observable<string> = ko.observable("");

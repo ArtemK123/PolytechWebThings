@@ -1,7 +1,7 @@
+import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { IComponent } from "src/componentsRegistration/IComponent";
+import { HeaderViewModel } from "src/components/app/header/HeaderViewModel";
 import template from "./Header.html";
-import { HeaderViewModel } from "./HeaderViewModel";
-import { IComponentDescriptor } from "../../../componentsRegistration/IComponentDescriptor";
-import { IComponent } from "../../../componentsRegistration/IComponent";
 
 export class HeaderComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

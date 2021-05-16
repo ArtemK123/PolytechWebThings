@@ -1,10 +1,10 @@
 import * as ko from "knockout";
-import { RedirectHandler } from "../../../services/RedirectHandler";
-import { OperationStatus } from "../../../backendApi/models/response/OperationResult/OperationStatus";
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
-import { UserApiClient } from "../../../backendApi/clients/UserApiClient";
-import { IOperationResult } from "../../../backendApi/models/response/OperationResult/IOperationResult";
-import { ILoginUserRequest } from "../../../backendApi/models/request/user/ILoginUserRequest";
+import { RedirectHandler } from "src/services/RedirectHandler";
+import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { UserApiClient } from "src/backendApi/clients/UserApiClient";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { ILoginUserRequest } from "src/backendApi/models/request/user/ILoginUserRequest";
 
 export class LoginViewModel implements IViewModel {
     public readonly email: ko.Observable<string> = ko.observable("");

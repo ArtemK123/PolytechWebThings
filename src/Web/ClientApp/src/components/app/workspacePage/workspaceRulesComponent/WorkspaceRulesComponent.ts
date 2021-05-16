@@ -1,7 +1,7 @@
+import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { IComponent } from "src/componentsRegistration/IComponent";
+import { WorkspaceRulesComponentViewModel } from "src/components/app/workspacePage/workspaceRulesComponent/WorkspaceRulesComponentViewModel";
 import template from "./WorkspaceRulesComponent.html";
-import { WorkspaceRulesComponentViewModel } from "./WorkspaceRulesComponentViewModel";
-import { IComponentDescriptor } from "../../../../componentsRegistration/IComponentDescriptor";
-import { IComponent } from "../../../../componentsRegistration/IComponent";
 
 export class WorkspaceRulesComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

@@ -1,7 +1,7 @@
+import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { IComponent } from "src/componentsRegistration/IComponent";
+import { HomePageViewModel } from "src/components/app/homePage/HomePageViewModel";
 import template from "./HomePage.html";
-import { HomePageViewModel } from "./HomePageViewModel";
-import { IComponentDescriptor } from "../../../componentsRegistration/IComponentDescriptor";
-import { IComponent } from "../../../componentsRegistration/IComponent";
 
 export class HomePageComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

@@ -1,4 +1,4 @@
-﻿import { IWorkspaceApiModel } from "../../../../../backendApi/models/response/IWorkspaceApiModel";
+﻿import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
 
 export interface IWorkspaceCardParams {
     workspaceApiModel: IWorkspaceApiModel;

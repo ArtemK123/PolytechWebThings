@@ -1,5 +1,5 @@
-﻿import { GatewayValueType } from "./GatewayValueType";
-import { ILinkApiModel } from "./ILinkApiModel";
+﻿import { ILinkApiModel } from "src/backendApi/models/response/things/ILinkApiModel";
+import { GatewayValueType } from "src/backendApi/models/response/things/GatewayValueType";
 
 export interface IPropertyApiModel {
     name: string | null;

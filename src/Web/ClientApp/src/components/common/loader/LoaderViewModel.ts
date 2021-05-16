@@ -1,4 +1,4 @@
-﻿import { IViewModel } from "../../../componentsRegistration/IViewModel";
+﻿import { IViewModel } from "src/componentsRegistration/IViewModel";
 
 export class LoaderViewModel implements IViewModel {
 }

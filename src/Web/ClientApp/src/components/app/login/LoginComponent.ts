@@ -1,7 +1,7 @@
+import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { IComponent } from "src/componentsRegistration/IComponent";
+import { LoginViewModel } from "src/components/app/login/LoginViewModel";
 import template from "./Login.html";
-import { LoginViewModel } from "./LoginViewModel";
-import { IComponentDescriptor } from "../../../componentsRegistration/IComponentDescriptor";
-import { IComponent } from "../../../componentsRegistration/IComponent";
 
 export class LoginComponent implements IComponent {
     generateDescriptor(): IComponentDescriptor {

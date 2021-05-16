@@ -1,6 +1,6 @@
-import { IRouterParams } from "./IRouterParams";
-import { IRoute } from "./IRoute";
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
+import { IRouterParams } from "src/components/common/router/IRouterParams";
+import { IRoute } from "src/components/common/router/IRoute";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
 
 export class RouterViewModel implements IViewModel {
     private readonly routes: IRoute[];

@@ -1,9 +1,9 @@
 import * as ko from "knockout";
-import { IWorkspaceApiModel } from "../../../../backendApi/models/response/IWorkspaceApiModel";
-import { IGetUserWorkspacesResponse } from "../../../../backendApi/models/response/IGetUserWorkspacesResponse";
-import { IViewModel } from "../../../../componentsRegistration/IViewModel";
-import { IOperationResult } from "../../../../backendApi/models/response/OperationResult/IOperationResult";
-import { WorkspaceApiClient } from "../../../../backendApi/clients/WorkspaceApiClient";
+import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { IGetUserWorkspacesResponse } from "src/backendApi/models/response/IGetUserWorkspacesResponse";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class AuthorizedHomePageViewModel implements IViewModel {
     public readonly email: ko.Observable<string> = ko.observable<string>("");

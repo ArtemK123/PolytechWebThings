@@ -1,10 +1,10 @@
 import * as ko from "knockout";
-import { IWorkspaceCardParams } from "./IWorkspaceCardParams";
-import { RedirectHandler } from "../../../../../services/RedirectHandler";
-import { IWorkspaceApiModel } from "../../../../../backendApi/models/response/IWorkspaceApiModel";
-import { IViewModel } from "../../../../../componentsRegistration/IViewModel";
-import { IDeleteWorkspaceRequest } from "../../../../../backendApi/models/request/workspace/IDeleteWorkspaceRequest";
-import { WorkspaceApiClient } from "../../../../../backendApi/clients/WorkspaceApiClient";
+import { IWorkspaceCardParams } from "src/components/app/homePage/authorizedHomePage/workspaceCard/IWorkspaceCardParams";
+import { RedirectHandler } from "src/services/RedirectHandler";
+import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { IDeleteWorkspaceRequest } from "src/backendApi/models/request/workspace/IDeleteWorkspaceRequest";
+import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class WorkspaceCardViewModel implements IViewModel {
     public readonly workspaceLink: ko.Observable<string> = ko.observable("test");

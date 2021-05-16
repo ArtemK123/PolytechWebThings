@@ -1,23 +1,23 @@
 import * as ko from "knockout";
-import { AppComponent } from "../components/app/AppComponent";
-import { HeaderComponent } from "../components/app/header/HeaderComponent";
-import { UnauthorizedHomePageComponent } from "../components/app/homePage/unauthorizedHomePage/UnauthorizedHomePageComponent";
-import { LoginComponent } from "../components/app/login/LoginComponent";
-import { WorkspaceCardComponent } from "../components/app/homePage/authorizedHomePage/workspaceCard/WorkspaceCardComponent";
-import { BackendConnectionCheckComponent } from "../components/app/backendConnectionCheck/BackendConnectionCheckComponent";
-import { CreateWorkspacePageComponent } from "../components/app/createWorkspacePage/CreateWorkspacePageComponent";
-import { AuthorizedHomePageComponent } from "../components/app/homePage/authorizedHomePage/AuthorizedHomePageComponent";
-import { RegisterComponent } from "../components/app/register/RegisterComponent";
-import { HomePageComponent } from "../components/app/homePage/HomePageComponent";
-import { WorkspacePageComponent } from "../components/app/workspacePage/WorkspacePageComponent";
-import { UpdateWorkspacePageComponent } from "../components/app/updateWorkspacePage/UpdateWorkspacePageComponent";
-import { RouterComponent } from "../components/common/router/RouterComponent";
-import { LoaderComponent } from "../components/common/loader/LoaderComponent";
-import { CreateRuleModalComponent } from "../components/app/workspacePage/createRuleModal/CreateRuleModalComponent";
-import { CreateStepModalComponent } from "../components/app/workspacePage/createRuleModal/CreateStepModal/CreateStepModalComponent";
-import { WorkspaceThingsComponent } from "../components/app/workspacePage/workspaceThingsComponent/WorkspaceThingsComponent";
-import { WorkspaceRulesComponent } from "../components/app/workspacePage/workspaceRulesComponent/WorkspaceRulesComponent";
-import { ThingCardComponent } from "../components/app/workspacePage/workspaceThingsComponent/thingCard/ThingCardComponent";
+import { HeaderComponent } from "src/components/app/header/HeaderComponent";
+import { UnauthorizedHomePageComponent } from "src/components/app/homePage/unauthorizedHomePage/UnauthorizedHomePageComponent";
+import { CreateRuleModalComponent } from "src/components/app/workspacePage/createRuleModal/CreateRuleModalComponent";
+import { LoaderComponent } from "src/components/common/loader/LoaderComponent";
+import { ThingCardComponent } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/ThingCardComponent";
+import { LoginComponent } from "src/components/app/login/LoginComponent";
+import { WorkspaceCardComponent } from "src/components/app/homePage/authorizedHomePage/workspaceCard/WorkspaceCardComponent";
+import { BackendConnectionCheckComponent } from "src/components/app/backendConnectionCheck/BackendConnectionCheckComponent";
+import { CreateWorkspacePageComponent } from "src/components/app/createWorkspacePage/CreateWorkspacePageComponent";
+import { AuthorizedHomePageComponent } from "src/components/app/homePage/authorizedHomePage/AuthorizedHomePageComponent";
+import { WorkspaceThingsComponent } from "src/components/app/workspacePage/workspaceThingsComponent/WorkspaceThingsComponent";
+import { AppComponent } from "src/components/app/AppComponent";
+import { RouterComponent } from "src/components/common/router/RouterComponent";
+import { RegisterComponent } from "src/components/app/register/RegisterComponent";
+import { CreateStepModalComponent } from "src/components/app/workspacePage/createRuleModal/CreateStepModal/CreateStepModalComponent";
+import { HomePageComponent } from "src/components/app/homePage/HomePageComponent";
+import { WorkspacePageComponent } from "src/components/app/workspacePage/WorkspacePageComponent";
+import { UpdateWorkspacePageComponent } from "src/components/app/updateWorkspacePage/UpdateWorkspacePageComponent";
+import { WorkspaceRulesComponent } from "src/components/app/workspacePage/workspaceRulesComponent/WorkspaceRulesComponent";
 
 export class ComponentRegistration {
     public registerBindings() {

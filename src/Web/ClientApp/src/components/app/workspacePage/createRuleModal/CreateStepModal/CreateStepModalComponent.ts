@@ -1,7 +1,7 @@
+import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { IComponent } from "src/componentsRegistration/IComponent";
+import { CreateStepModalViewModel } from "src/components/app/workspacePage/createRuleModal/CreateStepModal/CreateStepModalViewModel";
 import template from "./CreateStepModal.html";
-import { IComponent } from "../../../../../componentsRegistration/IComponent";
-import { IComponentDescriptor } from "../../../../../componentsRegistration/IComponentDescriptor";
-import { CreateStepModalViewModel } from "./CreateStepModalViewModel";
 
 export class CreateStepModalComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

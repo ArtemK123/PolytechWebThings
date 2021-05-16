@@ -1,7 +1,7 @@
+import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
+import { IComponent } from "src/componentsRegistration/IComponent";
 import template from "./WorkspaceCard.html";
 import { WorkspaceCardViewModel } from "./WorkspaceCardViewModel";
-import { IComponentDescriptor } from "../../../../../componentsRegistration/IComponentDescriptor";
-import { IComponent } from "../../../../../componentsRegistration/IComponent";
 
 export class WorkspaceCardComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

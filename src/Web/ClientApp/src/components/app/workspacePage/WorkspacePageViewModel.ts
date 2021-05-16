@@ -1,16 +1,16 @@
 import * as ko from "knockout";
-import {IThingApiModel} from "src/backendApi/models/response/things/IThingApiModel";
-import {IViewModel} from "src/componentsRegistration/IViewModel";
-import {IOperationResult} from "src/backendApi/models/response/OperationResult/IOperationResult";
-import { IWorkspacePageParams } from "./IWorkspacePageParams";
-import { IGetWorkspaceWithThingsRequest } from "../../../backendApi/models/request/workspace/IGetWorkspaceWithThingsRequest";
-import { IGetWorkspaceWithThingsResponse } from "../../../backendApi/models/response/IGetWorkspaceWithThingsResponse";
-import { WorkspaceApiClient } from "../../../backendApi/clients/WorkspaceApiClient";
-import { OperationStatus } from "../../../backendApi/models/response/OperationResult/OperationStatus";
-import { RedirectHandler } from "../../../services/RedirectHandler";
-import { IRuleModel } from "./models/IRuleModel";
-import { RouteGenerator } from "../../common/router/RouteGenerator";
-import { IRoute } from "../../common/router/IRoute";
+import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
+import { RedirectHandler } from "src/services/RedirectHandler";
+import { IWorkspacePageParams } from "src/components/app/workspacePage/IWorkspacePageParams";
+import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { RouteGenerator } from "src/components/common/router/RouteGenerator";
+import { IRoute } from "src/components/common/router/IRoute";
+import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/workspace/IGetWorkspaceWithThingsRequest";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class WorkspacePageViewModel implements IViewModel {
     public readonly id: ko.Observable<number> = ko.observable(-1);

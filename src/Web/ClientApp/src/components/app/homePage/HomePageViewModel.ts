@@ -1,5 +1,5 @@
 import * as ko from "knockout";
-import { IViewModel } from "../../../componentsRegistration/IViewModel";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
 
 export class HomePageViewModel implements IViewModel {
     public readonly authorizedUser: ko.Observable<boolean> = ko.observable(false);

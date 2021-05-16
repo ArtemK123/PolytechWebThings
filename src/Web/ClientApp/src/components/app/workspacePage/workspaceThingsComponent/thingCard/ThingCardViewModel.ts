@@ -1,7 +1,7 @@
 import * as ko from "knockout";
-import { IViewModel } from "../../../../../componentsRegistration/IViewModel";
-import { IThingCardParams } from "./IThingCardParams";
-import { IPropertyApiModel } from "../../../../../backendApi/models/response/things/IPropertyApiModel";
+import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+import { IThingCardParams } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/IThingCardParams";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
 
 export class ThingCardViewModel implements IViewModel {
     public readonly title: ko.Observable<string> = ko.observable("");

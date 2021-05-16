@@ -1,9 +1,9 @@
 import * as ko from "knockout";
-import { IViewModel } from "../../../../../componentsRegistration/IViewModel";
-import { ICreateStepModalParams } from "./ICreateStepModalParams";
-import { IRuleModel } from "../../models/IRuleModel";
-import { IThingApiModel } from "../../../../../backendApi/models/response/things/IThingApiModel";
-import { IPropertyApiModel } from "../../../../../backendApi/models/response/things/IPropertyApiModel";
+import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
+import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { ICreateStepModalParams } from "src/components/app/workspacePage/createRuleModal/CreateStepModal/ICreateStepModalParams";
 
 export class CreateStepModalViewModel implements IViewModel {
     public readonly isVisible: ko.Observable<boolean>;

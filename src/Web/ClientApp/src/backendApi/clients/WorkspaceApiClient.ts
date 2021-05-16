@@ -1,13 +1,13 @@
-﻿import { IGetUserWorkspacesResponse } from "../models/response/IGetUserWorkspacesResponse";
-import { ICreateWorkspaceRequest } from "../models/request/workspace/ICreateWorkspaceRequest";
-import { IDeleteWorkspaceRequest } from "../models/request/workspace/IDeleteWorkspaceRequest";
-import { IGetWorkspaceByIdRequest } from "../models/request/workspace/IGetWorkspaceByIdRequest";
-import { IUpdateWorkspaceRequest } from "../models/request/workspace/IUpdateWorkspaceRequest";
-import { IOperationResult } from "../models/response/OperationResult/IOperationResult";
-import { IWorkspaceApiModel } from "../models/response/IWorkspaceApiModel";
-import { BackendRequestSender } from "../senders/BackendRequestSender";
-import { IGetWorkspaceWithThingsRequest } from "../models/request/workspace/IGetWorkspaceWithThingsRequest";
-import { IGetWorkspaceWithThingsResponse } from "../models/response/IGetWorkspaceWithThingsResponse";
+﻿import { IUpdateWorkspaceRequest } from "src/backendApi/models/request/workspace/IUpdateWorkspaceRequest";
+import { ICreateWorkspaceRequest } from "src/backendApi/models/request/workspace/ICreateWorkspaceRequest";
+import { IGetUserWorkspacesResponse } from "src/backendApi/models/response/IGetUserWorkspacesResponse";
+import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/workspace/IGetWorkspaceWithThingsRequest";
+import { BackendRequestSender } from "src/backendApi/senders/BackendRequestSender";
+import { IDeleteWorkspaceRequest } from "src/backendApi/models/request/workspace/IDeleteWorkspaceRequest";
+import { IGetWorkspaceByIdRequest } from "src/backendApi/models/request/workspace/IGetWorkspaceByIdRequest";
+import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
+import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
 
 export class WorkspaceApiClient {
     private static readonly apiUrl: string = "/api/WorkspaceApi/";
