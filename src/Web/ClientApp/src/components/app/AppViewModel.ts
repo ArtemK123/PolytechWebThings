@@ -20,12 +20,14 @@ export class AppViewModel implements IViewModel {
     }
 
     private static generateWorkspacePage(path: string): string {
-        const id = path.replace(/^\/workspaces\//, "");
+        const pathElems: string[] = path.split("/");
+        const id: number = Number.parseInt(pathElems[2], 10);
         return `<workspace-page params='{id: ${id}}'></workspace-page>`;
     }
 
     private static generateEditWorkspacePage(path: string): string {
-        const id: number = Number.parseInt(path.replace("/workspaces/", "").replace("/edit", ""), 10);
+        const pathElems: string[] = path.split("/");
+        const id: number = Number.parseInt(pathElems[2], 10);
         return `<update-workspace-page params='{id: ${id}}'></update-workspace-page>`;
     }
 }

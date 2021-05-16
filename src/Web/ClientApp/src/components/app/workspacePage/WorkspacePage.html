@@ -9,17 +9,5 @@
             <li><a data-bind="attr: { href: currentUrl() + '/rules' }">Rules</a></li>
         </ul>
         <router id="workspace-router"  params="{ routes: routes, routerElementId: 'workspace-router' }"></router>
-        <h3>Things in the workspace:</h3>
-        <div data-bind="foreach: things">
-            <thing-card params="{ model: $data }"></thing-card>
-        </div>
-        <h3>Rules in the workspace</h3>
-        <div data-bind="foreach: rules">
-            <div data-bind="html: $parent.generateRuleElement($data)"></div>
-        </div>
-        <div data-bind="ifnot: isCreateRuleFormOpened">
-            <button data-bind="click: createRule.bind($data)">Create new rule</button>
-        </div>
-        <create-rule-modal params="{ isVisible: isCreateRuleFormOpened, rules: rules, things: things }"></create-rule-modal>
     </div>
 </div>

@@ -18,35 +18,16 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly things: ko.ObservableArray<IThingApiModel> = ko.observableArray([]);
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
     public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
-    public readonly rules: ko.ObservableArray<IRuleModel> = ko.observableArray([]);
     public readonly currentUrl: ko.Computed = ko.computed(() => window.location.pathname);
 
     public readonly routes: IRoute[] = [
         RouteGenerator.generate(/\/things/, () => "<workspace-things-component></workspace-things-component>"),
         RouteGenerator.generate(/\/rules/, () => "<workspace-rules-component></workspace-rules-component>"),
+        RouteGenerator.generate(/\//, () => ""),
     ];
-
-    private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
     constructor(params: IWorkspacePageParams) {
         this.id(params.id);
-        // this.workspaceApiClient.getWorkspaceWithThingsRequest({ workspaceId: this.id() } as IGetWorkspaceWithThingsRequest)
-        //     .then((response: IOperationResult<IGetWorkspaceWithThingsResponse>) => {
-        //         if (response.status !== OperationStatus.Success) {
-        //             RedirectHandler.redirect("/");
-        //         }
-        //         this.isLoading(false);
-        //         this.workspaceName(response.data.workspace.name);
-        //         this.things(response.data.things);
-        //     });
-    }
-
-    public generateRuleElement(rule: IRuleModel) {
-        const ruleElement = rule.steps.reduce((prev, current, index) => `${prev}<br/><span>${index + 1}. ${current}</span>`, `<span>${rule.name}:</span>`);
-        return `${ruleElement}<hr/>`;
-    }
-
-    public createRule(): void {
-        this.isCreateRuleFormOpened(true);
+        this.isLoading(false);
     }
 }
