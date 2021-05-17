@@ -79,7 +79,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         {
             Mock<IHttpClientFactory> httpClientFactoryMock = new Mock<IHttpClientFactory>(MockBehavior.Strict);
             HttpClient httpClient = new HttpClient(HttpMessageHandlerMock.Object);
-            httpClientFactoryMock.Setup(factory => factory.CreateClient(nameof(GatewayMessageSender))).Returns(httpClient);
+            httpClientFactoryMock.Setup(factory => factory.CreateClient(It.IsAny<string>())).Returns(httpClient);
             services.AddTransient(_ => httpClientFactoryMock.Object);
         }
     }
