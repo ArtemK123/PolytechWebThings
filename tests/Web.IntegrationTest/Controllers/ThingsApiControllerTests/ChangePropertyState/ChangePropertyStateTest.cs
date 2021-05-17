@@ -123,7 +123,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
 
         private void MockGatewayUpdatePropertyEndpoint()
         {
-            string expectedContent = "{ \"on\": true }";
+            string expectedContent = "{\"on\":true}";
 
             SetupHttpMessageHandlerMock(
                 request =>

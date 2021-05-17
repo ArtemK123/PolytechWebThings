@@ -26,7 +26,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Updaters
             {
                 Headers =
                 {
-                    Authorization = new AuthenticationHeaderValue("Bearer", property.Thing.Workspace.AccessToken)
+                    Authorization = new AuthenticationHeaderValue("Bearer", property.Thing.Workspace.AccessToken),
+                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
                 },
                 Content = new StringContent(gatewayRequestBody)
                 {
@@ -47,7 +48,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Updaters
             {
                 Headers =
                 {
-                    Authorization = new AuthenticationHeaderValue("Bearer", property.Thing.Workspace.AccessToken)
+                    Authorization = new AuthenticationHeaderValue("Bearer", property.Thing.Workspace.AccessToken),
+                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
                 },
                 Content = new StringContent(gatewayRequestBody)
                 {
@@ -68,7 +70,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Updaters
             {
                 Headers =
                 {
-                    Authorization = new AuthenticationHeaderValue("Bearer", property.Thing.Workspace.AccessToken)
+                    Authorization = new AuthenticationHeaderValue("Bearer", property.Thing.Workspace.AccessToken),
+                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
                 },
                 Content = new StringContent(gatewayRequestBody)
                 {
