@@ -18,8 +18,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Controllers\WorkspaceApiControllerTests\GetWorkspaceWithThings\PrimitivePropertyValues\**">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <Content Include="Controllers\WorkspaceApiControllerTests\GetWorkspaceWithThings\PrimitivePropertyValues\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Controllers\ThingsApiControllerTests\ChangePropertyState\*.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>
