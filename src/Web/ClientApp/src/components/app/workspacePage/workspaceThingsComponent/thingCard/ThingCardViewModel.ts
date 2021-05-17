@@ -6,6 +6,7 @@ import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiM
 import { IThingStateApiModel } from "src/backendApi/models/response/things/IThingStateApiModel";
 import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
 import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
 
 export class ThingCardViewModel implements IViewModel {
     public readonly title: ko.Observable<string> = ko.observable("");
@@ -14,6 +15,8 @@ export class ThingCardViewModel implements IViewModel {
     public readonly model: IThingApiModel;
     public readonly params: IThingCardParams;
     public readonly thingState: ko.Observable<IThingStateApiModel> = ko.observable();
+
+    private readonly thingsApiClient: ThingsApiClient = new ThingsApiClient();
 
     constructor(params: IThingCardParams) {
         this.params = params;
@@ -32,7 +35,7 @@ export class ThingCardViewModel implements IViewModel {
     }
 
     private fetchThingState(): void {
-        this.getHardcodedThingState()
+        this.thingsApiClient.getThingState({ thingId: this.model.id, workspaceId: this.params.workspaceId })
             .then((result) => {
                 if (result.status === OperationStatus.Success) {
                     this.thingState(result.data);

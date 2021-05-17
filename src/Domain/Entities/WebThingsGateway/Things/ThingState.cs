@@ -5,7 +5,7 @@ namespace Domain.Entities.WebThingsGateway.Things
 {
     public record ThingState
     {
-        public ThingState(Thing thing, IReadOnlyDictionary<Property, string> propertyStates)
+        public ThingState(Thing thing, IReadOnlyDictionary<Property, string?> propertyStates)
         {
             Thing = thing;
             PropertyStates = propertyStates;
@@ -13,6 +13,6 @@ namespace Domain.Entities.WebThingsGateway.Things
 
         public Thing Thing { get; }
 
-        public IReadOnlyDictionary<Property, string> PropertyStates { get; }
+        public IReadOnlyDictionary<Property, string?> PropertyStates { get; }
     }
 }

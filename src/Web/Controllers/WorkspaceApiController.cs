@@ -134,7 +134,7 @@ namespace Web.Controllers
             if (property.ValueType == GatewayValueType.Boolean)
             {
                 BooleanProperty convertedProperty = (BooleanProperty)property;
-                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue.ToString() };
+                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue.ToString().ToLower() };
             }
 
             if (property.ValueType == GatewayValueType.Number)
