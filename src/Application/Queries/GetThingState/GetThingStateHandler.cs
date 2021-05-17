@@ -31,7 +31,7 @@ namespace Application.Queries.GetThingState
             Thing? thing = things.SingleOrDefault(currentThing => currentThing.Id == request.ThingId);
             if (thing is null)
             {
-                throw new EntityNotFoundException($"Can not find property with id=${request.ThingId}");
+                throw new EntityNotFoundException($"Can not find property with id={request.ThingId}");
             }
 
             return await thingStateProvider.GetStateAsync(thing);

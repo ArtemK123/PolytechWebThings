@@ -27,11 +27,10 @@ namespace Web.Controllers
             { typeof(FluentValidationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(DomainValidationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(EmailTakenByOtherUserException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
-            { typeof(UserNotFoundByEmailException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(WrongUserPasswordException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(CanNotConnectToGatewayException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(GatewayAlreadyRegisteredException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
-            { typeof(WorkspaceNotFoundByIdException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            { typeof(EntityNotFoundException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(UserDoesNotHaveRequiredRightsException), exception => new OperationResult(OperationStatus.Forbidden, exception.Message) },
             {
                 typeof(BrokenGatewayCommunicationException), exception =>

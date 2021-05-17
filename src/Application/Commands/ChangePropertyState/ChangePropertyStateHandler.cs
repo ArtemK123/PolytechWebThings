@@ -30,13 +30,13 @@ namespace Application.Commands.ChangePropertyState
             Thing? targetThing = things.SingleOrDefault(thing => thing.Id == request.ThingId);
             if (targetThing is null)
             {
-                throw new EntityNotFoundException($"Can not find entity with id=${request.ThingId}");
+                throw new EntityNotFoundException($"Can not find thing with id={request.ThingId}");
             }
 
             Property? targetProperty = targetThing.Properties.SingleOrDefault(property => property.Name == request.PropertyName);
             if (targetProperty is null)
             {
-                throw new EntityNotFoundException($"Can not find property with name=${request.PropertyName} in thing ${targetThing.Title}");
+                throw new EntityNotFoundException($"Can not find property with name={request.PropertyName} in thing {targetThing.Title}");
             }
 
             await targetProperty.UpdateValueAsync(request.NewPropertyValue);

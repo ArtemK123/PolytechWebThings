@@ -29,6 +29,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
         private const string UserPassword = "123123";
         private const string UserEmail = "test@gmail.com";
         private const string ThingId = "http://localhost:1214/things/virtual-things-0";
+        private const string ThingTitle = "Virtual On/Off Color Light";
         private const string PropertyName = "on";
         private const string CorrectNewValue = "true";
 
@@ -79,7 +80,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
             string nonExistingThingId = "non-existing-id";
             OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest() with { ThingId = nonExistingThingId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Message about non existing id. Replace with actual message", result.Message);
+            Assert.AreEqual($"Can not find thing with id={nonExistingThingId}", result.Message);
         }
 
         [Test]
@@ -90,7 +91,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
             string nonExistingPropertyName = "non-existing-property";
             OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest() with { PropertyName = nonExistingPropertyName });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Message about non existing property. Replace with actual message", result.Message);
+            Assert.AreEqual($"Can not find property with name={nonExistingPropertyName} in thing {ThingTitle}", result.Message);
         }
 
         [Test]
