@@ -18,7 +18,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 propertyType: parsedModel.PropertyType,
                 links: parsedModel.Links,
                 readOnly: parsedModel.ReadOnly,
-                value: parsedModel.Value,
+                defaultValue: parsedModel.Value,
                 unit: parsedModel.Unit,
                 minimum: parsedModel.Minimum,
                 maximum: parsedModel.Maximum);

@@ -4,14 +4,14 @@ namespace Domain.Entities.WebThingsGateway.Properties
 {
     public record BooleanProperty : Property
     {
-        public BooleanProperty(string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, bool value)
+        public BooleanProperty(string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, bool defaultValue)
             : base(name, visible, title, propertyType, links, readOnly)
         {
-            Value = value;
+            DefaultValue = defaultValue;
         }
 
         public override GatewayValueType ValueType => GatewayValueType.Boolean;
 
-        public bool Value { get; }
+        public bool DefaultValue { get; }
     }
 }

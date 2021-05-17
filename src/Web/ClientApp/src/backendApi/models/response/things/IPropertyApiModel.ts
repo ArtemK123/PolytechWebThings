@@ -3,7 +3,7 @@ import { GatewayValueType } from "src/backendApi/models/response/things/GatewayV
 
 export interface IPropertyApiModel {
     name: string | null;
-    value: string | null;
+    defaultValue: string | null;
     visible: boolean;
     title: string | null;
     valueType: GatewayValueType;

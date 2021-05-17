@@ -134,7 +134,7 @@ namespace Web.Controllers
             if (property.ValueType == GatewayValueType.Boolean)
             {
                 BooleanProperty convertedProperty = (BooleanProperty)property;
-                return propertyApiModel with { Value = convertedProperty.Value.ToString() };
+                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue.ToString() };
             }
 
             if (property.ValueType == GatewayValueType.Number)
@@ -142,7 +142,7 @@ namespace Web.Controllers
                 NumberProperty convertedProperty = (NumberProperty)property;
                 return propertyApiModel with
                 {
-                    Value = convertedProperty.Value.ToString(),
+                    DefaultValue = convertedProperty.DefaultValue.ToString(),
                     Unit = convertedProperty.Unit,
                     Minimum = convertedProperty.Minimum,
                     Maximum = convertedProperty.Maximum
@@ -152,13 +152,13 @@ namespace Web.Controllers
             if (property.ValueType == GatewayValueType.String)
             {
                 StringProperty convertedProperty = (StringProperty)property;
-                return propertyApiModel with { Value = convertedProperty.Value };
+                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue };
             }
 
             if (property.ValueType == GatewayValueType.Enum)
             {
                 EnumProperty convertedProperty = (EnumProperty)property;
-                return propertyApiModel with { Value = convertedProperty.Value, AllowedValues = convertedProperty.AllowedValues };
+                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue, AllowedValues = convertedProperty.AllowedValues };
             }
 
             throw new NotSupportedException("Unsupported property type");

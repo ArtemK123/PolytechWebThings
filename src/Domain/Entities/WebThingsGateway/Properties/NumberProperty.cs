@@ -5,10 +5,10 @@ namespace Domain.Entities.WebThingsGateway.Properties
     public record NumberProperty : Property
     {
         public NumberProperty(
-            string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, int value, string unit, int minimum, int maximum)
+            string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, int defaultValue, string unit, int minimum, int maximum)
             : base(name, visible, title, propertyType, links, readOnly)
         {
-            Value = value;
+            DefaultValue = defaultValue;
             Unit = unit;
             Minimum = minimum;
             Maximum = maximum;
@@ -16,7 +16,7 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public override GatewayValueType ValueType => GatewayValueType.Number;
 
-        public int Value { get; }
+        public int DefaultValue { get; }
 
         public string Unit { get; }
 

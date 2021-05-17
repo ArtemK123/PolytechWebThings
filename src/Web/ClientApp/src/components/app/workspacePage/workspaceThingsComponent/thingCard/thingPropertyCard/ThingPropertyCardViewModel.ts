@@ -9,7 +9,7 @@ export class ThingPropertyCardViewModel implements IViewModel {
 
     constructor(params: IThingPropertyCardParams) {
         this.model = params.model;
-        this.inputValue(this.model.value);
+        this.inputValue(this.model.defaultValue);
     }
 
     public handleKeyUp(data: ThingPropertyCardViewModel, event: KeyboardEvent): void {

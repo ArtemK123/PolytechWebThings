@@ -24,7 +24,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 propertyType: parsedModel.PropertyType,
                 links: parsedModel.Links,
                 readOnly: parsedModel.ReadOnly,
-                value: parsedModel.Value);
+                defaultValue: parsedModel.Value);
         }
 
         private Property ParseEnum(JsonElement propertyJson)
@@ -37,7 +37,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 propertyType: parsedModel.PropertyType,
                 links: parsedModel.Links,
                 readOnly: parsedModel.ReadOnly,
-                value: parsedModel.Value,
+                defaultValue: parsedModel.Value,
                 allowedValues: parsedModel.Enum);
         }
     }

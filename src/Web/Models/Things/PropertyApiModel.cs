@@ -7,7 +7,7 @@ namespace Web.Models.Things
     {
         public string? Name { get; init; }
 
-        public string? Value { get; init; }
+        public string? DefaultValue { get; init; }
 
         public bool? Visible { get; init; }
 
