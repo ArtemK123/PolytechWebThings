@@ -27,5 +27,7 @@ namespace Domain.Entities.WebThingsGateway.Properties
         public IReadOnlyCollection<Link> Links { get; }
 
         public bool ReadOnly { get; }
+
+        public abstract void ValidateValue(string? value);
     }
 }

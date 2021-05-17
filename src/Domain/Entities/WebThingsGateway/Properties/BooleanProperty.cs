@@ -13,5 +13,10 @@ namespace Domain.Entities.WebThingsGateway.Properties
         public override GatewayValueType ValueType => GatewayValueType.Boolean;
 
         public bool DefaultValue { get; }
+
+        public override void ValidateValue(string? value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

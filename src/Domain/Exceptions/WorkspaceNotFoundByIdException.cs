@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Domain.Exceptions
+﻿namespace Domain.Exceptions
 {
-    public class WorkspaceNotFoundByIdException : Exception
+    public class WorkspaceNotFoundByIdException : EntityNotFoundException
     {
         public WorkspaceNotFoundByIdException(int workspaceId)
             : base($"Workspace with id={workspaceId} is not found")

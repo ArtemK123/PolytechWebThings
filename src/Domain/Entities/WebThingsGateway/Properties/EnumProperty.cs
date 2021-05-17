@@ -14,5 +14,10 @@ namespace Domain.Entities.WebThingsGateway.Properties
         public override GatewayValueType ValueType => GatewayValueType.Enum;
 
         public IReadOnlyCollection<string> AllowedValues { get; }
+
+        public override void ValidateValue(string? value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -23,5 +23,10 @@ namespace Domain.Entities.WebThingsGateway.Properties
         public int Minimum { get; }
 
         public int Maximum { get; }
+
+        public override void ValidateValue(string? value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
