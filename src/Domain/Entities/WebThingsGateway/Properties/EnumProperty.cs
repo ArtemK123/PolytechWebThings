@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Exceptions;
 using Domain.Updaters;
 
@@ -17,8 +18,9 @@ namespace Domain.Entities.WebThingsGateway.Properties
             bool readOnly,
             IPropertyValueUpdater propertyValueUpdater,
             string defaultValue,
-            IReadOnlyCollection<string> allowedValues)
-            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater, defaultValue)
+            IReadOnlyCollection<string> allowedValues,
+            Thing thing)
+            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater, defaultValue, thing)
         {
             AllowedValues = allowedValues;
         }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
+using Domain.Entities.Workspace;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Resolvers;
@@ -18,11 +18,11 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
             this.propertyParserResolver = propertyParserResolver;
         }
 
-        public Thing Parse(ThingFlatParsingModel flatThingModel)
+        public Thing Parse(ThingFlatParsingModel flatThingModel, IWorkspace workspace)
         {
-            IReadOnlyCollection<Property> parsedProperties = flatThingModel.Properties.Select(keyValuePair => ParseProperty(keyValuePair.Value)).ToArray();
+            List<Property> properties = new List<Property>();
 
-            return new Thing(
+            Thing newThing = new Thing(
                 title: flatThingModel.Title,
                 types: flatThingModel.Types,
                 description: flatThingModel.Description,
@@ -30,13 +30,17 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
                 selectedCapability: flatThingModel.SelectedCapability,
                 id: flatThingModel.Id,
                 links: flatThingModel.Links,
-                properties: parsedProperties);
-        }
+                properties: properties,
+                workspace);
 
-        private Property ParseProperty(JsonElement propertyJson)
-        {
-            IPropertyParser parser = propertyParserResolver.Resolve(propertyJson);
-            return parser.Parse(propertyJson);
+            foreach (JsonElement propertyElement in flatThingModel.Properties.Values)
+            {
+                IPropertyParser parser = propertyParserResolver.Resolve(propertyElement);
+                Property property = parser.Parse(propertyElement, newThing);
+                properties.Add(property);
+            }
+
+            return newThing;
         }
     }
 }

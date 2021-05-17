@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Exceptions;
 using Domain.Updaters;
 
@@ -18,8 +19,9 @@ namespace Domain.Entities.WebThingsGateway.Properties
             string unit,
             int minimum,
             int maximum,
-            IPropertyValueUpdater propertyValueUpdater)
-            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater)
+            IPropertyValueUpdater propertyValueUpdater,
+            Thing thing)
+            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater, thing)
         {
             DefaultValue = defaultValue;
             Unit = unit;

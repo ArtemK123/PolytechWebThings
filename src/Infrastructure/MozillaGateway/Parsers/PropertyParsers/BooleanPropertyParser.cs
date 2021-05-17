@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
@@ -14,7 +15,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
 
         public override string PropertyValueType => "boolean";
 
-        public override Property Parse(JsonElement propertyJson)
+        public override Property Parse(JsonElement propertyJson, Thing thing)
         {
             BooleanPropertyParsingModel parsedModel = Deserialize<BooleanPropertyParsingModel>(propertyJson);
             return new BooleanProperty(
@@ -25,7 +26,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 links: parsedModel.Links,
                 readOnly: parsedModel.ReadOnly,
                 defaultValue: parsedModel.Value,
-                propertyValueUpdater: PropertyValueUpdater);
+                propertyValueUpdater: PropertyValueUpdater,
+                thing: thing);
         }
     }
 }

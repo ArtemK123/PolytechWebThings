@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
@@ -14,13 +15,13 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
 
         public override string PropertyValueType => "string";
 
-        public override Property Parse(JsonElement propertyJson)
+        public override Property Parse(JsonElement propertyJson, Thing thing)
         {
             bool isEnum = propertyJson.TryGetProperty("enum", out _);
-            return isEnum ? ParseEnum(propertyJson: propertyJson) : ParseString(propertyJson: propertyJson);
+            return isEnum ? ParseEnum(propertyJson, thing) : ParseString(propertyJson, thing);
         }
 
-        private Property ParseString(JsonElement propertyJson)
+        private Property ParseString(JsonElement propertyJson, Thing thing)
         {
             StringPropertyParsingModel parsedModel = Deserialize<StringPropertyParsingModel>(propertyJson);
             return new StringProperty(
@@ -31,10 +32,11 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 links: parsedModel.Links,
                 readOnly: parsedModel.ReadOnly,
                 defaultValue: parsedModel.Value,
-                propertyValueUpdater: PropertyValueUpdater);
+                propertyValueUpdater: PropertyValueUpdater,
+                thing: thing);
         }
 
-        private Property ParseEnum(JsonElement propertyJson)
+        private Property ParseEnum(JsonElement propertyJson, Thing thing)
         {
             EnumPropertyParsingModel parsedModel = Deserialize<EnumPropertyParsingModel>(propertyJson);
             return new EnumProperty(
@@ -46,7 +48,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 readOnly: parsedModel.ReadOnly,
                 defaultValue: parsedModel.Value,
                 allowedValues: parsedModel.Enum,
-                propertyValueUpdater: PropertyValueUpdater);
+                propertyValueUpdater: PropertyValueUpdater,
+                thing: thing);
         }
     }
 }

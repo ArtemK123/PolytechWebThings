@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Entities.WebThingsGateway.Things;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
 {
@@ -7,6 +8,6 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
     {
         string? PropertyValueType { get; }
 
-        Property Parse(JsonElement propertyJson);
+        Property Parse(JsonElement propertyJson, Thing thing);
     }
 }

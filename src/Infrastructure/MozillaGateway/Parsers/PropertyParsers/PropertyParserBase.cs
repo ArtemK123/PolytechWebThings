@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Application.Converters;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
@@ -22,7 +23,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
 
         protected IPropertyValueUpdater PropertyValueUpdater { get; }
 
-        public abstract Property Parse(JsonElement propertyJson);
+        public abstract Property Parse(JsonElement propertyJson, Thing thing);
 
         protected TParsingModel Deserialize<TParsingModel>(JsonElement json)
             where TParsingModel : PropertyParsingModelBase

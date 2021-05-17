@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Exceptions;
 using Domain.Updaters;
 
@@ -15,8 +16,9 @@ namespace Domain.Entities.WebThingsGateway.Properties
             IReadOnlyCollection<Link> links,
             bool readOnly,
             IPropertyValueUpdater propertyValueUpdater,
-            bool defaultValue)
-            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater)
+            bool defaultValue,
+            Thing thing)
+            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater, thing)
         {
             DefaultValue = defaultValue;
         }

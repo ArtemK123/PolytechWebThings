@@ -1,12 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Entities.WebThingsGateway.Things;
 using Domain.Updaters;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
     public abstract record Property
     {
-        protected Property(string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, IPropertyValueUpdater propertyValueUpdater)
+        protected Property(
+            string name,
+            bool visible,
+            string title,
+            string propertyType,
+            IReadOnlyCollection<Link> links,
+            bool readOnly,
+            IPropertyValueUpdater propertyValueUpdater,
+            Thing thing)
         {
             Name = name;
             Visible = visible;
@@ -15,6 +24,7 @@ namespace Domain.Entities.WebThingsGateway.Properties
             Links = links;
             ReadOnly = readOnly;
             PropertyValueUpdater = propertyValueUpdater;
+            Thing = thing;
         }
 
         public string Name { get; }
@@ -30,6 +40,8 @@ namespace Domain.Entities.WebThingsGateway.Properties
         public IReadOnlyCollection<Link> Links { get; }
 
         public bool ReadOnly { get; }
+
+        public Thing Thing { get; }
 
         protected IPropertyValueUpdater PropertyValueUpdater { get; }
 

@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Application.Converters;
 using Domain.Entities.WebThingsGateway.Things;
+using Domain.Entities.Workspace;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
@@ -23,12 +24,12 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
             this.thingParser = thingParser;
         }
 
-        public async Task<IReadOnlyCollection<Thing>> Parse(HttpResponseMessage response)
+        public async Task<IReadOnlyCollection<Thing>> Parse(IWorkspace workspace, HttpResponseMessage response)
         {
             byte[] responseBytes = await response.Content.ReadAsByteArrayAsync();
             var thingParsingModels = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<IReadOnlyCollection<ThingFlatParsingModel>>(responseBytes, jsonSerializerOptions));
 
-            IReadOnlyCollection<Thing> parsedThings = thingParsingModels.Select(thingParser.Parse).ToList();
+            IReadOnlyCollection<Thing> parsedThings = thingParsingModels.Select(thingParsingModel => thingParser.Parse(thingParsingModel, workspace)).ToList();
             return parsedThings;
         }
     }

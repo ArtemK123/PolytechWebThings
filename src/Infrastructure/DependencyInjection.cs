@@ -3,6 +3,7 @@ using Application.MozillaGateway.Checkers;
 using Application.MozillaGateway.Providers;
 using Application.Repositories;
 using Domain.Providers;
+using Domain.Updaters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PolytechWebThings.Infrastructure.Database;
@@ -16,6 +17,7 @@ using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Resolvers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
+using PolytechWebThings.Infrastructure.MozillaGateway.Updaters;
 using PolytechWebThings.Infrastructure.Providers;
 
 namespace PolytechWebThings.Infrastructure
@@ -38,6 +40,7 @@ namespace PolytechWebThings.Infrastructure
             services.AddTransient<IThingsProvider, ThingsProvider>();
             services.AddTransient<IGatewayMessageSender, GatewayMessageSender>();
             services.AddTransient<IPropertyParserResolver, PropertyParserResolver>();
+            services.AddTransient<IPropertyValueUpdater, PropertyValueUpdater>();
             services.AddParsers();
         }
 

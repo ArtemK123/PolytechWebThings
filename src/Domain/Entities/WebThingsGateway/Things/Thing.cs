@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Entities.Workspace;
 
 namespace Domain.Entities.WebThingsGateway.Things
 {
@@ -13,7 +14,7 @@ namespace Domain.Entities.WebThingsGateway.Things
             string selectedCapability,
             string id,
             IReadOnlyCollection<Link> links,
-            IReadOnlyCollection<Property> properties)
+            IReadOnlyCollection<Property> properties, IWorkspace workspace)
         {
             Title = title;
             Types = types;
@@ -23,6 +24,7 @@ namespace Domain.Entities.WebThingsGateway.Things
             Id = id;
             Links = links;
             Properties = properties;
+            Workspace = workspace;
         }
 
         public string Title { get; }
@@ -40,5 +42,7 @@ namespace Domain.Entities.WebThingsGateway.Things
         public IReadOnlyCollection<Link> Links { get; }
 
         public IReadOnlyCollection<Property> Properties { get; }
+
+        public IWorkspace Workspace { get; }
     }
 }

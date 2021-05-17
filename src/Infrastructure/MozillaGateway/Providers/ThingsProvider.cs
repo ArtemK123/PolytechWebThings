@@ -34,7 +34,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
                         $"Invalid access token for {workspace.Name} gateway at {workspace.GatewayUrl}. Please, update access token and try again");
                 }
 
-                return await getThingsResponseParser.Parse(response);
+                return await getThingsResponseParser.Parse(workspace, response);
             }
             catch (HttpRequestException httpRequestException)
             {
