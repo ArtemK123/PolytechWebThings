@@ -1,7 +1,9 @@
-<div>
-    <div data-bind="if: isLoading">
-        <loader></loader>
-    </div>
+<div class="workspace-page">
+    <!-- ko if: isLoading -->
+        <div class="workspace-page__loader-container">
+            <loader></loader>
+        </div>
+    <!-- /ko -->
     <div data-bind="ifnot: isLoading">
         <h2>Workspace name is <span data-bind="text: workspaceName"></span></h2>
         <ul>

@@ -3,9 +3,13 @@
     <div>
         <!-- ko if: model.readOnly -->
             <input data-bind='value: inputValue' readonly>
+
         <!-- /ko -->
         <!-- ko ifnot: model.readOnly -->
             <input title="Press enter if you want to save modified value" data-bind='textInput: inputValue, event: { keyup: handleKeyUp }'>
         <!-- /ko -->
+        <div class="thing-property-card__loader-container" data-bind="if: isUpdateInProgress">
+            <loader></loader>
+        </div>
     </div>
 </div>

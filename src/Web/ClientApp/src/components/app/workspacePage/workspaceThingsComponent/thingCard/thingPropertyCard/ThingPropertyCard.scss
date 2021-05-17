@@ -2,5 +2,11 @@
   margin: 5px 5px 5px 20px;
   display: flex;
   justify-content: space-between;
-  width: 250px;
+  width: 300px;
+}
+
+.thing-property-card__loader-container {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
 }

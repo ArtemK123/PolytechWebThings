@@ -2,6 +2,7 @@ import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescr
 import { WorkspacePageViewModel } from "src/components/app/workspacePage/WorkspacePageViewModel";
 import { IComponent } from "src/componentsRegistration/IComponent";
 import template from "./WorkspacePage.html";
+import "./WorkspacePage.scss";
 
 export class WorkspacePageComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {

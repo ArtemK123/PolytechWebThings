@@ -1,13 +1,14 @@
 import * as ko from "knockout";
-import {IViewModel} from "src/componentsRegistration/IViewModel";
-import {IThingPropertyCardParams} from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/IThingPropertyCardParams";
-import {IPropertyApiModel} from "src/backendApi/models/response/things/IPropertyApiModel";
-import {ThingsApiClient} from "src/backendApi/clients/ThingsApiClient";
-import {IChangePropertyStateRequest} from "src/backendApi/models/request/things/IChangePropertyStateRequest";
-import {OperationStatus} from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { IViewModel } from "src/componentsRegistration/IViewModel";
+import { IThingPropertyCardParams } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/IThingPropertyCardParams";
+import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
+import { IChangePropertyStateRequest } from "src/backendApi/models/request/things/IChangePropertyStateRequest";
+import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
 
 export class ThingPropertyCardViewModel implements IViewModel {
     public readonly inputValue: ko.Observable<string> = ko.observable("");
+    public readonly isUpdateInProgress: ko.Observable<boolean> = ko.observable(false);
     private readonly model: IPropertyApiModel;
     private readonly thingsApiClient: ThingsApiClient = new ThingsApiClient();
     private readonly params: IThingPropertyCardParams;
@@ -26,6 +27,7 @@ export class ThingPropertyCardViewModel implements IViewModel {
     }
 
     private handleValueUpdate(): void {
+        this.isUpdateInProgress(true);
         const requestModel: IChangePropertyStateRequest = {
             workspaceId: this.params.workspaceId,
             thingId: this.params.thingId,
@@ -34,6 +36,7 @@ export class ThingPropertyCardViewModel implements IViewModel {
         } as IChangePropertyStateRequest;
         this.thingsApiClient.changePropertyState(requestModel)
             .then((operationResult) => {
+                this.isUpdateInProgress(false);
                 if (operationResult.status === OperationStatus.Success) {
                     alert("Updated property successfully");
                 }
