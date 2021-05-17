@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain.Exceptions;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
@@ -24,9 +26,19 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public int Maximum { get; }
 
-        public override void ValidateValue(string? value)
+        public override async Task UpdateValueAsync(string? value)
         {
-            throw new System.NotImplementedException();
+            if (!int.TryParse(value, out int parsedValue))
+            {
+                throw new CanNotParsePropertyValueException(ValueType, value);
+            }
+
+            if (parsedValue < Minimum || parsedValue > Maximum)
+            {
+                throw new ValidationException($"Parsed number ${parsedValue} is not allowed. Minimum for this value - {Minimum}, maximum - {Maximum}");
+            }
+
+            await PropertyValueUpdater.UpdateAsync(this, parsedValue);
         }
     }
 }

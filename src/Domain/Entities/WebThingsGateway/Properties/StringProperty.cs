@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
@@ -14,9 +15,9 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public string DefaultValue { get; }
 
-        public override void ValidateValue(string? value)
+        public override async Task UpdateValueAsync(string? value)
         {
-            throw new System.NotImplementedException();
+            await PropertyValueUpdater.UpdateAsync(this, value);
         }
     }
 }

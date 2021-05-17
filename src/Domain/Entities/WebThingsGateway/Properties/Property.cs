@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain.Updaters;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
@@ -28,6 +30,8 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public bool ReadOnly { get; }
 
-        public abstract void ValidateValue(string? value);
+        protected IPropertyValueUpdater PropertyValueUpdater { get; }
+
+        public abstract Task UpdateValueAsync(string? value);
     }
 }

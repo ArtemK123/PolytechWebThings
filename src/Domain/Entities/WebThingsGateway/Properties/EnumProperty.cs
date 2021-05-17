@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Domain.Exceptions;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
@@ -15,9 +18,14 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public IReadOnlyCollection<string> AllowedValues { get; }
 
-        public override void ValidateValue(string? value)
+        public override async Task UpdateValueAsync(string? value)
         {
-            throw new System.NotImplementedException();
+            if (!AllowedValues.Contains(value))
+            {
+                throw new ValidationException($"Value \"{value}\" is not allowed for the property. Allowed values are: [${string.Join(", ", AllowedValues)}]");
+            }
+
+            await PropertyValueUpdater.UpdateAsync(this, value);
         }
     }
 }

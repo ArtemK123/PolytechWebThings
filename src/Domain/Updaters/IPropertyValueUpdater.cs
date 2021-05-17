@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Domain.Entities.WebThingsGateway.Properties;
 
-namespace Application.MozillaGateway.Updaters
+namespace Domain.Updaters
 {
     public interface IPropertyValueUpdater
     {
-        Task Update(Property property, string? newValue);
+        Task UpdateAsync<TValueType>(Property property, TValueType? newValue);
     }
 }

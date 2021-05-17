@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.MozillaGateway.Providers;
-using Application.MozillaGateway.Updaters;
 using Application.Queries.GetWorkspaceById;
 using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using Domain.Exceptions;
+using Domain.Updaters;
 using MediatR;
 
 namespace Application.Commands.ChangePropertyState
@@ -42,8 +42,7 @@ namespace Application.Commands.ChangePropertyState
                 throw new EntityNotFoundException($"Can not find property with name=${request.PropertyName} in thing ${targetThing.Title}");
             }
 
-            targetProperty.ValidateValue(request.NewPropertyValue);
-            await propertyValueUpdater.Update(targetProperty, request.NewPropertyValue);
+            await targetProperty.UpdateValueAsync(request.NewPropertyValue);
             return Unit.Value;
         }
     }

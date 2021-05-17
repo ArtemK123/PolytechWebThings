@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using Domain.Exceptions;
-using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Web.Models.OperationResults;
+using DomainValidationException = Domain.Exceptions.ValidationException;
+using FluentValidationException = FluentValidation.ValidationException;
 
 namespace Web.Controllers
 {
@@ -23,7 +24,8 @@ namespace Web.Controllers
 
         private IReadOnlyDictionary<Type, Func<Exception, OperationResult>> ExceptionHandlersMapping => new Dictionary<Type, Func<Exception, OperationResult>>
         {
-            { typeof(ValidationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            { typeof(FluentValidationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            { typeof(DomainValidationException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(EmailTakenByOtherUserException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(UserNotFoundByEmailException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(WrongUserPasswordException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
