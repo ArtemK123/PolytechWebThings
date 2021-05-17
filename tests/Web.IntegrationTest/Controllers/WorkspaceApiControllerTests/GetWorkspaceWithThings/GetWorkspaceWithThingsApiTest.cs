@@ -9,26 +9,15 @@ using Moq;
 using Moq.Protected;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.IntegrationTest.Controllers.WorkspaceApiControllerTests;
-using Web.IntegrationTest.Utils.ApiClients;
-using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 
-namespace Web.IntegrationTest.Controllers.ThingsApiControllerTest.GetWorkspaceWithThings
+namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests.GetWorkspaceWithThings
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
     internal class GetWorkspaceWithThingsApiTest : WorkspaceApiControllerWithStoredWorkspaceTestBase
     {
-        private ThingsApiClient thingsApiClient;
-
-        [SetUp]
-        public void SetUp()
-        {
-            thingsApiClient = new ThingsApiClient(HttpClient, new HttpResponseMessageParser());
-        }
-
         [Test]
         public async Task GetWorkspaceWithThings_PrimitivePropertyValues_ShouldDeserializeAndReturnThings()
         {
@@ -36,7 +25,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTest.GetWorkspaceWi
             await SetupHttpMessageHandlerMockWithValidResponse(resourcesFolder);
             string serializedExpected = await File.ReadAllTextAsync(Path.Combine(resourcesFolder, "Expected.json"));
 
-            OperationResult<GetWorkspaceWithThingsResponse> result = await thingsApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+            OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
             string serializedActual = JsonSerializer.Serialize(result.Data);
 
             Assert.AreEqual(OperationStatus.Success, result.Status);
@@ -52,7 +41,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTest.GetWorkspaceWi
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(message => IsExpectedHttpResponseMessage(message)), ItExpr.IsAny<CancellationToken>())
                 .ThrowsAsync(thrownException);
 
-            OperationResult<GetWorkspaceWithThingsResponse> result = await thingsApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+            OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
 
             Assert.AreEqual(OperationStatus.Error, result.Status);
             Assert.AreEqual($"Can not connect to {WorkspaceName} gateway at {GatewayUrl}", result.Message);
@@ -63,7 +52,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTest.GetWorkspaceWi
         {
             SetupHttpMessageHandlerMock(IsExpectedHttpResponseMessage, new HttpResponseMessage(HttpStatusCode.Unauthorized));
 
-            OperationResult<GetWorkspaceWithThingsResponse> result = await thingsApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+            OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
             Assert.AreEqual($"Invalid access token for {WorkspaceName} gateway at {GatewayUrl}. Please, update access token and try again", result.Message);
         }
@@ -74,7 +63,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTest.GetWorkspaceWi
             string returnedPayload = "<doctype html><html><head></head><body></body></html>";
             SetupHttpMessageHandlerMock(IsExpectedHttpResponseMessage, new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(returnedPayload) });
 
-            OperationResult<GetWorkspaceWithThingsResponse> result = await thingsApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
+            OperationResult<GetWorkspaceWithThingsResponse> result = await WorkspaceApiClient.GetWorkspaceWithThingsAsync(new GetWorkspaceWithThingsRequest { WorkspaceId = WorkspaceId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
             Assert.AreEqual($"{WorkspaceName} gateway returned invalid data, which can not be parsed. If this error remains, please contact the support", result.Message);
         }

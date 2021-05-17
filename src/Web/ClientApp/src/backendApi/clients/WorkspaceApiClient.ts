@@ -2,9 +2,11 @@
 import { ICreateWorkspaceRequest } from "src/backendApi/models/request/workspace/ICreateWorkspaceRequest";
 import { IGetUserWorkspacesResponse } from "src/backendApi/models/response/IGetUserWorkspacesResponse";
 import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/workspace/IGetWorkspaceWithThingsRequest";
 import { BackendRequestSender } from "src/backendApi/senders/BackendRequestSender";
 import { IDeleteWorkspaceRequest } from "src/backendApi/models/request/workspace/IDeleteWorkspaceRequest";
 import { IGetWorkspaceByIdRequest } from "src/backendApi/models/request/workspace/IGetWorkspaceByIdRequest";
+import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
 import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
 
 export class WorkspaceApiClient {
@@ -29,5 +31,9 @@ export class WorkspaceApiClient {
 
     public updateWorkspace(requestModel: IUpdateWorkspaceRequest): Promise<IOperationResult<void>> {
         return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}Update`, requestModel);
+    }
+
+    public getWorkspaceWithThingsRequest(requestModel: IGetWorkspaceWithThingsRequest): Promise<IOperationResult<IGetWorkspaceWithThingsResponse>> {
+        return this.backendRequestSender.sendPostRequest(`${WorkspaceApiClient.apiUrl}GetWorkspaceWithThings`, requestModel);
     }
 }
