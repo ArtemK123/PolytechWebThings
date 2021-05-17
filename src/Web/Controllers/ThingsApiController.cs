@@ -1,11 +1,15 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Commands.ChangePropertyState;
 using Application.Converters;
+using Application.Queries.GetThingState;
+using Domain.Entities.WebThingsGateway.Things;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.OperationResults;
+using Web.Models.Things;
 using Web.Models.Things.Request;
 using Web.Providers;
 
@@ -36,6 +40,26 @@ namespace Web.Controllers
                 cancellationToken);
 
             return new OperationResult(OperationStatus.Success);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<OperationResult<ThingStateApiModel>> GetThingState([FromBody] GetThingStateRequest request, CancellationToken cancellationToken)
+        {
+            ThingState thingState = await mediator.Send(
+                new GetThingStateQuery(
+                    thingId: NullableConverter.GetOrThrow(request.ThingId),
+                    workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId),
+                    userEmail: userEmailProvider.GetUserEmail(HttpContext)),
+                cancellationToken);
+
+            return new OperationResult<ThingStateApiModel>(
+                OperationStatus.Success,
+                new ThingStateApiModel
+                {
+                    ThingId = thingState.Thing.Id,
+                    PropertyStates = thingState.PropertyStates.ToDictionary(pair => pair.Key.Name, pair => pair.Value)
+                });
         }
     }
 }

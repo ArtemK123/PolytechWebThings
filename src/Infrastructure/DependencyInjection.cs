@@ -41,6 +41,7 @@ namespace PolytechWebThings.Infrastructure
             services.AddTransient<IGatewayMessageSender, GatewayMessageSender>();
             services.AddTransient<IPropertyParserResolver, PropertyParserResolver>();
             services.AddTransient<IPropertyValueUpdater, PropertyValueUpdater>();
+            services.AddTransient<IThingStateProvider, ThingStateProvider>();
             services.AddParsers();
         }
 

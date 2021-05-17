@@ -14,7 +14,8 @@ namespace Domain.Entities.WebThingsGateway.Things
             string selectedCapability,
             string id,
             IReadOnlyCollection<Link> links,
-            IReadOnlyCollection<Property> properties, IWorkspace workspace)
+            IReadOnlyCollection<Property> properties,
+            IWorkspace workspace)
         {
             Title = title;
             Types = types;

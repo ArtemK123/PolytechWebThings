@@ -8,7 +8,6 @@ using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using Domain.Exceptions;
-using Domain.Updaters;
 using MediatR;
 
 namespace Application.Commands.ChangePropertyState
