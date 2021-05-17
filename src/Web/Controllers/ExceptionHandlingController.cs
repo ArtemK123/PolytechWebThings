@@ -73,7 +73,7 @@ namespace Web.Controllers
 
         private Func<Exception, OperationResult>? GetExceptionHandler(Type exceptionType)
         {
-            // anonymous class is used in order to have null as default (keyValue has another value)
+            // anonymous class is used in order to have null as default (KeyValuePair has another value)
             return ExceptionHandlersMapping
                 .Select(typeHandlerPair => new { Type = typeHandlerPair.Key, Handler = typeHandlerPair.Value })
                 .FirstOrDefault(typeAndHandler => typeAndHandler.Type.IsAssignableFrom(exceptionType))

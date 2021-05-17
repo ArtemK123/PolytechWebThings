@@ -68,9 +68,12 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
         [Test]
         public async Task ChangePropertyState_InvalidModel_ShouldReturnErrorMessage()
         {
+            string expectedMessage =
+                "{\"ThingId\":[\"'Thing Id' must not be empty.\"],\"WorkspaceId\":[\"'Workspace Id' must not be empty.\"],\"PropertyName\":[\"'Property Name' must not be empty.\"]}";
             var requestWithoutFields = new ChangePropertyStateRequest();
             OperationResult result = await thingsApiClient.ChangePropertyStateAsync(requestWithoutFields);
             Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual(expectedMessage, result.Message);
         }
 
         [Test]
