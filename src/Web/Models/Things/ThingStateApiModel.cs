@@ -6,6 +6,6 @@ namespace Web.Models.Things
     {
         public string? ThingId { get; init; }
 
-        public IReadOnlyDictionary<string, string> PropertyStates { get; init; } = new Dictionary<string, string>();
+        public IReadOnlyDictionary<string, string?> PropertyStates { get; init; } = new Dictionary<string, string?>();
     }
 }
