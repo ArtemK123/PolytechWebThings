@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
+using Web.Models.Things;
 using Web.Models.Things.Request;
 
 namespace Web.IntegrationTest.Utils.ApiClients
@@ -26,6 +27,15 @@ namespace Web.IntegrationTest.Utils.ApiClients
                 Content = JsonContent.Create(request)
             });
             return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+        }
+
+        public async Task<OperationResult<ThingStateApiModel>> GetThingStateAsync(GetThingStateRequest request)
+        {
+            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, ApiBaseUrl + "GetThingState")
+            {
+                Content = JsonContent.Create(request)
+            });
+            return await httpResponseMessageParser.ParseResponseAsync<OperationResult<ThingStateApiModel>>(response);
         }
     }
 }

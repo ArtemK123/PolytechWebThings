@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Entities.WebThingsGateway;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Moq.Protected;
@@ -19,10 +18,10 @@ using Web.Models.User.Request;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 
-namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropertyState
+namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
 {
     [TestFixture(TestOf = typeof(ThingsApiController))]
-    internal class ChangePropertyStateTest : WebApiIntegrationTestBase
+    internal class GetThingStateTest : WebApiIntegrationTestBase
     {
         private const string WorkspaceName = "TestName";
         private const string GatewayUrl = "http://localhost:1214";
@@ -58,65 +57,23 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
         }
 
         [Test]
-        public async Task ChangePropertyState_UnauthorizedUser_ShouldReturnUnauthorizedOperationResult()
+        public async Task GetThingState_UnauthorizedUser_ShouldReturnUnauthorizedOperationResult()
         {
             await userApiClient.LogoutAsync();
-            OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest());
+            OperationResult result = await thingsApiClient.GetThingStateAsync(CreateRequest());
             Assert.AreEqual(OperationStatus.Unauthorized, result.Status);
         }
 
         [Test]
-        public async Task ChangePropertyState_InvalidModel_ShouldReturnErrorMessage()
+        public async Task GetThingState_ThingIsNotFound_ShouldReturnErrorMessage()
         {
-            string expectedMessage =
-                "{\"ThingId\":[\"'Thing Id' must not be empty.\"],\"WorkspaceId\":[\"'Workspace Id' must not be empty.\"],\"PropertyName\":[\"'Property Name' must not be empty.\"]}";
-            var requestWithoutFields = new ChangePropertyStateRequest();
-            OperationResult result = await thingsApiClient.ChangePropertyStateAsync(requestWithoutFields);
-            Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual(expectedMessage, result.Message);
+            throw new NotImplementedException();
         }
 
         [Test]
-        public async Task ChangePropertyState_CanNotFindTargetThing_ShouldReturnErrorMessage()
+        public async Task GetThingState_Success_ShouldReturnThingState()
         {
-            string serializedThings = await GetSerializedThingsAsync();
-            MockGatewayThingsEndpoint(serializedThings);
-            string nonExistingThingId = "non-existing-id";
-            OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest() with { ThingId = nonExistingThingId });
-            Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual($"Can not find thing with id={nonExistingThingId}", result.Message);
-        }
-
-        [Test]
-        public async Task ChangePropertyState_CanNotFindTargetProperty_ShouldReturnErrorMessage()
-        {
-            string serializedThings = await GetSerializedThingsAsync();
-            MockGatewayThingsEndpoint(serializedThings);
-            string nonExistingPropertyName = "non-existing-property";
-            OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest() with { PropertyName = nonExistingPropertyName });
-            Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual($"Can not find property with name={nonExistingPropertyName} in thing {ThingTitle}", result.Message);
-        }
-
-        [Test]
-        public async Task ChangePropertyState_InvalidNewValue_ShouldReturnErrorMessage()
-        {
-            string serializedThings = await GetSerializedThingsAsync();
-            MockGatewayThingsEndpoint(serializedThings);
-            string invalidNewValue = "invalid";
-            OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest() with { NewPropertyValue = invalidNewValue });
-            Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual($"Can not parse value {invalidNewValue} to type {GatewayValueType.Boolean}", result.Message);
-        }
-
-        [Test]
-        public async Task ChangePropertyState_Success_ShouldReturnSuccessOperationResult()
-        {
-            string serializedThings = await GetSerializedThingsAsync();
-            MockGatewayThingsEndpoint(serializedThings);
-            MockGatewayUpdatePropertyEndpoint();
-            OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest());
-            Assert.AreEqual(OperationStatus.Success, result.Status);
+            throw new NotImplementedException();
         }
 
         protected override void SetupMocks(IServiceCollection services)
@@ -124,17 +81,6 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
             base.SetupMocks(services);
             httpMessageHandlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
             MockHttpClientFactory(services: services);
-        }
-
-        private void MockGatewayUpdatePropertyEndpoint()
-        {
-            string expectedContent = "{\"on\":true}";
-
-            SetupHttpMessageHandlerMock(
-                request =>
-                    CheckHttpRequestMessage(request, ThingId + "/properties/" + PropertyName, HttpMethod.Put)
-                    && request.Content?.ReadAsStringAsync().Result == expectedContent,
-                new HttpResponseMessage { StatusCode = HttpStatusCode.OK });
         }
 
         private void MockGatewayThingsEndpoint(string returnedContent)
@@ -173,19 +119,13 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
             services.AddTransient(_ => httpClientFactoryMock.Object);
         }
 
-        private ChangePropertyStateRequest CreateRequest()
-            => new ChangePropertyStateRequest
-            {
-                WorkspaceId = workspaceId,
-                ThingId = ThingId,
-                PropertyName = PropertyName,
-                NewPropertyValue = CorrectNewValue
-            };
-
         private async Task<string> GetSerializedThingsAsync()
         {
             string resourcesFolder = Path.GetFullPath("Controllers/ThingsApiControllerTests/ChangePropertyState/things.json");
             return await File.ReadAllTextAsync(resourcesFolder);
         }
+
+        private GetThingStateRequest CreateRequest()
+            => new GetThingStateRequest { ThingId = ThingId, WorkspaceId = workspaceId };
     }
 }
