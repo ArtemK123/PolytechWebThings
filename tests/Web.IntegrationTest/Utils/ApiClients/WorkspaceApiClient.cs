@@ -62,14 +62,5 @@ namespace Web.IntegrationTest.Utils.ApiClients
             });
             return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
         }
-
-        public async Task<OperationResult<GetWorkspaceWithThingsResponse>> GetWorkspaceWithThingsAsync(GetWorkspaceWithThingsRequest requestModel)
-        {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}GetWorkspaceWithThings")
-            {
-                Content = JsonContent.Create(requestModel)
-            });
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult<GetWorkspaceWithThingsResponse>>(response);
-        }
     }
 }

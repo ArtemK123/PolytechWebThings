@@ -10,7 +10,7 @@ import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/wo
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
 import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
-import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
+import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
 
 export class WorkspacePageViewModel implements IViewModel {
     public readonly id: number;
@@ -20,7 +20,7 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
     public readonly rules: ko.ObservableArray<IRuleModel> = ko.observableArray([]);
 
-    private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
+    private readonly thingsApiClient: ThingsApiClient = new ThingsApiClient();
 
     public readonly routes: IRoute[] = [
         RouteGenerator.generate(/\/things/, () => "<workspace-things-component params=\"{ things: $parent.things, workspaceId: $parent.id }\"></workspace-things-component>"),
@@ -30,7 +30,7 @@ export class WorkspacePageViewModel implements IViewModel {
 
     constructor(params: IWorkspacePageParams) {
         this.id = params.id;
-        this.workspaceApiClient.getWorkspaceWithThingsRequest({ workspaceId: this.id } as IGetWorkspaceWithThingsRequest)
+        this.thingsApiClient.getWorkspaceWithThingsRequest({ workspaceId: this.id } as IGetWorkspaceWithThingsRequest)
             .then((response: IOperationResult<IGetWorkspaceWithThingsResponse>) => {
                 if (response.status !== OperationStatus.Success) {
                     RedirectHandler.redirect("/");
