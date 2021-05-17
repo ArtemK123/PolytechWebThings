@@ -6,7 +6,7 @@ namespace Domain.Entities.WebThingsGateway.Properties
 {
     public abstract record Property
     {
-        protected Property(string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly)
+        protected Property(string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, IPropertyValueUpdater propertyValueUpdater)
         {
             Name = name;
             Visible = visible;
@@ -14,6 +14,7 @@ namespace Domain.Entities.WebThingsGateway.Properties
             PropertyType = propertyType;
             Links = links;
             ReadOnly = readOnly;
+            PropertyValueUpdater = propertyValueUpdater;
         }
 
         public string Name { get; }

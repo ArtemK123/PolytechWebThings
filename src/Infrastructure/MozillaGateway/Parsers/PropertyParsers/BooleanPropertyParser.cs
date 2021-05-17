@@ -1,11 +1,17 @@
 ﻿using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
 {
     internal class BooleanPropertyParser : PropertyParserBase
     {
+        public BooleanPropertyParser(IPropertyValueUpdater propertyValueUpdater)
+            : base(propertyValueUpdater)
+        {
+        }
+
         public override string PropertyValueType => "boolean";
 
         public override Property Parse(JsonElement propertyJson)
@@ -18,7 +24,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 propertyType: parsedModel.PropertyType,
                 links: parsedModel.Links,
                 readOnly: parsedModel.ReadOnly,
-                defaultValue: parsedModel.Value);
+                defaultValue: parsedModel.Value,
+                propertyValueUpdater: PropertyValueUpdater);
         }
     }
 }

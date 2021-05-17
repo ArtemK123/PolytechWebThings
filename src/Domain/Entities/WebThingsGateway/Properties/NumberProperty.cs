@@ -1,14 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Exceptions;
+using Domain.Updaters;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
     public record NumberProperty : Property
     {
         public NumberProperty(
-            string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, int defaultValue, string unit, int minimum, int maximum)
-            : base(name, visible, title, propertyType, links, readOnly)
+            string name,
+            bool visible,
+            string title,
+            string propertyType,
+            IReadOnlyCollection<Link> links,
+            bool readOnly,
+            int defaultValue,
+            string unit,
+            int minimum,
+            int maximum,
+            IPropertyValueUpdater propertyValueUpdater)
+            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater)
         {
             DefaultValue = defaultValue;
             Unit = unit;

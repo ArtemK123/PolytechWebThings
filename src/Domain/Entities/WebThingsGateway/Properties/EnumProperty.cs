@@ -2,14 +2,23 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Domain.Exceptions;
+using Domain.Updaters;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
     public record EnumProperty : StringProperty
     {
         public EnumProperty(
-            string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, string defaultValue, IReadOnlyCollection<string> allowedValues)
-            : base(name, visible, title, propertyType, links, readOnly, defaultValue)
+            string name,
+            bool visible,
+            string title,
+            string propertyType,
+            IReadOnlyCollection<Link> links,
+            bool readOnly,
+            IPropertyValueUpdater propertyValueUpdater,
+            string defaultValue,
+            IReadOnlyCollection<string> allowedValues)
+            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater, defaultValue)
         {
             AllowedValues = allowedValues;
         }

@@ -1,11 +1,17 @@
 ﻿using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
 {
     internal class NumberPropertyParser : PropertyParserBase
     {
+        public NumberPropertyParser(IPropertyValueUpdater propertyValueUpdater)
+            : base(propertyValueUpdater)
+        {
+        }
+
         public override string PropertyValueType => "number";
 
         public override Property Parse(JsonElement propertyJson)
@@ -21,7 +27,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 defaultValue: parsedModel.Value,
                 unit: parsedModel.Unit,
                 minimum: parsedModel.Minimum,
-                maximum: parsedModel.Maximum);
+                maximum: parsedModel.Maximum,
+                propertyValueUpdater: PropertyValueUpdater);
         }
     }
 }

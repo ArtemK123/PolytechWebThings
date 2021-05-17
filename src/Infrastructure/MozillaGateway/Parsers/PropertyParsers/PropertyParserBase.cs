@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Application.Converters;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
@@ -12,7 +13,14 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
             PropertyNameCaseInsensitive = true,
         };
 
+        protected PropertyParserBase(IPropertyValueUpdater propertyValueUpdater)
+        {
+            PropertyValueUpdater = propertyValueUpdater;
+        }
+
         public abstract string PropertyValueType { get; }
+
+        protected IPropertyValueUpdater PropertyValueUpdater { get; }
 
         public abstract Property Parse(JsonElement propertyJson);
 

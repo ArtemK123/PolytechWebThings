@@ -1,13 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Exceptions;
+using Domain.Updaters;
 
 namespace Domain.Entities.WebThingsGateway.Properties
 {
     public record BooleanProperty : Property
     {
-        public BooleanProperty(string name, bool visible, string title, string propertyType, IReadOnlyCollection<Link> links, bool readOnly, bool defaultValue)
-            : base(name, visible, title, propertyType, links, readOnly)
+        public BooleanProperty(
+            string name,
+            bool visible,
+            string title,
+            string propertyType,
+            IReadOnlyCollection<Link> links,
+            bool readOnly,
+            IPropertyValueUpdater propertyValueUpdater,
+            bool defaultValue)
+            : base(name, visible, title, propertyType, links, readOnly, propertyValueUpdater)
         {
             DefaultValue = defaultValue;
         }
