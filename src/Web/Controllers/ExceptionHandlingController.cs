@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
@@ -59,7 +60,8 @@ namespace Web.Controllers
             Type exceptionType = exception.GetType();
             string exceptionLogMessage = $"{exceptionType.Name}: {exception.Message}";
 
-            if (ExceptionHandlersMapping.TryGetValue(exceptionType, out Func<Exception, OperationResult>? handler))
+            Func<Exception, OperationResult>? handler = GetExceptionHandler(exceptionType);
+            if (handler is not null)
             {
                 logger.LogInformation($"{exceptionLogMessage} - Exception is handled by an exception handler");
                 return new OkObjectResult(handler(exception));
@@ -67,6 +69,15 @@ namespace Web.Controllers
 
             logger.LogError($"{exceptionLogMessage} - Exception handler is not found" + Environment.NewLine + exception.StackTrace);
             return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+        }
+
+        private Func<Exception, OperationResult>? GetExceptionHandler(Type exceptionType)
+        {
+            // anonymous class is used in order to have null as default (keyValue has another value)
+            return ExceptionHandlersMapping
+                .Select(typeHandlerPair => new { Type = typeHandlerPair.Key, Handler = typeHandlerPair.Value })
+                .FirstOrDefault(typeAndHandler => typeAndHandler.Type.IsAssignableFrom(exceptionType))
+                ?.Handler;
         }
     }
 }

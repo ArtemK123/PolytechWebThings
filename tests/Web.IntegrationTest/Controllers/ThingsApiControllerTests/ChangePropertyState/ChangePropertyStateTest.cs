@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain.Entities.WebThingsGateway;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Moq.Protected;
@@ -102,7 +103,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
             string invalidNewValue = "invalid";
             OperationResult result = await thingsApiClient.ChangePropertyStateAsync(CreateRequest() with { NewPropertyValue = invalidNewValue });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Message about invalid property value. Replace with actual message", result.Message);
+            Assert.AreEqual($"Can not parse value {invalidNewValue} to type {GatewayValueType.Boolean}", result.Message);
         }
 
         [Test]
