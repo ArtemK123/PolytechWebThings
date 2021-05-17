@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
 using Web.IntegrationTest.Utils.ApiClients;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.User.Request;
