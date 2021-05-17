@@ -10,7 +10,7 @@
     </div>
     <!-- ko ifnot: isCollapsed -->
     <div data-bind="foreach: properties">
-        <thing-property-card params="{ model: $data }"></thing-property-card>
+        <thing-property-card params="{ model: $data, thingId: $parent.model.id, workspaceId: $parent.params.workspaceId }"></thing-property-card>
     </div>
     <!-- /ko -->
 </div>

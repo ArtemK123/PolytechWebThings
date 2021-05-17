@@ -2,4 +2,6 @@
 
 export interface IThingPropertyCardParams {
     model: IPropertyApiModel;
+    thingId: string;
+    workspaceId: number;
 }

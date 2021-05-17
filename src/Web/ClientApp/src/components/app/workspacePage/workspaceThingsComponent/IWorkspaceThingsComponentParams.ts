@@ -3,4 +3,5 @@ import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiM
 
 export interface IWorkspaceThingsComponentParams {
     things: ko.ObservableArray<IThingApiModel>;
+    workspaceId: number;
 }

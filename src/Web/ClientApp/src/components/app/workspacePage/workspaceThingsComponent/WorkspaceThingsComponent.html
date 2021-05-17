@@ -1,6 +1,6 @@
 <div>
     <h3>Things in the workspace:</h3>
     <div data-bind="foreach: things">
-        <thing-card params="{ model: $data }"></thing-card>
+        <thing-card params="{ model: $data, workspaceId: $parent.params.workspaceId }"></thing-card>
     </div>
 </div>

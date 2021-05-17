@@ -5,8 +5,10 @@ import { IViewModel } from "src/componentsRegistration/IViewModel";
 
 export class WorkspaceThingsComponentViewModel implements IViewModel {
     public readonly things: ko.ObservableArray<IThingApiModel>;
+    public readonly params: IWorkspaceThingsComponentParams;
 
     constructor(params: IWorkspaceThingsComponentParams) {
+        this.params = params;
         this.things = params.things;
     }
 }

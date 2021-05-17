@@ -1,13 +1,19 @@
 import * as ko from "knockout";
-import { IViewModel } from "src/componentsRegistration/IViewModel";
-import { IThingPropertyCardParams } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/IThingPropertyCardParams";
-import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+import {IViewModel} from "src/componentsRegistration/IViewModel";
+import {IThingPropertyCardParams} from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/IThingPropertyCardParams";
+import {IPropertyApiModel} from "src/backendApi/models/response/things/IPropertyApiModel";
+import {ThingsApiClient} from "src/backendApi/clients/ThingsApiClient";
+import {IChangePropertyStateRequest} from "src/backendApi/models/request/things/IChangePropertyStateRequest";
+import {OperationStatus} from "src/backendApi/models/response/OperationResult/OperationStatus";
 
 export class ThingPropertyCardViewModel implements IViewModel {
     public readonly inputValue: ko.Observable<string> = ko.observable("");
     private readonly model: IPropertyApiModel;
+    private readonly thingsApiClient: ThingsApiClient = new ThingsApiClient();
+    private readonly params: IThingPropertyCardParams;
 
     constructor(params: IThingPropertyCardParams) {
+        this.params = params;
         this.model = params.model;
         this.inputValue(this.model.defaultValue);
     }
@@ -20,6 +26,17 @@ export class ThingPropertyCardViewModel implements IViewModel {
     }
 
     private handleValueUpdate(): void {
-        console.log(`New value ${this.inputValue()} was sent to backend`);
+        const requestModel: IChangePropertyStateRequest = {
+            workspaceId: this.params.workspaceId,
+            thingId: this.params.thingId,
+            propertyName: this.model.name,
+            newPropertyValue: this.inputValue(),
+        } as IChangePropertyStateRequest;
+        this.thingsApiClient.changePropertyState(requestModel)
+            .then((operationResult) => {
+                if (operationResult.status === OperationStatus.Success) {
+                    alert("Updated property successfully");
+                }
+            });
     }
 }

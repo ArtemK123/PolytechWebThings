@@ -9,7 +9,8 @@ export class BackendRequestSender extends BackendRequestDirectSender {
     public async send<TData>(url: RequestInfo, config?: RequestInit): Promise<IOperationResult<TData>> {
         const response = await fetch(url, config);
         if (!response.ok) {
-            throw new Error("Add appropriate handling here.");
+            alert("Internal server error");
+            throw new Error(`Internal error - ${response.statusText}`);
         }
         return response.json();
     }

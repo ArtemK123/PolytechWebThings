@@ -17,13 +17,11 @@ namespace Application.Commands.ChangePropertyState
     {
         private readonly ISender mediator;
         private readonly IThingsProvider thingsProvider;
-        private readonly IPropertyValueUpdater propertyValueUpdater;
 
-        public ChangePropertyStateHandler(ISender mediator, IThingsProvider thingsProvider, IPropertyValueUpdater propertyValueUpdater)
+        public ChangePropertyStateHandler(ISender mediator, IThingsProvider thingsProvider)
         {
             this.mediator = mediator;
             this.thingsProvider = thingsProvider;
-            this.propertyValueUpdater = propertyValueUpdater;
         }
 
         public async Task<Unit> Handle(ChangePropertyStateCommand request, CancellationToken cancellationToken)

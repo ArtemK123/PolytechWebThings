@@ -2,4 +2,5 @@
 
 export interface IThingCardParams {
     model: IThingApiModel;
+    workspaceId: number;
 }

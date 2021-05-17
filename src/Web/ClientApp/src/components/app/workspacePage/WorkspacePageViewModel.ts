@@ -13,7 +13,7 @@ import { IOperationResult } from "src/backendApi/models/response/OperationResult
 import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class WorkspacePageViewModel implements IViewModel {
-    public readonly id: ko.Observable<number> = ko.observable(-1);
+    public readonly id: number;
     public readonly workspaceName: ko.Observable<string> = ko.observable("");
     public readonly things: ko.ObservableArray<IThingApiModel> = ko.observableArray([]);
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
@@ -23,14 +23,14 @@ export class WorkspacePageViewModel implements IViewModel {
     private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
     public readonly routes: IRoute[] = [
-        RouteGenerator.generate(/\/things/, () => "<workspace-things-component params=\"{ things: $parent.things }\"></workspace-things-component>"),
+        RouteGenerator.generate(/\/things/, () => "<workspace-things-component params=\"{ things: $parent.things, workspaceId: $parent.id }\"></workspace-things-component>"),
         RouteGenerator.generate(/\/rules/, () => "<workspace-rules-component></workspace-rules-component>"),
         RouteGenerator.generate(/\//, () => ""),
     ];
 
     constructor(params: IWorkspacePageParams) {
-        this.id(params.id);
-        this.workspaceApiClient.getWorkspaceWithThingsRequest({ workspaceId: this.id() } as IGetWorkspaceWithThingsRequest)
+        this.id = params.id;
+        this.workspaceApiClient.getWorkspaceWithThingsRequest({ workspaceId: this.id } as IGetWorkspaceWithThingsRequest)
             .then((response: IOperationResult<IGetWorkspaceWithThingsResponse>) => {
                 if (response.status !== OperationStatus.Success) {
                     RedirectHandler.redirect("/");
@@ -42,7 +42,7 @@ export class WorkspacePageViewModel implements IViewModel {
     }
 
     public generateMenuHref(menuItem: string) {
-        return `/workspaces/${this.id()}/${menuItem}`;
+        return `/workspaces/${this.id}/${menuItem}`;
     }
 
     public generateRuleElement(rule: IRuleModel) {

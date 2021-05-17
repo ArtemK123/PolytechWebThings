@@ -116,7 +116,7 @@ namespace Web.Controllers
         private static WorkspaceApiModel ConvertApiModel(IWorkspace workspace)
             => new WorkspaceApiModel(id: workspace.Id, name: workspace.Name, accessToken: workspace.AccessToken, gatewayUrl: workspace.GatewayUrl);
 
-        private ThingApiModel Convert(Thing thing) => new ThingApiModel { Title = thing.Title, Properties = thing.Properties.Select(Convert).ToArray() };
+        private ThingApiModel Convert(Thing thing) => new ThingApiModel { Id = thing.Id, Title = thing.Title, Properties = thing.Properties.Select(Convert).ToArray() };
 
         private PropertyApiModel Convert(Property property)
         {

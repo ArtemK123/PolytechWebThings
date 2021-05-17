@@ -5,6 +5,10 @@ namespace Domain.Updaters
 {
     public interface IPropertyValueUpdater
     {
-        Task UpdateAsync<TValueType>(Property property, TValueType? newValue);
+        Task UpdateAsync(Property property, bool newValue);
+
+        Task UpdateAsync(Property property, string newValue);
+
+        Task UpdateAsync(Property property, int newValue);
     }
 }
