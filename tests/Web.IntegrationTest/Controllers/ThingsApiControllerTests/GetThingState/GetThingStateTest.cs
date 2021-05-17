@@ -13,6 +13,7 @@ using Web.Controllers;
 using Web.IntegrationTest.Utils.ApiClients;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
+using Web.Models.Things;
 using Web.Models.Things.Request;
 using Web.Models.User.Request;
 using Web.Models.Workspace.Request;
@@ -32,6 +33,8 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
         private const string ThingTitle = "Virtual On/Off Color Light";
         private const string PropertyName = "on";
         private const string CorrectNewValue = "true";
+        private const string ThingsInputPath = "Controllers/ThingsApiControllerTests/GetThingState/thing.json";
+        private const string PropertyStateInputPath = "Controllers/ThingsApiControllerTests/GetThingState/propertyState.json";
 
         private UserApiClient userApiClient;
         private WorkspaceApiClient workspaceApiClient;
@@ -65,15 +68,40 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
         }
 
         [Test]
+        public async Task GetThingState_InvalidModel_ShouldReturnErrorMessage()
+        {
+            GetThingStateRequest emptyRequestModel = new GetThingStateRequest();
+            OperationResult result = await thingsApiClient.GetThingStateAsync(emptyRequestModel);
+            Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual("Replace with actual text", result.Message);
+        }
+
+        [Test]
         public async Task GetThingState_ThingIsNotFound_ShouldReturnErrorMessage()
         {
-            throw new NotImplementedException();
+            string nonExistingThing = "non-existing-thing-id";
+            string thingInput = await ReadInputAsync(ThingsInputPath);
+            MockGatewayThingsEndpoint(thingInput);
+            OperationResult result = await thingsApiClient.GetThingStateAsync(CreateRequest() with { ThingId = nonExistingThing });
+            Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual("Replace with actual text", result.Message);
         }
 
         [Test]
         public async Task GetThingState_Success_ShouldReturnThingState()
         {
-            throw new NotImplementedException();
+            string thingInput = await ReadInputAsync(ThingsInputPath);
+            string propertyInput = "{ \"color\": \"#ff00aa\", \"colorTemperature\": 4000, \"colorMode\": \"temperature\", \"level\": 70, \"on\": true }";
+            MockGatewayThingsEndpoint(thingInput);
+            MockGatewayThingPropertiesEndpoint(propertyInput);
+            OperationResult<ThingStateApiModel> result = await thingsApiClient.GetThingStateAsync(CreateRequest());
+            Assert.AreEqual(OperationStatus.Success, result.Status);
+            Assert.AreEqual(result.Data.ThingId, ThingId);
+            Assert.AreEqual(result.Data.PropertyStates["color"], "#ff00aa");
+            Assert.AreEqual(result.Data.PropertyStates["colorTemperature"], "4000");
+            Assert.AreEqual(result.Data.PropertyStates["colorMode"], "temperature");
+            Assert.AreEqual(result.Data.PropertyStates["level"], "70");
+            Assert.AreEqual(result.Data.PropertyStates["on"], "true");
         }
 
         protected override void SetupMocks(IServiceCollection services)
@@ -87,6 +115,13 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
         {
             SetupHttpMessageHandlerMock(
                 request => CheckHttpRequestMessage(request, GatewayUrl + "/things", HttpMethod.Get),
+                new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(returnedContent) });
+        }
+
+        private void MockGatewayThingPropertiesEndpoint(string returnedContent)
+        {
+            SetupHttpMessageHandlerMock(
+                request => CheckHttpRequestMessage(request, ThingId + "/properties", HttpMethod.Get),
                 new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(returnedContent) });
         }
 
@@ -119,9 +154,9 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
             services.AddTransient(_ => httpClientFactoryMock.Object);
         }
 
-        private async Task<string> GetSerializedThingsAsync()
+        private async Task<string> ReadInputAsync(string pathFromProjRoot)
         {
-            string resourcesFolder = Path.GetFullPath("Controllers/ThingsApiControllerTests/ChangePropertyState/things.json");
+            string resourcesFolder = Path.GetFullPath(pathFromProjRoot);
             return await File.ReadAllTextAsync(resourcesFolder);
         }
 
