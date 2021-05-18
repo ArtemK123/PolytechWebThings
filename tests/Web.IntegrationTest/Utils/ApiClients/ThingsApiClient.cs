@@ -5,6 +5,8 @@ using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
 using Web.Models.Things;
 using Web.Models.Things.Request;
+using Web.Models.Things.Response;
+using Web.Models.Workspace.Response;
 
 namespace Web.IntegrationTest.Utils.ApiClients
 {
@@ -36,6 +38,15 @@ namespace Web.IntegrationTest.Utils.ApiClients
                 Content = JsonContent.Create(request)
             });
             return await httpResponseMessageParser.ParseResponseAsync<OperationResult<ThingStateApiModel>>(response);
+        }
+
+        public async Task<OperationResult<GetWorkspaceWithThingsResponse>> GetWorkspaceWithThingsAsync(GetWorkspaceWithThingsRequest requestModel)
+        {
+            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiBaseUrl}GetWorkspaceWithThings")
+            {
+                Content = JsonContent.Create(requestModel)
+            });
+            return await httpResponseMessageParser.ParseResponseAsync<OperationResult<GetWorkspaceWithThingsResponse>>(response);
         }
     }
 }

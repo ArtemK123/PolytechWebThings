@@ -94,20 +94,6 @@ namespace Web.Controllers
             return new OperationResult(OperationStatus.Success);
         }
 
-        [HttpPost]
-        [Authorize]
-        public async Task<OperationResult<GetWorkspaceWithThingsResponse>> GetWorkspaceWithThings([FromBody] GetWorkspaceWithThingsRequest request, CancellationToken cancellationToken)
-        {
-            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            WorkspaceWithThingsModel result
-                = await mediator.Send(new GetWorkspaceWithThingsQuery(workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId), userEmail), cancellationToken);
-            WorkspaceApiModel convertedWorkspaceModel = ConvertApiModel(result.Workspace);
-            IReadOnlyCollection<ThingApiModel> convertedThingModels = result.Things.Select(Convert).ToArray();
-            return new OperationResult<GetWorkspaceWithThingsResponse>(
-                OperationStatus.Success,
-                new GetWorkspaceWithThingsResponse { Workspace = convertedWorkspaceModel, Things = convertedThingModels });
-        }
-
         private static OperationResult<WorkspaceApiModel> ConvertToOperationResult(IWorkspace workspace)
             => new OperationResult<WorkspaceApiModel>(
                 OperationStatus.Success,
@@ -115,59 +101,5 @@ namespace Web.Controllers
 
         private static WorkspaceApiModel ConvertApiModel(IWorkspace workspace)
             => new WorkspaceApiModel(id: workspace.Id, name: workspace.Name, accessToken: workspace.AccessToken, gatewayUrl: workspace.GatewayUrl);
-
-        private ThingApiModel Convert(Thing thing) => new ThingApiModel { Id = thing.Id, Title = thing.Title, Properties = thing.Properties.Select(Convert).ToArray() };
-
-        private PropertyApiModel Convert(Property property)
-        {
-            var propertyApiModel = new PropertyApiModel
-            {
-                Name = property.Name,
-                Visible = property.Visible,
-                Title = property.Title,
-                ValueType = property.ValueType,
-                PropertyType = property.PropertyType,
-                Links = property.Links.Select(Convert).ToArray(),
-                ReadOnly = property.ReadOnly
-            };
-
-            if (property.ValueType == GatewayValueType.Boolean)
-            {
-                BooleanProperty convertedProperty = (BooleanProperty)property;
-                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue.ToString().ToLower() };
-            }
-
-            if (property.ValueType == GatewayValueType.Number)
-            {
-                NumberProperty convertedProperty = (NumberProperty)property;
-                return propertyApiModel with
-                {
-                    DefaultValue = convertedProperty.DefaultValue.ToString(),
-                    Unit = convertedProperty.Unit,
-                    Minimum = convertedProperty.Minimum,
-                    Maximum = convertedProperty.Maximum
-                };
-            }
-
-            if (property.ValueType == GatewayValueType.String)
-            {
-                StringProperty convertedProperty = (StringProperty)property;
-                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue };
-            }
-
-            if (property.ValueType == GatewayValueType.Enum)
-            {
-                EnumProperty convertedProperty = (EnumProperty)property;
-                return propertyApiModel with { DefaultValue = convertedProperty.DefaultValue, AllowedValues = convertedProperty.AllowedValues };
-            }
-
-            throw new NotSupportedException("Unsupported property type");
-        }
-
-        private LinkApiModel Convert(Link link) => new LinkApiModel
-        {
-            Rel = link.Rel,
-            Href = link.Href
-        };
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Web.Models.Things;
+using Web.Models.Workspace.Response;
 
-namespace Web.Models.Workspace.Response
+namespace Web.Models.Things.Response
 {
     public record GetWorkspaceWithThingsResponse
     {

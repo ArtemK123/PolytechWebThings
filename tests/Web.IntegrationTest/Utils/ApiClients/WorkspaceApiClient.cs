@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
+using Web.Models.Things.Request;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 
@@ -61,15 +62,6 @@ namespace Web.IntegrationTest.Utils.ApiClients
                 Content = JsonContent.Create(requestModel)
             });
             return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
-        }
-
-        public async Task<OperationResult<GetWorkspaceWithThingsResponse>> GetWorkspaceWithThingsAsync(GetWorkspaceWithThingsRequest requestModel)
-        {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}GetWorkspaceWithThings")
-            {
-                Content = JsonContent.Create(requestModel)
-            });
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult<GetWorkspaceWithThingsResponse>>(response);
         }
     }
 }

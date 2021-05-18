@@ -1,4 +1,4 @@
-﻿namespace Web.Models.Workspace.Request
+﻿namespace Web.Models.Things.Request
 {
     public record GetWorkspaceWithThingsRequest
     {

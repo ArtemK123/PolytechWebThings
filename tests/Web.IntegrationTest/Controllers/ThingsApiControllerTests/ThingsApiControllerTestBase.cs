@@ -17,11 +17,20 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests
             ThingsApiClient = new ThingsApiClient(HttpClient, new HttpResponseMessageParser());
         }
 
-        protected void MockGatewayThingsEndpoint(string returnedContent)
+        protected void MockGatewayThingsEndpoint(HttpStatusCode statusCode = HttpStatusCode.OK, string returnedContent = null)
         {
-            SetupHttpMessageHandlerMock(
-                request => CheckHttpRequestMessage(request, GatewayUrl + "/things", HttpMethod.Get),
-                new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(returnedContent) });
+            HttpResponseMessage response = new HttpResponseMessage { StatusCode = statusCode };
+
+            if (returnedContent is not null)
+            {
+                response.Content = new StringContent(returnedContent);
+            }
+
+            SetupHttpMessageHandlerMock(IsGatewayThingsEndpointRequest, response);
         }
+
+        protected void MockGatewayThingsEndpoint(string returnedContent) => MockGatewayThingsEndpoint(HttpStatusCode.OK, returnedContent);
+
+        protected bool IsGatewayThingsEndpointRequest(HttpRequestMessage httpRequestMessage) => CheckHttpRequestMessage(httpRequestMessage, GatewayUrl + "/things", HttpMethod.Get);
     }
 }
