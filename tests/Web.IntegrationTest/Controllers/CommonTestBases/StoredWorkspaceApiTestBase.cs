@@ -22,7 +22,7 @@ namespace Web.IntegrationTest.Controllers.CommonTestBases
         protected int WorkspaceId { get; private set; }
 
         [SetUp]
-        public async Task WorkspaceApiControllerWithStoredWorkspaceTestBaseSetUp()
+        public async Task StoredWorkspaceApiTestBaseSetUp()
         {
             WorkspaceApiClient = new WorkspaceApiClient(HttpClient, new HttpResponseMessageParser());
             MockGatewayPingEndpoint();
@@ -38,7 +38,7 @@ namespace Web.IntegrationTest.Controllers.CommonTestBases
                 new HttpResponseMessage(responseStatus));
         }
 
-        private bool CheckHttpRequestMessage(HttpRequestMessage request, string url, HttpMethod method)
+        protected bool CheckHttpRequestMessage(HttpRequestMessage request, string url, HttpMethod method)
             => request.RequestUri?.AbsoluteUri == url
                && request.Method == method
                && request.Headers.Authorization?.Scheme == "Bearer"

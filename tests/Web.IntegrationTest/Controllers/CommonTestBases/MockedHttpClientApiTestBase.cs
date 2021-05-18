@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +33,12 @@ namespace Web.IntegrationTest.Controllers.CommonTestBases
             HttpMessageHandlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(message => matchRequestFunc(message)), ItExpr.IsAny<CancellationToken>())
                 .ThrowsAsync(exception);
+        }
+
+        protected async Task<string> ReadContentFromDiskAsync(string pathFromProjRoot)
+        {
+            string resourcesFolder = Path.GetFullPath(pathFromProjRoot);
+            return await File.ReadAllTextAsync(resourcesFolder);
         }
 
         private void MockHttpClientFactory(IServiceCollection services)
