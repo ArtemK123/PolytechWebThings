@@ -27,7 +27,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Providers
         {
             try
             {
-                HttpResponseMessage response = await gatewayMessageSender.SendGetThingsRequestAsync(workspace.GatewayUrl, workspace.AccessToken);
+                HttpResponseMessage response = await gatewayMessageSender.GetThingsAsync(workspace.GatewayUrl, workspace.AccessToken);
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     throw new BrokenGatewayCommunicationException(

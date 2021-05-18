@@ -18,7 +18,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Checkers
         {
             try
             {
-                HttpResponseMessage response = await gatewayMessageSender.SendPingRequestAsync(gatewayBaseUrl: gatewayUrl, accessToken: accessToken);
+                HttpResponseMessage response = await gatewayMessageSender.PingAsync(gatewayBaseUrl: gatewayUrl, accessToken: accessToken);
                 return response.IsSuccessStatusCode;
             }
             catch (HttpRequestException)
