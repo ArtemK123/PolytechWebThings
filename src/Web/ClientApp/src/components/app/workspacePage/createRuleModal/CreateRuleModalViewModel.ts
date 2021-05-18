@@ -24,12 +24,12 @@ export class CreateRuleModalViewModel implements IViewModel {
     }
 
     public addRule(): void {
-        const newRule: IRuleModel = {
-            name: this.ruleName(),
-            steps: this.steps(),
-        } as IRuleModel;
-        this.rules.push(newRule);
-        this.isVisible(false);
+        // const newRule: IRuleModel = {
+        //     name: this.ruleName(),
+        //     steps: this.steps(),
+        // } as IRuleModel;
+        // this.rules.push(newRule);
+        // this.isVisible(false);
         this.resetField();
     }
 
