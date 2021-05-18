@@ -16,25 +16,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.OperationResults;
 using Web.Models.User.Request;
-using Web.Providers;
 
 namespace Web.Controllers
 {
-    public class UserApiController : ControllerBase
+    public class UserApiController : ApiControllerBase
     {
-        private readonly ISender mediator;
-        private readonly IUserEmailProvider userEmailProvider;
-
-        public UserApiController(ISender mediator, IUserEmailProvider userEmailProvider)
+        public UserApiController(ISender mediator)
+            : base(mediator)
         {
-            this.mediator = mediator;
-            this.userEmailProvider = userEmailProvider;
         }
 
         [HttpPost]
         public async Task<OperationResult> Create([FromBody]CreateUserRequest createUserRequest, CancellationToken cancellationToken)
         {
-            await mediator.Send(
+            await Mediator.Send(
                 new CreateUserCommand(
                     email: createUserRequest.Email ?? throw new NullReferenceException(),
                     password: createUserRequest.Password ?? throw new NullReferenceException(),
@@ -46,13 +41,13 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<OperationResult> Login([FromBody]LoginUserRequest loginUserRequest, CancellationToken cancellationToken)
         {
-            await mediator.Send(
+            await Mediator.Send(
                 new LoginUserCommand(
                     email: loginUserRequest.Email ?? throw new NullReferenceException(),
                     password: loginUserRequest.Password ?? throw new NullReferenceException()),
                 cancellationToken);
 
-            IUser user = await mediator.Send(new GetUserByEmailQuery(email: loginUserRequest.Email));
+            IUser user = await Mediator.Send(new GetUserByEmailQuery(email: loginUserRequest.Email));
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 CreateUserPrincipal(user),
@@ -68,8 +63,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult> Logout(CancellationToken cancellationToken)
         {
-            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(new LogoutUserCommand { Email = userEmail }, cancellationToken);
+            await Mediator.Send(new LogoutUserCommand { Email = UserEmail }, cancellationToken);
             await HttpContext.SignOutAsync();
             return new OperationResult(OperationStatus.Success);
         }

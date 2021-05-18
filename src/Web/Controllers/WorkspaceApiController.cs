@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,43 +8,33 @@ using Application.Commands.UpdateWorkspace;
 using Application.Converters;
 using Application.Queries.GetUserWorkspaces;
 using Application.Queries.GetWorkspaceById;
-using Application.Queries.GetWorkspaceWithThings;
-using Domain.Entities.WebThingsGateway;
-using Domain.Entities.WebThingsGateway.Properties;
-using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.OperationResults;
-using Web.Models.Things;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
-using Web.Providers;
 
 namespace Web.Controllers
 {
-    public class WorkspaceApiController : ControllerBase
+    public class WorkspaceApiController : ApiControllerBase
     {
-        private readonly ISender mediator;
-        private readonly IUserEmailProvider userEmailProvider;
-
-        public WorkspaceApiController(ISender mediator, IUserEmailProvider userEmailProvider)
+        public WorkspaceApiController(ISender mediator)
+            : base(mediator)
         {
-            this.mediator = mediator;
-            this.userEmailProvider = userEmailProvider;
         }
 
         [HttpPost]
         [Authorize]
         public async Task<OperationResult> Create([FromBody] CreateWorkspaceRequest request, CancellationToken cancellationToken)
         {
-            await mediator.Send(
+            await Mediator.Send(
                 new CreateWorkspaceCommand(
                     name: NullableConverter.GetOrThrow(request.Name),
                     gatewayUrl: NullableConverter.GetOrThrow(request.GatewayUrl),
                     accessToken: NullableConverter.GetOrThrow(request.AccessToken),
-                    userEmail: userEmailProvider.GetUserEmail(HttpContext)),
+                    userEmail: UserEmail),
                 cancellationToken);
             return new OperationResult(OperationStatus.Success);
         }
@@ -54,8 +43,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult<GetUserWorkspacesResponse>> GetUserWorkspaces(CancellationToken cancellationToken)
         {
-            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            IReadOnlyCollection<IWorkspace> workspaces = await mediator.Send(new GetUserWorkspacesQuery(userEmail: userEmail), cancellationToken);
+            IReadOnlyCollection<IWorkspace> workspaces = await Mediator.Send(new GetUserWorkspacesQuery(userEmail: UserEmail), cancellationToken);
             IReadOnlyCollection<WorkspaceApiModel> convertedWorkspaces = workspaces.Select(ConvertApiModel).ToArray();
             return new OperationResult<GetUserWorkspacesResponse>(OperationStatus.Success, new GetUserWorkspacesResponse(convertedWorkspaces));
         }
@@ -64,8 +52,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult<WorkspaceApiModel>> GetById([FromBody]GetWorkspaceByIdRequest request, CancellationToken cancellationToken)
         {
-            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.Id!.Value, userEmail), cancellationToken);
+            IWorkspace workspace = await Mediator.Send(new GetWorkspaceByIdQuery(request.Id!.Value, UserEmail), cancellationToken);
             return ConvertToOperationResult(workspace);
         }
 
@@ -73,14 +60,13 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult> Update([FromBody]UpdateWorkspaceRequest request, CancellationToken cancellationToken)
         {
-            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(
+            await Mediator.Send(
                 new UpdateWorkspaceCommand(
                     workspaceId: NullableConverter.GetOrThrow(request.Id),
                     name: NullableConverter.GetOrThrow(request.Name),
                     gatewayUrl: NullableConverter.GetOrThrow(request.GatewayUrl),
                     accessToken: NullableConverter.GetOrThrow(request.AccessToken),
-                    userEmail),
+                    UserEmail),
                 cancellationToken);
             return new OperationResult(OperationStatus.Success);
         }
@@ -89,8 +75,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult> Delete([FromBody]DeleteWorkspaceRequest request, CancellationToken cancellationToken)
         {
-            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
-            await mediator.Send(new DeleteWorkspaceCommand(workspaceId: NullableConverter.GetOrThrow(request.Id), userEmail: userEmail), cancellationToken);
+            await Mediator.Send(new DeleteWorkspaceCommand(workspaceId: NullableConverter.GetOrThrow(request.Id), userEmail: UserEmail), cancellationToken);
             return new OperationResult(OperationStatus.Success);
         }
 

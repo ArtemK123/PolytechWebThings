@@ -18,34 +18,28 @@ using Web.Models.OperationResults;
 using Web.Models.Things;
 using Web.Models.Things.Request;
 using Web.Models.Things.Response;
-using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
-using Web.Providers;
 
 namespace Web.Controllers
 {
-    public class ThingsApiController : ControllerBase
+    public class ThingsApiController : ApiControllerBase
     {
-        private readonly ISender mediator;
-        private readonly IUserEmailProvider userEmailProvider;
-
-        public ThingsApiController(ISender mediator, IUserEmailProvider userEmailProvider)
+        public ThingsApiController(ISender mediator)
+            : base(mediator)
         {
-            this.mediator = mediator;
-            this.userEmailProvider = userEmailProvider;
         }
 
         [HttpPost]
         [Authorize]
         public async Task<OperationResult> ChangePropertyState([FromBody] ChangePropertyStateRequest request, CancellationToken cancellationToken)
         {
-            await mediator.Send(
+            await Mediator.Send(
                 new ChangePropertyStateCommand(
                     workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId),
                     thingId: NullableConverter.GetOrThrow(request.ThingId),
                     propertyName: NullableConverter.GetOrThrow(request.PropertyName),
                     newPropertyValue: request.NewPropertyValue,
-                    userEmail: userEmailProvider.GetUserEmail(HttpContext)),
+                    userEmail: UserEmail),
                 cancellationToken);
 
             return new OperationResult(OperationStatus.Success);
@@ -55,11 +49,11 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult<ThingStateApiModel>> GetThingState([FromBody] GetThingStateRequest request, CancellationToken cancellationToken)
         {
-            ThingState thingState = await mediator.Send(
+            ThingState thingState = await Mediator.Send(
                 new GetThingStateQuery(
                     thingId: NullableConverter.GetOrThrow(request.ThingId),
                     workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId),
-                    userEmail: userEmailProvider.GetUserEmail(HttpContext)),
+                    userEmail: UserEmail),
                 cancellationToken);
 
             return new OperationResult<ThingStateApiModel>(
@@ -75,9 +69,8 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult<GetWorkspaceWithThingsResponse>> GetWorkspaceWithThings([FromBody] GetWorkspaceWithThingsRequest request, CancellationToken cancellationToken)
         {
-            string userEmail = userEmailProvider.GetUserEmail(HttpContext);
             WorkspaceWithThingsModel result
-                = await mediator.Send(new GetWorkspaceWithThingsQuery(workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId), userEmail), cancellationToken);
+                = await Mediator.Send(new GetWorkspaceWithThingsQuery(workspaceId: NullableConverter.GetOrThrow(request.WorkspaceId), UserEmail), cancellationToken);
             WorkspaceApiModel convertedWorkspaceModel = ConvertApiModel(result.Workspace);
             IReadOnlyCollection<ThingApiModel> convertedThingModels = result.Things.Select(Convert).ToArray();
             return new OperationResult<GetWorkspaceWithThingsResponse>(
