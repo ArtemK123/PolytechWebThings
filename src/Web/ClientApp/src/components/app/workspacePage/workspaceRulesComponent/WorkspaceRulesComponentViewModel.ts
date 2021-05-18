@@ -5,6 +5,7 @@ import { IOperationResult } from "src/backendApi/models/entities/OperationResult
 import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 import { IGetRulesResponse } from "src/components/app/workspacePage/models/IGetRulesResponse";
 import { IStepModel } from "src/components/app/workspacePage/models/IStepModel";
+import { RedirectHandler } from "src/services/RedirectHandler";
 
 export class WorkspaceRulesComponentViewModel implements IViewModel {
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
@@ -18,6 +19,10 @@ export class WorkspaceRulesComponentViewModel implements IViewModel {
                 }
                 this.isLoading(false);
             });
+    }
+
+    public createRule(): void {
+        RedirectHandler.redirect(`${window.location.pathname}/create`);
     }
 
     private getHardcodedRules(): Promise<IOperationResult<IGetRulesResponse>> {

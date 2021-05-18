@@ -22,6 +22,7 @@ import { ThingPropertyCardComponent } from "src/components/app/workspacePage/wor
 import { RuleCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/RuleCardComponent";
 import {RuleStepCardComponent} from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/RuleStepCardComponent";
 import {CollapseArrowComponent} from "src/components/common/collapseArrow/CollapseArrowComponent";
+import {EditRulePageComponent} from "src/components/app/workspacePage/editRulePage/EditRulePageComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -50,6 +51,7 @@ export class ComponentRegistration {
         ko.components.register("thing-property-card", new ThingPropertyCardComponent().generateDescriptor());
         ko.components.register("rule-card", new RuleCardComponent().generateDescriptor());
         ko.components.register("rule-step-card", new RuleStepCardComponent().generateDescriptor());
+        ko.components.register("edit-rule-page", new EditRulePageComponent().generateDescriptor());
     }
 
     private static registerCommonComponents() {

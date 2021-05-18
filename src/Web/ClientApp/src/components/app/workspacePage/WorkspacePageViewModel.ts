@@ -11,6 +11,7 @@ import { IOperationResult } from "src/backendApi/models/entities/OperationResult
 import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
 import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
 import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/things/IGetWorkspaceWithThingsRequest";
+import { IEditRulePageParams } from "src/components/app/workspacePage/editRulePage/IEditRulePageParams";
 
 export class WorkspacePageViewModel implements IViewModel {
     public readonly id: number;
@@ -20,11 +21,18 @@ export class WorkspacePageViewModel implements IViewModel {
     public readonly isCreateRuleFormOpened: ko.Observable<boolean> = ko.observable(false);
     public readonly rules: ko.ObservableArray<IRuleModel> = ko.observableArray([]);
 
+    private readonly editRulePageParams: IEditRulePageParams = {
+        rule: this.generateEmptyRuleModel(),
+        confirmAction: this.confirmEditRuleAction,
+        cancelAction: this.cancelEditRuleAction,
+    } as IEditRulePageParams;
+
     private readonly thingsApiClient: ThingsApiClient = new ThingsApiClient();
 
     public readonly routes: IRoute[] = [
-        RouteGenerator.generate(/\/things/, () => "<workspace-things-component params=\"{ things: $parent.things, workspaceId: $parent.id }\"></workspace-things-component>"),
-        RouteGenerator.generate(/\/rules/, () => "<workspace-rules-component></workspace-rules-component>"),
+        RouteGenerator.generate(/\/things$/, () => "<workspace-things-component params=\"{ things: $parent.things, workspaceId: $parent.id }\"></workspace-things-component>"),
+        RouteGenerator.generate(/\/rules$/, () => "<workspace-rules-component></workspace-rules-component>"),
+        RouteGenerator.generate(/\/rules\/create$/, () => this.generateEditRulePageTag()),
         RouteGenerator.generate(/\//, () => ""),
     ];
 
@@ -52,5 +60,27 @@ export class WorkspacePageViewModel implements IViewModel {
 
     public createRule(): void {
         this.isCreateRuleFormOpened(true);
+    }
+
+    private generateEditRulePageTag(): string {
+        return `
+            <edit-rule-page
+                params='{ rule: $parent.editRulePageParams.rule, confirmAction: $parent.editRulePageParams.confirmAction, cancelAction: $parent.editRulePageParams.cancelAction }'>
+            </edit-rule-page>`;
+    }
+
+    private confirmEditRuleAction(): void {
+        console.log("editRuleConfirmAction");
+    }
+
+    private cancelEditRuleAction(): void {
+        console.log("editRuleConfirmAction");
+    }
+
+    private generateEmptyRuleModel(): IRuleModel {
+        return {
+            name: "",
+            steps: [],
+        } as IRuleModel;
     }
 }
