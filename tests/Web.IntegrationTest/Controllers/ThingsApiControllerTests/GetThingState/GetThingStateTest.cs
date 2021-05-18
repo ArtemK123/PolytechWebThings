@@ -30,11 +30,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
         private const string UserPassword = "123123";
         private const string UserEmail = "test@gmail.com";
         private const string ThingId = "http://localhost:1214/things/virtual-things-0";
-        private const string ThingTitle = "Virtual On/Off Color Light";
-        private const string PropertyName = "on";
-        private const string CorrectNewValue = "true";
         private const string ThingsInputPath = "Controllers/ThingsApiControllerTests/GetThingState/thing.json";
-        private const string PropertyStateInputPath = "Controllers/ThingsApiControllerTests/GetThingState/propertyState.json";
 
         private UserApiClient userApiClient;
         private WorkspaceApiClient workspaceApiClient;
@@ -70,10 +66,11 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
         [Test]
         public async Task GetThingState_InvalidModel_ShouldReturnErrorMessage()
         {
+            string expectedMessage = "{\"ThingId\":[\"'Thing Id' must not be empty.\"],\"WorkspaceId\":[\"'Workspace Id' must not be empty.\"]}";
             GetThingStateRequest emptyRequestModel = new GetThingStateRequest();
             OperationResult result = await thingsApiClient.GetThingStateAsync(emptyRequestModel);
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace with actual text", result.Message);
+            Assert.AreEqual(expectedMessage, result.Message);
         }
 
         [Test]
@@ -84,7 +81,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.GetThingState
             MockGatewayThingsEndpoint(thingInput);
             OperationResult result = await thingsApiClient.GetThingStateAsync(CreateRequest() with { ThingId = nonExistingThing });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace with actual text", result.Message);
+            Assert.AreEqual($"Can not find thing with id={nonExistingThing}", result.Message);
         }
 
         [Test]

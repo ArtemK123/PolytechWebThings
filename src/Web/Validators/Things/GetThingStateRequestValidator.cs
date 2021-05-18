@@ -4,13 +4,12 @@ using Web.Validators.Workspace;
 
 namespace Web.Validators.Things
 {
-    public class ChangePropertyStateRequestValidator : AbstractValidator<ChangePropertyStateRequest>
+    public class GetThingStateRequestValidator : AbstractValidator<GetThingStateRequest>
     {
-        public ChangePropertyStateRequestValidator()
+        public GetThingStateRequestValidator()
         {
             RuleFor(request => request.ThingId).NotEmpty();
             RuleFor(request => request.WorkspaceId).NotNull().SetValidator(new IdValidator());
-            RuleFor(request => request.PropertyName).NotEmpty();
         }
     }
 }
