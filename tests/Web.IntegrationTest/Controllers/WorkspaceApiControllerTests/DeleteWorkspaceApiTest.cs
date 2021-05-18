@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.IntegrationTest.Controllers.CommonTestBases;
 using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
@@ -8,7 +9,7 @@ using Web.Models.Workspace.Response;
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
-    internal class DeleteWorkspaceApiTest : WorkspaceApiControllerWithStoredWorkspaceTestBase
+    internal class DeleteWorkspaceApiTest : StoredWorkspaceApiTestBase
     {
         [Test]
         public async Task Delete_UnauthorizedUser_ShouldReturnUnauthorizedResponse()

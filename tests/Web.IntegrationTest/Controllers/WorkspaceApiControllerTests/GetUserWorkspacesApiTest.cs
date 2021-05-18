@@ -10,7 +10,7 @@ using Web.Models.Workspace.Response;
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
-    internal class GetUserWorkspacesApiTest : WorkspaceApiControllerTestBase
+    internal class GetUserWorkspacesApiTest : WorkspaceApiControllerWithoutStoredWorkspaceTestBase
     {
         [Test]
         public async Task GetUserWorkspaces_Unauthorized_ShouldReturnUnauthorizedResponse()

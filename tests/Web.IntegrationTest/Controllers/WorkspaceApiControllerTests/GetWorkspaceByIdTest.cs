@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.IntegrationTest.Controllers.CommonTestBases;
 using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
@@ -8,7 +9,7 @@ using Web.Models.Workspace.Response;
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
-    internal class GetWorkspaceByIdTest : WorkspaceApiControllerWithStoredWorkspaceTestBase
+    internal class GetWorkspaceByIdTest : StoredWorkspaceApiTestBase
     {
         [Test]
         public async Task GetById_UnauthorizedUser_ShouldReturnUnauthorizedResponse()
@@ -49,13 +50,10 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
         {
             OperationResult<WorkspaceApiModel> response = await WorkspaceApiClient.GetByIdAsync(new GetWorkspaceByIdRequest { Id = WorkspaceId });
             Assert.AreEqual(OperationStatus.Success, response.Status);
-            Assert.IsTrue(AreSame(StoredWorkspace, WorkspaceId, response.Data));
+            Assert.AreEqual(WorkspaceName, response.Data.Name);
+            Assert.AreEqual(AccessToken, response.Data.AccessToken);
+            Assert.AreEqual(GatewayUrl, response.Data.GatewayUrl);
+            Assert.AreEqual(WorkspaceId, response.Data.Id);
         }
-
-        private bool AreSame(CreateWorkspaceRequest request, int id, WorkspaceApiModel apiModel)
-            => request.Name == apiModel.Name
-               && request.AccessToken == apiModel.AccessToken
-               && request.GatewayUrl == apiModel.GatewayUrl
-               && id == apiModel.Id;
     }
 }

@@ -7,7 +7,7 @@ using Web.Models.Workspace.Request;
 namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
 {
     [TestFixture(TestOf = typeof(WorkspaceApiController))]
-    internal class CreateWorkspaceApiTest : WorkspaceApiControllerTestBase
+    internal class CreateWorkspaceApiTest : WorkspaceApiControllerWithoutStoredWorkspaceTestBase
     {
         [Test]
         public async Task Create_InvalidModel_ShouldReturnBadRequestResponse()
