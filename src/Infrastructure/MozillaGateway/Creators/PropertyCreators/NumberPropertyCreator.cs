@@ -4,18 +4,18 @@ using Domain.Entities.WebThingsGateway.Things;
 using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
-namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
+namespace PolytechWebThings.Infrastructure.MozillaGateway.Creators.PropertyCreators
 {
-    internal class NumberPropertyParser : PropertyParserBase
+    internal class NumberPropertyCreator : PropertyCreatorBase
     {
-        public NumberPropertyParser(IPropertyValueUpdater propertyValueUpdater)
+        public NumberPropertyCreator(IPropertyValueUpdater propertyValueUpdater)
             : base(propertyValueUpdater)
         {
         }
 
         public override string PropertyValueType => "number";
 
-        public override Property Parse(JsonElement propertyJson, Thing thing)
+        public override Property Create(JsonElement propertyJson, Thing thing)
         {
             NumberPropertyParsingModel parsedModel = Deserialize<NumberPropertyParsingModel>(propertyJson);
             return new NumberProperty(

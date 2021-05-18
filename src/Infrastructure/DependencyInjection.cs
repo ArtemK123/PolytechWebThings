@@ -12,8 +12,9 @@ using PolytechWebThings.Infrastructure.Database.StartupJobs;
 using PolytechWebThings.Infrastructure.Database.Users;
 using PolytechWebThings.Infrastructure.Database.Workspaces;
 using PolytechWebThings.Infrastructure.MozillaGateway.Checkers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Creators;
+using PolytechWebThings.Infrastructure.MozillaGateway.Creators.PropertyCreators;
 using PolytechWebThings.Infrastructure.MozillaGateway.Parsers;
-using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Providers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Resolvers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Senders;
@@ -42,17 +43,12 @@ namespace PolytechWebThings.Infrastructure
             services.AddTransient<IPropertyParserResolver, PropertyParserResolver>();
             services.AddTransient<IPropertyValueUpdater, PropertyValueUpdater>();
             services.AddTransient<IThingStateProvider, ThingStateProvider>();
-            services.AddParsers();
-        }
-
-        private static void AddParsers(this IServiceCollection services)
-        {
             services.AddTransient<IGetThingsResponseParser, GetThingsResponseParser>();
-            services.AddTransient<IThingParser, ThingParser>();
-            services.AddTransient<IPropertyParser, BooleanPropertyParser>();
-            services.AddTransient<IPropertyParser, StringPropertyParser>();
-            services.AddTransient<IPropertyParser, NumberPropertyParser>();
-            services.AddTransient<IPropertyParser, IntegerPropertyParser>();
+            services.AddTransient<IThingCreator, ThingCreator>();
+            services.AddTransient<IPropertyCreator, BooleanPropertyCreator>();
+            services.AddTransient<IPropertyCreator, StringPropertyCreator>();
+            services.AddTransient<IPropertyCreator, NumberPropertyCreator>();
+            services.AddTransient<IPropertyCreator, IntegerPropertyCreator>();
         }
 
         private static void AddDatabase(this IServiceCollection services)

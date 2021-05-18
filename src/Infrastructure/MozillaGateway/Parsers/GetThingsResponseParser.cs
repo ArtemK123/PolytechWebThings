@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Converters;
 using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
+using PolytechWebThings.Infrastructure.MozillaGateway.Creators;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
@@ -17,11 +18,11 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
             PropertyNameCaseInsensitive = true,
         };
 
-        private readonly IThingParser thingParser;
+        private readonly IThingCreator thingCreator;
 
-        public GetThingsResponseParser(IThingParser thingParser)
+        public GetThingsResponseParser(IThingCreator thingCreator)
         {
-            this.thingParser = thingParser;
+            this.thingCreator = thingCreator;
         }
 
         public async Task<IReadOnlyCollection<Thing>> Parse(IWorkspace workspace, HttpResponseMessage response)
@@ -29,7 +30,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
             byte[] responseBytes = await response.Content.ReadAsByteArrayAsync();
             var thingParsingModels = NullableConverter.GetOrThrow(JsonSerializer.Deserialize<IReadOnlyCollection<ThingFlatParsingModel>>(responseBytes, jsonSerializerOptions));
 
-            IReadOnlyCollection<Thing> parsedThings = thingParsingModels.Select(thingParsingModel => thingParser.Parse(thingParsingModel, workspace)).ToList();
+            IReadOnlyCollection<Thing> parsedThings = thingParsingModels.Select(thingParsingModel => thingCreator.Creator(thingParsingModel, workspace)).ToList();
             return parsedThings;
         }
     }

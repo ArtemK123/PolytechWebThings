@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Creators.PropertyCreators;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Resolvers
 {
     internal class PropertyParserResolver : IPropertyParserResolver
     {
-        private readonly IEnumerable<IPropertyParser> propertyParsers;
+        private readonly IEnumerable<IPropertyCreator> propertyParsers;
 
-        public PropertyParserResolver(IEnumerable<IPropertyParser> propertyParsers)
+        public PropertyParserResolver(IEnumerable<IPropertyCreator> propertyParsers)
         {
             this.propertyParsers = propertyParsers;
         }
 
-        public IPropertyParser Resolve(JsonElement propertyJson)
+        public IPropertyCreator Resolve(JsonElement propertyJson)
         {
             if (!propertyJson.TryGetProperty("type", out JsonElement typeElement))
             {
@@ -24,7 +24,7 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Resolvers
 
             string? propertyValueType = typeElement.GetString();
 
-            IPropertyParser? parser = propertyParsers.SingleOrDefault(currentParser => currentParser.PropertyValueType == propertyValueType);
+            IPropertyCreator? parser = propertyParsers.SingleOrDefault(currentParser => currentParser.PropertyValueType == propertyValueType);
 
             if (parser is null)
             {

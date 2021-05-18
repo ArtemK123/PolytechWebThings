@@ -2,12 +2,12 @@
 using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 
-namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
+namespace PolytechWebThings.Infrastructure.MozillaGateway.Creators.PropertyCreators
 {
-    internal interface IPropertyParser
+    internal interface IPropertyCreator
     {
         string? PropertyValueType { get; }
 
-        Property Parse(JsonElement propertyJson, Thing thing);
+        Property Create(JsonElement propertyJson, Thing thing);
     }
 }

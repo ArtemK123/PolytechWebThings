@@ -4,21 +4,21 @@ using Domain.Entities.WebThingsGateway.Things;
 using Domain.Updaters;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
 
-namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers
+namespace PolytechWebThings.Infrastructure.MozillaGateway.Creators.PropertyCreators
 {
-    internal class IntegerPropertyParser : PropertyParserBase
+    internal class BooleanPropertyCreator : PropertyCreatorBase
     {
-        public IntegerPropertyParser(IPropertyValueUpdater propertyValueUpdater)
+        public BooleanPropertyCreator(IPropertyValueUpdater propertyValueUpdater)
             : base(propertyValueUpdater)
         {
         }
 
-        public override string PropertyValueType => "integer";
+        public override string PropertyValueType => "boolean";
 
-        public override Property Parse(JsonElement propertyJson, Thing thing)
+        public override Property Create(JsonElement propertyJson, Thing thing)
         {
-            IntegerPropertyParsingModel parsedModel = Deserialize<IntegerPropertyParsingModel>(propertyJson);
-            return new NumberProperty(
+            BooleanPropertyParsingModel parsedModel = Deserialize<BooleanPropertyParsingModel>(propertyJson);
+            return new BooleanProperty(
                 name: parsedModel.Name,
                 visible: parsedModel.Visible,
                 title: parsedModel.Title,
@@ -26,9 +26,6 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParser
                 links: parsedModel.Links,
                 readOnly: parsedModel.ReadOnly,
                 defaultValue: parsedModel.Value,
-                unit: parsedModel.Unit,
-                minimum: int.MinValue,
-                maximum: int.MaxValue,
                 propertyValueUpdater: PropertyValueUpdater,
                 thing: thing);
         }

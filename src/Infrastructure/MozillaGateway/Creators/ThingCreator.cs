@@ -3,22 +3,22 @@ using System.Text.Json;
 using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
+using PolytechWebThings.Infrastructure.MozillaGateway.Creators.PropertyCreators;
 using PolytechWebThings.Infrastructure.MozillaGateway.Models;
-using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
 using PolytechWebThings.Infrastructure.MozillaGateway.Resolvers;
 
-namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
+namespace PolytechWebThings.Infrastructure.MozillaGateway.Creators
 {
-    internal class ThingParser : IThingParser
+    internal class ThingCreator : IThingCreator
     {
         private readonly IPropertyParserResolver propertyParserResolver;
 
-        public ThingParser(IPropertyParserResolver propertyParserResolver)
+        public ThingCreator(IPropertyParserResolver propertyParserResolver)
         {
             this.propertyParserResolver = propertyParserResolver;
         }
 
-        public Thing Parse(ThingFlatParsingModel flatThingModel, IWorkspace workspace)
+        public Thing Creator(ThingFlatParsingModel flatThingModel, IWorkspace workspace)
         {
             List<Property> properties = new List<Property>();
 
@@ -35,8 +35,8 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Parsers
 
             foreach (JsonElement propertyElement in flatThingModel.Properties.Values)
             {
-                IPropertyParser parser = propertyParserResolver.Resolve(propertyElement);
-                Property property = parser.Parse(propertyElement, newThing);
+                IPropertyCreator creator = propertyParserResolver.Resolve(propertyElement);
+                Property property = creator.Create(propertyElement, newThing);
                 properties.Add(property);
             }
 

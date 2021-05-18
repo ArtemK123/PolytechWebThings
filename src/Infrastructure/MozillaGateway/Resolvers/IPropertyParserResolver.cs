@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
-using PolytechWebThings.Infrastructure.MozillaGateway.Parsers.PropertyParsers;
+using PolytechWebThings.Infrastructure.MozillaGateway.Creators.PropertyCreators;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Resolvers
 {
     internal interface IPropertyParserResolver
     {
-        IPropertyParser Resolve(JsonElement propertyJson);
+        IPropertyCreator Resolve(JsonElement propertyJson);
     }
 }
