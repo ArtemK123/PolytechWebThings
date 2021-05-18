@@ -6,3 +6,12 @@
 .rule-card__title-container:hover {
   cursor: pointer;
 }
+
+.rule-card__title-with-buttons-containers {
+  display: flex;
+  flex-direction: row;
+}
+
+.rule-card__buttons-container {
+  padding-left: 20px;
+}

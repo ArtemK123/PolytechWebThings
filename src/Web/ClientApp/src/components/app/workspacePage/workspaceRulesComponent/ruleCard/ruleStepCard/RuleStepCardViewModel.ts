@@ -8,6 +8,6 @@ export class RuleStepCardViewModel implements IViewModel {
 
     constructor(params: IRuleStepCardParams) {
         this.params = params;
-        this.description(`${params.index()}. ${params.step.description}`);
+        this.description(`${params.index() + 1}. ${params.step.description}`);
     }
 }
