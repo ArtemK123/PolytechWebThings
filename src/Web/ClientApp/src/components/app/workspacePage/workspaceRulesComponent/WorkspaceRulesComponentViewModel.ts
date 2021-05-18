@@ -7,6 +7,7 @@ import { IGetRulesResponse } from "src/components/app/workspacePage/models/IGetR
 import { IStepModel } from "src/components/app/workspacePage/models/IStepModel";
 
 export class WorkspaceRulesComponentViewModel implements IViewModel {
+    public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
     public readonly rules: ko.ObservableArray<IRuleModel> = ko.observableArray([]);
 
     constructor() {
@@ -15,6 +16,7 @@ export class WorkspaceRulesComponentViewModel implements IViewModel {
                 if (result.status === OperationStatus.Success) {
                     this.rules(result.data.rules);
                 }
+                this.isLoading(false);
             });
     }
 

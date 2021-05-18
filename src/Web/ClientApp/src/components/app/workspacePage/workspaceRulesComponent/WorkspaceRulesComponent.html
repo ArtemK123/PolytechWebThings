@@ -1,6 +1,13 @@
-<div>
+<div class="workspace-rules">
     <h4>Workspace Rules</h4>
-    <div data-bind="foreach: rules">
-        <span data-bind="text: name"></span><br/>
+    <div data-bind="if: isLoading">
+        <div class="workspace-rules__loader-container">
+            <loader></loader>
+        </div>
+    </div>
+    <div data-bind="ifnot: isLoading">
+        <div data-bind="foreach: rules">
+            <rule-card params="{ rule: $data }"></rule-card>
+        </div>
     </div>
 </div>
