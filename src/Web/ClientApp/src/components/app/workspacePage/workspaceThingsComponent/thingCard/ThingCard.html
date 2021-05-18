@@ -1,11 +1,6 @@
 <div class="thing-card">
     <div class="thing-card__title-with-icon-container" data-bind="click: changeCollapseState">
-        <div data-bind="if: isCollapsed" class="thing-card__icon-container">
-            <i class="fas fa-angle-right"></i>
-        </div>
-        <div data-bind="ifnot: isCollapsed" class="thing-card__icon-container">
-            <i class="fas fa-angle-down"></i>
-        </div>
+        <collapse-arrow params="{ isCollapsed: isCollapsed }"></collapse-arrow>
         <span data-bind="text: title"></span>
     </div>
     <!-- ko ifnot: isCollapsed -->

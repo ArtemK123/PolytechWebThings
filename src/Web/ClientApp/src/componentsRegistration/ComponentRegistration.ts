@@ -21,6 +21,7 @@ import { WorkspaceRulesComponent } from "src/components/app/workspacePage/worksp
 import { ThingPropertyCardComponent } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/ThingPropertyCardComponent";
 import { RuleCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/RuleCardComponent";
 import {RuleStepCardComponent} from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/RuleStepCardComponent";
+import {CollapseArrowComponent} from "src/components/common/collapseArrow/CollapseArrowComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -54,5 +55,6 @@ export class ComponentRegistration {
     private static registerCommonComponents() {
         ko.components.register("router", new RouterComponent().generateDescriptor());
         ko.components.register("loader", new LoaderComponent().generateDescriptor());
+        ko.components.register("collapse-arrow", new CollapseArrowComponent().generateDescriptor());
     }
 }
