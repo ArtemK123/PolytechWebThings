@@ -1,4 +1,8 @@
 ﻿.rule-card {
-  padding: 20px;
+  padding: 10px;
   border-bottom: 2px solid gray;
+}
+
+.rule-card__title-container:hover {
+  cursor: pointer;
 }

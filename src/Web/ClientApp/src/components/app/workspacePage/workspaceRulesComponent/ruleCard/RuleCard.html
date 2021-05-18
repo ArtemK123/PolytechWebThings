@@ -1,6 +1,11 @@
 <div class="rule-card">
-    <div data-bind="text: params.rule.name"></div>
+    <div class="rule-card__title-container" data-bind="click: changeCollapseState">
+        <collapse-arrow params="{ isCollapsed: isCollapsed }"></collapse-arrow>
+        <span data-bind="text: params.rule.name"></span>
+    </div>
+    <!-- ko ifnot: isCollapsed -->
     <div data-bind="foreach: params.rule.steps">
         <rule-step-card params="{ step: $data, index: $index}"></rule-step-card>
     </div>
+    <!-- /ko -->
 </div>
