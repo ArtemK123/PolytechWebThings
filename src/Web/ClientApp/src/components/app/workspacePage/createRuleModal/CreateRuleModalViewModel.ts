@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 import { ICreateRuleModalParams } from "src/components/app/workspacePage/createRuleModal/ICreateRuleModalParams";
-import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 

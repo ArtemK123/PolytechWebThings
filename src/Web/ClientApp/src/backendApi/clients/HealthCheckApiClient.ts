@@ -1,5 +1,5 @@
 import { BackendRequestSender } from "src/backendApi/senders/BackendRequestSender";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 
 export class HealthCheckApiClient {
     private readonly backendRequestSender: BackendRequestSender = new BackendRequestSender();

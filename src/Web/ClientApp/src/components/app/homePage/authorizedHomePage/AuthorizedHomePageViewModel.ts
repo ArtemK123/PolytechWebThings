@@ -1,8 +1,8 @@
 import * as ko from "knockout";
-import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { IWorkspaceApiModel } from "src/backendApi/models/entities/IWorkspaceApiModel";
 import { IGetUserWorkspacesResponse } from "src/backendApi/models/response/IGetUserWorkspacesResponse";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class AuthorizedHomePageViewModel implements IViewModel {

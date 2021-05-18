@@ -1,12 +1,12 @@
 ﻿import * as ko from "knockout";
 import { IUpdateWorkspaceRequest } from "src/backendApi/models/request/workspace/IUpdateWorkspaceRequest";
 import { RedirectHandler } from "src/services/RedirectHandler";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
-import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
+import { IWorkspaceApiModel } from "src/backendApi/models/entities/IWorkspaceApiModel";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { IGetWorkspaceByIdRequest } from "src/backendApi/models/request/workspace/IGetWorkspaceByIdRequest";
 import { IUpdateWorkspacePageParams } from "src/components/app/updateWorkspacePage/IUpdateWorkspacePageParams";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class UpdateWorkspacePageViewModel implements IViewModel {

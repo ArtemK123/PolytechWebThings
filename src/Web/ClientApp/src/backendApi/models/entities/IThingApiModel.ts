@@ -1,4 +1,4 @@
-﻿import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+﻿import { IPropertyApiModel } from "./IPropertyApiModel";
 
 export interface IThingApiModel {
     id: string;

@@ -1,10 +1,10 @@
 ﻿import { BackendRequestSender } from "src/backendApi/senders/BackendRequestSender";
 import { IChangePropertyStateRequest } from "src/backendApi/models/request/things/IChangePropertyStateRequest";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { IGetThingStateRequest } from "src/backendApi/models/request/things/IGetThingStateRequest";
-import { IThingStateApiModel } from "src/backendApi/models/response/things/IThingStateApiModel";
+import { IThingStateApiModel } from "src/backendApi/models/entities/IThingStateApiModel";
 import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/things/IGetWorkspaceWithThingsRequest";
-import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/things/IGetWorkspaceWithThingsResponse";
+import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
 
 export class ThingsApiClient {
     private static readonly apiUrlBase: string = "/api/ThingsApi/";

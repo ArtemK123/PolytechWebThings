@@ -1,10 +1,10 @@
 import * as ko from "knockout";
 import { ICreateUserRequest } from "src/backendApi/models/request/user/ICreateUserRequest";
 import { RedirectHandler } from "src/services/RedirectHandler";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { UserApiClient } from "src/backendApi/clients/UserApiClient";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 
 export class RegisterViewModel implements IViewModel {
     public readonly email: ko.Observable<string> = ko.observable("");

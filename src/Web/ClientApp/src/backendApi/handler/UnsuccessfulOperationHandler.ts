@@ -1,6 +1,6 @@
 ﻿import { RedirectHandler } from "src/services/RedirectHandler";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 
 export class UnsuccessfulOperationHandler {
     public handle<TData>(response: IOperationResult<TData>): void {

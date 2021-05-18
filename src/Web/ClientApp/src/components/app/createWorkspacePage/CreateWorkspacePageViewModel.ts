@@ -1,9 +1,9 @@
 ﻿import * as ko from "knockout";
 import { ICreateWorkspaceRequest } from "src/backendApi/models/request/workspace/ICreateWorkspaceRequest";
 import { RedirectHandler } from "src/services/RedirectHandler";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class CreateWorkspacePageViewModel implements IViewModel {

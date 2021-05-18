@@ -1,7 +1,7 @@
 import * as ko from "knockout";
 import { IWorkspaceCardParams } from "src/components/app/homePage/authorizedHomePage/workspaceCard/IWorkspaceCardParams";
 import { RedirectHandler } from "src/services/RedirectHandler";
-import { IWorkspaceApiModel } from "src/backendApi/models/response/IWorkspaceApiModel";
+import { IWorkspaceApiModel } from "src/backendApi/models/entities/IWorkspaceApiModel";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { IDeleteWorkspaceRequest } from "src/backendApi/models/request/workspace/IDeleteWorkspaceRequest";
 import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";

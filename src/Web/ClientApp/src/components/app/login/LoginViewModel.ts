@@ -1,9 +1,9 @@
 import * as ko from "knockout";
 import { RedirectHandler } from "src/services/RedirectHandler";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { UserApiClient } from "src/backendApi/clients/UserApiClient";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { ILoginUserRequest } from "src/backendApi/models/request/user/ILoginUserRequest";
 
 export class LoginViewModel implements IViewModel {

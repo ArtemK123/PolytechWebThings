@@ -1,5 +1,5 @@
 ﻿import * as ko from "knockout";
-import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
 
 export interface ICreateStepModalParams {

@@ -1,6 +1,6 @@
 import { ICreateUserRequest } from "src/backendApi/models/request/user/ICreateUserRequest";
 import { BackendRequestSender } from "src/backendApi/senders/BackendRequestSender";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { ILoginUserRequest } from "src/backendApi/models/request/user/ILoginUserRequest";
 
 export class UserApiClient {

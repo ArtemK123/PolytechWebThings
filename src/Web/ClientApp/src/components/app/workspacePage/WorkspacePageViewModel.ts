@@ -1,15 +1,15 @@
 import * as ko from "knockout";
-import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
 import { RedirectHandler } from "src/services/RedirectHandler";
 import { IWorkspacePageParams } from "src/components/app/workspacePage/IWorkspacePageParams";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 import { RouteGenerator } from "src/components/common/router/RouteGenerator";
 import { IRoute } from "src/components/common/router/IRoute";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
-import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/things/IGetWorkspaceWithThingsResponse";
+import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
 import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/things/IGetWorkspaceWithThingsRequest";
 
 export class WorkspacePageViewModel implements IViewModel {

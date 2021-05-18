@@ -1,7 +1,7 @@
 import * as ko from "knockout";
-import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
-import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+import { IPropertyApiModel } from "src/backendApi/models/entities/IPropertyApiModel";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { ICreateStepModalParams } from "src/components/app/workspacePage/createRuleModal/CreateStepModal/ICreateStepModalParams";
 

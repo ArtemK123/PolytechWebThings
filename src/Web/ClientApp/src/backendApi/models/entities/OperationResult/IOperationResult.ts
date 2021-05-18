@@ -1,4 +1,4 @@
-﻿import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+﻿import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 
 export interface IOperationResult<TData> {
     status: OperationStatus;

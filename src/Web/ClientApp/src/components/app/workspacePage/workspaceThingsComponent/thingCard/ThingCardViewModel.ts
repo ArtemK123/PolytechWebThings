@@ -1,11 +1,11 @@
 import * as ko from "knockout";
-import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+import { IPropertyApiModel } from "src/backendApi/models/entities/IPropertyApiModel";
 import { IThingCardParams } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/IThingCardParams";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
-import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
-import { IThingStateApiModel } from "src/backendApi/models/response/things/IThingStateApiModel";
-import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
+import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
+import { IThingStateApiModel } from "src/backendApi/models/entities/IThingStateApiModel";
+import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
 
 export class ThingCardViewModel implements IViewModel {

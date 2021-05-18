@@ -1,4 +1,4 @@
-﻿import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+﻿import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 
 export interface IThingCardParams {
     model: IThingApiModel;

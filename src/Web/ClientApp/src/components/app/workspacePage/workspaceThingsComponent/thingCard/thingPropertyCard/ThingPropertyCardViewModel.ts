@@ -1,11 +1,11 @@
 import * as ko from "knockout";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { IThingPropertyCardParams } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/IThingPropertyCardParams";
-import { IPropertyApiModel } from "src/backendApi/models/response/things/IPropertyApiModel";
+import { IPropertyApiModel } from "src/backendApi/models/entities/IPropertyApiModel";
 import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
 import { IChangePropertyStateRequest } from "src/backendApi/models/request/things/IChangePropertyStateRequest";
-import { OperationStatus } from "src/backendApi/models/response/OperationResult/OperationStatus";
-import { IThingStateApiModel } from "src/backendApi/models/response/things/IThingStateApiModel";
+import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
+import { IThingStateApiModel } from "src/backendApi/models/entities/IThingStateApiModel";
 
 export class ThingPropertyCardViewModel implements IViewModel {
     public readonly inputValue: ko.Observable<string> = ko.observable("");

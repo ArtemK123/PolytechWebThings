@@ -1,4 +1,4 @@
-﻿import { IOperationResult } from "src/backendApi/models/response/OperationResult/IOperationResult";
+﻿import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 
 export class BackendRequestDirectSender {
     public async send<TData>(url: RequestInfo, config?: RequestInit): Promise<IOperationResult<TData>> {

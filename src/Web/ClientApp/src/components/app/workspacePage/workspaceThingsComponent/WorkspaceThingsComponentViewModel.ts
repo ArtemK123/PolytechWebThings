@@ -1,5 +1,5 @@
 import * as ko from "knockout";
-import { IThingApiModel } from "src/backendApi/models/response/things/IThingApiModel";
+import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 import { IWorkspaceThingsComponentParams } from "src/components/app/workspacePage/workspaceThingsComponent/IWorkspaceThingsComponentParams";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 
