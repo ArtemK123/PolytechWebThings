@@ -3,6 +3,9 @@ import { IEditRulePageParams } from "src/components/app/workspacePage/EditRulePa
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 
 export class EditRulePageViewModel implements IViewModel {
+    public readonly params: IEditRulePageParams;
+
     constructor(params: IEditRulePageParams) {
+        this.params = params;
     }
 }

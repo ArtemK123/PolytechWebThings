@@ -1,3 +1,11 @@
 <div>
-    <span>Edit rule page!</span>
+    <h4>Edit rule</h4>
+    <div>
+        <span>Rule name</span><br/>
+        <input type="text">
+    </div>
+    <span>Steps</span>
+    <div data-bind="foreach: params.rule.steps">
+        <rule-step-card params="{ step: $data, index: $index }"></rule-step-card>
+    </div>
 </div>
