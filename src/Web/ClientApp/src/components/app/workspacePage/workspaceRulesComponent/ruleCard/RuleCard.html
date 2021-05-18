@@ -1,3 +1,6 @@
 <div class="rule-card">
-    <span data-bind="text: params.rule.name"></span>
+    <div data-bind="text: params.rule.name"></div>
+    <div data-bind="foreach: params.rule.steps">
+        <rule-step-card params="{ step: $data, index: $index}"></rule-step-card>
+    </div>
 </div>
