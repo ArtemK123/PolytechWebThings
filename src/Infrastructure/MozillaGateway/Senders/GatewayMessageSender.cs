@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Domain.Entities.WebThingsGateway.Properties;
+using Domain.Entities.WebThingsGateway.Things;
 
 namespace PolytechWebThings.Infrastructure.MozillaGateway.Senders
 {
@@ -54,6 +55,19 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Senders
                 Content = new StringContent(serializedPayloadWithNewValue)
                 {
                     Headers = { ContentType = new MediaTypeHeaderValue("application/json") }
+                }
+            });
+        }
+
+        public async Task<HttpResponseMessage> GetPropertyStatesAsync(Thing thing)
+        {
+            string url = thing.Workspace.GatewayUrl + thing.Links.First(link => link.Rel == "properties").Href;
+            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Headers =
+                {
+                    Accept = { new MediaTypeWithQualityHeaderValue("application/json") },
+                    Authorization = new AuthenticationHeaderValue("Bearer", thing.Workspace.AccessToken)
                 }
             });
         }
