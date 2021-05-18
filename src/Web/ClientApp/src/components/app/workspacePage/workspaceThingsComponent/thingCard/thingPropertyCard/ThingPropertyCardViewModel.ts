@@ -49,7 +49,7 @@ export class ThingPropertyCardViewModel implements IViewModel {
             .then((operationResult) => {
                 this.isUpdateInProgress(false);
                 if (operationResult.status === OperationStatus.Success) {
-                    alert("Updated property successfully");
+                    alert("Property is successfully updated");
                 }
             });
     }
