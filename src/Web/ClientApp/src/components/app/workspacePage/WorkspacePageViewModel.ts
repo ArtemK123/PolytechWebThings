@@ -11,7 +11,6 @@ import { IOperationResult } from "src/backendApi/models/entities/OperationResult
 import { ThingsApiClient } from "src/backendApi/clients/ThingsApiClient";
 import { IGetWorkspaceWithThingsResponse } from "src/backendApi/models/response/IGetWorkspaceWithThingsResponse";
 import { IGetWorkspaceWithThingsRequest } from "src/backendApi/models/request/things/IGetWorkspaceWithThingsRequest";
-import { IEditRulePageParams } from "src/components/app/workspacePage/editRulePage/IEditRulePageParams";
 import { IGetRulesResponse } from "src/components/app/workspacePage/models/IGetRulesResponse";
 import { StepType } from "src/components/app/workspacePage/models/StepType";
 import { IExecuteRuleStepModel } from "src/components/app/workspacePage/models/IExecuteRuleStepModel";
@@ -27,12 +26,6 @@ export class WorkspacePageViewModel implements IViewModel {
 
     private readonly loadingProcessCounter: ko.Observable<number> = ko.observable(0);
 
-    private readonly editRulePageParams: IEditRulePageParams = {
-        rule: ko.observable(this.generateEmptyRuleModel()),
-        confirmAction: this.confirmEditRuleAction,
-        cancelAction: this.cancelEditRuleAction,
-    } as IEditRulePageParams;
-
     private readonly thingsApiClient: ThingsApiClient = new ThingsApiClient();
 
     public readonly routes: IRoute[] = [
@@ -42,8 +35,8 @@ export class WorkspacePageViewModel implements IViewModel {
             () => "<workspace-rules-component"
                 + " params='{ rules: $parent.rules, editRuleAction: $parent.editRule.bind($parent), deleteRuleAction: $parent.deleteRule.bind($parent) }'></workspace-rules-component>",
         ),
-        RouteGenerator.generate(/\/rules\/create$/, () => this.generateEditRulePageTag()),
-        RouteGenerator.generate(/\/rules\/edit$/, () => this.generateEditRulePageTag()),
+        RouteGenerator.generate(/\/rules\/create$/, this.generateCreateRulePageTag),
+        RouteGenerator.generate(/\/rules\/\d+\/edit$/, this.generateEditRulePageTag),
         RouteGenerator.generate(/\//, () => ""),
     ];
 
@@ -67,10 +60,19 @@ export class WorkspacePageViewModel implements IViewModel {
         this.isCreateRuleFormOpened(true);
     }
 
-    public generateEditRulePageTag(): string {
+    public generateCreateRulePageTag(): string {
         return `
             <edit-rule-page
-                params='{ rule: $parent.editRulePageParams.rule, confirmAction: $parent.editRulePageParams.confirmAction, cancelAction: $parent.editRulePageParams.cancelAction }'>
+                params='{ confirmAction: $parent.confirmEditRuleAction, cancelAction: $parent.cancelEditRuleAction }'>
+            </edit-rule-page>`;
+    }
+
+    public generateEditRulePageTag(route: string): string {
+        const chunks: string[] = route.split("/");
+        const ruleId: string = chunks[4];
+        return `
+            <edit-rule-page
+                params='{ ruleId: ${ruleId}, confirmAction: $parent.confirmEditRuleAction, cancelAction: $parent.cancelEditRuleAction }'>
             </edit-rule-page>`;
     }
 
@@ -83,8 +85,7 @@ export class WorkspacePageViewModel implements IViewModel {
     }
 
     public editRule(rule: IRuleModel): void {
-        this.editRulePageParams.rule(rule);
-        RedirectHandler.redirect(`/workspaces/${this.id}/rules/edit`);
+        RedirectHandler.redirect(`/workspaces/${this.id}/rules/${rule.id}/edit`);
     }
 
     public deleteRule(rule: IRuleModel): void {
@@ -133,6 +134,7 @@ export class WorkspacePageViewModel implements IViewModel {
             data: {
                 rules: [
                     {
+                        id: 1,
                         name: "Rule1",
                         steps: [
                             { stepType: StepType.ExecuteRule, ruleName: "Rule2" } as IExecuteRuleStepModel,
@@ -144,6 +146,7 @@ export class WorkspacePageViewModel implements IViewModel {
                             } as IChangeThingStateStepModel],
                     } as IRuleModel,
                     {
+                        id: 2,
                         name: "Rule2",
                         steps: [
                             {

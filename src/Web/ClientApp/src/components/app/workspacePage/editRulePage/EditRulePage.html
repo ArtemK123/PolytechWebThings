@@ -5,7 +5,7 @@
         <input type="text" data-bind="textInput: ruleName">
     </div>
     <h5>Steps</h5>
-    <div data-bind="foreach: params.rule().steps">
+    <div data-bind="foreach: steps">
         <rule-step-card params="{ step: $data, index: $index }"></rule-step-card>
     </div>
     <div>
