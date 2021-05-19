@@ -34,7 +34,7 @@ export class EditRulePageViewModel implements IViewModel {
     }
 
     public handleCancel(): void {
-        console.log("handleCancel");
+        this.params.cancelAction();
     }
 
     private generateEmptyRule(): IRuleModel {

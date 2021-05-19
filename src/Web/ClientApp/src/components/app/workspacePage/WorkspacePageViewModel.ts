@@ -63,7 +63,7 @@ export class WorkspacePageViewModel implements IViewModel {
     public generateCreateRulePageTag(): string {
         return `
             <edit-rule-page
-                params='{ confirmAction: $parent.confirmEditRuleAction, cancelAction: $parent.cancelEditRuleAction }'>
+                params='{ confirmAction: $parent.confirmEditRuleAction.bind($parent), cancelAction: $parent.cancelEditRuleAction.bind($parent) }'>
             </edit-rule-page>`;
     }
 
@@ -72,7 +72,7 @@ export class WorkspacePageViewModel implements IViewModel {
         const ruleId: string = chunks[4];
         return `
             <edit-rule-page
-                params='{ ruleId: ${ruleId}, confirmAction: $parent.confirmEditRuleAction, cancelAction: $parent.cancelEditRuleAction }'>
+                params='{ ruleId: ${ruleId}, confirmAction: $parent.confirmEditRuleAction.bind($parent), cancelAction: $parent.cancelEditRuleAction.bind($parent) }'>
             </edit-rule-page>`;
     }
 
@@ -81,7 +81,7 @@ export class WorkspacePageViewModel implements IViewModel {
     }
 
     public cancelEditRuleAction(): void {
-        console.log("editRuleConfirmAction");
+        RedirectHandler.redirect(`/workspaces/${this.id}/rules`);
     }
 
     public editRule(rule: IRuleModel): void {
