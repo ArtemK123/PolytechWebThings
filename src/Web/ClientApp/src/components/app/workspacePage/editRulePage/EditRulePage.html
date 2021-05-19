@@ -2,10 +2,14 @@
     <h4>Edit rule</h4>
     <div>
         <span>Rule name</span><br/>
-        <input type="text">
+        <input type="text" data-bind="textInput: ruleName">
     </div>
-    <span>Steps</span>
-    <div data-bind="foreach: params.rule.steps">
+    <h5>Steps</h5>
+    <div data-bind="foreach: params.rule().steps">
         <rule-step-card params="{ step: $data, index: $index }"></rule-step-card>
+    </div>
+    <div>
+        <button data-bind="click: handleCancel">Cancel</button>
+        <button data-bind="click: handleConfirm">Confirm</button>
     </div>
 </div>

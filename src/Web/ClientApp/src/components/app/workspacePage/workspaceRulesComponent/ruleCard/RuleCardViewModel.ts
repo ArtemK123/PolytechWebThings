@@ -22,11 +22,11 @@ export class RuleCardViewModel implements IViewModel {
         console.log("executeRule");
     }
 
-    public updateRule(): void {
-        console.log("updateRule");
+    public editRule(): void {
+        this.params.editRuleAction(this.params.rule);
     }
 
     public deleteRule(): void {
-        console.log("deleteRule");
+        this.params.deleteRuleAction(this.params.rule);
     }
 }

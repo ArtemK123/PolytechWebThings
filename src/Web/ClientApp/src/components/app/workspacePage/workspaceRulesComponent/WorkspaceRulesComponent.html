@@ -1,14 +1,7 @@
 <div class="workspace-rules">
     <h4>Workspace Rules</h4>
-    <div data-bind="if: isLoading">
-        <div class="workspace-rules__loader-container">
-            <loader></loader>
-        </div>
+    <div data-bind="foreach: params.rules">
+        <rule-card params="{ rule: $data, editRuleAction: $parent.params.editRuleAction, deleteRuleAction: $parent.params.deleteRuleAction }"></rule-card>
     </div>
-    <div data-bind="ifnot: isLoading">
-        <div data-bind="foreach: rules">
-            <rule-card params="{ rule: $data }"></rule-card>
-        </div>
-        <button class="workspace-rules__create-rule-button" data-bind="click: createRule">Create rule</button>
-    </div>
+    <button class="workspace-rules__create-rule-button" data-bind="click: createRule">Create rule</button>
 </div>
