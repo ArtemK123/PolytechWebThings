@@ -1,3 +1,8 @@
 <div class="rule-step-card">
-    <div data-bind="text: description"></div>
+    <!-- ko if: params.step.stepType === 0 -->
+        <change-thing-state-step-card params="{ step: params.step, index: params.index }"></change-thing-state-step-card>
+    <!-- /ko -->
+    <!-- ko if: params.step.stepType === 1 -->
+        <execute-rule-step-card params="{ step: params.step, index: params.index }"></execute-rule-step-card>
+    <!-- /ko -->
 </div>

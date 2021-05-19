@@ -4,8 +4,10 @@ import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
 import { IOperationResult } from "src/backendApi/models/entities/OperationResult/IOperationResult";
 import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
 import { IGetRulesResponse } from "src/components/app/workspacePage/models/IGetRulesResponse";
-import { IStepModel } from "src/components/app/workspacePage/models/IStepModel";
 import { RedirectHandler } from "src/services/RedirectHandler";
+import { StepType } from "src/components/app/workspacePage/models/StepType";
+import { IExecuteRuleStepModel } from "src/components/app/workspacePage/models/IExecuteRuleStepModel";
+import { IChangeThingStateStepModel } from "src/components/app/workspacePage/models/IChangeThingStateStepModel";
 
 export class WorkspaceRulesComponentViewModel implements IViewModel {
     public readonly isLoading: ko.Observable<boolean> = ko.observable(true);
@@ -33,11 +35,26 @@ export class WorkspaceRulesComponentViewModel implements IViewModel {
                 rules: [
                     {
                         name: "Rule1",
-                        steps: [{ description: "Step1" } as IStepModel, { description: "Step2" } as IStepModel],
+                        steps: [
+                            { name: "Step1", stepType: StepType.ExecuteRule, ruleName: "Rule2" } as IExecuteRuleStepModel,
+                            {
+                                name: "Step2",
+                                stepType: StepType.ChangeThingState,
+                                thingName: "TestThing",
+                                propertyName: "Property1",
+                                newPropertyState: "true",
+                            } as IChangeThingStateStepModel],
                     } as IRuleModel,
                     {
                         name: "Rule2",
-                        steps: [{ description: "StepA" } as IStepModel, { description: "StepB" } as IStepModel],
+                        steps: [
+                            {
+                                name: "StepA",
+                                stepType: StepType.ChangeThingState,
+                                thingName: "OtherThing",
+                                propertyName: "On/Off",
+                                newPropertyState: "true",
+                            } as IChangeThingStateStepModel],
                     } as IRuleModel,
                 ],
             } as IGetRulesResponse,

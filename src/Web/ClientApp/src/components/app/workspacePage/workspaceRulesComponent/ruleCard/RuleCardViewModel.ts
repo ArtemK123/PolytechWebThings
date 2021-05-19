@@ -14,6 +14,10 @@ export class RuleCardViewModel implements IViewModel {
         this.isCollapsed(!this.isCollapsed());
     }
 
+    public executeRule(): void {
+        console.log("executeRule");
+    }
+
     public updateRule(): void {
         console.log("updateRule");
     }
