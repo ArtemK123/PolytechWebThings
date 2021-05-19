@@ -13,6 +13,9 @@
     <!-- ko ifnot: isCollapsed -->
     <div data-bind="foreach: params.rule.steps">
         <rule-step-card params="{ step: $data, index: $index }"></rule-step-card>
+        <!-- ko if: $parent.shouldInsertCardSeparator($index) -->
+            <hr class="rule-card__step-card-separator"/>
+        <!-- /ko -->
     </div>
     <!-- /ko -->
 </div>

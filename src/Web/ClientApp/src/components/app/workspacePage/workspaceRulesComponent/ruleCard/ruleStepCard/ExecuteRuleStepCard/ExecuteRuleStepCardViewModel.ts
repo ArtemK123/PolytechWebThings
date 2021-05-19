@@ -4,10 +4,10 @@ import { IExecuteRuleStepCardParams } from "src/components/app/workspacePage/wor
 
 export class ExecuteRuleStepCardViewModel implements IViewModel {
     public readonly params: IExecuteRuleStepCardParams;
-    public readonly description: ko.Observable<string> = ko.observable("");
+    public readonly titleText: ko.Computed<string>;
 
     constructor(params: IExecuteRuleStepCardParams) {
         this.params = params;
-        this.description(`${params.index() + 1}. ${params.step.name}`);
+        this.titleText = ko.computed(() => `${params.index()}. Execute rule`);
     }
 }

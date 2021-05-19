@@ -1,1 +1,16 @@
-﻿
+﻿.change-thing-state-step-card {
+  display: flex;
+  flex-direction: row;
+}
+
+.change-thing-state-step-card > div {
+  padding: 10px;
+}
+
+.change-thing-state-step-card__argument {
+  margin-top: 5px;
+}
+
+.change-thing-state-step-card__title {
+  width: 150px;
+}

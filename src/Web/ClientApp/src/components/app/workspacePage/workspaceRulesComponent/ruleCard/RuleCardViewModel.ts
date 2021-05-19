@@ -14,6 +14,10 @@ export class RuleCardViewModel implements IViewModel {
         this.isCollapsed(!this.isCollapsed());
     }
 
+    public shouldInsertCardSeparator(index: ko.Observable<number>): boolean {
+        return index() < this.params.rule.steps.length - 1;
+    }
+
     public executeRule(): void {
         console.log("executeRule");
     }

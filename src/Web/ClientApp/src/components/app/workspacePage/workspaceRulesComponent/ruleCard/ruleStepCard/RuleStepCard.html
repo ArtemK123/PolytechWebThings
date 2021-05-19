@@ -1,8 +1,8 @@
 <div class="rule-step-card">
     <!-- ko if: params.step.stepType === 0 -->
-        <change-thing-state-step-card params="{ step: params.step, index: params.index }"></change-thing-state-step-card>
+        <change-thing-state-step-card params="{ step: params.step, index: normalizedIndex }"></change-thing-state-step-card>
     <!-- /ko -->
     <!-- ko if: params.step.stepType === 1 -->
-        <execute-rule-step-card params="{ step: params.step, index: params.index }"></execute-rule-step-card>
+        <execute-rule-step-card params="{ step: params.step, index: normalizedIndex }"></execute-rule-step-card>
     <!-- /ko -->
 </div>

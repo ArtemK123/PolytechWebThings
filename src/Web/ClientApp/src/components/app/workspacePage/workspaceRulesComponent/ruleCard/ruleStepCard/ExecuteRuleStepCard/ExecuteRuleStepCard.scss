@@ -1,1 +1,12 @@
-﻿
+﻿.execute-rule-step-card {
+  display: flex;
+  flex-direction: row;
+}
+
+.execute-rule-step-card > div {
+  padding: 10px;
+}
+
+.execute-rule-step-card__title {
+  width: 150px;
+}

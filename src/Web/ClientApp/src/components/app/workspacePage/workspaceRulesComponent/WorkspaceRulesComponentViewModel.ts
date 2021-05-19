@@ -36,9 +36,8 @@ export class WorkspaceRulesComponentViewModel implements IViewModel {
                     {
                         name: "Rule1",
                         steps: [
-                            { name: "Step1", stepType: StepType.ExecuteRule, ruleName: "Rule2" } as IExecuteRuleStepModel,
+                            { stepType: StepType.ExecuteRule, ruleName: "Rule2" } as IExecuteRuleStepModel,
                             {
-                                name: "Step2",
                                 stepType: StepType.ChangeThingState,
                                 thingName: "TestThing",
                                 propertyName: "Property1",
@@ -49,7 +48,6 @@ export class WorkspaceRulesComponentViewModel implements IViewModel {
                         name: "Rule2",
                         steps: [
                             {
-                                name: "StepA",
                                 stepType: StepType.ChangeThingState,
                                 thingName: "OtherThing",
                                 propertyName: "On/Off",
