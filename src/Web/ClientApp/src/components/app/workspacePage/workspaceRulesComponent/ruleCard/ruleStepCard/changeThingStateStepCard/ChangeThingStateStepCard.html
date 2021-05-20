@@ -1,15 +1,21 @@
 <div class="change-thing-state-step-card">
     <div class="change-thing-state-step-card__title" data-bind="text: titleText"></div>
     <div>
-        <span>Thing</span><br/>
-        <div class="change-thing-state-step-card__argument" data-bind="text: params.step.thingName"></div>
+        <label>
+            Thing<br/>
+            <span data-bind="text: params.step.thingName"></span>
+        </label>
     </div>
     <div>
-        <span>Property</span>
-        <div class="change-thing-state-step-card__argument" data-bind="text: params.step.propertyName"></div>
+        <label>
+            Property<br/>
+            <span data-bind="text: params.step.propertyName"></span>
+        </label>
     </div>
     <div>
-        <span>New state</span><br/>
-        <div class="change-thing-state-step-card__argument" data-bind="text: params.step.newPropertyState"></div>
+        <label>
+            New state<br/>
+            <span data-bind="text: params.step.newPropertyState"></span>
+        </label>
     </div>
 </div>
