@@ -7,30 +7,27 @@ using Web.Models.User.Request;
 
 namespace Web.IntegrationTest.Utils.ApiClients
 {
-    internal class UserApiClient
+    internal class UserApiClient : ApiClientBase
     {
-        private const string UserApiBaseUrl = "api/UserApi/";
-        private readonly HttpClient httpClient;
-        private readonly HttpResponseMessageParser httpResponseMessageParser;
-
         public UserApiClient(HttpClient httpClient, HttpResponseMessageParser httpResponseMessageParser)
+            : base(httpClient, httpResponseMessageParser)
         {
-            this.httpClient = httpClient;
-            this.httpResponseMessageParser = httpResponseMessageParser;
         }
+
+        protected override string ApiBaseUrl => "api/UserApi/";
 
         public async Task<OperationResult> CreateAsync(CreateUserRequest createUserRequest)
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Create")
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, ApiBaseUrl + "Create")
             {
                 Content = JsonContent.Create(createUserRequest)
             });
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
         }
 
         public async Task<HttpResponseMessage> LoginRawResponseAsync(LoginUserRequest loginUserRequest)
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Login")
+            return await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, ApiBaseUrl + "Login")
             {
                 Content = JsonContent.Create(loginUserRequest)
             });
@@ -39,18 +36,18 @@ namespace Web.IntegrationTest.Utils.ApiClients
         public async Task<OperationResult> LoginAsync(LoginUserRequest loginUserRequest)
         {
             HttpResponseMessage response = await LoginRawResponseAsync(loginUserRequest);
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
         }
 
         public async Task<HttpResponseMessage> LogoutRawResponseAsync()
         {
-            return await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Logout"));
+            return await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, ApiBaseUrl + "Logout"));
         }
 
         public async Task<OperationResult> LogoutAsync()
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, UserApiBaseUrl + "Logout"));
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, ApiBaseUrl + "Logout"));
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
         }
     }
 }

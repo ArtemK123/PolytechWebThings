@@ -3,65 +3,60 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
-using Web.Models.Things.Request;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 
 namespace Web.IntegrationTest.Utils.ApiClients
 {
-    internal class WorkspaceApiClient
+    internal class WorkspaceApiClient : ApiClientBase
     {
-        private const string ApiUrlBase = "api/WorkspaceApi/";
-
-        private readonly HttpClient httpClient;
-        private readonly HttpResponseMessageParser httpResponseMessageParser;
-
         public WorkspaceApiClient(HttpClient httpClient, HttpResponseMessageParser httpResponseMessageParser)
+            : base(httpClient, httpResponseMessageParser)
         {
-            this.httpClient = httpClient;
-            this.httpResponseMessageParser = httpResponseMessageParser;
         }
+
+        protected override string ApiBaseUrl => "api/WorkspaceApi/";
 
         public async Task<OperationResult<GetUserWorkspacesResponse>> GetUserWorkspacesAsync()
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, $"{ApiUrlBase}GetUserWorkspaces"));
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult<GetUserWorkspacesResponse>>(response);
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, $"{ApiBaseUrl}GetUserWorkspaces"));
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult<GetUserWorkspacesResponse>>(response);
         }
 
         public async Task<OperationResult<WorkspaceApiModel>> GetByIdAsync(GetWorkspaceByIdRequest requestModel)
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}GetById")
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiBaseUrl}GetById")
             {
                 Content = JsonContent.Create(requestModel)
             });
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult<WorkspaceApiModel>>(response);
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult<WorkspaceApiModel>>(response);
         }
 
         public async Task<OperationResult> CreateAsync(CreateWorkspaceRequest requestModel)
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}Create")
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiBaseUrl}Create")
             {
                 Content = JsonContent.Create(requestModel)
             });
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
         }
 
         public async Task<OperationResult> UpdateAsync(UpdateWorkspaceRequest requestModel)
         {
-            HttpResponseMessage response = await httpClient.SendAsync(request: new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}Update")
+            HttpResponseMessage response = await HttpClient.SendAsync(request: new HttpRequestMessage(HttpMethod.Post, $"{ApiBaseUrl}Update")
             {
                 Content = JsonContent.Create(requestModel)
             });
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
         }
 
         public async Task<OperationResult> DeleteAsync(DeleteWorkspaceRequest requestModel)
         {
-            HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiUrlBase}Delete")
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, $"{ApiBaseUrl}Delete")
             {
                 Content = JsonContent.Create(requestModel)
             });
-            return await httpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
         }
     }
 }
