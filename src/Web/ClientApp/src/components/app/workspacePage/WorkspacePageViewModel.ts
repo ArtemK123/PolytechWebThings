@@ -77,7 +77,13 @@ export class WorkspacePageViewModel implements IViewModel {
     }
 
     public confirmEditRuleAction(updatedRule: IRuleModel): void {
-        console.log("editRuleConfirmAction");
+        if (!updatedRule.name) {
+            alert("Please, provide rule name");
+        }
+        if (updatedRule.steps.length === 0) {
+            alert("Please, add at least one step");
+        }
+        alert("confirmEditRuleAction");
     }
 
     public cancelEditRuleAction(): void {
@@ -94,13 +100,6 @@ export class WorkspacePageViewModel implements IViewModel {
             this.rules.remove(rule);
             console.log(`Deleted rule ${rule}`);
         }
-    }
-
-    private generateEmptyRuleModel(): IRuleModel {
-        return {
-            name: "",
-            steps: [],
-        } as IRuleModel;
     }
 
     private fetchThings() {

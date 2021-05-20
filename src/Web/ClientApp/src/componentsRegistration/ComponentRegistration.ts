@@ -25,6 +25,7 @@ import {CollapseArrowComponent} from "src/components/common/collapseArrow/Collap
 import {EditRulePageComponent} from "src/components/app/workspacePage/editRulePage/EditRulePageComponent";
 import {ExecuteRuleStepCardComponent} from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ExecuteRuleStepCard/ExecuteRuleStepCardComponent";
 import {ChangeThingStateStepCardComponent} from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ChangeThingStateStepCard/ChangeThingStateStepCardComponent";
+import {EditableStepComponentComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/EditableStepComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -56,6 +57,7 @@ export class ComponentRegistration {
         ko.components.register("edit-rule-page", new EditRulePageComponent().generateDescriptor());
         ko.components.register("execute-rule-step-card", new ExecuteRuleStepCardComponent().generateDescriptor());
         ko.components.register("change-thing-state-step-card", new ChangeThingStateStepCardComponent().generateDescriptor());
+        ko.components.register("editable-step", new EditableStepComponentComponent().generateDescriptor());
     }
 
     private static registerCommonComponents() {

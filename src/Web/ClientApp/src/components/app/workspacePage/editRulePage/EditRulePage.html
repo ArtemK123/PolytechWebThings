@@ -5,10 +5,14 @@
         <input type="text" data-bind="textInput: ruleName">
     </div>
     <h5>Steps</h5>
-    <div data-bind="foreach: steps">
-        <rule-step-card params="{ step: $data, index: $index }"></rule-step-card>
+    <div>
+        <!-- ko foreach: steps -->
+            <editable-step params="{ step: $data, index: $index, updateAction: $parent.updateStep.bind($parent), deleteAction: $parent.deleteStep.bind($parent) }"></editable-step>
+            <hr/>
+        <!-- /ko -->
     </div>
     <div>
+        <button class="edit-rule-page__new-step-button" data-bind="click: addStep">New step</button><br/>
         <button data-bind="click: handleCancel">Cancel</button>
         <button data-bind="click: handleConfirm">Confirm</button>
     </div>

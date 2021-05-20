@@ -7,7 +7,7 @@ import { StepType } from "src/components/app/workspacePage/models/StepType";
 import { IExecuteRuleStepModel } from "src/components/app/workspacePage/models/IExecuteRuleStepModel";
 import { IChangeThingStateStepModel } from "src/components/app/workspacePage/models/IChangeThingStateStepModel";
 import { OperationStatus } from "src/backendApi/models/entities/OperationResult/OperationStatus";
-import {IStepModel} from "src/components/app/workspacePage/models/IStepModel";
+import { IStepModel } from "src/components/app/workspacePage/models/IStepModel";
 
 export class EditRulePageViewModel implements IViewModel {
     public readonly params: IEditRulePageParams;
@@ -30,18 +30,32 @@ export class EditRulePageViewModel implements IViewModel {
     }
 
     public handleConfirm(): void {
-        console.log("handleConfirm");
+        const newRule: IRuleModel = {
+            id: this.ruleId,
+            name: this.ruleName(),
+            steps: this.steps(),
+        };
+        this.params.confirmAction(newRule);
     }
 
     public handleCancel(): void {
         this.params.cancelAction();
     }
 
-    private generateEmptyRule(): IRuleModel {
-        return {
-            name: "",
-            steps: [],
-        } as IRuleModel;
+    public addStep(): void {
+        console.log("addStep");
+    }
+
+    public updateStep(step: IStepModel):void {
+        console.log("updateStep");
+    }
+
+    public deleteStep(stepIndex: number):void {
+        const removedStep: IStepModel = this.steps()[stepIndex];
+        if (!removedStep) {
+            throw new Error("Can not find step to remove");
+        }
+        this.steps.remove(this.steps()[stepIndex]);
     }
 
     private getHardcodedApiResponse(): Promise<IOperationResult<IRuleModel>> {
