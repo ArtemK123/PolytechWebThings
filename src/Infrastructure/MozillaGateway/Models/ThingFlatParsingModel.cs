@@ -7,21 +7,21 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Models
 {
      internal class ThingFlatParsingModel
      {
-         public string Title { get; init; }
+         public string Title { get; init; } = default!;
 
          [JsonPropertyName("@type")]
-         public IReadOnlyCollection<string> Types { get; init; }
+         public IReadOnlyCollection<string> Types { get; init; } = default!;
 
-         public string Description { get; init; }
+         public string Description { get; init; } = default!;
 
-         public string Href { get; init; }
+         public string Href { get; init; } = default!;
 
-         public string SelectedCapability { get; init; }
+         public string SelectedCapability { get; init; } = default!;
 
-         public string Id { get; init; }
+         public string Id { get; init; } = default!;
 
-         public IReadOnlyCollection<Link> Links { get; init; }
+         public IReadOnlyCollection<Link> Links { get; init; } = default!;
 
-         public IReadOnlyDictionary<string, JsonElement> Properties { get; init; }
+         public IReadOnlyDictionary<string, JsonElement> Properties { get; init; } = default!;
      }
 }

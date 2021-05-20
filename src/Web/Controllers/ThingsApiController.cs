@@ -6,6 +6,7 @@ using Application.Commands.ChangePropertyState;
 using Application.Converters;
 using Application.Queries.GetThingState;
 using Application.Queries.GetWorkspaceWithThings;
+using Domain.Entities.WebThingsGateway.Properties;
 using Domain.Entities.WebThingsGateway.Things;
 using Domain.Entities.Workspace;
 using MediatR;
@@ -62,7 +63,9 @@ namespace Web.Controllers
                 new ThingStateApiModel
                 {
                     ThingId = thingState.Thing.Id,
-                    PropertyStates = thingState.PropertyStates.ToDictionary(pair => pair.Key.Name, pair => pair.Value)
+
+                    // ReSharper disable once RedundantTypeArgumentsOfMethod - Without explicit cast the nullability warning [CS8619] is shown
+                    PropertyStates = thingState.PropertyStates.ToDictionary<KeyValuePair<Property, string?>, string, string?>(pair => pair.Key.Name, pair => pair.Value)
                 });
         }
 

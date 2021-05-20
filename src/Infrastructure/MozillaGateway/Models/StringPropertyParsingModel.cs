@@ -2,6 +2,6 @@
 {
     internal record StringPropertyParsingModel : PropertyParsingModelBase
     {
-        public string Value { get; init; }
+        public string Value { get; init; } = default!;
     }
 }

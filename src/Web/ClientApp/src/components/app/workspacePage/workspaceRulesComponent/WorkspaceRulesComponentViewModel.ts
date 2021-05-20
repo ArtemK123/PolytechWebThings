@@ -1,4 +1,3 @@
-import * as ko from "knockout";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { RedirectHandler } from "src/services/RedirectHandler";
 import { IWorkspaceRulesComponentParams } from "src/components/app/workspacePage/workspaceRulesComponent/IWorkspaceRulesComponentParams";

@@ -4,6 +4,6 @@
     {
         public int Value { get; init; }
 
-        public string Unit { get; init; }
+        public string Unit { get; init; } = default!;
     }
 }

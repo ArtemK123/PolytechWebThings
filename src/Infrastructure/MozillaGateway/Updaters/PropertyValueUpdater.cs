@@ -17,21 +17,21 @@ namespace PolytechWebThings.Infrastructure.MozillaGateway.Updaters
             this.gatewayMessageSender = gatewayMessageSender;
         }
 
-        public async Task UpdateAsync(Property property, bool newValue)
+        public async Task UpdateAsync(Property property, bool? newValue)
         {
-            string gatewayRequestBody = "{" + Quote + property.Name + Quote + ":" + newValue.ToString().ToLower() + "}";
+            string gatewayRequestBody = "{" + Quote + property.Name + Quote + ":" + newValue?.ToString().ToLower() + "}";
             HttpResponseMessage response = await gatewayMessageSender.UpdatePropertyStateAsync(property, gatewayRequestBody);
             ThrowIfInvalid(response);
         }
 
-        public async Task UpdateAsync(Property property, string newValue)
+        public async Task UpdateAsync(Property property, string? newValue)
         {
             string gatewayRequestBody = "{" + Quote + property.Name + Quote + ":" + Quote + newValue + Quote + "}";
             HttpResponseMessage response = await gatewayMessageSender.UpdatePropertyStateAsync(property, gatewayRequestBody);
             ThrowIfInvalid(response: response);
         }
 
-        public async Task UpdateAsync(Property property, int newValue)
+        public async Task UpdateAsync(Property property, int? newValue)
         {
             string gatewayRequestBody = "{" + Quote + property.Name + Quote + ":" + newValue + "}";
             HttpResponseMessage response = await gatewayMessageSender.UpdatePropertyStateAsync(property, gatewayRequestBody);

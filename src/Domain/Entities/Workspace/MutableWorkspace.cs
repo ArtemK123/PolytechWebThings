@@ -2,12 +2,12 @@
 {
     public record MutableWorkspace
     {
-        public string Name { get; init; }
+        public string Name { get; init; } = default!;
 
-        public string GatewayUrl { get; init; }
+        public string GatewayUrl { get; init; } = default!;
 
-        public string AccessToken { get; init; }
+        public string AccessToken { get; init; } = default!;
 
-        public string UserEmail { get; init; }
+        public string UserEmail { get; init; } = default!;
     }
 }
