@@ -17,8 +17,17 @@
            }"></editable-step>
             <hr/>
         <!-- /ko -->
-        <!-- ko if: shouldShowNewStepInputs -->
-            <div>New rule input</div>
+        <!-- ko if: shouldShowNewStepCard -->
+            <div class="edit-rule-page__new-step-card-container">
+                <step-edit-card params="{
+                    step: generateEmptyStep(),
+                    index: null,
+                    things: params.things,
+                    availableRuleNames: availableRuleNames,
+                    confirmEditAction: confirmAddNewStepAction.bind($data),
+                    cancelEditAction: cancelAddNewStepAction.bind($data),
+                }"></step-edit-card>
+            </div>
             <hr/>
         <!-- /ko -->
     </div>

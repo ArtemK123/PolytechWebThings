@@ -14,7 +14,7 @@ export class EditRulePageViewModel implements IViewModel {
     public readonly ruleName: ko.Observable<string> = ko.observable("");
     public readonly steps: ko.ObservableArray<IStepModel> = ko.observableArray([]);
     public readonly availableRuleNames: ko.Computed<string[]>;
-    public readonly shouldShowNewStepInputs: ko.Observable<boolean> = ko.observable(false);
+    public readonly shouldShowNewStepCard: ko.Observable<boolean> = ko.observable(false);
 
     private ruleId: number;
 
@@ -45,7 +45,7 @@ export class EditRulePageViewModel implements IViewModel {
     }
 
     public addStep(): void {
-        this.shouldShowNewStepInputs(true);
+        this.shouldShowNewStepCard(true);
     }
 
     public updateStep(stepIndex: number, updatedStep: IStepModel): void {
@@ -54,12 +54,28 @@ export class EditRulePageViewModel implements IViewModel {
         this.steps(currentSteps);
     }
 
-    public deleteStep(stepIndex: number):void {
+    public deleteStep(stepIndex: number): void {
         const removedStep: IStepModel = this.steps()[stepIndex];
         if (!removedStep) {
             throw new Error("Can not find step to remove");
         }
         this.steps.remove(this.steps()[stepIndex]);
+    }
+
+    public generateEmptyStep(): IStepModel {
+        return {
+            ruleName: "",
+            stepType: StepType.ExecuteRule,
+        } as IExecuteRuleStepModel;
+    }
+
+    public confirmAddNewStepAction(step: IStepModel): void {
+        this.steps.push(step);
+        this.shouldShowNewStepCard(false);
+    }
+
+    public cancelAddNewStepAction(): void {
+        this.shouldShowNewStepCard(false);
     }
 
     private getHardcodedApiResponse(): Promise<IOperationResult<IRuleModel>> {
