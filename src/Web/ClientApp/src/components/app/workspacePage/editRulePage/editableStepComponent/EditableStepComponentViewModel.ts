@@ -32,6 +32,7 @@ export class EditableStepComponentViewModel implements IViewModel {
     }
 
     public cancelEditAction(): void {
+        this.currentStepType(StepType[this.params.step.stepType]);
         this.inEditState(false);
     }
 }

@@ -26,8 +26,8 @@ import { EditRulePageComponent } from "src/components/app/workspacePage/editRule
 import { ExecuteRuleStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ExecuteRuleStepCard/ExecuteRuleStepCardComponent";
 import { ChangeThingStateStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ChangeThingStateStepCard/ChangeThingStateStepCardComponent";
 import { EditableStepComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/EditableStepComponent";
-import { EditStepCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/EditStepCardComponent";
-import { ChangeThingStateStepEditCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
+import { ChangeThingStateStepEditCardComponent }
+    from "src/components/app/workspacePage/editRulePage/editableStepComponent/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
 import { ExecuteRuleStepEditCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/executeRuleStepEditCard/ExecuteRuleStepEditCardComponent";
 
 export class ComponentRegistration {
@@ -61,7 +61,6 @@ export class ComponentRegistration {
         ko.components.register("execute-rule-step-card", new ExecuteRuleStepCardComponent().generateDescriptor());
         ko.components.register("change-thing-state-step-card", new ChangeThingStateStepCardComponent().generateDescriptor());
         ko.components.register("editable-step", new EditableStepComponent().generateDescriptor());
-        ko.components.register("edit-step-card", new EditStepCardComponent().generateDescriptor());
         ko.components.register("change-thing-state-step-edit-card", new ChangeThingStateStepEditCardComponent().generateDescriptor());
         ko.components.register("execute-rule-step-edit-card", new ExecuteRuleStepEditCardComponent().generateDescriptor());
     }

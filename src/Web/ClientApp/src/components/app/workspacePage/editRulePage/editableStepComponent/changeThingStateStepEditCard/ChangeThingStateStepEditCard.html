@@ -1,9 +1,29 @@
 <div class="change-thing-state-step-edit-card">
-    <div>
-        <select data-bind="options: params.stepTypes, value: params.currentStepType"></select>
-        <span>ChangeThing state card</span>
+    <div class="change-thing-state-step-edit-card__inputs-container">
+        <div class="change-thing-state-step-edit-card__input-container">
+            <span>Select step type</span>
+            <select data-bind="options: params.stepTypes, value: params.currentStepType"></select>
+        </div>
+        <div class="change-thing-state-step-edit-card__input-container">
+            <label>
+                Thing<br/>
+                <input class="change-thing-state-step-edit-card__input" type="text" data-bind="textInput: thingName">
+            </label>
+        </div>
+        <div class="change-thing-state-step-edit-card__input-container">
+            <label>
+                Property<br/>
+                <input class="change-thing-state-step-edit-card__input" type="text" data-bind="textInput: propertyName">
+            </label>
+        </div>
+        <div class="change-thing-state-step-edit-card__input-container">
+            <label>
+                New state<br/>
+                <input class="change-thing-state-step-edit-card__input" type="text" data-bind="textInput: newPropertyState">
+            </label>
+        </div>
     </div>
-    <div>
+    <div class="change-thing-state-step-edit-card__buttons-container">
         <button data-bind="click: handleConfirm">Confirm</button>
         <button data-bind="click: handleCancel">Cancel</button>
     </div>
