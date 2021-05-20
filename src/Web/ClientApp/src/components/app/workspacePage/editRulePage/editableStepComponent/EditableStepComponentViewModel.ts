@@ -17,4 +17,12 @@ export class EditableStepComponentViewModel implements IViewModel {
     public handleDeleteButtonClick(): void {
         this.params.deleteAction(this.params.index());
     }
+
+    public confirmEditAction(): void {
+        console.log("confirmEditAction");
+    }
+
+    public cancelEditAction(): void {
+        this.inEditState(false);
+    }
 }

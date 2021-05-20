@@ -4,7 +4,7 @@ import { EditableStepComponentViewModel } from "src/components/app/workspacePage
 import template from "./EditableStepComponent.html";
 import "./EditableStepComponent.scss";
 
-export class EditableStepComponentComponent implements IComponent {
+export class EditableStepComponent implements IComponent {
     public generateDescriptor(): IComponentDescriptor {
         return { viewModel: EditableStepComponentViewModel, template } as IComponentDescriptor;
     }

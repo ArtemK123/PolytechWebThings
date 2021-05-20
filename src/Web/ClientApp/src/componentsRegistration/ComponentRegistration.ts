@@ -20,12 +20,16 @@ import { UpdateWorkspacePageComponent } from "src/components/app/updateWorkspace
 import { WorkspaceRulesComponent } from "src/components/app/workspacePage/workspaceRulesComponent/WorkspaceRulesComponent";
 import { ThingPropertyCardComponent } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/thingPropertyCard/ThingPropertyCardComponent";
 import { RuleCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/RuleCardComponent";
-import {RuleStepCardComponent} from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/RuleStepCardComponent";
-import {CollapseArrowComponent} from "src/components/common/collapseArrow/CollapseArrowComponent";
-import {EditRulePageComponent} from "src/components/app/workspacePage/editRulePage/EditRulePageComponent";
-import {ExecuteRuleStepCardComponent} from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ExecuteRuleStepCard/ExecuteRuleStepCardComponent";
-import {ChangeThingStateStepCardComponent} from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ChangeThingStateStepCard/ChangeThingStateStepCardComponent";
-import {EditableStepComponentComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/EditableStepComponent";
+import { RuleStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/RuleStepCardComponent";
+import { CollapseArrowComponent } from "src/components/common/collapseArrow/CollapseArrowComponent";
+import { EditRulePageComponent } from "src/components/app/workspacePage/editRulePage/EditRulePageComponent";
+import { ExecuteRuleStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ExecuteRuleStepCard/ExecuteRuleStepCardComponent";
+import { ChangeThingStateStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ChangeThingStateStepCard/ChangeThingStateStepCardComponent";
+import { EditableStepComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/EditableStepComponent";
+import { EditStepCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/EditStepCardComponent";
+import {ChangeThingStateStepEditCardComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
+import {ExecuteRuleStepEditCardViewModel} from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/executeRuleStepEditCard/ExecuteRuleStepEditCardViewModel";
+import {ExecuteRuleStepEditCardComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/executeRuleStepEditCard/ExecuteRuleStepEditCardComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -57,7 +61,10 @@ export class ComponentRegistration {
         ko.components.register("edit-rule-page", new EditRulePageComponent().generateDescriptor());
         ko.components.register("execute-rule-step-card", new ExecuteRuleStepCardComponent().generateDescriptor());
         ko.components.register("change-thing-state-step-card", new ChangeThingStateStepCardComponent().generateDescriptor());
-        ko.components.register("editable-step", new EditableStepComponentComponent().generateDescriptor());
+        ko.components.register("editable-step", new EditableStepComponent().generateDescriptor());
+        ko.components.register("edit-step-card", new EditStepCardComponent().generateDescriptor());
+        ko.components.register("change-thing-state-step-edit-card", new ChangeThingStateStepEditCardComponent().generateDescriptor());
+        ko.components.register("execute-rule-step-edit-card", new ExecuteRuleStepEditCardComponent().generateDescriptor());
     }
 
     private static registerCommonComponents() {

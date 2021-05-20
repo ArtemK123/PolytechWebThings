@@ -1,14 +1,16 @@
-<div class="editable-step">
-    <div>
-        <!-- ko if: inEditState -->
-            <div>Edit state</div>
-        <!-- /ko -->
-        <!-- ko ifnot: inEditState -->
+<div>
+    <!-- ko if: inEditState -->
+        <edit-step-card params="{ step: params.step, confirmAction: confirmEditAction.bind($data), cancelAction: cancelEditAction.bind($data) }"></edit-step-card>
+    <!-- /ko -->
+    <!-- ko ifnot: inEditState -->
+    <div class="editable-step__non-editable-container">
+        <div>
             <rule-step-card params="{ step: params.step, index: params.index }"></rule-step-card>
-        <!-- /ko -->
+        </div>
+        <div>
+            <button data-bind="click: handleEditButtonClick">Edit</button>
+            <button data-bind="click: handleDeleteButtonClick">Delete</button>
+        </div>
     </div>
-    <div>
-        <button data-bind="click: handleEditButtonClick">Edit</button>
-        <button data-bind="click: handleDeleteButtonClick">Delete</button>
-    </div>
+    <!-- /ko -->
 </div>
