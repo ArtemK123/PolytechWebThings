@@ -1,9 +1,9 @@
 <div class="edit-step-card">
-    <!-- ko if: params.step.stepType === 0-->
-        <change-thing-state-step-edit-card></change-thing-state-step-edit-card>
+    <!-- ko if: shouldShowChangeThingStateStepCard-->
+        <change-thing-state-step-edit-card params="step: params.step, currentStepType: currentStepType, stepTypes: stepTypes"></change-thing-state-step-edit-card>
     <!-- /ko -->
-    <!-- ko if: params.step.stepType === 1-->
-        <execute-rule-step-edit-card></execute-rule-step-edit-card>
+    <!-- ko if: shouldShowExecuteRuleStepCard-->
+        <execute-rule-step-edit-card params="step: params.step, currentStepType: currentStepType, stepTypes: stepTypes"></execute-rule-step-edit-card>
     <!-- /ko -->
     <div>
         <button data-bind="click: handleConfirm">Confirm</button>

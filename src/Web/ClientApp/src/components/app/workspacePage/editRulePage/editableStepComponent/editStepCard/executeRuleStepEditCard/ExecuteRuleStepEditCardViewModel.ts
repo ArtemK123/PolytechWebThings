@@ -5,10 +5,8 @@ import { IExecuteRuleStepEditCardParams }
 
 export class ExecuteRuleStepEditCardViewModel implements IViewModel {
     public readonly params: IExecuteRuleStepEditCardParams;
-    public readonly titleText: ko.Computed<string>;
 
     constructor(params: IExecuteRuleStepEditCardParams) {
         this.params = params;
-        this.titleText = ko.computed(() => "Change thing state");
     }
 }

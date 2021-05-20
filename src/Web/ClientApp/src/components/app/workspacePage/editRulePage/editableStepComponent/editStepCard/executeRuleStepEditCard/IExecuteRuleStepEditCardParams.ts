@@ -3,4 +3,6 @@ import { IChangeThingStateStepModel } from "src/components/app/workspacePage/mod
 
 export interface IExecuteRuleStepEditCardParams {
     step: IChangeThingStateStepModel;
+    currentStepType: ko.Observable<string>;
+    stepTypes: string[];
 }
