@@ -1,7 +1,6 @@
 import * as ko from "knockout";
 import { HeaderComponent } from "src/components/app/header/HeaderComponent";
 import { UnauthorizedHomePageComponent } from "src/components/app/homePage/unauthorizedHomePage/UnauthorizedHomePageComponent";
-import { CreateRuleModalComponent } from "src/components/app/workspacePage/createRuleModal/CreateRuleModalComponent";
 import { LoaderComponent } from "src/components/common/loader/LoaderComponent";
 import { ThingCardComponent } from "src/components/app/workspacePage/workspaceThingsComponent/thingCard/ThingCardComponent";
 import { LoginComponent } from "src/components/app/login/LoginComponent";
@@ -13,7 +12,6 @@ import { WorkspaceThingsComponent } from "src/components/app/workspacePage/works
 import { AppComponent } from "src/components/app/AppComponent";
 import { RouterComponent } from "src/components/common/router/RouterComponent";
 import { RegisterComponent } from "src/components/app/register/RegisterComponent";
-import { CreateStepModalComponent } from "src/components/app/workspacePage/createRuleModal/CreateStepModal/CreateStepModalComponent";
 import { HomePageComponent } from "src/components/app/homePage/HomePageComponent";
 import { WorkspacePageComponent } from "src/components/app/workspacePage/WorkspacePageComponent";
 import { UpdateWorkspacePageComponent } from "src/components/app/updateWorkspacePage/UpdateWorkspacePageComponent";
@@ -50,8 +48,6 @@ export class ComponentRegistration {
         ko.components.register("workspace-page", new WorkspacePageComponent().generateDescriptor());
         ko.components.register("update-workspace-page", new UpdateWorkspacePageComponent().generateDescriptor());
         ko.components.register("thing-card", new ThingCardComponent().generateDescriptor());
-        ko.components.register("create-rule-modal", new CreateRuleModalComponent().generateDescriptor());
-        ko.components.register("create-step-modal", new CreateStepModalComponent().generateDescriptor());
         ko.components.register("workspace-things-component", new WorkspaceThingsComponent().generateDescriptor());
         ko.components.register("workspace-rules-component", new WorkspaceRulesComponent().generateDescriptor());
         ko.components.register("thing-property-card", new ThingPropertyCardComponent().generateDescriptor());
