@@ -63,14 +63,14 @@ export class EditRulePageViewModel implements IViewModel {
         return Promise.resolve({
             status: OperationStatus.Success,
             data: {
-                id: this.params.ruleId,
+                id: 1,
                 name: "Rule1",
                 steps: [
                     { stepType: StepType.ExecuteRule, ruleName: "Rule2" } as IExecuteRuleStepModel,
                     {
                         stepType: StepType.ChangeThingState,
-                        thingName: "TestThing",
-                        propertyName: "Property1",
+                        thingName: "Virtual Dimmable Color Light",
+                        propertyName: "on",
                         newPropertyState: "true",
                     } as IChangeThingStateStepModel],
             } as IRuleModel,

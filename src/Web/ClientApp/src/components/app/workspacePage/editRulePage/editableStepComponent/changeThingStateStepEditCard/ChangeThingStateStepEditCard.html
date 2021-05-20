@@ -9,13 +9,13 @@
         <div class="change-thing-state-step-edit-card__input-container">
             <label>
                 Thing<br/>
-                <input class="change-thing-state-step-edit-card__input" type="text" data-bind="textInput: thingName">
+                <select data-bind="options: thingNames, value: thingName"></select>
             </label>
         </div>
         <div class="change-thing-state-step-edit-card__input-container">
             <label>
                 Property<br/>
-                <input class="change-thing-state-step-edit-card__input" type="text" data-bind="textInput: propertyName">
+                <select data-bind="options: propertyNames, value: propertyName"></select>
             </label>
         </div>
         <div class="change-thing-state-step-edit-card__input-container">

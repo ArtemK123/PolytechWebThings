@@ -1,7 +1,11 @@
-﻿import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
+﻿import * as ko from "knockout";
+import { IRuleModel } from "src/components/app/workspacePage/models/IRuleModel";
+import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 
 export interface IEditRulePageParams {
     ruleId: number | undefined;
-    confirmAction: (updatedRule: IRuleModel) => {},
-    cancelAction: () => {}
+    things: ko.ObservableArray<IThingApiModel>;
+    rules: ko.ObservableArray<IThingApiModel>;
+    confirmAction: (updatedRule: IRuleModel) => {};
+    cancelAction: () => {};
 }

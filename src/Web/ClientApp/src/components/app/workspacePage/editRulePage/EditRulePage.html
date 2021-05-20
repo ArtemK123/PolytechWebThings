@@ -10,6 +10,7 @@
             <editable-step params="{
                 step: $data,
                 index: $index,
+                things: $parent.params.things,
                 availableRuleNames: $parent.availableRuleNames,
                 updateAction: $parent.updateStep.bind($parent),
                 deleteAction: $parent.deleteStep.bind($parent)

@@ -6,6 +6,8 @@ import { StepType } from "src/components/app/workspacePage/models/StepType";
 
 export class ChangeThingStateStepEditCardViewModel implements IViewModel {
     public readonly params: IChangeThingStateStepEditCardParams;
+    public readonly thingNames: ko.Computed<string[]>;
+    public readonly propertyNames: ko.Computed<string[]>;
     public readonly thingName: ko.Observable<string>;
     public readonly propertyName: ko.Observable<string>;
     public readonly newPropertyState: ko.Observable<string>;
@@ -15,6 +17,9 @@ export class ChangeThingStateStepEditCardViewModel implements IViewModel {
         this.thingName = ko.observable(params.step.thingName);
         this.propertyName = ko.observable(params.step.propertyName);
         this.newPropertyState = ko.observable(params.step.newPropertyState);
+
+        this.thingNames = ko.computed(() => params.things().map((thing) => thing.title));
+        this.propertyNames = ko.computed(() => params.things().find((thing) => thing.title === this.thingName()).properties.map((property) => property.name));
     }
 
     public handleConfirm(): void {

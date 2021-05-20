@@ -62,18 +62,25 @@ export class WorkspacePageViewModel implements IViewModel {
 
     public generateCreateRulePageTag(): string {
         return `
-            <edit-rule-page
-                params='{ confirmAction: $parent.confirmEditRuleAction.bind($parent), cancelAction: $parent.cancelEditRuleAction.bind($parent) }'>
-            </edit-rule-page>`;
+            <edit-rule-page params='{
+                confirmAction: $parent.confirmEditRuleAction.bind($parent),
+                rules: $parent.rules,
+                things: $parent.things,
+                cancelAction: $parent.cancelEditRuleAction.bind($parent)
+            }'></edit-rule-page>`;
     }
 
     public generateEditRulePageTag(route: string): string {
         const chunks: string[] = route.split("/");
         const ruleId: string = chunks[4];
         return `
-            <edit-rule-page
-                params='{ ruleId: ${ruleId}, confirmAction: $parent.confirmEditRuleAction.bind($parent), cancelAction: $parent.cancelEditRuleAction.bind($parent) }'>
-            </edit-rule-page>`;
+            <edit-rule-page params='{
+                ruleId: ${ruleId},
+                rules: $parent.rules,
+                things: $parent.things,
+                confirmAction: $parent.confirmEditRuleAction.bind($parent), 
+                cancelAction: $parent.cancelEditRuleAction.bind($parent)
+            }'></edit-rule-page>`;
     }
 
     public confirmEditRuleAction(updatedRule: IRuleModel): void {
