@@ -1,25 +1,13 @@
 <div>
     <div class="editable-step__editable-container" data-bind="if: inEditState">
-        <!-- ko if: shouldShowChangeThingStateStepCard-->
-            <change-thing-state-step-edit-card params="{
-                step: params.step,
-                currentStepType: currentStepType,
-                things: params.things,
-                stepTypes: stepTypes,
-                confirmAction: confirmEditAction.bind($data),
-                cancelAction: cancelEditAction.bind($data)
-            }"></change-thing-state-step-edit-card>
-        <!-- /ko -->
-        <!-- ko if: shouldShowExecuteRuleStepCard-->
-            <execute-rule-step-edit-card params="{
-                step: params.step,
-                currentStepType: currentStepType,
-                stepTypes: stepTypes,
-                availableRuleNames: params.availableRuleNames,
-                confirmAction: confirmEditAction.bind($data),
-                cancelAction: cancelEditAction.bind($data)
-            }"></execute-rule-step-edit-card>
-        <!-- /ko -->
+        <step-edit-card params="{
+            step: params.step,
+            index: params.index,
+            things: params.things,
+            availableRuleNames: params.availableRuleNames,
+            confirmEditAction: confirmEditAction.bind($data),
+            cancelEditAction: cancelEditAction.bind($data),
+        }"></step-edit-card>
     </div>
     <!-- ko ifnot: inEditState -->
     <div class="editable-step__non-editable-container">

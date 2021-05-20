@@ -2,11 +2,11 @@
 import { IStepModel } from "src/components/app/workspacePage/models/IStepModel";
 import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 
-export interface IEditableStepComponentParams {
+export interface IStepEditCardParams {
     step: IStepModel;
     index: ko.Observable<number>;
     things: ko.ObservableArray<IThingApiModel>;
     availableRuleNames: ko.Computed<string[]>
-    deleteAction: (stepIndex: number) => {};
-    updateAction: (stepIndex: number, updatedStep: IStepModel) => {};
+    confirmEditAction: (step: IStepModel) => {};
+    cancelEditAction: () => {};
 }

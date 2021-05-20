@@ -17,6 +17,10 @@
            }"></editable-step>
             <hr/>
         <!-- /ko -->
+        <!-- ko if: shouldShowNewStepInputs -->
+            <div>New rule input</div>
+            <hr/>
+        <!-- /ko -->
     </div>
     <div>
         <button class="edit-rule-page__new-step-button" data-bind="click: addStep">New step</button><br/>

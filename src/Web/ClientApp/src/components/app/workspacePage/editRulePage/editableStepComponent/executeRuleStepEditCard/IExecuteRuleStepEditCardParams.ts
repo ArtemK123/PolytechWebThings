@@ -6,7 +6,7 @@ export interface IExecuteRuleStepEditCardParams {
     step: IExecuteRuleStepModel;
     currentStepType: ko.Observable<string>;
     stepTypes: string[];
-    availableRuleNames: ko.ObservableArray<string>;
-    confirmAction: (step: IStepModel) => {};
-    cancelAction: () => {};
+    availableRuleNames: ko.Computed<string[]>
+    confirmEditAction: (step: IStepModel) => {};
+    cancelEditAction: () => {};
 }

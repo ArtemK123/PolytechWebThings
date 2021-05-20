@@ -5,7 +5,7 @@ import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";
 export interface IEditRulePageParams {
     ruleId: number | undefined;
     things: ko.ObservableArray<IThingApiModel>;
-    rules: ko.ObservableArray<IThingApiModel>;
+    rules: ko.ObservableArray<IRuleModel>;
     confirmAction: (updatedRule: IRuleModel) => {};
     cancelAction: () => {};
 }

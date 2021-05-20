@@ -51,11 +51,11 @@ export class ChangeThingStateStepEditCardViewModel implements IViewModel {
             newPropertyState: this.newPropertyState(),
         } as IChangeThingStateStepModel;
 
-        this.params.confirmAction(updatedStep);
+        this.params.confirmEditAction(updatedStep);
     }
 
     public handleCancel(): void {
-        this.params.cancelAction();
+        this.params.cancelEditAction();
     }
 
     private getThing(thingName: string): IThingApiModel | undefined {

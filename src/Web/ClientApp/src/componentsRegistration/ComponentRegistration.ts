@@ -27,6 +27,7 @@ import { EditableStepComponent } from "src/components/app/workspacePage/editRule
 import { ChangeThingStateStepEditCardComponent }
     from "src/components/app/workspacePage/editRulePage/editableStepComponent/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
 import { ExecuteRuleStepEditCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/executeRuleStepEditCard/ExecuteRuleStepEditCardComponent";
+import {StepEditCardComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/StepEditCardComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
@@ -59,6 +60,7 @@ export class ComponentRegistration {
         ko.components.register("editable-step", new EditableStepComponent().generateDescriptor());
         ko.components.register("change-thing-state-step-edit-card", new ChangeThingStateStepEditCardComponent().generateDescriptor());
         ko.components.register("execute-rule-step-edit-card", new ExecuteRuleStepEditCardComponent().generateDescriptor());
+        ko.components.register("step-edit-card", new StepEditCardComponent().generateDescriptor());
     }
 
     private static registerCommonComponents() {

@@ -1,0 +1,20 @@
+<!-- ko if: shouldShowChangeThingStateStepCard-->
+    <change-thing-state-step-edit-card params="{
+        step: params.step,
+        currentStepType: currentStepType,
+        things: params.things,
+        stepTypes: stepTypes,
+        confirmEditAction: params.confirmEditAction,
+        cancelEditAction: params.cancelEditAction
+    }"></change-thing-state-step-edit-card>
+<!-- /ko -->
+<!-- ko if: shouldShowExecuteRuleStepCard-->
+    <execute-rule-step-edit-card params="{
+        step: params.step,
+        currentStepType: currentStepType,
+        stepTypes: stepTypes,
+        availableRuleNames: params.availableRuleNames,
+        confirmEditAction: params.confirmEditAction,
+        cancelEditAction: params.cancelEditAction
+    }"></execute-rule-step-edit-card>
+<!-- /ko -->

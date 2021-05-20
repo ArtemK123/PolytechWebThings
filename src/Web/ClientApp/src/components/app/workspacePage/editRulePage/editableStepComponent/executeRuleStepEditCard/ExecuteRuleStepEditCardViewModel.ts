@@ -19,10 +19,10 @@ export class ExecuteRuleStepEditCardViewModel implements IViewModel {
             ruleName: this.selectedRule(),
         } as IExecuteRuleStepModel;
 
-        this.params.confirmAction(updatedStep);
+        this.params.confirmEditAction(updatedStep);
     }
 
     public handleCancel(): void {
-        this.params.cancelAction();
+        this.params.cancelEditAction();
     }
 }

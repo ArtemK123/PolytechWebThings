@@ -8,6 +8,6 @@ export interface IChangeThingStateStepEditCardParams {
     currentStepType: ko.Observable<string>;
     things: ko.ObservableArray<IThingApiModel>;
     stepTypes: string[];
-    confirmAction: (step: IStepModel) => {};
-    cancelAction: () => {};
+    confirmEditAction: (step: IStepModel) => {};
+    cancelEditAction: () => {};
 }

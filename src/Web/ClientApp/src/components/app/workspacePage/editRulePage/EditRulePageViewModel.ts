@@ -13,7 +13,8 @@ export class EditRulePageViewModel implements IViewModel {
     public readonly params: IEditRulePageParams;
     public readonly ruleName: ko.Observable<string> = ko.observable("");
     public readonly steps: ko.ObservableArray<IStepModel> = ko.observableArray([]);
-    public readonly availableRuleNames: ko.ObservableArray<string> = ko.observableArray(["RuleA", "RuleB"]);
+    public readonly availableRuleNames: ko.Computed<string[]>;
+    public readonly shouldShowNewStepInputs: ko.Observable<boolean> = ko.observable(false);
 
     private ruleId: number;
 
@@ -27,7 +28,7 @@ export class EditRulePageViewModel implements IViewModel {
                     this.ruleId = result.data.id;
                 });
         }
-        this.ruleName();
+        this.availableRuleNames = ko.computed(() => this.params.rules().map((rule: IRuleModel) => rule.name));
     }
 
     public handleConfirm(): void {
@@ -44,7 +45,7 @@ export class EditRulePageViewModel implements IViewModel {
     }
 
     public addStep(): void {
-        console.log("addStep");
+        this.shouldShowNewStepInputs(true);
     }
 
     public updateStep(stepIndex: number, updatedStep: IStepModel): void {
