@@ -47,8 +47,10 @@ export class EditRulePageViewModel implements IViewModel {
         console.log("addStep");
     }
 
-    public updateStep(step: IStepModel):void {
-        console.log("updateStep");
+    public updateStep(stepIndex: number, updatedStep: IStepModel): void {
+        const currentSteps: IStepModel[] = this.steps();
+        currentSteps[stepIndex] = updatedStep;
+        this.steps(currentSteps);
     }
 
     public deleteStep(stepIndex: number):void {

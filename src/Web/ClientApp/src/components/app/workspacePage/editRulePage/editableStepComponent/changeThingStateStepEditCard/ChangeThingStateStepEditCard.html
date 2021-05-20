@@ -3,19 +3,19 @@
         <div class="change-thing-state-step-edit-card__input-container">
             <label>
                 Select step type<br/>
-                <select data-bind="options: params.stepTypes, value: params.currentStepType"></select>
+                <select class="change-thing-state-step-edit-card__input" data-bind="options: params.stepTypes, value: params.currentStepType"></select>
             </label>
         </div>
         <div class="change-thing-state-step-edit-card__input-container">
             <label>
                 Thing<br/>
-                <select data-bind="options: thingNames, value: thingName"></select>
+                <select class="change-thing-state-step-edit-card__input" data-bind="options: thingNames, value: selectedThingName"></select>
             </label>
         </div>
         <div class="change-thing-state-step-edit-card__input-container">
             <label>
                 Property<br/>
-                <select data-bind="options: propertyNames, value: propertyName"></select>
+                <select class="change-thing-state-step-edit-card__input" data-bind="options: propertyNames, value: selectedPropertyName"></select>
             </label>
         </div>
         <div class="change-thing-state-step-edit-card__input-container">

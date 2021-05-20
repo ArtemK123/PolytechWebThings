@@ -18,7 +18,8 @@ export class ExecuteRuleStepEditCardViewModel implements IViewModel {
             stepType: StepType.ExecuteRule,
             ruleName: this.selectedRule(),
         } as IExecuteRuleStepModel;
-        console.log(`handleConfirm ${JSON.stringify(updatedStep)}`);
+
+        this.params.confirmAction(updatedStep);
     }
 
     public handleCancel(): void {
