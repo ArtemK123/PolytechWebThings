@@ -1,7 +1,7 @@
 import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescriptor";
 import { IComponent } from "src/componentsRegistration/IComponent";
 import { ChangeThingStateStepEditCardViewModel }
-    from "src/components/app/workspacePage/editRulePage/editableStepComponent/changeThingStateStepEditCard/ChangeThingStateStepEditCardViewModel";
+    from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/changeThingStateStepEditCard/ChangeThingStateStepEditCardViewModel";
 import template from "./ChangeThingStateStepEditCard.html";
 import "./ChangeThingStateStepEditCard.scss";
 

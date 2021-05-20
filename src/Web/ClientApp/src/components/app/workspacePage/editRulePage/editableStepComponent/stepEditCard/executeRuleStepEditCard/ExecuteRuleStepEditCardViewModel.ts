@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
-import { IExecuteRuleStepEditCardParams } from "src/components/app/workspacePage/editRulePage/editableStepComponent/ExecuteRuleStepEditCard/IExecuteRuleStepEditCardParams";
+import { IExecuteRuleStepEditCardParams } from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/executeRuleStepEditCard//IExecuteRuleStepEditCardParams";
 import { IExecuteRuleStepModel } from "src/components/app/workspacePage/models/IExecuteRuleStepModel";
 import { StepType } from "src/components/app/workspacePage/models/StepType";
 

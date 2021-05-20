@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
-import { IChangeThingStateStepEditCardParams } from "src/components/app/workspacePage/editRulePage/editableStepComponent/changeThingStateStepEditCard/IChangeThingStateStepEditCardParams";
+import { IChangeThingStateStepEditCardParams } from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/changeThingStateStepEditCard/IChangeThingStateStepEditCardParams";
 import { IChangeThingStateStepModel } from "src/components/app/workspacePage/models/IChangeThingStateStepModel";
 import { StepType } from "src/components/app/workspacePage/models/StepType";
 import { IThingApiModel } from "src/backendApi/models/entities/IThingApiModel";

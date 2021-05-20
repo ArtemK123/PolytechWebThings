@@ -24,10 +24,11 @@ import { EditRulePageComponent } from "src/components/app/workspacePage/editRule
 import { ExecuteRuleStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ExecuteRuleStepCard/ExecuteRuleStepCardComponent";
 import { ChangeThingStateStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ChangeThingStateStepCard/ChangeThingStateStepCardComponent";
 import { EditableStepComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/EditableStepComponent";
+import { StepEditCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/StepEditCardComponent";
+import { ExecuteRuleStepEditCardComponent }
+    from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/executeRuleStepEditCard/ExecuteRuleStepEditCardComponent";
 import { ChangeThingStateStepEditCardComponent }
-    from "src/components/app/workspacePage/editRulePage/editableStepComponent/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
-import { ExecuteRuleStepEditCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/executeRuleStepEditCard/ExecuteRuleStepEditCardComponent";
-import {StepEditCardComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/StepEditCardComponent";
+    from "src/components/app/workspacePage/editRulePage/editableStepComponent/stepEditCard/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
