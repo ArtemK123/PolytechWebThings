@@ -27,9 +27,8 @@ import { ExecuteRuleStepCardComponent } from "src/components/app/workspacePage/w
 import { ChangeThingStateStepCardComponent } from "src/components/app/workspacePage/workspaceRulesComponent/ruleCard/ruleStepCard/ChangeThingStateStepCard/ChangeThingStateStepCardComponent";
 import { EditableStepComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/EditableStepComponent";
 import { EditStepCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/EditStepCardComponent";
-import {ChangeThingStateStepEditCardComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
-import {ExecuteRuleStepEditCardViewModel} from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/executeRuleStepEditCard/ExecuteRuleStepEditCardViewModel";
-import {ExecuteRuleStepEditCardComponent} from "src/components/app/workspacePage/editRulePage/editableStepComponent/editStepCard/executeRuleStepEditCard/ExecuteRuleStepEditCardComponent";
+import { ChangeThingStateStepEditCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/changeThingStateStepEditCard/ChangeThingStateStepEditCardComponent";
+import { ExecuteRuleStepEditCardComponent } from "src/components/app/workspacePage/editRulePage/editableStepComponent/executeRuleStepEditCard/ExecuteRuleStepEditCardComponent";
 
 export class ComponentRegistration {
     public registerBindings() {
