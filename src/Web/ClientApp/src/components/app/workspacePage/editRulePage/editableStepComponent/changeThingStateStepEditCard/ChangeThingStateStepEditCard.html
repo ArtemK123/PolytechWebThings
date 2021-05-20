@@ -1,8 +1,10 @@
 <div class="change-thing-state-step-edit-card">
     <div class="change-thing-state-step-edit-card__inputs-container">
         <div class="change-thing-state-step-edit-card__input-container">
-            <span>Select step type</span>
-            <select data-bind="options: params.stepTypes, value: params.currentStepType"></select>
+            <label>
+                Select step type<br/>
+                <select data-bind="options: params.stepTypes, value: params.currentStepType"></select>
+            </label>
         </div>
         <div class="change-thing-state-step-edit-card__input-container">
             <label>
@@ -23,7 +25,7 @@
             </label>
         </div>
     </div>
-    <div class="change-thing-state-step-edit-card__buttons-container">
+    <div>
         <button data-bind="click: handleConfirm">Confirm</button>
         <button data-bind="click: handleCancel">Cancel</button>
     </div>

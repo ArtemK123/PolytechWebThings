@@ -7,7 +7,13 @@
     <h5>Steps</h5>
     <div>
         <!-- ko foreach: steps -->
-            <editable-step params="{step: $data, index: $index, updateAction: $parent.updateStep.bind($parent), deleteAction: $parent.deleteStep.bind($parent) }"></editable-step>
+            <editable-step params="{
+                step: $data,
+                index: $index,
+                availableRuleNames: $parent.availableRuleNames,
+                updateAction: $parent.updateStep.bind($parent),
+                deleteAction: $parent.deleteStep.bind($parent)
+           }"></editable-step>
             <hr/>
         <!-- /ko -->
     </div>

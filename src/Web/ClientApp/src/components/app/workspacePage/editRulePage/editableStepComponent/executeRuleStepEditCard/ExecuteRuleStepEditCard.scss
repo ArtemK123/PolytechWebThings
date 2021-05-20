@@ -2,7 +2,22 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-content: center;
-  max-width: 600px;
+  max-width: 800px;
   padding: 5px 5px 5px 10px;
+  align-items: center;
+}
+
+.execute-rule-step-edit-card__inputs-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.execute-rule-step-edit-card__input-container {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.execute-rule-step-edit-card__input {
+  max-width: 100px;
 }

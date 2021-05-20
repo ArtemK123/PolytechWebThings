@@ -1,7 +1,7 @@
 import * as ko from "knockout";
 import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { IEditableStepComponentParams } from "src/components/app/workspacePage/editRulePage/EditableStepComponent/IEditableStepComponentParams";
-import {StepType} from "src/components/app/workspacePage/models/StepType";
+import { StepType } from "src/components/app/workspacePage/models/StepType";
 
 export class EditableStepComponentViewModel implements IViewModel {
     public readonly params: IEditableStepComponentParams;

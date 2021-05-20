@@ -1,7 +1,17 @@
 <div class="execute-rule-step-edit-card">
-    <div>
-        <select data-bind="options: params.stepTypes, value: params.currentStepType"></select>
-        <span>Execute rule card</span>
+    <div class="execute-rule-step-edit-card__inputs-container">
+        <div class="execute-rule-step-edit-card__input-container">
+            <label>
+                Select step type<br/>
+                <select data-bind="options: params.stepTypes, value: params.currentStepType"></select>
+            </label>
+        </div>
+        <div class="execute-rule-step-edit-card__input-container">
+            <label>
+                Rule<br/>
+                <select data-bind="options: params.availableRuleNames, value: selectedRule"></select>
+            </label>
+        </div>
     </div>
     <div>
         <button data-bind="click: handleConfirm">Confirm</button>

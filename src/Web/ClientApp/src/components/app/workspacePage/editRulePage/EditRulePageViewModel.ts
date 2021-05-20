@@ -13,6 +13,7 @@ export class EditRulePageViewModel implements IViewModel {
     public readonly params: IEditRulePageParams;
     public readonly ruleName: ko.Observable<string> = ko.observable("");
     public readonly steps: ko.ObservableArray<IStepModel> = ko.observableArray([]);
+    public readonly availableRuleNames: ko.ObservableArray<string> = ko.observableArray(["RuleA", "RuleB"]);
 
     private ruleId: number;
 

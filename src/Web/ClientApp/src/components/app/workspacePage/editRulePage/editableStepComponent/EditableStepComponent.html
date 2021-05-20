@@ -1,5 +1,5 @@
 <div>
-    <!-- ko if: inEditState -->
+    <div class="editable-step__editable-container" data-bind="if: inEditState">
         <!-- ko if: shouldShowChangeThingStateStepCard-->
             <change-thing-state-step-edit-card params="{
                 step: params.step,
@@ -14,11 +14,12 @@
                 step: params.step,
                 currentStepType: currentStepType,
                 stepTypes: stepTypes,
+                availableRuleNames: params.availableRuleNames,
                 confirmAction: confirmEditAction.bind($data),
                 cancelAction: cancelEditAction.bind($data)
             }"></execute-rule-step-edit-card>
         <!-- /ko -->
-    <!-- /ko -->
+    </div>
     <!-- ko ifnot: inEditState -->
     <div class="editable-step__non-editable-container">
         <div>
