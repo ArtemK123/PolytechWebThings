@@ -1,6 +1,6 @@
 ﻿namespace Web.Models.Rules.Steps
 {
-    public record ChangeThingStateStepApiModel : StepApiModel
+    public interface IChangeThingStateStepApiModel : IStepApiModel
     {
         public string? ThingId { get; init; }
 

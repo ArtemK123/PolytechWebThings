@@ -1,7 +1,17 @@
-﻿namespace Web.Models.Rules.Steps
+﻿using Domain.Entities.Rule;
+
+namespace Web.Models.Rules.Steps
 {
-    public abstract record StepApiModel
+    public record StepApiModel : IChangeThingStateStepApiModel, IExecuteRuleStepApiModel
     {
         public StepType? StepType { get; init; }
+
+        public string? ThingId { get; init; }
+
+        public string? PropertyName { get; init; }
+
+        public string? NewPropertyState { get; init; }
+
+        public string? RuleName { get; init; }
     }
 }

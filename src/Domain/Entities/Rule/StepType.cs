@@ -1,4 +1,4 @@
-﻿namespace Web.Models.Rules.Steps
+﻿namespace Domain.Entities.Rule
 {
     public enum StepType
     {

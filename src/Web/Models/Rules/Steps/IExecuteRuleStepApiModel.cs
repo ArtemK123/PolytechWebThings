@@ -1,6 +1,6 @@
 ﻿namespace Web.Models.Rules.Steps
 {
-    public record ExecuteRuleStepApiModel : StepApiModel
+    public interface IExecuteRuleStepApiModel : IStepApiModel
     {
         public string? RuleName { get; init; }
     }

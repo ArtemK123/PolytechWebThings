@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Domain.Entities.Rule;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.IntegrationTest.Controllers.CommonTestBases;
@@ -32,10 +33,10 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
                 RuleCreationModel = new RuleCreationApiModel
                 {
                     RuleName = "TestRuleName",
-                    Steps = new StepApiModel[]
+                    Steps = new[]
                     {
-                        new ExecuteRuleStepApiModel { StepType = StepType.ExecuteRule, RuleName = "Rule to execute 1" },
-                        new ChangeThingStateStepApiModel { StepType = StepType.ChangeThingState, ThingId = "Thing1", PropertyName = "Property1", NewPropertyState = "123" },
+                        new StepApiModel { StepType = StepType.ExecuteRule, RuleName = "Rule to execute 1" },
+                        new StepApiModel { StepType = StepType.ChangeThingState, ThingId = "Thing1", PropertyName = "Property1", NewPropertyState = "123" },
                     }
                 }
             };
