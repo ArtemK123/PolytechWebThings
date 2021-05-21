@@ -3,7 +3,7 @@ using Web.Models.Rules.Steps;
 
 namespace Web.Models.Rules
 {
-    public class RuleCreationApiModel
+    public record RuleCreationApiModel
     {
         public string? RuleName { get; init; }
 

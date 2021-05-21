@@ -1,6 +1,6 @@
 ﻿namespace Web.Models.Rules.Request
 {
-    public class CreateRuleRequest
+    public record CreateRuleRequest
     {
         public RuleCreationApiModel? RuleCreationModel { get; init; }
 
