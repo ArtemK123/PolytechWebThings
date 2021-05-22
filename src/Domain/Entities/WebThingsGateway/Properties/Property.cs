@@ -45,6 +45,8 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         protected IPropertyValueUpdater PropertyValueUpdater { get; }
 
+        public abstract bool IsValidValue(string? value);
+
         public abstract Task UpdateValueAsync(string? value);
     }
 }

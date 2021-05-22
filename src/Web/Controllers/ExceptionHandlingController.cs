@@ -32,6 +32,7 @@ namespace Web.Controllers
             { typeof(CanNotConnectToGatewayException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(GatewayAlreadyRegisteredException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(EntityNotFoundException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            { typeof(NotUniqueEntityException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(UserDoesNotHaveRequiredRightsException), exception => new OperationResult(OperationStatus.Forbidden, exception.Message) },
             {
                 typeof(BrokenGatewayCommunicationException), exception =>

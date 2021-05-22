@@ -39,11 +39,16 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public int Maximum { get; }
 
+        public override bool IsValidValue(string? value)
+        {
+            return int.TryParse(value, out int _);
+        }
+
         public override async Task UpdateValueAsync(string? value)
         {
             if (!int.TryParse(value, out int parsedValue))
             {
-                throw new CanNotParsePropertyValueException(ValueType, value);
+                throw new InvalidPropertyValueException(ValueType, value);
             }
 
             if (parsedValue < Minimum || parsedValue > Maximum)

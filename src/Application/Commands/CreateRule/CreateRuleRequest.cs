@@ -5,16 +5,16 @@ namespace Application.Commands.CreateRule
 {
     public record CreateRuleRequest : IRequest
     {
-        public CreateRuleRequest(int workspaceId, string usedEmail, RuleCreationModel ruleCreationModel)
+        public CreateRuleRequest(int workspaceId, string userEmail, RuleCreationModel ruleCreationModel)
         {
             WorkspaceId = workspaceId;
-            UsedEmail = usedEmail;
+            UserEmail = userEmail;
             RuleCreationModel = ruleCreationModel;
         }
 
         public int WorkspaceId { get; }
 
-        public string UsedEmail { get; }
+        public string UserEmail { get; }
 
         public RuleCreationModel RuleCreationModel { get; }
     }

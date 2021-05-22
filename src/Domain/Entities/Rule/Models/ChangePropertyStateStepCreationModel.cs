@@ -2,8 +2,8 @@
 {
     public class ChangePropertyStateStepCreationModel : StepCreationModel
     {
-        public ChangePropertyStateStepCreationModel(int executionOrder, string thingId, string propertyName, string newPropertyState)
-            : base(executionOrder, StepType.ChangeThingState)
+        public ChangePropertyStateStepCreationModel(StepType stepType, string thingId, string propertyName, string? newPropertyState)
+            : base(stepType)
         {
             ThingId = thingId;
             PropertyName = propertyName;
@@ -14,6 +14,6 @@
 
         public string PropertyName { get; }
 
-        public string NewPropertyState { get; }
+        public string? NewPropertyState { get; }
     }
 }

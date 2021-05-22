@@ -26,6 +26,11 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public string DefaultValue { get; }
 
+        public override bool IsValidValue(string? value)
+        {
+            return true;
+        }
+
         public override async Task UpdateValueAsync(string? value)
         {
             await PropertyValueUpdater.UpdateAsync(this, value);

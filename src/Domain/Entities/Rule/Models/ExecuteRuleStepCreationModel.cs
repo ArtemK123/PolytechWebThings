@@ -2,10 +2,9 @@
 {
     public class ExecuteRuleStepCreationModel : StepCreationModel
     {
-        public ExecuteRuleStepCreationModel(int executionOrder, string ruleName)
-            : base(executionOrder, StepType.ExecuteRule)
+        public ExecuteRuleStepCreationModel(StepType stepType)
+            : base(stepType)
         {
-            RuleName = ruleName;
         }
 
         public string RuleName { get; }

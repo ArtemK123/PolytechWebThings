@@ -27,11 +27,16 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public bool DefaultValue { get; }
 
+        public override bool IsValidValue(string? value)
+        {
+            return bool.TryParse(value, out bool _);
+        }
+
         public override async Task UpdateValueAsync(string? value)
         {
             if (!bool.TryParse(value, out bool parsedNewValue))
             {
-                throw new CanNotParsePropertyValueException(ValueType, value);
+                throw new InvalidPropertyValueException(ValueType, value);
             }
 
             await PropertyValueUpdater.UpdateAsync(this, parsedNewValue);

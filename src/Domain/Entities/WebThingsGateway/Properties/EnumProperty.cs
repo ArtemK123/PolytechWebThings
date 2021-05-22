@@ -29,9 +29,14 @@ namespace Domain.Entities.WebThingsGateway.Properties
 
         public IReadOnlyCollection<string> AllowedValues { get; }
 
+        public override bool IsValidValue(string? value)
+        {
+            return AllowedValues.Contains(value);
+        }
+
         public override async Task UpdateValueAsync(string? value)
         {
-            if (!AllowedValues.Contains(value))
+            if (!IsValidValue(value))
             {
                 throw new ValidationException($"Value \"{value}\" is not allowed for the property. Allowed values are: [${string.Join(", ", AllowedValues)}]");
             }

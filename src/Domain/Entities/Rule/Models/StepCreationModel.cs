@@ -2,13 +2,10 @@
 {
     public abstract class StepCreationModel
     {
-        protected StepCreationModel(int executionOrder, StepType stepType)
+        protected StepCreationModel(StepType stepType)
         {
-            ExecutionOrder = executionOrder;
             StepType = stepType;
         }
-
-        public int ExecutionOrder { get; }
 
         public StepType StepType { get; }
     }
