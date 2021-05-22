@@ -9,7 +9,6 @@ using Web.IntegrationTest.Controllers.CommonTestBases;
 using Web.IntegrationTest.Utils.ApiClients;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
-using Web.Models.Rules;
 using Web.Models.Rules.Request;
 using Web.Models.Rules.Response;
 using Web.Models.Rules.Steps;
@@ -35,12 +34,9 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
 
         private CreateRuleRequest DefaultRequest => new CreateRuleRequest
         {
-            RuleCreationModel = new RuleCreationApiModel
-            {
-                WorkspaceId = WorkspaceId,
-                RuleName = CreatedRuleName,
-                Steps = new[] { DefaultChangePropertyStateStep }
-            }
+            WorkspaceId = WorkspaceId,
+            RuleName = CreatedRuleName,
+            Steps = new[] { DefaultChangePropertyStateStep }
         };
 
         [SetUp]
@@ -68,13 +64,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         {
             int nonExistingWorkspaceId = WorkspaceId + 1;
             await RunCreateWithErrorTestAsync(
-                DefaultRequest with
-                {
-                    RuleCreationModel = DefaultRequest.RuleCreationModel with
-                    {
-                        WorkspaceId = nonExistingWorkspaceId
-                    }
-                },
+                DefaultRequest with { WorkspaceId = nonExistingWorkspaceId },
                 $"Workspace with id={nonExistingWorkspaceId} is not found");
         }
 
@@ -151,13 +141,10 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
 
             await rulesApiClient.CreateAsync(DefaultRequest);
 
-            CreateRuleRequest secondRequest = CreateRequestWithStep(DefaultExecuteRuleStep);
-            secondRequest = secondRequest with
+            CreateRuleRequest secondRequest = CreateRequestWithStep(DefaultExecuteRuleStep) with
             {
-                RuleCreationModel = secondRequest.RuleCreationModel with
-                {
-                    RuleName = OtherRuleName
-                }
+                RuleName = OtherRuleName
+
             };
             OperationResult<CreateRuleResponse> result = await rulesApiClient.CreateAsync(secondRequest);
             Assert.AreEqual(OperationStatus.Success, result.Status);
@@ -173,10 +160,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         private CreateRuleRequest CreateRequestWithStep(StepApiModel step)
             => DefaultRequest with
             {
-                RuleCreationModel = DefaultRequest.RuleCreationModel with
-                {
-                    Steps = new[] { step }
-                }
+                Steps = new[] { step }
             };
 
         private async Task MockGatewayThingsEndpointAsync()

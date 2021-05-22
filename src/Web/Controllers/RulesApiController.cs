@@ -11,7 +11,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.OperationResults;
-using Web.Models.Rules;
 using Web.Models.Rules.Request;
 using Web.Models.Rules.Response;
 using Web.Models.Rules.Steps;
@@ -29,7 +28,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult<CreateRuleResponse>> Create([FromBody] CreateRuleRequest request, CancellationToken cancellationToken)
         {
-            RuleCreationApiModel ruleCreationModel = NullableConverter.GetOrThrow(request.RuleCreationModel);
+            CreateRuleRequest ruleCreationModel = NullableConverter.GetOrThrow(request);
             int workspaceId = NullableConverter.GetOrThrow(ruleCreationModel.WorkspaceId);
 
             await Mediator.Send(
@@ -46,7 +45,7 @@ namespace Web.Controllers
             return new OperationResult<CreateRuleResponse>(OperationStatus.Success, new CreateRuleResponse { CreatedRuleId = createdRule.Id });
         }
 
-        private RuleCreationModel Convert(RuleCreationApiModel apiModel)
+        private RuleCreationModel Convert(CreateRuleRequest apiModel)
         {
             return new RuleCreationModel(
                 NullableConverter.GetOrThrow(apiModel.WorkspaceId),
