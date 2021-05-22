@@ -51,17 +51,19 @@ namespace Web.Controllers
             return new RuleCreationModel(NullableConverter.GetOrThrow(apiModel.RuleName), NullableConverter.GetOrThrow(apiModel.Steps).Select(Convert).ToArray());
         }
 
+        // TODO: Change executeOrderPosition to valid ones
         private StepCreationModel Convert(StepApiModel apiModel)
         {
             if (apiModel.StepType == StepType.ExecuteRule)
             {
-                return new ExecuteRuleStepCreationModel(StepType.ExecuteRule, NullableConverter.GetOrThrow(apiModel.RuleName));
+                return new ExecuteRuleStepCreationModel(executionOrderPosition: 1, stepType: StepType.ExecuteRule, ruleName: NullableConverter.GetOrThrow(apiModel.RuleName));
             }
 
             if (apiModel.StepType == StepType.ChangeThingState)
             {
-                return new ChangePropertyStateStepCreationModel(
-                    StepType.ChangeThingState,
+                return new ChangeThingStateStepCreationModel(
+                    executionOrderPosition: 1,
+                    stepType: StepType.ChangeThingState,
                     thingId: NullableConverter.GetOrThrow(apiModel.ThingId),
                     propertyName: NullableConverter.GetOrThrow(apiModel.PropertyName),
                     newPropertyState: apiModel.NewPropertyState);

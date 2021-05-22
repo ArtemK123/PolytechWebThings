@@ -51,8 +51,8 @@ namespace Application.Commands.CreateRule
         {
             IReadOnlyCollection<ExecuteRuleStepCreationModel> executeRuleStepCreationModels =
                 command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ExecuteRule).Select(step => (ExecuteRuleStepCreationModel)step).ToArray();
-            IReadOnlyCollection<ChangePropertyStateStepCreationModel> changePropertyStateStepCreationModels
-                = command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ChangeThingState).Select(step => (ChangePropertyStateStepCreationModel)step).ToArray();
+            IReadOnlyCollection<ChangeThingStateStepCreationModel> changePropertyStateStepCreationModels
+                = command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ChangeThingState).Select(step => (ChangeThingStateStepCreationModel)step).ToArray();
 
             ValidateExecuteRuleStepModels(executeRuleStepCreationModels, rules);
             await ValidateChangePropertyStateStepModelsAsync(changePropertyStateStepCreationModels, workspace);
@@ -69,7 +69,7 @@ namespace Application.Commands.CreateRule
             }
         }
 
-        private async Task ValidateChangePropertyStateStepModelsAsync(IReadOnlyCollection<ChangePropertyStateStepCreationModel> steps, IWorkspace workspace)
+        private async Task ValidateChangePropertyStateStepModelsAsync(IReadOnlyCollection<ChangeThingStateStepCreationModel> steps, IWorkspace workspace)
         {
             if (steps.Count == 0)
             {
@@ -78,7 +78,7 @@ namespace Application.Commands.CreateRule
 
             IReadOnlyCollection<Thing> things = await thingsProvider.GetAsync(workspace);
 
-            foreach (ChangePropertyStateStepCreationModel step in steps)
+            foreach (ChangeThingStateStepCreationModel step in steps)
             {
                 Thing? thing = things.SingleOrDefault(currentThing => currentThing.Id == step.ThingId);
 

@@ -1,8 +1,8 @@
 ﻿namespace Domain.Entities.Rule
 {
-    public record ChangePropertyStateStep : Step
+    public record ChangeThingStateStep : Step
     {
-        public ChangePropertyStateStep(int executionOrderPosition, string? thingId, string? propertyName, string? newPropertyState)
+        public ChangeThingStateStep(int executionOrderPosition, string thingId, string propertyName, string? newPropertyState)
             : base(executionOrderPosition)
         {
             ThingId = thingId;
@@ -12,9 +12,9 @@
 
         public override StepType StepType => StepType.ChangeThingState;
 
-        public string? ThingId { get; }
+        public string ThingId { get; }
 
-        public string? PropertyName { get; }
+        public string PropertyName { get; }
 
         public string? NewPropertyState { get; }
     }

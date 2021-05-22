@@ -1,6 +1,6 @@
 ﻿namespace PolytechWebThings.Infrastructure.Database.Rules.Steps
 {
-    internal class ChangePropertyStateStepDatabaseModel : StepDatabaseModel
+    internal class ChangeThingStateStepDatabaseModel : StepDatabaseModel
     {
         public string ThingId { get; set; }
 

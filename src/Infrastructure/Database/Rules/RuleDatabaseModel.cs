@@ -11,7 +11,7 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
 
         public string Name { get; set; }
 
-        public List<ChangePropertyStateStepDatabaseModel> ChangePropertyStateSteps { get; set; }
+        public List<ChangeThingStateStepDatabaseModel> ChangeThingStateSteps { get; set; }
 
         public List<ExecuteRuleStepDatabaseModel> ExecuteRuleSteps { get; set; }
     }

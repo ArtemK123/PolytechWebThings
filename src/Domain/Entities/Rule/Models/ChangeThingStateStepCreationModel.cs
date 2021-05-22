@@ -1,9 +1,9 @@
 ﻿namespace Domain.Entities.Rule.Models
 {
-    public class ChangePropertyStateStepCreationModel : StepCreationModel
+    public class ChangeThingStateStepCreationModel : StepCreationModel
     {
-        public ChangePropertyStateStepCreationModel(StepType stepType, string thingId, string propertyName, string? newPropertyState)
-            : base(stepType)
+        public ChangeThingStateStepCreationModel(StepType stepType, int executionOrderPosition, string thingId, string propertyName, string? newPropertyState)
+            : base(stepType, executionOrderPosition)
         {
             ThingId = thingId;
             PropertyName = propertyName;
