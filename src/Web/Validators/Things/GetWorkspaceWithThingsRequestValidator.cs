@@ -8,7 +8,7 @@ namespace Web.Validators.Things
     {
         public GetWorkspaceWithThingsRequestValidator()
         {
-            RuleFor(request => request.WorkspaceId).NotNull().SetValidator(new IdValidator());
+            RuleFor(request => request.WorkspaceId).NotNull().SetValidator(new IntIdValidator());
         }
     }
 }

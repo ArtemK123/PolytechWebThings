@@ -56,7 +56,9 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_InvalidModel_ShouldReturnErrorMessage()
         {
-            await RunCreateWithErrorTestAsync(new CreateRuleRequest(), "Replace with actual message");
+            await RunCreateWithErrorTestAsync(
+                new CreateRuleRequest(),
+                "{\"Steps\":[\"'Steps' must not be empty.\"],\"RuleName\":[\"'Rule Name' must not be empty.\"],\"WorkspaceId\":[\"'Workspace Id' must not be empty.\"]}");
         }
 
         [Test]
@@ -120,7 +122,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_InvalidExecutionOrder_ShouldReturnErrorMessage()
         {
-            StepApiModel changeInvalidStateStep = DefaultChangePropertyStateStep with { ExecutionOrderPosition = -1 };
+            StepApiModel changeInvalidStateStep = DefaultChangePropertyStateStep with { ExecutionOrderPosition = 111 };
             await RunCreateWithErrorTestAsync(CreateRequestWithStep(changeInvalidStateStep), "Invalid order of step execution");
         }
 

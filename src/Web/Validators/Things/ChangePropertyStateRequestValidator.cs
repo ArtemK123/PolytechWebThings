@@ -9,7 +9,7 @@ namespace Web.Validators.Things
         public ChangePropertyStateRequestValidator()
         {
             RuleFor(request => request.ThingId).NotEmpty();
-            RuleFor(request => request.WorkspaceId).NotNull().SetValidator(new IdValidator());
+            RuleFor(request => request.WorkspaceId).NotNull().SetValidator(new IntIdValidator());
             RuleFor(request => request.PropertyName).NotEmpty();
         }
     }

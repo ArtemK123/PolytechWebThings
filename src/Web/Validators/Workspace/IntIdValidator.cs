@@ -2,9 +2,9 @@
 
 namespace Web.Validators.Workspace
 {
-    public class IdValidator : AbstractValidator<int?>
+    public class IntIdValidator : AbstractValidator<int?>
     {
-        public IdValidator()
+        public IntIdValidator()
         {
             RuleFor(id => id)
                 .Cascade(CascadeMode.Stop)
