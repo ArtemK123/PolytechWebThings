@@ -15,44 +15,44 @@ using MediatR;
 
 namespace Application.Commands.CreateRule
 {
-    internal class CreateRuleRequestHandler : IRequestHandler<CreateRuleRequest>
+    internal class CreateRuleCommandHandler : IRequestHandler<CreateRuleCommand>
     {
         private readonly ISender mediator;
         private readonly IRuleRepository ruleRepository;
         private readonly IThingsProvider thingsProvider;
 
-        public CreateRuleRequestHandler(ISender mediator, IRuleRepository ruleRepository, IThingsProvider thingsProvider)
+        public CreateRuleCommandHandler(ISender mediator, IRuleRepository ruleRepository, IThingsProvider thingsProvider)
         {
             this.mediator = mediator;
             this.ruleRepository = ruleRepository;
             this.thingsProvider = thingsProvider;
         }
 
-        public async Task<Unit> Handle(CreateRuleRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateRuleCommand command, CancellationToken cancellationToken)
         {
-            IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.WorkspaceId, request.UserEmail), cancellationToken);
-            await ValidateRuleCreationModelAsync(request, workspace);
-            await ruleRepository.CreateAsync(request.RuleCreationModel);
+            IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(command.WorkspaceId, command.UserEmail), cancellationToken);
+            await ValidateRuleCreationModelAsync(command, workspace);
+            await ruleRepository.CreateAsync(command.RuleCreationModel);
             return Unit.Value;
         }
 
-        private async Task ValidateRuleCreationModelAsync(CreateRuleRequest request, IWorkspace workspace)
+        private async Task ValidateRuleCreationModelAsync(CreateRuleCommand command, IWorkspace workspace)
         {
             IReadOnlyCollection<Rule> rules = await ruleRepository.GetRulesAsync(workspace.Id);
-            if (rules.Any(rule => rule.Name == request.RuleCreationModel.Name))
+            if (rules.Any(rule => rule.Name == command.RuleCreationModel.Name))
             {
-                throw new NotUniqueEntityException($"Rule with name={request.RuleCreationModel.Name} is already created");
+                throw new NotUniqueEntityException($"Rule with name={command.RuleCreationModel.Name} is already created");
             }
 
-            await ValidateStepsAsync(request: request, workspace: workspace, rules: rules);
+            await ValidateStepsAsync(command: command, workspace: workspace, rules: rules);
         }
 
-        private async Task ValidateStepsAsync(CreateRuleRequest request, IWorkspace workspace, IReadOnlyCollection<Rule> rules)
+        private async Task ValidateStepsAsync(CreateRuleCommand command, IWorkspace workspace, IReadOnlyCollection<Rule> rules)
         {
             IReadOnlyCollection<ExecuteRuleStepCreationModel> executeRuleStepCreationModels =
-                request.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ExecuteRule).Select(step => (ExecuteRuleStepCreationModel)step).ToArray();
+                command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ExecuteRule).Select(step => (ExecuteRuleStepCreationModel)step).ToArray();
             IReadOnlyCollection<ChangePropertyStateStepCreationModel> changePropertyStateStepCreationModels
-                = request.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ChangeThingState).Select(step => (ChangePropertyStateStepCreationModel)step).ToArray();
+                = command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ChangeThingState).Select(step => (ChangePropertyStateStepCreationModel)step).ToArray();
 
             ValidateExecuteRuleStepModels(executeRuleStepCreationModels, rules);
             await ValidateChangePropertyStateStepModelsAsync(changePropertyStateStepCreationModels, workspace);

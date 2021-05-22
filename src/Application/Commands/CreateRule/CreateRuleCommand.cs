@@ -3,9 +3,9 @@ using MediatR;
 
 namespace Application.Commands.CreateRule
 {
-    public record CreateRuleRequest : IRequest
+    public record CreateRuleCommand : IRequest
     {
-        public CreateRuleRequest(int workspaceId, string userEmail, RuleCreationModel ruleCreationModel)
+        public CreateRuleCommand(int workspaceId, string userEmail, RuleCreationModel ruleCreationModel)
         {
             WorkspaceId = workspaceId;
             UserEmail = userEmail;
