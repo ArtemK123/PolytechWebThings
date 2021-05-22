@@ -2,8 +2,8 @@
 {
     public record ChangePropertyStateStep : Step
     {
-        public ChangePropertyStateStep(int executionOrderNumber, string? thingId, string? propertyName, string? newPropertyState)
-            : base(executionOrderNumber)
+        public ChangePropertyStateStep(int executionOrderPosition, string? thingId, string? propertyName, string? newPropertyState)
+            : base(executionOrderPosition)
         {
             ThingId = thingId;
             PropertyName = propertyName;

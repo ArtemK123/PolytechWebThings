@@ -2,8 +2,8 @@
 {
     public record ExecuteRuleStep : Step
     {
-        public ExecuteRuleStep(int executionOrderNumber, string ruleName)
-            : base(executionOrderNumber)
+        public ExecuteRuleStep(int executionOrderPosition, string ruleName)
+            : base(executionOrderPosition)
         {
             RuleName = ruleName;
         }
