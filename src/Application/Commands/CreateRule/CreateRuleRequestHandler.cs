@@ -31,21 +31,31 @@ namespace Application.Commands.CreateRule
         public async Task<Unit> Handle(CreateRuleRequest request, CancellationToken cancellationToken)
         {
             IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.WorkspaceId, request.UserEmail), cancellationToken);
+            await ValidateRuleCreationModelAsync(request, workspace);
+            await ruleRepository.CreateAsync(request.RuleCreationModel);
+            return Unit.Value;
+        }
+
+        private async Task ValidateRuleCreationModelAsync(CreateRuleRequest request, IWorkspace workspace)
+        {
             IReadOnlyCollection<Rule> rules = await ruleRepository.GetRulesAsync(workspace.Id);
             if (rules.Any(rule => rule.Name == request.RuleCreationModel.Name))
             {
                 throw new NotUniqueEntityException($"Rule with name={request.RuleCreationModel.Name} is already created");
             }
 
+            await ValidateStepsAsync(request: request, workspace: workspace, rules: rules);
+        }
+
+        private async Task ValidateStepsAsync(CreateRuleRequest request, IWorkspace workspace, IReadOnlyCollection<Rule> rules)
+        {
             IReadOnlyCollection<ExecuteRuleStepCreationModel> executeRuleStepCreationModels =
                 request.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ExecuteRule).Select(step => (ExecuteRuleStepCreationModel)step).ToArray();
             IReadOnlyCollection<ChangePropertyStateStepCreationModel> changePropertyStateStepCreationModels
                 = request.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ChangeThingState).Select(step => (ChangePropertyStateStepCreationModel)step).ToArray();
+
             ValidateExecuteRuleStepModels(executeRuleStepCreationModels, rules);
             await ValidateChangePropertyStateStepModelsAsync(changePropertyStateStepCreationModels, workspace);
-
-            await ruleRepository.CreateAsync(request.RuleCreationModel);
-            return Unit.Value;
         }
 
         private void ValidateExecuteRuleStepModels(IReadOnlyCollection<ExecuteRuleStepCreationModel> steps, IReadOnlyCollection<Rule> rules)
