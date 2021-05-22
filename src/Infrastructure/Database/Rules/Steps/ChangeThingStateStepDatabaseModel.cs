@@ -2,9 +2,9 @@
 {
     internal class ChangeThingStateStepDatabaseModel : StepDatabaseModel
     {
-        public string ThingId { get; set; }
+        public string ThingId { get; set; } = null!;
 
-        public string PropertyName { get; set; }
+        public string PropertyName { get; set; } = null!;
 
         public string? NewPropertyState { get; set; }
     }

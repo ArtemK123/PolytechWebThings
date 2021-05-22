@@ -18,6 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="Controllers\RulesApiControllerTests\Create\things.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <Content Include="Controllers\ThingsApiControllerTests\GetWorkspaceWithThings\PrimitivePropertyValues\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>

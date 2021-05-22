@@ -9,10 +9,10 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
 
         public int WorkspaceId { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public List<ChangeThingStateStepDatabaseModel> ChangeThingStateSteps { get; set; }
+        public List<ChangeThingStateStepDatabaseModel> ChangeThingStateSteps { get; set; } = null!;
 
-        public List<ExecuteRuleStepDatabaseModel> ExecuteRuleSteps { get; set; }
+        public List<ExecuteRuleStepDatabaseModel> ExecuteRuleSteps { get; set; } = null!;
     }
 }

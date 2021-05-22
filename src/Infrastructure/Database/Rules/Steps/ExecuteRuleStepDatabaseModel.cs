@@ -2,6 +2,6 @@
 {
     internal class ExecuteRuleStepDatabaseModel : StepDatabaseModel
     {
-        public string RuleName { get; set; }
+        public string RuleName { get; set; } = null!;
     }
 }

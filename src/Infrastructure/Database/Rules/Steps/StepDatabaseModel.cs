@@ -6,6 +6,8 @@
 
         public int RuleId { get; set; }
 
+        public RuleDatabaseModel Rule { get; set; } = null!;
+
         public int ExecutionOrderPosition { get; set; }
     }
 }

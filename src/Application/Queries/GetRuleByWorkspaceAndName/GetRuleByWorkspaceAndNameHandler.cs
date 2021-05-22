@@ -26,7 +26,7 @@ namespace Application.Queries.GetRuleByWorkspaceAndName
             Rule? rule = await ruleRepository.GetRuleAsync(workspace.Id, request.RuleName);
             if (rule is null)
             {
-                throw new EntityNotFoundException($"Can not find rule with name=${request.RuleName} in workspace with name ${workspace.Name}");
+                throw new EntityNotFoundException($"Can not find rule with name={request.RuleName} in workspace with name={workspace.Name}");
             }
 
             return rule;

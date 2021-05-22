@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Application.Repositories;
 using Domain.Entities.Rule;
@@ -20,19 +22,20 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
 
         public async Task<IReadOnlyCollection<Rule>> GetRulesAsync(int workspaceId)
         {
-            IReadOnlyCollection<RuleDatabaseModel> storedRules = await dbContext.Rules.Where(storedRule => storedRule.WorkspaceId == workspaceId).ToArrayAsync();
+            IReadOnlyCollection<RuleDatabaseModel> storedRules = await GetRulesAsync(rule => rule.WorkspaceId == workspaceId);
             return storedRules.Select(Convert).ToList();
         }
 
         public async Task<Rule?> GetRuleAsync(int workspaceId, string ruleName)
         {
-            RuleDatabaseModel? storedRule = await dbContext.Rules.Where(rule => rule.Name == ruleName && rule.WorkspaceId == workspaceId).SingleOrDefaultAsync();
+            IReadOnlyCollection<RuleDatabaseModel> storedRules = await GetRulesAsync(rule => rule.WorkspaceId == workspaceId && rule.Name == ruleName);
+            RuleDatabaseModel? storedRule = storedRules.SingleOrDefault();
             return storedRule is null ? null : Convert(storedRule);
         }
 
         public async Task CreateAsync(RuleCreationModel ruleCreationModel)
         {
-            RuleDatabaseModel ruleDatabaseModel = new RuleDatabaseModel { Name = ruleCreationModel.Name };
+            RuleDatabaseModel ruleDatabaseModel = new RuleDatabaseModel { WorkspaceId = ruleCreationModel.WorkspaceId, Name = ruleCreationModel.Name };
 
             ruleDatabaseModel.ExecuteRuleSteps = CreateExecuteRuleStepDatabaseModels(ruleCreationModel: ruleCreationModel);
             ruleDatabaseModel.ChangeThingStateSteps = CreateChangeThingStateStepDatabaseModels(ruleCreationModel: ruleCreationModel);
@@ -69,6 +72,14 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
                     };
                 })
                 .ToList();
+
+        private async Task<IReadOnlyCollection<RuleDatabaseModel>> GetRulesAsync(Expression<Func<RuleDatabaseModel, bool>> rulesFilter)
+            => await dbContext
+                .Rules
+                .Where(rulesFilter)
+                .Include(rule => rule.ExecuteRuleSteps)
+                .Include(rule => rule.ChangeThingStateSteps)
+                .ToArrayAsync();
 
         private Rule Convert(RuleDatabaseModel databaseModel)
         {

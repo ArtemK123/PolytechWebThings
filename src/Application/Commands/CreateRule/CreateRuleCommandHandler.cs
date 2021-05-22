@@ -49,6 +49,8 @@ namespace Application.Commands.CreateRule
 
         private async Task ValidateStepsAsync(CreateRuleCommand command, IWorkspace workspace, IReadOnlyCollection<Rule> rules)
         {
+            ValidateStepExecutionOrder(command: command);
+
             IReadOnlyCollection<ExecuteRuleStepCreationModel> executeRuleStepCreationModels =
                 command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ExecuteRule).Select(step => (ExecuteRuleStepCreationModel)step).ToArray();
             IReadOnlyCollection<ChangeThingStateStepCreationModel> changePropertyStateStepCreationModels
@@ -58,13 +60,26 @@ namespace Application.Commands.CreateRule
             await ValidateChangePropertyStateStepModelsAsync(changePropertyStateStepCreationModels, workspace);
         }
 
+        private void ValidateStepExecutionOrder(CreateRuleCommand command)
+        {
+            IReadOnlyCollection<StepCreationModel> orderedSteps = command.RuleCreationModel.Steps.OrderBy(step => step.ExecutionOrderPosition).ToArray();
+            for (int i = 0; i < orderedSteps.Count; i++)
+            {
+                StepCreationModel currentStep = orderedSteps.ElementAt(i);
+                if (currentStep.ExecutionOrderPosition != i)
+                {
+                    throw new InvalidStepExecutionOrderException();
+                }
+            }
+        }
+
         private void ValidateExecuteRuleStepModels(IReadOnlyCollection<ExecuteRuleStepCreationModel> steps, IReadOnlyCollection<Rule> rules)
         {
             foreach (ExecuteRuleStepCreationModel step in steps)
             {
                 if (rules.All(rule => rule.Name != step.RuleName))
                 {
-                    throw new EntityNotFoundException($"Can not find rule with name=${step.RuleName}");
+                    throw new EntityNotFoundException($"Can not find rule with name={step.RuleName}");
                 }
             }
         }
@@ -84,14 +99,14 @@ namespace Application.Commands.CreateRule
 
                 if (thing is null)
                 {
-                    throw new EntityNotFoundException($"Can not find thing with id=${step.ThingId}");
+                    throw new EntityNotFoundException($"Can not find thing with id={step.ThingId}");
                 }
 
                 Property? property = thing.Properties.SingleOrDefault(currentProperty => currentProperty.Name == step.PropertyName);
 
                 if (property is null)
                 {
-                    throw new EntityNotFoundException($"Can not find property with name=${step.PropertyName}");
+                    throw new EntityNotFoundException($"Can not find property with name={step.PropertyName}");
                 }
 
                 if (!property.IsValidValue(step.NewPropertyState))

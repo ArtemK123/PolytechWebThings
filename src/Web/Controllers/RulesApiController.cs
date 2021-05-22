@@ -30,7 +30,7 @@ namespace Web.Controllers
         public async Task<OperationResult<CreateRuleResponse>> Create([FromBody] CreateRuleRequest request, CancellationToken cancellationToken)
         {
             RuleCreationApiModel ruleCreationModel = NullableConverter.GetOrThrow(request.RuleCreationModel);
-            int workspaceId = NullableConverter.GetOrThrow(request.WorkspaceId);
+            int workspaceId = NullableConverter.GetOrThrow(ruleCreationModel.WorkspaceId);
 
             await Mediator.Send(
                 new CreateRuleCommand(
@@ -48,21 +48,26 @@ namespace Web.Controllers
 
         private RuleCreationModel Convert(RuleCreationApiModel apiModel)
         {
-            return new RuleCreationModel(NullableConverter.GetOrThrow(apiModel.RuleName), NullableConverter.GetOrThrow(apiModel.Steps).Select(Convert).ToArray());
+            return new RuleCreationModel(
+                NullableConverter.GetOrThrow(apiModel.WorkspaceId),
+                NullableConverter.GetOrThrow(apiModel.RuleName),
+                NullableConverter.GetOrThrow(apiModel.Steps).Select(Convert).ToArray());
         }
 
-        // TODO: Change executeOrderPosition to valid ones
         private StepCreationModel Convert(StepApiModel apiModel)
         {
             if (apiModel.StepType == StepType.ExecuteRule)
             {
-                return new ExecuteRuleStepCreationModel(executionOrderPosition: 1, stepType: StepType.ExecuteRule, ruleName: NullableConverter.GetOrThrow(apiModel.RuleName));
+                return new ExecuteRuleStepCreationModel(
+                    executionOrderPosition: NullableConverter.GetOrThrow(apiModel.ExecutionOrderPosition),
+                    stepType: StepType.ExecuteRule,
+                    ruleName: NullableConverter.GetOrThrow(apiModel.RuleName));
             }
 
             if (apiModel.StepType == StepType.ChangeThingState)
             {
                 return new ChangeThingStateStepCreationModel(
-                    executionOrderPosition: 1,
+                    executionOrderPosition: NullableConverter.GetOrThrow(apiModel.ExecutionOrderPosition),
                     stepType: StepType.ChangeThingState,
                     thingId: NullableConverter.GetOrThrow(apiModel.ThingId),
                     propertyName: NullableConverter.GetOrThrow(apiModel.PropertyName),
