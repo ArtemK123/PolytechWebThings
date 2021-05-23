@@ -53,7 +53,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
             int invalidRuleId = -1;
             OperationResult result = await rulesApiClient.DeleteAsync(new DeleteRuleRequest { RuleId = invalidRuleId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace with actual message", result.Message);
+            Assert.AreEqual("{\"RuleId\":[\"Non-positive ids are not supported\"]}", result.Message);
         }
 
         [Test]
