@@ -62,7 +62,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
             int nonExistingRuleId = ruleId + 1;
             OperationResult result = await rulesApiClient.DeleteAsync(new DeleteRuleRequest { RuleId = nonExistingRuleId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace with actual message", result.Message);
+            Assert.AreEqual($"Can not find rule with id={nonExistingRuleId}", result.Message);
         }
 
         [Test]

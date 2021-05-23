@@ -66,7 +66,7 @@ namespace Web.IntegrationTest.Controllers.ThingsApiControllerTests.ChangePropert
             string invalidNewValue = "invalid";
             OperationResult result = await ThingsApiClient.ChangePropertyStateAsync(CreateRequest() with { NewPropertyValue = invalidNewValue });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual($"Can not parse value {invalidNewValue} to type {GatewayValueType.Boolean}", result.Message);
+            Assert.AreEqual($"Invalid value {invalidNewValue} for property with type {GatewayValueType.Boolean}", result.Message);
         }
 
         [Test]

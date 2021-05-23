@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Commands.CreateRule;
+using Application.Commands.DeleteRule;
 using Application.Converters;
 using Application.Queries.GetRuleByWorkspaceAndName;
 using Application.Queries.GetRulesFromWorkspace;
@@ -50,9 +51,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<OperationResult<GetAllFromWorkspaceResponse>> GetAllFromWorkspace(
-            [FromBody] GetAllFromWorkspaceRequest request,
-            CancellationToken cancellationToken)
+        public async Task<OperationResult<GetAllFromWorkspaceResponse>> GetAllFromWorkspace([FromBody] GetAllFromWorkspaceRequest request, CancellationToken cancellationToken)
         {
             IReadOnlyCollection<Rule> rules = await Mediator.Send(new GetRulesFromWorkspaceQuery(NullableConverter.GetOrThrow(request.WorkspaceId), UserEmail), cancellationToken);
             IReadOnlyCollection<RuleApiModel> convertedRules = rules.Select(Convert).ToArray();
@@ -61,11 +60,10 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<OperationResult> Delete(
-            [FromBody] DeleteRuleRequest request,
-            CancellationToken cancellationToken)
+        public async Task<OperationResult> Delete([FromBody] DeleteRuleRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await Mediator.Send(new DeleteRuleCommand(NullableConverter.GetOrThrow(request.RuleId), UserEmail), cancellationToken);
+            return new OperationResult(OperationStatus.Success);
         }
 
         private RuleApiModel Convert(Rule rule)

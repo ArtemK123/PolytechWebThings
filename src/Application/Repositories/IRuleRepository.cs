@@ -9,8 +9,12 @@ namespace Application.Repositories
     {
         Task<IReadOnlyCollection<Rule>> GetRulesAsync(int workspaceId);
 
-        Task<Rule?> GetRuleAsync(int workspaceId, string ruleName);
+        Task<Rule?> GetRuleByWorkspaceAndNameAsync(int workspaceId, string ruleName);
+
+        Task<Rule?> GetRuleByIdAsync(int ruleId);
 
         Task CreateAsync(RuleCreationModel ruleCreationModel);
+
+        Task DeleteAsync(int ruleId);
     }
 }

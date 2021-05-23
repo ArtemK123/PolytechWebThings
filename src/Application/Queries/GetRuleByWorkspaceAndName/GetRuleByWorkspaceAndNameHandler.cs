@@ -23,7 +23,7 @@ namespace Application.Queries.GetRuleByWorkspaceAndName
         public async Task<Rule> Handle(GetRuleByWorkspaceAndNameQuery request, CancellationToken cancellationToken)
         {
             IWorkspace workspace = await mediator.Send(new GetWorkspaceByIdQuery(request.WorkspaceId, request.UserEmail), cancellationToken);
-            Rule? rule = await ruleRepository.GetRuleAsync(workspace.Id, request.RuleName);
+            Rule? rule = await ruleRepository.GetRuleByWorkspaceAndNameAsync(workspace.Id, request.RuleName);
             if (rule is null)
             {
                 throw new EntityNotFoundException($"Can not find rule with name={request.RuleName} in workspace with name={workspace.Name}");

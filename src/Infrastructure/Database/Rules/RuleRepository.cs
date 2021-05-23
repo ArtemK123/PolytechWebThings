@@ -26,11 +26,18 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
             return storedRules.Select(Convert).ToList();
         }
 
-        public async Task<Rule?> GetRuleAsync(int workspaceId, string ruleName)
+        public async Task<Rule?> GetRuleByWorkspaceAndNameAsync(int workspaceId, string ruleName)
         {
             IReadOnlyCollection<RuleDatabaseModel> storedRules = await GetRulesAsync(rule => rule.WorkspaceId == workspaceId && rule.Name == ruleName);
             RuleDatabaseModel? storedRule = storedRules.SingleOrDefault();
-            return storedRule is null ? null : Convert(storedRule);
+            return ConvertNullable(storedRule);
+        }
+
+        public async Task<Rule?> GetRuleByIdAsync(int ruleId)
+        {
+            IReadOnlyCollection<RuleDatabaseModel> storedRules = await GetRulesAsync(rule => rule.Id == ruleId);
+            RuleDatabaseModel? storedRule = storedRules.SingleOrDefault();
+            return ConvertNullable(storedRule);
         }
 
         public async Task CreateAsync(RuleCreationModel ruleCreationModel)
@@ -40,6 +47,18 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
             ruleDatabaseModel.ExecuteRuleSteps = CreateExecuteRuleStepDatabaseModels(ruleCreationModel: ruleCreationModel);
             ruleDatabaseModel.ChangeThingStateSteps = CreateChangeThingStateStepDatabaseModels(ruleCreationModel: ruleCreationModel);
             await dbContext.Rules.AddAsync(ruleDatabaseModel);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int ruleId)
+        {
+            RuleDatabaseModel? modelWithoutDependencies = await dbContext.Rules.SingleOrDefaultAsync(rule => rule.Id == ruleId);
+            if (modelWithoutDependencies is null)
+            {
+                return;
+            }
+
+            dbContext.Rules.Remove(modelWithoutDependencies);
             await dbContext.SaveChangesAsync();
         }
 
@@ -80,6 +99,8 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
                 .Include(rule => rule.ExecuteRuleSteps)
                 .Include(rule => rule.ChangeThingStateSteps)
                 .ToArrayAsync();
+
+        private Rule? ConvertNullable(RuleDatabaseModel? databaseModel) => databaseModel is null ? null : Convert(databaseModel);
 
         private Rule Convert(RuleDatabaseModel databaseModel)
         {
