@@ -1,11 +1,8 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Domain.Entities.Rule;
-using Domain.Entities.WebThingsGateway;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.IntegrationTest.Controllers.CommonTestBases;
+using Web.IntegrationTest.Controllers.CommonTestBases.MockedGatewayThingsApi;
 using Web.IntegrationTest.Utils.ApiClients;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
@@ -16,14 +13,10 @@ using Web.Models.Rules.Steps;
 namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
 {
     [TestFixture(TestOf = typeof(RulesApiController))]
-    internal class CreateRuleApiTest : StoredWorkspaceApiTestBase
+    internal class CreateRuleApiTest : MockedGatewayThingsApiTestBase
     {
-        private const string PropertyName = "on";
-        private const string NewPropertyState = "false";
         private const string CreatedRuleName = "CreatedRule";
         private const string OtherRuleName = "OtherRuleName";
-        private const GatewayValueType PropertyValueType = GatewayValueType.Boolean;
-        private static readonly string ThingId = GatewayUrl + "/things/virtual-things-0";
 
         private RulesApiClient rulesApiClient;
 
@@ -73,8 +66,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_RuleNameDuplicated_ShouldReturnErrorMessage()
         {
-            await MockGatewayThingsEndpointAsync();
-
             await rulesApiClient.CreateAsync(DefaultRequest);
             await RunCreateWithErrorTestAsync(DefaultRequest, $"Rule with name={CreatedRuleName} is already created");
         }
@@ -82,8 +73,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_ExecuteRuleStep_RuleIsNotFound_ShouldReturnErrorMessage()
         {
-            await MockGatewayThingsEndpointAsync();
-
             string unknownRuleName = "unknown rule";
             StepApiModel executeUnknownRuleStep = DefaultExecuteRuleStep with { RuleName = unknownRuleName };
             await RunCreateWithErrorTestAsync(CreateRequestWithStep(executeUnknownRuleStep), $"Can not find rule with name={unknownRuleName}");
@@ -92,8 +81,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_ChangePropertyState_ThingIsNotFound_ShouldReturnErrorMessage()
         {
-            await MockGatewayThingsEndpointAsync();
-
             string invalidThingId = "invalid thing id";
             StepApiModel changeUnknownThingStateStep = DefaultChangePropertyStateStep with { ThingId = invalidThingId };
             await RunCreateWithErrorTestAsync(CreateRequestWithStep(changeUnknownThingStateStep), $"Can not find thing with id={invalidThingId}");
@@ -102,8 +89,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_ChangePropertyState_PropertyIsNotFound_ShouldReturnErrorMessage()
         {
-            await MockGatewayThingsEndpointAsync();
-
             string invalidPropertyName = "invalid property name";
             StepApiModel changeUnknownPropertyStateStep = DefaultChangePropertyStateStep with { PropertyName = invalidPropertyName };
             await RunCreateWithErrorTestAsync(CreateRequestWithStep(changeUnknownPropertyStateStep), $"Can not find property with name={invalidPropertyName}");
@@ -112,8 +97,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_ChangePropertyState_NewValueIsInvalid_ShouldReturnErrorMessage()
         {
-            await MockGatewayThingsEndpointAsync();
-
             var invalidPropertyState = "invalidValue";
             StepApiModel changeInvalidStateStep = DefaultChangePropertyStateStep with { NewPropertyState = invalidPropertyState };
             await RunCreateWithErrorTestAsync(CreateRequestWithStep(changeInvalidStateStep), $"Invalid value {invalidPropertyState} for property with type {PropertyValueType}");
@@ -129,8 +112,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_ChangePropertyStep_Success_ShouldReturnCreatedRuleId()
         {
-            await MockGatewayThingsEndpointAsync();
-
             OperationResult<CreateRuleResponse> result = await rulesApiClient.CreateAsync(DefaultRequest);
             Assert.AreEqual(OperationStatus.Success, result.Status);
             Assert.AreNotEqual(default(int), result.Data.CreatedRuleId);
@@ -139,8 +120,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
         [Test]
         public async Task Create_ExecuteRuleStep_Success_ShouldReturnSuccessResult()
         {
-            await MockGatewayThingsEndpointAsync();
-
             await rulesApiClient.CreateAsync(DefaultRequest);
 
             CreateRuleRequest secondRequest = CreateRequestWithStep(DefaultExecuteRuleStep) with
@@ -164,22 +143,5 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
             {
                 Steps = new[] { step }
             };
-
-        private async Task MockGatewayThingsEndpointAsync()
-        {
-            string input = await GetSerializedThingsAsync();
-
-            HttpResponseMessage response = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(input)
-            };
-
-            SetupHttpMessageHandlerMock(IsGatewayThingsEndpointRequest, response);
-        }
-
-        private async Task<string> GetSerializedThingsAsync() => await ReadContentFromDiskAsync("Controllers/RulesApiControllerTests/Create/things.json");
-
-        private bool IsGatewayThingsEndpointRequest(HttpRequestMessage httpRequestMessage) => CheckHttpRequestMessage(httpRequestMessage, GatewayUrl + "/things", HttpMethod.Get);
     }
 }

@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="Controllers\RulesApiControllerTests\Create\things.json">
+        <Content Include="Controllers\CommonTestBases\MockedGatewayThingsApi\things.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="Controllers\RulesApiControllerTests\GetAllFromWorkspace\things.json">
