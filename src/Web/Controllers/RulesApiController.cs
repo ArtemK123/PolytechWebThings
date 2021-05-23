@@ -66,6 +66,13 @@ namespace Web.Controllers
             return new OperationResult(OperationStatus.Success);
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<OperationResult> Update([FromBody] UpdateRuleRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         private RuleApiModel Convert(Rule rule)
         {
             return new RuleApiModel

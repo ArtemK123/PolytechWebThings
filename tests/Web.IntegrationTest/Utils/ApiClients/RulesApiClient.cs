@@ -43,5 +43,14 @@ namespace Web.IntegrationTest.Utils.ApiClients
             });
             return await HttpResponseMessageParser.ParseResponseAsync<OperationResult<GetAllFromWorkspaceResponse>>(response);
         }
+
+        public async Task<OperationResult> UpdateAsync(UpdateRuleRequest request)
+        {
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, ApiBaseUrl + "Update")
+            {
+                Content = JsonContent.Create(request)
+            });
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult>(response);
+        }
     }
 }
