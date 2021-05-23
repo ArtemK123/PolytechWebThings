@@ -17,9 +17,14 @@ namespace Web.IntegrationTest.Controllers.CommonTestBases.MockedGatewayThingsApi
         [SetUp]
         public async Task MockedGatewayThingsApiTestBaseSetUp()
         {
+            await SetupThingsEndpointMockAsync(GatewayUrl);
+        }
+
+        protected async Task SetupThingsEndpointMockAsync(string gatewayUrl)
+        {
             string thingsInput = await ReadContentFromDiskAsync(ThingsInputPath);
             SetupHttpMessageHandlerMock(
-                request => CheckHttpRequestMessage(request, GatewayUrl + "/things", HttpMethod.Get),
+                request => CheckHttpRequestMessage(request, gatewayUrl + "/things", HttpMethod.Get),
                 new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(thingsInput) });
         }
     }

@@ -21,9 +21,6 @@
         <Content Include="Controllers\CommonTestBases\MockedGatewayThingsApi\things.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="Controllers\RulesApiControllerTests\GetAllFromWorkspace\things.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
         <Content Include="Controllers\ThingsApiControllerTests\GetWorkspaceWithThings\PrimitivePropertyValues\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Domain.Entities.Rule;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.IntegrationTest.Controllers.CommonTestBases;
+using Web.IntegrationTest.Controllers.CommonTestBases.MockedGatewayThingsApi;
 using Web.IntegrationTest.Utils;
 using Web.IntegrationTest.Utils.ApiClients;
 using Web.IntegrationTest.Utils.Parsers;
@@ -22,12 +21,8 @@ using Web.Models.Workspace.Response;
 namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWorkspace
 {
     [TestFixture(TestOf = typeof(RulesApiController))]
-    internal class GetAllFromWorkspaceRulesApiTest : StoredWorkspaceApiTestBase
+    internal class GetAllFromWorkspaceRulesApiTest : MockedGatewayThingsApiTestBase
     {
-        private const string PropertyName = "on";
-        private const string NewPropertyState = "false";
-        private static readonly string ThingId = GatewayUrl + "/things/virtual-things-0";
-
         private RulesApiClient rulesApiClient;
 
         private GetAllFromWorkspaceRequest GetRequest => new GetAllFromWorkspaceRequest { WorkspaceId = WorkspaceId };
@@ -46,7 +41,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
         public async Task SetUp()
         {
             rulesApiClient = new RulesApiClient(HttpClient, new HttpResponseMessageParser());
-            await MockGatewayThingsEndpointAsync();
             await rulesApiClient.CreateAsync(CreateRuleRequest);
         }
 
@@ -142,21 +136,6 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
                && stepA.PropertyName == stepB.PropertyName
                && stepA.NewPropertyState == stepB.NewPropertyState;
 
-        private async Task MockGatewayThingsEndpointAsync(string gatewayUrl = GatewayUrl)
-        {
-            string input = await GetSerializedThingsAsync();
-
-            HttpResponseMessage response = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(input)
-            };
-
-            SetupHttpMessageHandlerMock(request => CheckHttpRequestMessage(request, gatewayUrl + "/things", HttpMethod.Get), response);
-        }
-
-        private async Task<string> GetSerializedThingsAsync() => await ReadContentFromDiskAsync("Controllers/RulesApiControllerTests/GetAllFromWorkspace/things.json");
-
         private async Task<int> CreateOtherWorkspaceAsync()
         {
             CreateWorkspaceRequest createOtherWorkspaceCommand = new CreateWorkspaceRequest
@@ -167,7 +146,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
             };
 
             MockGatewayPingEndpoint(HttpStatusCode.OK, createOtherWorkspaceCommand.GatewayUrl);
-            await MockGatewayThingsEndpointAsync(createOtherWorkspaceCommand.GatewayUrl);
+            await SetupThingsEndpointMockAsync(createOtherWorkspaceCommand.GatewayUrl);
             await WorkspaceApiClient.CreateAsync(createOtherWorkspaceCommand);
             OperationResult<GetUserWorkspacesResponse> userWorkspacesResponse = await WorkspaceApiClient.GetUserWorkspacesAsync();
 
