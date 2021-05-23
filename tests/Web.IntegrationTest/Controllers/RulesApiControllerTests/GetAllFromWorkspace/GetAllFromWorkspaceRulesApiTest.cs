@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +7,7 @@ using Domain.Entities.Rule;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.IntegrationTest.Controllers.CommonTestBases;
+using Web.IntegrationTest.Utils;
 using Web.IntegrationTest.Utils.ApiClients;
 using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
@@ -87,7 +87,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
             OperationResult<GetAllFromWorkspaceResponse> getAllRulesResponse = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest);
 
             Assert.AreEqual(OperationStatus.Success, getAllRulesResponse.Status);
-            Assert.True(CompareCollections(currentWorkspaceRules, getAllRulesResponse.Data.Rules, CompareRules));
+            Assert.True(CollectionComparer.Compare(currentWorkspaceRules, getAllRulesResponse.Data.Rules, CompareRules));
             Assert.False(getAllRulesResponse.Data.Rules?.Any(rule => CompareRules(otherWorkspaceRule, rule)));
         }
 
@@ -118,24 +118,11 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
             return rulesToCreate;
         }
 
-        private bool CompareCollections<TFirstEntity, TSecondEntity>(
-            IReadOnlyCollection<TFirstEntity> firstCollection,
-            IReadOnlyCollection<TSecondEntity> secondCollection,
-            Func<TFirstEntity, TSecondEntity, bool> compareMembers)
-        {
-            if (firstCollection.Count != secondCollection.Count)
-            {
-                return false;
-            }
-
-            return firstCollection.All(firstCollectionMember => secondCollection.Any(secondCollectionMember => compareMembers(firstCollectionMember, secondCollectionMember)));
-        }
-
         private bool CompareRules(CreateRuleRequest createRuleRequest, RuleApiModel rule)
         {
             return createRuleRequest.WorkspaceId == rule.WorkspaceId
                    && createRuleRequest.RuleName == rule.Name
-                   && CompareCollections(createRuleRequest.Steps, rule.Steps, CompareSteps);
+                   && CollectionComparer.Compare(createRuleRequest.Steps, rule.Steps, CompareSteps);
         }
 
         private bool CompareSteps(StepApiModel stepA, StepApiModel stepB)

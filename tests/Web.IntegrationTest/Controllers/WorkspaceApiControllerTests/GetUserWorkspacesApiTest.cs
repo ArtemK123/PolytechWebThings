@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Web.Controllers;
+using Web.IntegrationTest.Utils;
 using Web.Models.OperationResults;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
@@ -47,11 +48,7 @@ namespace Web.IntegrationTest.Controllers.WorkspaceApiControllerTests
             OperationResult<GetUserWorkspacesResponse> response = await WorkspaceApiClient.GetUserWorkspacesAsync();
 
             Assert.AreEqual(OperationStatus.Success, response.Status);
-            Assert.True(
-                response.Data
-                    .Workspaces.All(responseModel =>
-                        createWorkspaceRequests.Any(
-                            requestModel => AreSame(requestModel, responseModel))));
+            Assert.True(CollectionComparer.Compare(createWorkspaceRequests, response.Data.Workspaces, AreSame));
             Assert.True(response.Data.Workspaces.All(workspace => workspace.Id != default));
         }
 
