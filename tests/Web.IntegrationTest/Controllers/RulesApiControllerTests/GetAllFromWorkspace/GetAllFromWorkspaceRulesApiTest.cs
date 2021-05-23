@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -35,7 +36,10 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
         {
             RuleName = "Rule1",
             WorkspaceId = WorkspaceId,
-            Steps = new[] { new StepApiModel { StepType = StepType.ChangeThingState, ThingId = ThingId, PropertyName = PropertyName, NewPropertyState = NewPropertyState } }
+            Steps = new[]
+            {
+                new StepApiModel { ExecutionOrderPosition = 0, StepType = StepType.ChangeThingState, ThingId = ThingId, PropertyName = PropertyName, NewPropertyState = NewPropertyState }
+            }
         };
 
         [SetUp]
@@ -65,9 +69,10 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
         [Test]
         public async Task GetAllFromWorkspace_WorkspaceIsNotFound_ShouldReturnErrorMessage()
         {
-            OperationResult<GetAllFromWorkspaceResponse> result = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = WorkspaceId + 1 });
+            int nonExistingWorkspaceId = WorkspaceId + 1;
+            OperationResult<GetAllFromWorkspaceResponse> result = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = nonExistingWorkspaceId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace with actual", result.Message);
+            Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", result.Message);
         }
 
         [Test]
@@ -95,7 +100,11 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
         {
             foreach (CreateRuleRequest createRuleRequest in rulesToCreate)
             {
-                await rulesApiClient.CreateAsync(createRuleRequest);
+                OperationResult<CreateRuleResponse> response = await rulesApiClient.CreateAsync(createRuleRequest);
+                if (response.Status != OperationStatus.Success)
+                {
+                    throw new Exception(response.Message);
+                }
             }
         }
 
@@ -110,7 +119,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
                     Steps = new[]
                     {
                         CreateRuleRequest?.Steps?.First(),
-                        new StepApiModel { StepType = StepType.ExecuteRule, RuleName = "RuleA" }
+                        new StepApiModel { ExecutionOrderPosition = 1, StepType = StepType.ExecuteRule, RuleName = "RuleA" }
                     }
                 },
                 CreateRuleRequest with { WorkspaceId = otherWorkspaceId }
@@ -133,7 +142,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
                && stepA.PropertyName == stepB.PropertyName
                && stepA.NewPropertyState == stepB.NewPropertyState;
 
-        private async Task MockGatewayThingsEndpointAsync()
+        private async Task MockGatewayThingsEndpointAsync(string gatewayUrl = GatewayUrl)
         {
             string input = await GetSerializedThingsAsync();
 
@@ -143,12 +152,10 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
                 Content = new StringContent(input)
             };
 
-            SetupHttpMessageHandlerMock(IsGatewayThingsEndpointRequest, response);
+            SetupHttpMessageHandlerMock(request => CheckHttpRequestMessage(request, gatewayUrl + "/things", HttpMethod.Get), response);
         }
 
         private async Task<string> GetSerializedThingsAsync() => await ReadContentFromDiskAsync("Controllers/RulesApiControllerTests/GetAllFromWorkspace/things.json");
-
-        private bool IsGatewayThingsEndpointRequest(HttpRequestMessage httpRequestMessage) => CheckHttpRequestMessage(httpRequestMessage, GatewayUrl + "/things", HttpMethod.Get);
 
         private async Task<int> CreateOtherWorkspaceAsync()
         {
@@ -160,6 +167,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
             };
 
             MockGatewayPingEndpoint(HttpStatusCode.OK, createOtherWorkspaceCommand.GatewayUrl);
+            await MockGatewayThingsEndpointAsync(createOtherWorkspaceCommand.GatewayUrl);
             await WorkspaceApiClient.CreateAsync(createOtherWorkspaceCommand);
             OperationResult<GetUserWorkspacesResponse> userWorkspacesResponse = await WorkspaceApiClient.GetUserWorkspacesAsync();
 

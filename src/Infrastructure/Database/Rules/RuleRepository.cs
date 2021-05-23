@@ -68,7 +68,7 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
                         ExecutionOrderPosition = changeThingStateStepCreationModel.ExecutionOrderPosition,
                         ThingId = changeThingStateStepCreationModel.ThingId,
                         PropertyName = changeThingStateStepCreationModel.PropertyName,
-                        NewPropertyState = changeThingStateStepCreationModel.PropertyName
+                        NewPropertyState = changeThingStateStepCreationModel.NewPropertyState
                     };
                 })
                 .ToList();

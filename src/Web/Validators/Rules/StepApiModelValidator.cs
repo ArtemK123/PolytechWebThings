@@ -9,7 +9,7 @@ namespace Web.Validators.Rules
         public StepApiModelValidator()
         {
             RuleFor(step => step.StepType).IsInEnum();
-            RuleFor(step => step.ExecutionOrderPosition).Must(orderPosition => orderPosition.HasValue && orderPosition.Value >= 0);
+            RuleFor(step => step.ExecutionOrderPosition).Must(orderPosition => orderPosition is >= 0).WithMessage("Step execution order is missing");
             RuleFor(step => step).NotNull().SetValidator(new ChangeThingStateStepApiModelValidator()).When(step => step.StepType == StepType.ChangeThingState);
             RuleFor(step => step).NotNull().SetValidator(new ExecuteRuleStepApiModelValidator()).When(step => step.StepType == StepType.ExecuteRule);
         }

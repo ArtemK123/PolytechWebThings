@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Commands.CreateRule;
 using Application.Converters;
 using Application.Queries.GetRuleByWorkspaceAndName;
+using Application.Queries.GetRulesFromWorkspace;
 using Domain.Entities.Rule;
 using Domain.Entities.Rule.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.OperationResults;
+using Web.Models.Rules;
 using Web.Models.Rules.Request;
 using Web.Models.Rules.Response;
 using Web.Models.Rules.Steps;
@@ -51,7 +54,44 @@ namespace Web.Controllers
             [FromBody] GetAllFromWorkspaceRequest request,
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            IReadOnlyCollection<Rule> rules = await Mediator.Send(new GetRulesFromWorkspaceQuery(NullableConverter.GetOrThrow(request.WorkspaceId), UserEmail), cancellationToken);
+            IReadOnlyCollection<RuleApiModel> convertedRules = rules.Select(Convert).ToArray();
+            return new OperationResult<GetAllFromWorkspaceResponse>(OperationStatus.Success, new GetAllFromWorkspaceResponse { Rules = convertedRules });
+        }
+
+        private RuleApiModel Convert(Rule rule)
+        {
+            return new RuleApiModel
+            {
+                Id = rule.Id,
+                Name = rule.Name,
+                WorkspaceId = rule.WorkspaceId,
+                Steps = rule.Steps.Select(Convert).ToArray()
+            };
+        }
+
+        private StepApiModel Convert(Step step)
+        {
+            StepApiModel stepApiModel = new StepApiModel
+            {
+                ExecutionOrderPosition = step.ExecutionOrderPosition,
+                StepType = step.StepType
+            };
+
+            return step switch
+            {
+                ExecuteRuleStep executeRuleStep => stepApiModel with
+                {
+                    RuleName = executeRuleStep.RuleName
+                },
+                ChangeThingStateStep changeThingStateStep => stepApiModel with
+                {
+                    ThingId = changeThingStateStep.ThingId,
+                    PropertyName = changeThingStateStep.PropertyName,
+                    NewPropertyState = changeThingStateStep.NewPropertyState
+                },
+                _ => throw new NotSupportedException()
+            };
         }
 
         private RuleCreationModel Convert(CreateRuleRequest apiModel)
