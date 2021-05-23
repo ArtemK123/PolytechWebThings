@@ -45,6 +45,15 @@ namespace Web.Controllers
             return new OperationResult<CreateRuleResponse>(OperationStatus.Success, new CreateRuleResponse { CreatedRuleId = createdRule.Id });
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<OperationResult<GetAllFromWorkspaceResponse>> GetAllFromWorkspace(
+            [FromBody] GetAllFromWorkspaceRequest request,
+            CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         private RuleCreationModel Convert(CreateRuleRequest apiModel)
         {
             return new RuleCreationModel(

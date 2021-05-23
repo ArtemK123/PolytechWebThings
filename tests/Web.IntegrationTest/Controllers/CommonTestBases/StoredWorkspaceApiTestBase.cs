@@ -31,10 +31,10 @@ namespace Web.IntegrationTest.Controllers.CommonTestBases
             WorkspaceId = getUserWorkspacesResponse.Data.Workspaces.First().Id;
         }
 
-        protected void MockGatewayPingEndpoint(HttpStatusCode responseStatus = HttpStatusCode.OK)
+        protected void MockGatewayPingEndpoint(HttpStatusCode responseStatus = HttpStatusCode.OK, string gatewayUrl = GatewayUrl)
         {
             SetupHttpMessageHandlerMock(
-                request => CheckHttpRequestMessage(request, GatewayUrl + "/ping", HttpMethod.Get),
+                request => CheckHttpRequestMessage(request, gatewayUrl + "/ping", HttpMethod.Get),
                 new HttpResponseMessage(responseStatus));
         }
 
