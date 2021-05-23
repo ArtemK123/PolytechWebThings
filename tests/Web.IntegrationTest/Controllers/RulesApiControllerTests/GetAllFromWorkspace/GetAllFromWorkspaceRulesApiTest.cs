@@ -59,7 +59,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
         {
             OperationResult<GetAllFromWorkspaceResponse> result = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = -1 });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace with error message", result.Message);
+            Assert.AreEqual("{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", result.Message);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
         {
             OperationResult<GetAllFromWorkspaceResponse> result = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = WorkspaceId + 1 });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace with error message", result.Message);
+            Assert.AreEqual("Replace with actual", result.Message);
         }
 
         [Test]
