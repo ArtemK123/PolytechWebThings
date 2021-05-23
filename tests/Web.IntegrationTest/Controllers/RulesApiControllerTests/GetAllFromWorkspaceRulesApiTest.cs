@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 using Domain.Entities.Rule;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.IntegrationTest.Controllers.CommonTestBases.MockedGatewayThingsApi;
 using Web.IntegrationTest.Utils;
-using Web.IntegrationTest.Utils.ApiClients;
-using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
 using Web.Models.Rules;
 using Web.Models.Rules.Request;
@@ -21,41 +18,22 @@ using Web.Models.Workspace.Response;
 namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
 {
     [TestFixture(TestOf = typeof(RulesApiController))]
-    internal class GetAllFromWorkspaceRulesApiTest : MockedGatewayThingsApiTestBase
+    internal class GetAllFromWorkspaceRulesApiTest : RulesApiTestBase
     {
-        private RulesApiClient rulesApiClient;
-
         private GetAllFromWorkspaceRequest GetRequest => new GetAllFromWorkspaceRequest { WorkspaceId = WorkspaceId };
-
-        private CreateRuleRequest CreateRuleRequest => new CreateRuleRequest
-        {
-            RuleName = "Rule1",
-            WorkspaceId = WorkspaceId,
-            Steps = new[]
-            {
-                new StepApiModel { ExecutionOrderPosition = 0, StepType = StepType.ChangeThingState, ThingId = ThingId, PropertyName = PropertyName, NewPropertyState = NewPropertyState }
-            }
-        };
-
-        [SetUp]
-        public async Task SetUp()
-        {
-            rulesApiClient = new RulesApiClient(HttpClient, new HttpResponseMessageParser());
-            await rulesApiClient.CreateAsync(CreateRuleRequest);
-        }
 
         [Test]
         public async Task GetAllFromWorkspace_UnauthorizedUser_ShouldReturnUnauthorizedStatus()
         {
             await UserApiClient.LogoutAsync();
-            OperationResult<GetAllFromWorkspaceResponse> result = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest);
+            OperationResult<GetAllFromWorkspaceResponse> result = await RulesApiClient.GetAllFromWorkspaceAsync(GetRequest);
             Assert.AreEqual(OperationStatus.Unauthorized, result.Status);
         }
 
         [Test]
         public async Task GetAllFromWorkspace_InvalidRequestModel_ShouldReturnErrorMessage()
         {
-            OperationResult<GetAllFromWorkspaceResponse> result = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = -1 });
+            OperationResult<GetAllFromWorkspaceResponse> result = await RulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = -1 });
             Assert.AreEqual(OperationStatus.Error, result.Status);
             Assert.AreEqual("{\"WorkspaceId\":[\"Non-positive ids are not supported\"]}", result.Message);
         }
@@ -64,7 +42,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         public async Task GetAllFromWorkspace_WorkspaceIsNotFound_ShouldReturnErrorMessage()
         {
             int nonExistingWorkspaceId = WorkspaceId + 1;
-            OperationResult<GetAllFromWorkspaceResponse> result = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = nonExistingWorkspaceId });
+            OperationResult<GetAllFromWorkspaceResponse> result = await RulesApiClient.GetAllFromWorkspaceAsync(GetRequest with { WorkspaceId = nonExistingWorkspaceId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
             Assert.AreEqual($"Workspace with id={nonExistingWorkspaceId} is not found", result.Message);
         }
@@ -83,7 +61,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
                     .ToArray();
             CreateRuleRequest otherWorkspaceRule = rulesToCreate.Single(createRequest => createRequest.WorkspaceId == otherWorkspaceId);
 
-            OperationResult<GetAllFromWorkspaceResponse> getAllRulesResponse = await rulesApiClient.GetAllFromWorkspaceAsync(GetRequest);
+            OperationResult<GetAllFromWorkspaceResponse> getAllRulesResponse = await RulesApiClient.GetAllFromWorkspaceAsync(GetRequest);
 
             Assert.AreEqual(OperationStatus.Success, getAllRulesResponse.Status);
             Assert.True(CollectionComparer.Compare(currentWorkspaceRules, getAllRulesResponse.Data.Rules, CompareRules));
@@ -94,7 +72,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         {
             foreach (CreateRuleRequest createRuleRequest in rulesToCreate)
             {
-                OperationResult<CreateRuleResponse> response = await rulesApiClient.CreateAsync(createRuleRequest);
+                OperationResult<CreateRuleResponse> response = await RulesApiClient.CreateAsync(createRuleRequest);
                 if (response.Status != OperationStatus.Success)
                 {
                     throw new Exception(response.Message);

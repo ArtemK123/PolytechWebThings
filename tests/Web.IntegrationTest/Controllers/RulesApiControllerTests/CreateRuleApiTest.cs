@@ -2,9 +2,6 @@
 using Domain.Entities.Rule;
 using NUnit.Framework;
 using Web.Controllers;
-using Web.IntegrationTest.Controllers.CommonTestBases.MockedGatewayThingsApi;
-using Web.IntegrationTest.Utils.ApiClients;
-using Web.IntegrationTest.Utils.Parsers;
 using Web.Models.OperationResults;
 using Web.Models.Rules.Request;
 using Web.Models.Rules.Response;
@@ -13,12 +10,10 @@ using Web.Models.Rules.Steps;
 namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
 {
     [TestFixture(TestOf = typeof(RulesApiController))]
-    internal class CreateRuleApiTest : MockedGatewayThingsApiTestBase
+    internal class CreateRuleApiTest : RulesApiTestBase
     {
         private const string CreatedRuleName = "CreatedRule";
         private const string OtherRuleName = "OtherRuleName";
-
-        private RulesApiClient rulesApiClient;
 
         private StepApiModel DefaultExecuteRuleStep => new StepApiModel { ExecutionOrderPosition = 0, StepType = StepType.ExecuteRule, RuleName = CreatedRuleName };
 
@@ -32,17 +27,11 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
             Steps = new[] { DefaultChangePropertyStateStep }
         };
 
-        [SetUp]
-        public void SetUp()
-        {
-            rulesApiClient = new RulesApiClient(HttpClient, new HttpResponseMessageParser());
-        }
-
         [Test]
         public async Task Create_UnauthorizedUser_ShouldReturnUnauthorizedResult()
         {
             await UserApiClient.LogoutAsync();
-            OperationResult<CreateRuleResponse> result = await rulesApiClient.CreateAsync(DefaultRequest);
+            OperationResult<CreateRuleResponse> result = await RulesApiClient.CreateAsync(DefaultRequest);
             Assert.AreEqual(OperationStatus.Unauthorized, result.Status);
         }
 
@@ -66,7 +55,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         [Test]
         public async Task Create_RuleNameDuplicated_ShouldReturnErrorMessage()
         {
-            await rulesApiClient.CreateAsync(DefaultRequest);
+            await RulesApiClient.CreateAsync(DefaultRequest);
             await RunCreateWithErrorTestAsync(DefaultRequest, $"Rule with name={CreatedRuleName} is already created");
         }
 
@@ -112,7 +101,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         [Test]
         public async Task Create_ChangePropertyStep_Success_ShouldReturnCreatedRuleId()
         {
-            OperationResult<CreateRuleResponse> result = await rulesApiClient.CreateAsync(DefaultRequest);
+            OperationResult<CreateRuleResponse> result = await RulesApiClient.CreateAsync(DefaultRequest);
             Assert.AreEqual(OperationStatus.Success, result.Status);
             Assert.AreNotEqual(default(int), result.Data.CreatedRuleId);
         }
@@ -120,20 +109,20 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         [Test]
         public async Task Create_ExecuteRuleStep_Success_ShouldReturnSuccessResult()
         {
-            await rulesApiClient.CreateAsync(DefaultRequest);
+            await RulesApiClient.CreateAsync(DefaultRequest);
 
             CreateRuleRequest secondRequest = CreateRequestWithStep(DefaultExecuteRuleStep) with
             {
                 RuleName = OtherRuleName
 
             };
-            OperationResult<CreateRuleResponse> result = await rulesApiClient.CreateAsync(secondRequest);
+            OperationResult<CreateRuleResponse> result = await RulesApiClient.CreateAsync(secondRequest);
             Assert.AreEqual(OperationStatus.Success, result.Status);
         }
 
         private async Task RunCreateWithErrorTestAsync(CreateRuleRequest request, string expectedErrorMessage)
         {
-            OperationResult<CreateRuleResponse> result = await rulesApiClient.CreateAsync(request);
+            OperationResult<CreateRuleResponse> result = await RulesApiClient.CreateAsync(request);
             Assert.AreEqual(OperationStatus.Error, result.Status);
             Assert.AreEqual(expectedErrorMessage, result.Message);
         }
