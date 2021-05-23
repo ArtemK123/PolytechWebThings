@@ -59,6 +59,15 @@ namespace Web.Controllers
             return new OperationResult<GetAllFromWorkspaceResponse>(OperationStatus.Success, new GetAllFromWorkspaceResponse { Rules = convertedRules });
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<OperationResult> Delete(
+            [FromBody] DeleteRuleRequest request,
+            CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         private RuleApiModel Convert(Rule rule)
         {
             return new RuleApiModel

@@ -10,7 +10,7 @@ using Web.Models.Rules.Request;
 using Web.Models.Rules.Response;
 using Web.Models.Rules.Steps;
 
-namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.Create
+namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
 {
     [TestFixture(TestOf = typeof(RulesApiController))]
     internal class CreateRuleApiTest : MockedGatewayThingsApiTestBase

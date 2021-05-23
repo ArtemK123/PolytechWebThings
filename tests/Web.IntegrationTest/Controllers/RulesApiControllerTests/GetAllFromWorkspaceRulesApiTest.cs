@@ -18,7 +18,7 @@ using Web.Models.Rules.Steps;
 using Web.Models.Workspace.Request;
 using Web.Models.Workspace.Response;
 
-namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWorkspace
+namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
 {
     [TestFixture(TestOf = typeof(RulesApiController))]
     internal class GetAllFromWorkspaceRulesApiTest : MockedGatewayThingsApiTestBase
@@ -87,7 +87,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests.GetAllFromWork
 
             Assert.AreEqual(OperationStatus.Success, getAllRulesResponse.Status);
             Assert.True(CollectionComparer.Compare(currentWorkspaceRules, getAllRulesResponse.Data.Rules, CompareRules));
-            Assert.False(getAllRulesResponse.Data.Rules?.Any(rule => CompareRules(otherWorkspaceRule, rule)));
+            Assert.False(getAllRulesResponse.Data.Rules.Any(rule => CompareRules(otherWorkspaceRule, rule)));
         }
 
         private async Task CreateRulesAsync(IReadOnlyCollection<CreateRuleRequest> rulesToCreate)

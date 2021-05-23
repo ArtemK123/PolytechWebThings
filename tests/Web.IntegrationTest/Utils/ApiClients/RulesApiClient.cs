@@ -34,5 +34,14 @@ namespace Web.IntegrationTest.Utils.ApiClients
             });
             return await HttpResponseMessageParser.ParseResponseAsync<OperationResult<GetAllFromWorkspaceResponse>>(response);
         }
+
+        public async Task<OperationResult> DeleteAsync(DeleteRuleRequest request)
+        {
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, ApiBaseUrl + "Delete")
+            {
+                Content = JsonContent.Create(request)
+            });
+            return await HttpResponseMessageParser.ParseResponseAsync<OperationResult<GetAllFromWorkspaceResponse>>(response);
+        }
     }
 }

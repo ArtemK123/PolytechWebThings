@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Web.Models.Rules.Response
 {
     public class GetAllFromWorkspaceResponse
     {
-        public IReadOnlyCollection<RuleApiModel>? Rules { get; init; }
+        public IReadOnlyCollection<RuleApiModel> Rules { get; init; } = Array.Empty<RuleApiModel>();
     }
 }
