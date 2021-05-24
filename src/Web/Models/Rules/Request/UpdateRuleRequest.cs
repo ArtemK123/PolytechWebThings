@@ -3,7 +3,7 @@ using Web.Models.Rules.Steps;
 
 namespace Web.Models.Rules.Request
 {
-    public class UpdateRuleRequest
+    public record UpdateRuleRequest
     {
         public int RuleId { get; init; }
 
