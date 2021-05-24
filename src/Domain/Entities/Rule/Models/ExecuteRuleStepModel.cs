@@ -1,8 +1,8 @@
 ﻿namespace Domain.Entities.Rule.Models
 {
-    public class ExecuteRuleStepCreationModel : StepCreationModel
+    public class ExecuteRuleStepModel : StepModel
     {
-        public ExecuteRuleStepCreationModel(StepType stepType, int executionOrderPosition, string ruleName)
+        public ExecuteRuleStepModel(StepType stepType, int executionOrderPosition, string ruleName)
             : base(stepType, executionOrderPosition)
         {
             RuleName = ruleName;

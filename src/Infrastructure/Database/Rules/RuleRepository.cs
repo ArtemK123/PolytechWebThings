@@ -67,11 +67,11 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
                 .Where(step => step.StepType == StepType.ExecuteRule)
                 .Select(step =>
                 {
-                    ExecuteRuleStepCreationModel executeRuleStepCreationModel = (ExecuteRuleStepCreationModel)step;
+                    ExecuteRuleStepModel executeRuleStepModel = (ExecuteRuleStepModel)step;
                     return new ExecuteRuleStepDatabaseModel
                     {
-                        RuleName = executeRuleStepCreationModel.RuleName,
-                        ExecutionOrderPosition = executeRuleStepCreationModel.ExecutionOrderPosition
+                        RuleName = executeRuleStepModel.RuleName,
+                        ExecutionOrderPosition = executeRuleStepModel.ExecutionOrderPosition
                     };
                 })
                 .ToList();
@@ -81,13 +81,13 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
                 .Where(step => step.StepType == StepType.ChangeThingState)
                 .Select(step =>
                 {
-                    ChangeThingStateStepCreationModel changeThingStateStepCreationModel = (ChangeThingStateStepCreationModel)step;
+                    ChangeThingStateStepModel changeThingStateStepModel = (ChangeThingStateStepModel)step;
                     return new ChangeThingStateStepDatabaseModel
                     {
-                        ExecutionOrderPosition = changeThingStateStepCreationModel.ExecutionOrderPosition,
-                        ThingId = changeThingStateStepCreationModel.ThingId,
-                        PropertyName = changeThingStateStepCreationModel.PropertyName,
-                        NewPropertyState = changeThingStateStepCreationModel.NewPropertyState
+                        ExecutionOrderPosition = changeThingStateStepModel.ExecutionOrderPosition,
+                        ThingId = changeThingStateStepModel.ThingId,
+                        PropertyName = changeThingStateStepModel.PropertyName,
+                        NewPropertyState = changeThingStateStepModel.NewPropertyState
                     };
                 })
                 .ToList();

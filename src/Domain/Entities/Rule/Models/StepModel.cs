@@ -1,8 +1,8 @@
 ﻿namespace Domain.Entities.Rule.Models
 {
-    public abstract class StepCreationModel
+    public abstract class StepModel
     {
-        protected StepCreationModel(StepType stepType, int executionOrderPosition)
+        protected StepModel(StepType stepType, int executionOrderPosition)
         {
             StepType = stepType;
             ExecutionOrderPosition = executionOrderPosition;

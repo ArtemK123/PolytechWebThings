@@ -5,10 +5,10 @@ namespace Web.Models.Rules.Request
 {
     public record UpdateRuleRequest
     {
-        public int RuleId { get; init; }
+        public int? RuleId { get; init; }
 
         public string? NewRuleName { get; init; }
 
-        public IReadOnlyCollection<StepApiModel>? UpdatedSteps { get; init; }
+        public IReadOnlyCollection<StepApiModel?>? UpdatedSteps { get; init; }
     }
 }

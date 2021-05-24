@@ -4,7 +4,7 @@ namespace Domain.Entities.Rule.Models
 {
     public record RuleCreationModel
     {
-        public RuleCreationModel(int workspaceId, string name, IReadOnlyCollection<StepCreationModel> steps)
+        public RuleCreationModel(int workspaceId, string name, IReadOnlyCollection<StepModel> steps)
         {
             WorkspaceId = workspaceId;
             Name = name;
@@ -15,6 +15,6 @@ namespace Domain.Entities.Rule.Models
 
         public string Name { get; }
 
-        public IReadOnlyCollection<StepCreationModel> Steps { get; }
+        public IReadOnlyCollection<StepModel> Steps { get; }
     }
 }

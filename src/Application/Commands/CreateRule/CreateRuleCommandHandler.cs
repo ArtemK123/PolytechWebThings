@@ -51,10 +51,10 @@ namespace Application.Commands.CreateRule
         {
             ValidateStepExecutionOrder(command: command);
 
-            IReadOnlyCollection<ExecuteRuleStepCreationModel> executeRuleStepCreationModels =
-                command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ExecuteRule).Select(step => (ExecuteRuleStepCreationModel)step).ToArray();
-            IReadOnlyCollection<ChangeThingStateStepCreationModel> changePropertyStateStepCreationModels
-                = command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ChangeThingState).Select(step => (ChangeThingStateStepCreationModel)step).ToArray();
+            IReadOnlyCollection<ExecuteRuleStepModel> executeRuleStepCreationModels =
+                command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ExecuteRule).Select(step => (ExecuteRuleStepModel)step).ToArray();
+            IReadOnlyCollection<ChangeThingStateStepModel> changePropertyStateStepCreationModels
+                = command.RuleCreationModel.Steps.Where(step => step.StepType == StepType.ChangeThingState).Select(step => (ChangeThingStateStepModel)step).ToArray();
 
             ValidateExecuteRuleStepModels(executeRuleStepCreationModels, rules);
             await ValidateChangePropertyStateStepModelsAsync(changePropertyStateStepCreationModels, workspace);
@@ -62,10 +62,10 @@ namespace Application.Commands.CreateRule
 
         private void ValidateStepExecutionOrder(CreateRuleCommand command)
         {
-            IReadOnlyCollection<StepCreationModel> orderedSteps = command.RuleCreationModel.Steps.OrderBy(step => step.ExecutionOrderPosition).ToArray();
+            IReadOnlyCollection<StepModel> orderedSteps = command.RuleCreationModel.Steps.OrderBy(step => step.ExecutionOrderPosition).ToArray();
             for (int i = 0; i < orderedSteps.Count; i++)
             {
-                StepCreationModel currentStep = orderedSteps.ElementAt(i);
+                StepModel currentStep = orderedSteps.ElementAt(i);
                 if (currentStep.ExecutionOrderPosition != i)
                 {
                     throw new InvalidStepExecutionOrderException();
@@ -73,9 +73,9 @@ namespace Application.Commands.CreateRule
             }
         }
 
-        private void ValidateExecuteRuleStepModels(IReadOnlyCollection<ExecuteRuleStepCreationModel> steps, IReadOnlyCollection<Rule> rules)
+        private void ValidateExecuteRuleStepModels(IReadOnlyCollection<ExecuteRuleStepModel> steps, IReadOnlyCollection<Rule> rules)
         {
-            foreach (ExecuteRuleStepCreationModel step in steps)
+            foreach (ExecuteRuleStepModel step in steps)
             {
                 if (rules.All(rule => rule.Name != step.RuleName))
                 {
@@ -84,7 +84,7 @@ namespace Application.Commands.CreateRule
             }
         }
 
-        private async Task ValidateChangePropertyStateStepModelsAsync(IReadOnlyCollection<ChangeThingStateStepCreationModel> steps, IWorkspace workspace)
+        private async Task ValidateChangePropertyStateStepModelsAsync(IReadOnlyCollection<ChangeThingStateStepModel> steps, IWorkspace workspace)
         {
             if (steps.Count == 0)
             {
@@ -93,7 +93,7 @@ namespace Application.Commands.CreateRule
 
             IReadOnlyCollection<Thing> things = await thingsProvider.GetAsync(workspace);
 
-            foreach (ChangeThingStateStepCreationModel step in steps)
+            foreach (ChangeThingStateStepModel step in steps)
             {
                 Thing? thing = things.SingleOrDefault(currentThing => currentThing.Id == step.ThingId);
 
