@@ -60,6 +60,13 @@ namespace Web.Controllers
 
         [HttpPost]
         [Authorize]
+        public async Task<OperationResult<RuleApiModel>> GetById([FromBody] GetRuleByIdRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [Authorize]
         public async Task<OperationResult> Delete([FromBody] DeleteRuleRequest request, CancellationToken cancellationToken)
         {
             await Mediator.Send(new DeleteRuleCommand(NullableConverter.GetOrThrow(request.RuleId), UserEmail), cancellationToken);
