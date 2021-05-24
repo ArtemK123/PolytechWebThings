@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Commands.CreateRule;
 using Application.Commands.DeleteRule;
 using Application.Converters;
+using Application.Queries.GetRuleById;
 using Application.Queries.GetRuleByWorkspaceAndName;
 using Application.Queries.GetRulesFromWorkspace;
 using Domain.Entities.Rule;
@@ -62,7 +63,8 @@ namespace Web.Controllers
         [Authorize]
         public async Task<OperationResult<RuleApiModel>> GetById([FromBody] GetRuleByIdRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Rule rule = await Mediator.Send(new GetRuleByIdQuery(NullableConverter.GetOrThrow(request.RuleId), UserEmail), cancellationToken);
+            return new OperationResult<RuleApiModel>(OperationStatus.Success, Convert(rule));
         }
 
         [HttpPost]

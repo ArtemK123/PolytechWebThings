@@ -2,6 +2,6 @@
 {
     public record GetRuleByIdRequest
     {
-        public int RuleId { get; init; }
+        public int? RuleId { get; init; }
     }
 }

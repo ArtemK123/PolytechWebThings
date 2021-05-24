@@ -17,7 +17,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         {
             await UserApiClient.LogoutAsync();
             OperationResult<RuleApiModel> result = await RulesApiClient.GetByIdAsync(GetRuleRequest);
-            Assert.AreEqual(OperationStatus.Forbidden, result.Status);
+            Assert.AreEqual(OperationStatus.Unauthorized, result.Status);
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         {
             OperationResult<RuleApiModel> result = await RulesApiClient.GetByIdAsync(new GetRuleByIdRequest());
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace", result.Message);
+            Assert.AreEqual("{\"RuleId\":[\"'Rule Id' must not be empty.\"]}", result.Message);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
             int nonExistingRuleId = RuleId + 10;
             OperationResult<RuleApiModel> result = await RulesApiClient.GetByIdAsync(GetRuleRequest with { RuleId = nonExistingRuleId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("Replace", result.Message);
+            Assert.AreEqual($"Rule with id={nonExistingRuleId} is not found", result.Message);
         }
 
         [Test]
