@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Domain.Entities.Rule;
 using NUnit.Framework;
 using Web.Controllers;
 using Web.Models.OperationResults;
+using Web.Models.Rules;
 using Web.Models.Rules.Request;
 using Web.Models.Rules.Steps;
 
@@ -87,9 +87,15 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         public async Task Update_Success_ShouldUpdateRules()
         {
             OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest);
+            OperationResult<RuleApiModel> getUpdatedRuleResponse = await RulesApiClient.GetByIdAsync(new GetRuleByIdRequest { RuleId = RuleId });
             Assert.AreEqual(OperationStatus.Success, result.Status);
-            throw new NotImplementedException();
-            // TODO: Implement GetRuleById endpoint and use there in order to check updated rule
+            Assert.True(CompareRules(ConvertUpdateRequestToCreateRequest(UpdateRequest), getUpdatedRuleResponse.Data));
         }
+
+        private CreateRuleRequest ConvertUpdateRequestToCreateRequest(UpdateRuleRequest updateRuleRequest)
+            => new CreateRuleRequest
+            {
+                RuleName = updateRuleRequest.NewRuleName, WorkspaceId = WorkspaceId, Steps = updateRuleRequest.UpdatedSteps
+            };
     }
 }
