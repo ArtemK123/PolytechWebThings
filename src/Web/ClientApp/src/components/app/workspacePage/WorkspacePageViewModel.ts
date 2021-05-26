@@ -47,8 +47,8 @@ export class WorkspacePageViewModel implements IViewModel {
         this.fetchRules();
     }
 
-    public generateMenuHref(menuItem: string) {
-        return `/workspaces/${this.id}/${menuItem}`;
+    public showNavigationItem(menuItem: string) {
+        RedirectHandler.redirect(`/workspaces/${this.id}/${menuItem}`);
     }
 
     public generateRuleElement(rule: IRuleModel) {

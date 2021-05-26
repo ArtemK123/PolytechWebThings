@@ -6,10 +6,10 @@
     <!-- /ko -->
     <div data-bind="ifnot: isLoading">
         <h2>Workspace name is <span data-bind="text: workspaceName"></span></h2>
-        <ul>
-            <li><a data-bind="attr: { href: generateMenuHref('things') }">Things</a></li>
-            <li><a data-bind="attr: { href: generateMenuHref('rules') }">Rules</a></li>
-        </ul>
+        <div class="workspace-page__navigation-container">
+            <button data-bind="click: () => showNavigationItem('things')">Show things</button>
+            <button data-bind="click: () => showNavigationItem('rules')">Show rules</button>
+        </div>
         <router id="workspace-router"  params="{ routes: routes, routerElementId: 'workspace-router' }"></router>
     </div>
 </div>

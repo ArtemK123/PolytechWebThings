@@ -1,4 +1,12 @@
-﻿.workspace-page__loader-container {
+﻿@use "src/common-styles/buttons";
+
+.workspace-page__loader-container {
   width: 100px;
   height: 100px;
+}
+
+.workspace-page__navigation-container {
+  button {
+    @extend %primary-button;
+  }
 }
