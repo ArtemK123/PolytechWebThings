@@ -1,5 +1,7 @@
 <div class="app">
     <header-component></header-component>
-    <router id="root-router" params="{ routes: routerParams.routes, routerElementId: routerParams.routerElementId }"></router>
+    <div class="app__router-container">
+        <router id="root-router" params="{ routes: routerParams.routes, routerElementId: routerParams.routerElementId }"></router>
+    </div>
     <backend-connection-check></backend-connection-check>
 </div>

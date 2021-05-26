@@ -40,7 +40,6 @@
     <ItemGroup>
       <Folder Include="ClientApp\dist" />
       <Folder Include="ClientApp\spec" />
-      <Folder Include="ClientApp\src\common-styles" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

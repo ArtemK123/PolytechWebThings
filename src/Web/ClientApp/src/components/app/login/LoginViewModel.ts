@@ -28,8 +28,12 @@ export class LoginViewModel implements IViewModel {
         });
     }
 
-    public handleRedirectToHomePage() {
+    public handleRedirectToHome(): void {
         LoginViewModel.redirectToHomePage();
+    }
+
+    public handleRedirectToSignUp(): void {
+        RedirectHandler.redirect("/register");
     }
 
     private static redirectToHomePage(): void {

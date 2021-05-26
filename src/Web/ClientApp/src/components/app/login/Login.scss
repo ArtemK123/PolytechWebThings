@@ -1,0 +1,17 @@
+.login {
+  button {
+    background-color: #5d9bc7;
+    color: whitesmoke;
+    padding: 6px;
+    border: 2px solid lavender;
+    border-radius: 12px;
+  }
+  button:hover {
+    cursor: pointer;
+    background-color: #6dabc7;
+  }
+}
+
+.login__input {
+  margin-bottom: 10px;
+}

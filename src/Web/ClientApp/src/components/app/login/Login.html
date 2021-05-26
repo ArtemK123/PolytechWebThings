@@ -1,9 +1,18 @@
-<div>
+<div class="login">
     <h2>Log into your account</h2>
     <form data-bind="submit: handleLogin">
-        <span>Email</span><input data-bind="value: email"/><br/>
-        <span>Password</span><input type="password" data-bind="value: password"/><br/>
+        <label>
+            Email*:
+            <input class="login__input" data-bind="value: email"/>
+            <br/>
+        </label>
+        <label>
+            Password*:
+            <input class="login__input" type="password" data-bind="value: password"/>
+            <br/>
+        </label>
         <button type="submit">Login</button>
     </form>
-    <button data-bind="click: handleRedirectToHomePage">Go to Home page</button>
+    <button data-bind="click: handleRedirectToSignUp">Go Sign up page</button><br>
+    <button data-bind="click: handleRedirectToHome">Go to Home page</button>
 </div>
