@@ -1,4 +1,12 @@
-﻿.edit-rule-page__new-step-button {
+﻿@use "src/common-styles/buttons";
+
+.edit-rule-page {
+  button {
+    @extend %primary-button;
+  }
+}
+
+.edit-rule-page__new-step-button {
   margin-bottom: 40px;
 }
 
@@ -6,5 +14,9 @@
   label {
     color: whitesmoke;
   }
-  background-color: #494be3;
+  button {
+    @extend %alternative-button;
+  }
+
+  background-color: steelblue;
 }

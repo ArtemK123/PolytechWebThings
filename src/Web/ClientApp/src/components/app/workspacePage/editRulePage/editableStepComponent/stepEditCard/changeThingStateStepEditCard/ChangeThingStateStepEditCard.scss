@@ -1,10 +1,16 @@
-﻿.change-thing-state-step-edit-card {
+﻿@use "src/common-styles/buttons";
+
+.change-thing-state-step-edit-card {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   max-width: 900px;
   padding: 5px 5px 5px 10px;
   align-items: center;
+
+  button {
+    @extend %primary-button;
+  }
 }
 
 .change-thing-state-step-edit-card__inputs-container {

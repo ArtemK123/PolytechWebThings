@@ -1,10 +1,16 @@
-﻿.execute-rule-step-edit-card {
+﻿@use "src/common-styles/buttons";
+
+.execute-rule-step-edit-card {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   max-width: 900px;
   padding: 5px 5px 5px 10px;
   align-items: center;
+
+  button {
+    @extend %primary-button;
+  }
 }
 
 .execute-rule-step-edit-card__inputs-container {
