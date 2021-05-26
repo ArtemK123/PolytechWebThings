@@ -1,0 +1,30 @@
+﻿.header {
+  height: 80px;
+  background-color: steelblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 18px;
+  padding-right: 18px;
+
+  button {
+    background-color: #89b6d6;
+    color: whitesmoke;
+    padding: 6px;
+    border: 2px solid lavender;
+    border-radius: 12px;
+  }
+
+  span {
+    color: whitesmoke;
+  }
+}
+
+.header__title {
+  font-size: 22px;
+}
+
+.header__user-account {
+  font-size: 18px;
+  margin-right: 6px;
+}

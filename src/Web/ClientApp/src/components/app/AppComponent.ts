@@ -2,6 +2,7 @@ import { IComponentDescriptor } from "src/componentsRegistration/IComponentDescr
 import { IComponent } from "src/componentsRegistration/IComponent";
 import { AppViewModel } from "src/components/app/AppViewModel";
 import template from "./App.html";
+import "./App.scss";
 
 export class AppComponent implements IComponent {
     generateDescriptor(): IComponentDescriptor {

@@ -1,5 +1,12 @@
-<div>
-    <span data-bind="text: userAccount"></span>
-    <button data-bind="click: handleRedirectToHome">Go to home page</button>
-    <button data-bind="click: handleLogout">Logout</button>
-</div>
+<header class="header">
+    <div>
+        <span class="header__title">Polytech WebThings</span>
+    </div>
+    <div>
+        <!-- ko if: isUserAccountShown -->
+            <span class="header__user-account" data-bind="text: userAccount"></span>
+        <!-- /ko -->
+        <button class="header__home-redirect-button" data-bind="click: handleRedirectToHome">Go to home page</button>
+        <button class="header__logout-redirect-button" data-bind="click: handleLogout">Logout</button>
+    </div>
+</header>

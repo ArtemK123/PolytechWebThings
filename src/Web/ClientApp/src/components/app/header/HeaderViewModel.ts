@@ -5,7 +5,8 @@ import { IViewModel } from "src/componentsRegistration/IViewModel";
 import { UserApiClient } from "src/backendApi/clients/UserApiClient";
 
 export class HeaderViewModel implements IViewModel {
-    public readonly userAccount: ko.Observable<string> = ko.observable("Unauthorized");
+    public readonly userAccount: ko.Observable<string> = ko.observable("");
+    public readonly isUserAccountShown: ko.Computed<boolean> = ko.computed(() => this.userAccount() !== "");
 
     private readonly userApiClient: UserApiClient = new UserApiClient();
     private readonly logoutUseCase: LogoutUseCase = new LogoutUseCase();
