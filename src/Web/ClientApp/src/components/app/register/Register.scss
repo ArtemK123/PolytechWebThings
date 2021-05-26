@@ -1,0 +1,11 @@
+﻿@use "src/common-styles/buttons";
+
+.register {
+  button {
+    @extend %primary-button;
+  }
+
+  input {
+    margin-bottom: 10px;
+  }
+}

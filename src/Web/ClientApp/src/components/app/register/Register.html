@@ -1,9 +1,16 @@
-<div>
+<div class="register">
     <h2>Create your new account</h2>
     <form data-bind="submit: handleRegister">
-        <span>Email</span><input data-bind="value: email"/><br/>
-        <span>Password</span><input type="password" data-bind="value: password"/><br/>
+        <label>
+            Email*:
+            <input data-bind="value: email"/><br/>
+        </label>
+        <label>
+            Password*:
+            <input type="password" data-bind="value: password"/><br/>
+        </label>
         <button type="submit">Create account</button>
     </form>
+    <button data-bind="click: handleRedirectToSignIn">Go to Sign in</button><br/>
     <button data-bind="click: handleRedirectToHomePage">Go to Home page</button>
 </div>

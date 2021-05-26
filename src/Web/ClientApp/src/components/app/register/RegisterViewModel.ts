@@ -30,4 +30,8 @@ export class RegisterViewModel implements IViewModel {
     public handleRedirectToHomePage() {
         RedirectHandler.redirect("/");
     }
+
+    public handleRedirectToSignIn() {
+        RedirectHandler.redirect("/login");
+    }
 }
