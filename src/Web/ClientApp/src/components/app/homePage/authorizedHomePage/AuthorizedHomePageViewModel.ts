@@ -6,18 +6,10 @@ import { IOperationResult } from "src/backendApi/models/entities/OperationResult
 import { WorkspaceApiClient } from "src/backendApi/clients/WorkspaceApiClient";
 
 export class AuthorizedHomePageViewModel implements IViewModel {
-    public readonly email: ko.Observable<string> = ko.observable<string>("");
     public readonly workspaces: ko.ObservableArray<IWorkspaceApiModel> = ko.observableArray([]);
-
     private readonly workspaceApiClient: WorkspaceApiClient = new WorkspaceApiClient();
 
     constructor() {
-        const storedEmail: string | null | undefined = localStorage.getItem("email");
-        if (!storedEmail) {
-            throw new Error("User email is not found");
-        }
-
-        this.email(storedEmail);
         this.fetchWorkspaces();
     }
 

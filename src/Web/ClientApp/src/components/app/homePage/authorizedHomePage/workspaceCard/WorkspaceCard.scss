@@ -1,0 +1,7 @@
+@use "src/common-styles/buttons";
+
+.workspace-card {
+  button {
+    @extend %primary-button;
+  }
+}

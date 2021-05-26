@@ -1,8 +1,7 @@
 <div>
     <h2>Welcome to the Polytech Webthings</h2>
-    <h3>Your email is <em property="italic" data-bind="text: email">test</em></h3>
     <h3><a href="/create-workspace">Add new workspace</a></h3>
-    <h3>Or choose workspace:</h3>
+    <h3>Or choose existing workspace:</h3>
     <div data-bind="foreach: workspaces">
         <workspace-card params="{ workspaceApiModel: $data }"></workspace-card>
     </div>
