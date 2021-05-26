@@ -1,0 +1,7 @@
+@use "src/common-styles/buttons";
+
+.unauthorized-home-page {
+    button {
+        @extend %primary-button;
+    }
+}
