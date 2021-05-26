@@ -1,9 +1,18 @@
-﻿<div>
+﻿<div class="create-workspace-page">
     <h2>Create new workspace</h2>
     <form data-bind="submit: handleSubmit">
-        <span>Workspace name</span><input data-bind="value: name"/><br/>
-        <span>Url to the Mozilla IoT Gateway</span><input data-bind="value: url"/><br/>
-        <span>Access token</span><br/><textarea class="create-workspace-page__access-token-textarea" data-bind="value: token"></textarea><br/>
+        <label>
+            Workspace name*:
+            <input data-bind="value: name"/><br/>
+        </label>
+        <label>
+            Url to the Mozilla IoT Gateway*:
+            <input data-bind="value: url"/><br/>
+        </label>
+        <label>
+            Access token*: <br/>
+            <textarea class="create-workspace-page__access-token-textarea" data-bind="value: token"></textarea><br/>
+        </label>
         <button type="submit">Create</button>
     </form>
 </div>

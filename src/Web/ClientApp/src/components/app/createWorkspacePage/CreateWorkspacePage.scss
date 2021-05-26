@@ -1,4 +1,17 @@
-﻿.create-workspace-page__access-token-textarea {
+﻿@use "src/common-styles/buttons";
+
+.create-workspace-page {
+  input {
+    margin-bottom: 10px;
+  }
+
+  button {
+    @extend %primary-button;
+  }
+}
+
+.create-workspace-page__access-token-textarea {
   width: 400px;
-  height: 300px;
+  height: 200px;
+  margin-bottom: 5px;
 }
