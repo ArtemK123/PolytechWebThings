@@ -1,8 +1,11 @@
-﻿.workspace-rules__loader-container {
+﻿@use "src/common-styles/buttons";
+
+.workspace-rules__loader-container {
   width: 100px;
   height: 100px;
 }
 
 .workspace-rules__create-rule-button {
+  @extend %primary-button;
   margin-top: 20px;
 }

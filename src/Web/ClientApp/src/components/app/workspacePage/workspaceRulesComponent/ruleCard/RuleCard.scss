@@ -1,6 +1,12 @@
-﻿.rule-card {
+﻿@use "src/common-styles/buttons";
+
+.rule-card {
   padding: 10px;
   border-bottom: 2px solid gray;
+
+  button {
+    @extend %primary-button;
+  }
 }
 
 .rule-card__title-container:hover {
