@@ -27,6 +27,12 @@ namespace PolytechWebThings.Infrastructure.Database
             builder.Entity<WorkspaceDatabaseModel>()
                 .HasIndex(workspace => workspace.GatewayUrl)
                 .IsUnique();
+
+            builder.Entity<WorkspaceDatabaseModel>()
+                .HasOne(workspace => workspace.User)
+                .WithMany(user => user.Workspaces)
+                .HasForeignKey(workspaceDatabaseModel => workspaceDatabaseModel.UserEmail)
+                .HasPrincipalKey(user => user.Email);
         }
     }
 }

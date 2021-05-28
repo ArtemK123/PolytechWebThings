@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PolytechWebThings.Infrastructure.Database.Rules.Steps;
+using PolytechWebThings.Infrastructure.Database.Workspaces;
 
 namespace PolytechWebThings.Infrastructure.Database.Rules
 {
@@ -8,6 +9,8 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
         public int Id { get; set; }
 
         public int WorkspaceId { get; set; }
+
+        public WorkspaceDatabaseModel Workspace { get; set; } = null!;
 
         public string Name { get; set; } = null!;
 

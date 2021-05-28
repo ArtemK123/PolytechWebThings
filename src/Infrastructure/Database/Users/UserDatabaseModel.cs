@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Domain.Enums;
+using PolytechWebThings.Infrastructure.Database.Workspaces;
 
 namespace PolytechWebThings.Infrastructure.Database.Users
 {
@@ -15,5 +17,7 @@ namespace PolytechWebThings.Infrastructure.Database.Users
 
         [Required]
         public UserRole Role { get; set; }
+
+        public List<WorkspaceDatabaseModel> Workspaces { get; set; } = null!;
     }
 }
