@@ -97,7 +97,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         {
             OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest with { UpdatedSteps = UpdateRequest.UpdatedSteps!.Concat(UpdateRequest.UpdatedSteps).ToList() });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual($"Rule with name={ReferencingRule.RuleName} already exists in workspace with id={WorkspaceId}", result.Message);
+            Assert.AreEqual("Step execution order is broken.", result.Message);
         }
 
         [Test]
