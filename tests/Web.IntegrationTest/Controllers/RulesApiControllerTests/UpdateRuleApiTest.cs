@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Domain.Entities.Rule;
 using NUnit.Framework;
 using Web.Controllers;
@@ -54,7 +56,7 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
             int nonExistingRuleId = RuleId + 100;
             OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest with { RuleId = nonExistingRuleId });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("replace with message", result.Message);
+            Assert.AreEqual("Rule with id=101 is not found", result.Message);
         }
 
         [Test]
@@ -68,10 +70,9 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
         [Test]
         public async Task Update_StepsAreEmpty_ShouldReturnErrorMessage()
         {
-            int nonExistingRuleId = RuleId + 100;
-            OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest with { RuleId = nonExistingRuleId });
+            OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest with { UpdatedSteps = Array.Empty<StepApiModel>() });
             Assert.AreEqual(OperationStatus.Error, result.Status);
-            Assert.AreEqual("replace with message", result.Message);
+            Assert.AreEqual("Steps collection should not be empty. Add at least one step", result.Message);
         }
 
         [Test]
@@ -81,6 +82,22 @@ namespace Web.IntegrationTest.Controllers.RulesApiControllerTests
             OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest with { UpdatedSteps = new[] { circularReferenceStep } });
             Assert.AreEqual(OperationStatus.Error, result.Status);
             Assert.AreEqual("Replace with actual message", result.Message);
+        }
+
+        [Test]
+        public async Task Update_NewStepNameIsTaken_ShouldReturnErrorMessage()
+        {
+            OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest with { NewRuleName = ReferencingRule.RuleName });
+            Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual($"Rule with name={ReferencingRule.RuleName} already exists in workspace with id={WorkspaceId}", result.Message);
+        }
+
+        [Test]
+        public async Task Update_WrongStepOrder_ShouldReturnErrorMessage()
+        {
+            OperationResult result = await RulesApiClient.UpdateAsync(UpdateRequest with { UpdatedSteps = UpdateRequest.UpdatedSteps!.Concat(UpdateRequest.UpdatedSteps).ToList() });
+            Assert.AreEqual(OperationStatus.Error, result.Status);
+            Assert.AreEqual($"Rule with name={ReferencingRule.RuleName} already exists in workspace with id={WorkspaceId}", result.Message);
         }
 
         [Test]
