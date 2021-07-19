@@ -44,8 +44,8 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
         {
             RuleDatabaseModel ruleDatabaseModel = new RuleDatabaseModel { WorkspaceId = ruleCreationModel.WorkspaceId, Name = ruleCreationModel.Name };
 
-            ruleDatabaseModel.ExecuteRuleSteps = CreateExecuteRuleStepDatabaseModels(ruleCreationModel: ruleCreationModel);
-            ruleDatabaseModel.ChangeThingStateSteps = CreateChangeThingStateStepDatabaseModels(ruleCreationModel: ruleCreationModel);
+            ruleDatabaseModel.ExecuteRuleSteps = CreateExecuteRuleStepDatabaseModels(ruleCreationModel.Steps);
+            ruleDatabaseModel.ChangeThingStateSteps = CreateChangeThingStateStepDatabaseModels(ruleCreationModel.Steps);
             await dbContext.Rules.AddAsync(ruleDatabaseModel);
             await dbContext.SaveChangesAsync();
         }
@@ -62,23 +62,41 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
             await dbContext.SaveChangesAsync();
         }
 
-        public Task UpdateRuleNameAsync(int ruleId, string newRuleName)
+        public async Task UpdateRuleNameAsync(int ruleId, string newRuleName)
         {
-            throw new NotImplementedException();
+            RuleDatabaseModel? ruleDatabaseModel = await dbContext.Rules.SingleOrDefaultAsync(rule => rule.Id == ruleId);
+            if (ruleDatabaseModel is not null)
+            {
+                ruleDatabaseModel.Name = newRuleName;
+                await dbContext.SaveChangesAsync();
+            }
         }
 
-        public Task ClearStepsForRuleAsync(int ruleId)
+        public async Task ClearStepsForRuleAsync(int ruleId)
         {
-            throw new NotImplementedException();
+            RuleDatabaseModel? ruleDatabaseModel = await GetRuleWithStepsAsync(ruleId: ruleId);
+
+            if (ruleDatabaseModel is not null)
+            {
+                ruleDatabaseModel.ExecuteRuleSteps.Clear();
+                ruleDatabaseModel.ChangeThingStateSteps.Clear();
+            }
         }
 
-        public Task AddStepsToRuleAsync(int ruleId, IReadOnlyCollection<StepModel> steps)
+        public async Task AddStepsToRuleAsync(int ruleId, IReadOnlyCollection<StepModel> steps)
         {
-            throw new NotImplementedException();
+            RuleDatabaseModel? ruleDatabaseModel = await GetRuleWithStepsAsync(ruleId);
+
+            if (ruleDatabaseModel is not null)
+            {
+                ruleDatabaseModel.ExecuteRuleSteps.AddRange(CreateExecuteRuleStepDatabaseModels(steps));
+                ruleDatabaseModel.ChangeThingStateSteps.AddRange(CreateChangeThingStateStepDatabaseModels(steps));
+                await dbContext.SaveChangesAsync();
+            }
         }
 
-        private static List<ExecuteRuleStepDatabaseModel> CreateExecuteRuleStepDatabaseModels(RuleCreationModel ruleCreationModel)
-            => ruleCreationModel.Steps
+        private static List<ExecuteRuleStepDatabaseModel> CreateExecuteRuleStepDatabaseModels(IReadOnlyCollection<StepModel> steps)
+            => steps
                 .Where(step => step.StepType == StepType.ExecuteRule)
                 .Select(step =>
                 {
@@ -91,8 +109,8 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
                 })
                 .ToList();
 
-        private static List<ChangeThingStateStepDatabaseModel> CreateChangeThingStateStepDatabaseModels(RuleCreationModel ruleCreationModel)
-            => ruleCreationModel.Steps
+        private static List<ChangeThingStateStepDatabaseModel> CreateChangeThingStateStepDatabaseModels(IReadOnlyCollection<StepModel> steps)
+            => steps
                 .Where(step => step.StepType == StepType.ChangeThingState)
                 .Select(step =>
                 {
@@ -138,5 +156,8 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
                 propertyName: databaseModel.PropertyName,
                 newPropertyState: databaseModel.NewPropertyState);
         }
+
+        private async Task<RuleDatabaseModel?> GetRuleWithStepsAsync(int ruleId)
+            => (await GetRulesAsync(rule => rule.Id == ruleId)).SingleOrDefault();
     }
 }
