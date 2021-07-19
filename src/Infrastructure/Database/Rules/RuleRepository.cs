@@ -62,6 +62,21 @@ namespace PolytechWebThings.Infrastructure.Database.Rules
             await dbContext.SaveChangesAsync();
         }
 
+        public Task UpdateRuleNameAsync(int ruleId, string newRuleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ClearStepsForRuleAsync(int ruleId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddStepsToRuleAsync(int ruleId, IReadOnlyCollection<StepModel> steps)
+        {
+            throw new NotImplementedException();
+        }
+
         private static List<ExecuteRuleStepDatabaseModel> CreateExecuteRuleStepDatabaseModels(RuleCreationModel ruleCreationModel)
             => ruleCreationModel.Steps
                 .Where(step => step.StepType == StepType.ExecuteRule)

@@ -34,6 +34,9 @@ namespace Web.Controllers
             { typeof(EntityNotFoundException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(NotUniqueEntityException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(InvalidStepExecutionOrderException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            { typeof(EmptyCollectionException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            { typeof(CircularReferenceException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
+            { typeof(BrokenStepExecutionOrderException), exception => new OperationResult(OperationStatus.Error, exception.Message) },
             { typeof(UserDoesNotHaveRequiredRightsException), exception => new OperationResult(OperationStatus.Forbidden, exception.Message) },
             {
                 typeof(BrokenGatewayCommunicationException), exception =>

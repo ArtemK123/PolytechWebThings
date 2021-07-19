@@ -16,5 +16,11 @@ namespace Application.Repositories
         Task CreateAsync(RuleCreationModel ruleCreationModel);
 
         Task DeleteAsync(int ruleId);
+
+        Task UpdateRuleNameAsync(int ruleId, string newRuleName);
+
+        Task ClearStepsForRuleAsync(int ruleId);
+
+        Task AddStepsToRuleAsync(int ruleId, IReadOnlyCollection<StepModel> steps);
     }
 }
